@@ -1,23 +1,31 @@
 <template>
-  <div class="container">
+  <div>
     
-    <side-menu :sideMenuItems="sideMenuItems"></side-menu>
+    <app-header></app-header>
+    
+    <side-bar :sideBarItems="sideBarItems"></side-bar>
     
   </div>
 </template>
 
 <script>
-import SideMenu from "./components/SideMenu.vue";
+import SideBar from "./components/SideBar.vue";
+import AppHeader from "./components/AppHeader.vue";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import "bootstrap";
 
 export default {
   name: "app",
   data: function() {
     return {
-      sideMenuItems: ["This is a test"]
+      sideBarItems: ["This is a test"]
     };
   },
   components: {
-    sideMenu: SideMenu
+    sideBar: SideBar,
+    appHeader: AppHeader
   }
 };
 </script>
