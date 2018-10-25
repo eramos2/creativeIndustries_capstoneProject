@@ -8,9 +8,10 @@
   </div>
 </template>
 
+
 <script>
 import SideBar from "./components/SideBar.vue";
-import AppHeader from "./components/AppHeader.vue";
+import AppHeader from "./components/header/AppHeader.vue";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";

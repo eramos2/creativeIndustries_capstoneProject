@@ -1,44 +1,80 @@
 <template>
     <div class="wrapper">
-        <nav id="sidebar">
-            <ul class="list-unstyled components">
+        <nav id="sidebar" class="btn-group-vertical dropright">
             
-            <div class="dropright">
+            
                
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropright
-  </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <button 
+                    type="button" 
+                    id="dropdownMenuButton" 
+                    class="btn btn-secondary dropdown-toggle" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false"
+                    data-reference="parent"
+                >
+                    Materials
+                </button>
+
+                <div 
+                    class="dropdown-menu" 
+                    aria-labelledby="dropdownMenuButton"
+
+                >
+                    <a class="dropdown-item" href="#">Concrete</a>
+                    <a class="dropdown-item" href="#">Fabrics</a>
+                    <a class="dropdown-item" href="#">Glass and Ceramics</a>
+                </div>
+            
+            <div class="btn-group dropright">
+                <button 
+                    type="button" 
+                    id="processesDropdownMenuButton" 
+                    class="btn btn-secondary dropdown-toggle" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false"
+                    data-reference="parent"
+                    
+                >
+                    Processes
+                </button>
+                <div 
+                    class="dropdown-menu" 
+                    aria-labelledby="processesDropdownMenuButton"
+                >
+                    <a class="dropdown-item" href="#">Engraving</a>
+                    <a class="dropdown-item" href="#">Extrusion</a>
+                    <a class="dropdown-item" href="#">Fabric Machinery</a>
+                </div>
+            </div>
+
+
+           
+
+            <div class="dropright">
+                <a 
+                    type="button" 
+                    id="processesDropdownMenuButton" 
+                    class="btn btn-secondary dropdown-toggle" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false"
+                    data-reference="#sidebar"
+                    
+                >
+                    Processes
+                </a>
+                <div 
+                    class="dropdown-menu" 
+                    aria-labelledby="processesDropdownMenuButton"
+                >
                     <a class="dropdown-item" href="#">Action</a>
                     <a class="dropdown-item" href="#">Another action</a>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
-                
             </div>
-            <li>
-                <a href="#">Services</a>
-            </li>
-            <li class="dropright">
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle">Processes</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Businesses</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
-        </ul>
+        
 
         </nav>
         <side-bar-item 
@@ -101,6 +137,11 @@ a:focus {
 }
 
 #sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid #47748b;
+}
+
+.dropright {
   padding: 20px 0;
   border-bottom: 1px solid #47748b;
 }
