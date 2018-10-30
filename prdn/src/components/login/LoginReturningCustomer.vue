@@ -1,4 +1,5 @@
-<!-- Returning Customer Start -->
+<template>
+    <!-- Returning Customer Start -->
                             <div class="col-md-6">
                                 <div class="well">
                                     <div class="return-customer">
@@ -20,3 +21,15 @@
                                 </div>
                             </div>
                             <!-- Returning Customer End -->
+</template>
+
+<script>
+    export default{
+        
+    }
+    
+</script>
+
+<style>
+    
+</style>
