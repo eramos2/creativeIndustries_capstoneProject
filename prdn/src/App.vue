@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="wrapper home-2">
     
     <!--<app-header></app-header>-->
     <slider></slider>
+    
     <!--<side-bar :sideBarItems="sideBarItems"></side-bar>-->
     
   </div>
@@ -34,6 +35,9 @@ export default {
 </script>
 
 <style>
+@import "../public/style.css";
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
+
 html,
 body {
   height: 100%;

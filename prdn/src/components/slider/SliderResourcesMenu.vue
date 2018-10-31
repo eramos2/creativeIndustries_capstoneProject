@@ -225,7 +225,6 @@ export default {
   text-transform: uppercase;
   cursor: pointer;
 }
-
 .vertical-menu-list {
   background: #ffffff none repeat scroll 0 0;
   border-color: #eaecee;
