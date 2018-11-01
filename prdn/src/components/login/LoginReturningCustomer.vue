@@ -3,8 +3,8 @@
                             <div class="col-md-6">
                                 <div class="well">
                                     <div class="return-customer">
-                                        <h3 class="mb-10 custom-title">returning customer</h3>
-                                        <p class="mb-10"><strong>I am a returning customer</strong></p>
+                                        <h3 class="mb-10 custom-title">Login</h3>
+                                        <p class="mb-10"><strong>Login</strong></p>
                                         <form action="#">
                                             <div class="form-group">
                                                 <label>Email</label>
@@ -24,12 +24,8 @@
 </template>
 
 <script>
-    export default{
-        
-    }
-    
+export default {};
 </script>
 
 <style>
-    
 </style>

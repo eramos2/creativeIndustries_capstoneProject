@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-   <login></login>
+   <register></register>
   </div>
 </template>
 
 <script>
-import Login from "./components/login/Login.vue";
+import Register from "./components/register/Register.vue";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -14,7 +14,7 @@ import "bootstrap";
 export default {
   name: "app",
   components: {
-    login: Login
+    register: Register
   }
 };
 </script>

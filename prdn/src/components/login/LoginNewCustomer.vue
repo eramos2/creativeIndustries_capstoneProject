@@ -4,7 +4,7 @@
                             <div class="col-md-6">
                                 <div class="well mb-sm-30">
                                     <div class="new-customer">
-                                        <h3 class="custom-title">new customer</h3>
+                                        <h3 class="custom-title">new user</h3>
                                         <p class="mtb-10"><strong>Register</strong></p>
                                         <p>By creating an account you will be able to access the companies and receive recommendations for your projects</p>
                                         <a class="customer-btn" href="register.html">continue</a>
@@ -16,11 +16,8 @@
 </template>
 
 <script>
-    export default{
-
-    }
+export default {};
 </script>
 
 <style>
-    
 </style>
