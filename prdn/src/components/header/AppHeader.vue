@@ -8,6 +8,18 @@
 import HeaderBottom from "./header-bottom/HeaderBottom.vue";
 
 export default {
+  mounted() {
+    window.on("scroll", function() {
+      var scroll = window.scrollTop();
+      if (scroll < 265) {
+        window.$(".sticky-header").removeClass("sticky");
+      } else {
+        window.$(".sticky-header").addClass("sticky");
+      }
+    });
+
+    window.$(".nice-select").niceSelect();
+  },
   components: {
     headerBottom: HeaderBottom
   }
@@ -232,5 +244,9 @@ li.megamenu-img a {
 
 .category-menu-list > li ul.megamenu-two {
   width: 420px;
+}
+
+.dropdown-toggle::after {
+  display: none;
 }
 </style>

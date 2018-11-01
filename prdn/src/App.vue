@@ -2,6 +2,8 @@
   <div class="wrapper home-2">
     
     <!--<app-header></app-header>-->
+    <header-top></header-top>
+    <header-bot></header-bot>
     <slider></slider>
     
     <!--<side-bar :sideBarItems="sideBarItems"></side-bar>-->
@@ -13,6 +15,8 @@
 <script>
 import SideBar from "./components/SideBar.vue";
 import AppHeader from "./components/header/AppHeader.vue";
+import Header from "./components/header/Header.vue";
+import MainMenu from "./components/header/MainMenu.vue";
 import Slider from "./components/slider/Slider.vue";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,9 +31,21 @@ export default {
     };
   },
   components: {
-    sideBar: SideBar,
-    appHeader: AppHeader,
+    headerTop: Header,
+    headerBot: MainMenu,
     slider: Slider
+  },
+  mounted() {
+    window.on("scroll", function() {
+      var scroll = window.scrollTop();
+      if (scroll < 265) {
+        window.$(".sticky-header").removeClass("sticky");
+      } else {
+        window.$(".sticky-header").addClass("sticky");
+      }
+    });
+
+    window.$(".nice-select").niceSelect();
   }
 };
 </script>
@@ -310,5 +326,9 @@ body {
 
 #scrollUp:hover {
   background: #0879c9;
+}
+
+.dropdown-toggle::after {
+  display: none;
 }
 </style>
