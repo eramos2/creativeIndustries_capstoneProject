@@ -4,7 +4,7 @@
                                 <div class="well">
                                     <div class="return-customer">
                                         <h3 class="mb-10 custom-title">Login</h3>
-                                        <p class="mb-10"><strong>Login</strong></p>
+                                        <p class="mb-10"><strong></strong></p>
                                         <form action="#">
                                             <div class="form-group">
                                                 <label>Email</label>
