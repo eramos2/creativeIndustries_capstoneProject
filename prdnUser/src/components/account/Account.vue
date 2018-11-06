@@ -7,17 +7,7 @@
                         <div class="col-md-3">
                             <div class="myaccount-tab-menu nav" role="tablist">
                                 <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
-                                    Dashboard</a>
-
-                                <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
-
-                                <a href="#download" data-toggle="tab"><i class="fa fa-cloud-download"></i> Download</a>
-
-                                <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i> Payment
-                                    Method</a>
-
-                                <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
-
+                                    Home</a>
                                 <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
 
                                 <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a>
@@ -31,16 +21,14 @@
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade show active" id="dashboad" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <h3>Dashboard</h3>
+                                        <h3>Home</h3>
 
                                         <div class="welcome">
-                                            <p>Hello, <strong>Alex Tuntuni</strong> (If Not <strong>Tuntuni !</strong><a
-                                                    href="login.html" class="logout"> Logout</a>)</p>
+                                            <p>Hello, <strong></strong> <a
+                                                    href="login.html" class="logout"> </a></p>
                                         </div>
 
-                                        <p class="mb-0">From your account dashboard. you can easily check & view your
-                                            recent orders, manage your shipping and billing addresses and edit your
-                                            password and account details.</p>
+                                        <p class="mb-0">Manage your Account Details</p>
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->

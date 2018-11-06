@@ -52,7 +52,13 @@
 </div>
 </template>
 <script>
-export default {};
+import AddBusiness from "./AddBusiness.vue";
+export default {
+  name: "app",
+  components: {
+    addBusiness: AddBusiness
+  }
+};
 </script>
 <style>
 .myaccount-content {
