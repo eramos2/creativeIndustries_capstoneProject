@@ -19,23 +19,24 @@ const state = {
 
 const getters = {
     getResources: state => {
-        console.log('test Get Resources');
-        console.log(state.resources);
+        //console.log('test Get Resources');
+        //console.log(state.resources);
         return state.resources;
     },
     getResourceCategories(state) {
         return (payload) => {
-            console.log('inside getResourceCategories ');
-            console.log(payload);
-            console.log(state.resources[payload].categories);
+            //console.log('inside getResourceCategories ');
+            //console.log(payload);
+            //console.log(state.resources[payload].categories);
             return state.resources[payload].categories;
         }
     },
     getCategorySubCategories(state) {
         return (payload) => {
-            console.log('test getCategorySubCategories');
-            console.log(payload);
-            return state.resources;
+            //console.log('test getCategorySubCategories');
+            //console.log(payload);
+            //console.log(state.resources[payload.rK].categories[payload.cK]);
+            return state.resources[payload.rK].categories[payload.cK].subcategories;
         }
     }
 }
@@ -101,6 +102,9 @@ const mutations = {
                 name: subcategoryName
             }
         }
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
         state.resources = { ...state.resources
         }
     }

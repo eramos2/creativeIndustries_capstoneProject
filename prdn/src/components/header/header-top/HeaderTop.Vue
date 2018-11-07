@@ -5,9 +5,12 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-5">
                         <!-- logo start -->
-                        <div class="logo">
+                        
+                        <router-link to="/" tag="div" class="logo" active-class="active" exact><a><img src="https://via.placeholder.com/178x52?text=PRDN LOGO" alt=""></a></router-link>
+                        <!--<div class="logo">
+                          
                             <a href="index.html"><img src="https://via.placeholder.com/178x52?text=PRDN LOGO" alt=""></a>
-                        </div>
+                        </div>-->
                         <!-- logo end -->
                     </div>
                     <div class="col-lg-6 d-none d-lg-block">

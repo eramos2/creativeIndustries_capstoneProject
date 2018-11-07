@@ -1,7 +1,7 @@
 <template>
     <div class="categories-box sidebar-categores-box">
         <div class="secton-title">
-            <h2>Categories</h2>
+            <h2>{{resource}}</h2>
         </div>
         <div class="sidebar-categores-inner">
             <div class="filter-group">
@@ -26,6 +26,10 @@ export default {
       return this.$store.getters.getResourceCategories(
         this.$route.params.resourceName
       );
+    },
+    resource() {
+      let resources = this.$store.getters.getResources;
+      return resources[this.$route.params.resourceName].name;
     }
   }
 };

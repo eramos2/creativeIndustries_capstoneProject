@@ -239,7 +239,7 @@ export default {
     ...mapActions(["setResources"])
   },
   mounted() {
-    //this.setResources();
+    this.setResources();
     console.log("inside App.vue after setting resources");
     console.log(this.$store.state.resources);
 

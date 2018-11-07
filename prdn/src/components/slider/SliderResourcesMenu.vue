@@ -25,7 +25,6 @@
 <script>
 import SliderCategoriesMenu from "./SliderCategoriesMenu.vue";
 import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
 export default {
   //props: ["resources"],
   components: {
@@ -39,7 +38,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setResources"]),
     ...mapGetters(["getResources"]),
     getMaterials() {
       this.$http
@@ -53,9 +51,6 @@ export default {
           this.$store.state.resources.materials = data;
         });
     }
-  },
-  mounted() {
-    this.setResources();
   }
 };
 </script>

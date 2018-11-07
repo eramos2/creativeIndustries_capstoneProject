@@ -22,8 +22,7 @@ Vue.use(VueRouter);
 Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/prds.php";
 
 const router = new VueRouter({
-  routes: routes,
-  mode: 'history'
+  routes: routes
 });
 
 

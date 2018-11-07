@@ -1,7 +1,14 @@
 <template>
 
-    <li><a href="#"><slot></slot></a>
-        <ul>
+<router-link :to="{
+    name: 'subcategoriesLink', 
+    params: {
+        resourceName: rKey,
+        categoryName: cKey
+        }
+    }" tag="li" active-class="active" exact>
+    <a><slot></slot></a>
+    <ul>
             <li
                 v-for="(subcategory, index) in category.subcategories"
                 :key="index"
@@ -9,7 +16,7 @@
             <a href="#">{{subcategory.name}}</a>
             </li>
         </ul>
-    </li>
+    </router-link>
 
 </template>
 
