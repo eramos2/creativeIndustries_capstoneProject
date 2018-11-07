@@ -2,14 +2,33 @@
   <div class="wrapper home-2">
     
     <!--<app-header></app-header>-->
-    <header-top></header-top>
-    <header-bot></header-bot>
-    <slider></slider>
+    <header-bar
+      :resources="resources"
+    >
+    </header-bar>
+
+    <router-view></router-view>
+    <!--
+    <slider
+      :resources="resources"
+    >
+    </slider>
+    <resources-lists></resources-lists>-->
+    <!--<breadcrumbs></breadcrumbs>
+    <category-list 
+      class="shop"
+      :resources="resources"
+
+    >
+    </category-list>-->
+
+    
     
     <!--<side-bar :sideBarItems="sideBarItems"></side-bar>-->
     
   </div>
 </template>
+
 
 
 <script>
@@ -18,30 +37,218 @@ import AppHeader from "./components/header/AppHeader.vue";
 import Header from "./components/header/Header.vue";
 import MainMenu from "./components/header/MainMenu.vue";
 import Slider from "./components/slider/Slider.vue";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import "bootstrap";
+import ResourcesList from "./components/resourcesList/ResourcesList.vue";
+import Breadcrumbs from "./components/Breadcrumbs.vue";
+import CategoryList from "./components/lists/CategoryList.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "app",
   data: function() {
     return {
-      sideBarItems: ["This is a test"]
+      sideBarItems: ["This is a test"],
+      resources: {
+        materials: {
+          name: "Materials",
+          categories: {
+            concrete: {
+              name: "Concrete",
+              subcategories: [
+                "Digital Concrete",
+                "Foam Aggregate",
+                "Geometrical Concrete",
+                "Insulate Concrete",
+                "Lightweight Concrete",
+                "Translucent Concrete"
+              ]
+            },
+            fabrics: {
+              name: "Fabrics",
+              subcategories: ["Carbon Fiber", "Cotton", "Fiberglass", "Leather"]
+            },
+            glassAndCeramics: {
+              name: "Glass and Ceramics",
+              subcategories: [
+                "Blowing Glass",
+                "Bulletproof",
+                "Ceramic",
+                "Laminate Glass",
+                "Temper Glass"
+              ]
+            },
+            metal: {
+              name: "Metal",
+              subcategories: [
+                "Aluminium",
+                "Copper",
+                "Rare Metal (Medicinal)",
+                "Stainless Steel",
+                "Steel",
+                "Zinc"
+              ]
+            },
+            papersCoating: {
+              name: "Papers Coating and Surfaces",
+              subcategories: ["Packaging"]
+            },
+            plastics: {
+              name: "Plastics",
+              subcategories: [
+                "Acrylic",
+                "Bakelite",
+                "Nylon",
+                "Polycarbonate",
+                "Polyester",
+                "Polypropylene",
+                "Polythene",
+                "Prototype",
+                "PVC"
+              ]
+            },
+            rubber: {
+              name: "Rubber",
+              subcategories: [
+                "Latex",
+                "Neoprene",
+                "Nitrile",
+                "Recycled Tire",
+                "Silicone"
+              ]
+            },
+            wood: {
+              name: "Wood",
+              subcategories: [
+                "Bamboo Panels",
+                "Ceder",
+                "Furniture Products",
+                "Mahogany",
+                "Marine Performance",
+                "Oak",
+                "Pine",
+                "Saw Mill",
+                "Wood Craft"
+              ]
+            }
+          }
+        },
+        processes: {
+          name: "Processes",
+          categories: {
+            engraving: {
+              name: "Engraving",
+              subcategories: [
+                "CNC Engraving",
+                "Laser Engraving",
+                "Prefabricated Panels",
+                "Sand Blasted"
+              ]
+            },
+            extrusion: {
+              name: "Extrusion",
+              subcategories: [
+                "Extrusion Bowl Making",
+                "Metal Extrusion",
+                "Plastic Extrusion"
+              ]
+            },
+            fabricMachinery: {
+              name: "Fabric Machinery",
+              subcategories: ["Industrial Sewing"]
+            },
+            geometricalPrecisionCutting: {
+              name: "Geometrical Precision Cutting",
+              subcategories: [
+                "CNC 3 Axis Milling",
+                "CNC 5 Axis Milling",
+                "CNC Drilling",
+                "CNC Foam",
+                "CNC Metal",
+                "CNC Wood",
+                "Laser Cutting",
+                "Plasma Cutter",
+                "Precision Machinery",
+                "Punching",
+                "Water Jet"
+              ]
+            },
+            handMade: {
+              name: "Hand Made",
+              subcategories: ["Ceramic Sampler", "Fabric Patterns"]
+            },
+            metalWorkshop: {
+              name: "Metal Workshop",
+              subcategories: ["Forming and Shaping", "Metal Casting"]
+            },
+            molding: {
+              name: "Molding",
+              subcategories: [
+                "Car Mold Making",
+                "Hand Molding",
+                "Injection Molding",
+                "Pressure Molding",
+                "Thermo Forming",
+                "Vacuum Former"
+              ]
+            },
+            rapidPrototype: {
+              name: "Rapid Prototype",
+              subcategories: ["3D Printing"]
+            },
+            welding: {
+              name: "Welding",
+              subcategories: ["Arc Welding", "Tig Welding"]
+            }
+          }
+        },
+        services: {
+          name: "Services",
+          categories: {
+            cleaning: {
+              name: "Cleaning",
+              subcategories: ["Warehouse Cleaning"]
+            },
+            extraction: {
+              name: "Extraction",
+              subcategories: ["Concrete Extraction"]
+            },
+            prototype: {
+              name: "Prototype",
+              subcategories: [
+                "Industrial Welders",
+                "Mold Makers",
+                "Precision Welding"
+              ]
+            },
+            roofSealing: {
+              name: "Roof Sealing",
+              subcategories: ["Hydro Stop"]
+            }
+          }
+        }
+      }
     };
   },
   components: {
-    headerTop: Header,
-    headerBot: MainMenu,
-    slider: Slider
+    headerBar: Header,
+    slider: Slider,
+    resourcesLists: ResourcesList,
+    breadcrumbs: Breadcrumbs,
+    categoryList: CategoryList
+  },
+  methods: {
+    ...mapActions(["setResources"])
   },
   mounted() {
-    window.on("scroll", function() {
-      var scroll = window.scrollTop();
+    //this.setResources();
+    console.log("inside App.vue after setting resources");
+    console.log(this.$store.state.resources);
+
+    $(window).on("scroll", function() {
+      var scroll = $(window).scrollTop();
       if (scroll < 265) {
-        window.$(".sticky-header").removeClass("sticky");
+        $(".sticky-header").removeClass("sticky");
       } else {
-        window.$(".sticky-header").addClass("sticky");
+        $(".sticky-header").addClass("sticky");
       }
     });
 
@@ -50,8 +257,7 @@ export default {
 };
 </script>
 
-<style>
-@import "../public/style.css";
+<style >
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
 
 html,

@@ -7,14 +7,16 @@
             <div class="vertical-menu-list">
                 <ul>
                     <category-menu
-                        v-for="(resource, index) in resources"
-                        :key="index"
+                        v-for="(resource, key) in resources"
+                        :key="key"
+                        :resourceKey="key"
                         :resource="resource"
                     >
                         {{resource.name}}
                     </category-menu>
                 </ul>
             </div>
+            <!--<button class="btn btn-primary" @click="setResources">Get Materials</button>-->
 
         </div>
     </div>
@@ -22,193 +24,38 @@
 
 <script>
 import SliderCategoriesMenu from "./SliderCategoriesMenu.vue";
-
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
-  data: function() {
-    return {
-      resources: {
-        materials: {
-          name: "Materials",
-          categories: {
-            concrete: {
-              name: "Concrete",
-              subcategories: [
-                "Digital Concrete",
-                "Foam Aggregate",
-                "Geometrical Concrete",
-                "Insulate Concrete",
-                "Lightweight Concrete",
-                "Translucent Concrete"
-              ]
-            },
-            fabrics: {
-              name: "Fabrics",
-              subcategories: ["Carbon Fiber", "Cotton", "Fiberglass", "Leather"]
-            },
-            glassAndCeramics: {
-              name: "Glass and Ceramics",
-              subcategories: [
-                "Blowing Glass",
-                "Bulletproof",
-                "Ceramic",
-                "Laminate Glass",
-                "Temper Glass"
-              ]
-            },
-            metal: {
-              name: "Metal",
-              subcategories: [
-                "Aluminium",
-                "Copper",
-                "Rare Metal (Medicinal)",
-                "Stainless Steel",
-                "Steel",
-                "Zinc"
-              ]
-            },
-            papersCoating: {
-              name: "Papers Coating and Surfaces",
-              subcategories: ["Packaging"]
-            },
-            plastics: {
-              name: "Plastics",
-              subcategories: [
-                "Acrylic",
-                "Bakelite",
-                "Nylon",
-                "Polycarbonate",
-                "Polyester",
-                "Polypropylene",
-                "Polythene",
-                "Prototype",
-                "PVC"
-              ]
-            },
-            rubber: {
-              name: "Rubber",
-              subcategories: [
-                "Latex",
-                "Neoprene",
-                "Nitrile",
-                "Recycled Tire",
-                "Silicone"
-              ]
-            },
-            wood: {
-              name: "Wood",
-              subcategories: [
-                "Bamboo Panels",
-                "Ceder",
-                "Furniture Products",
-                "Mahogany",
-                "Marine Performance",
-                "Oak",
-                "Pine",
-                "Saw Mill",
-                "Wood Craft"
-              ]
-            }
-          }
-        },
-        processes: {
-          name: "Processes",
-          categories: {
-            engraving: {
-              name: "Engraving",
-              subcategories: [
-                "CNC Engraving",
-                "Laser Engraving",
-                "Prefabricated Panels",
-                "Sand Blasted"
-              ]
-            },
-            extrusion: {
-              name: "Extrusion",
-              subcategories: [
-                "Extrusion Bowl Making",
-                "Metal Extrusion",
-                "Plastic Extrusion"
-              ]
-            },
-            fabricMachinery: {
-              name: "Fabric Machinery",
-              subcategories: ["Industrial Sewing"]
-            },
-            geometricalPrecisionCutting: {
-              name: "Geometrical Precision Cutting",
-              subcategories: [
-                "CNC 3 Axis Milling",
-                "CNC 5 Axis Milling",
-                "CNC Drilling",
-                "CNC Foam",
-                "CNC Metal",
-                "CNC Wood",
-                "Laser Cutting",
-                "Plasma Cutter",
-                "Precision Machinery",
-                "Punching",
-                "Water Jet"
-              ]
-            },
-            handMade: {
-              name: "Hand Made",
-              subcategories: ["Ceramic Sampler", "Fabric Patterns"]
-            },
-            metalWorkshop: {
-              name: "Metal Workshop",
-              subcategories: ["Forming and Shaping", "Metal Casting"]
-            },
-            molding: {
-              name: "Molding",
-              subcategories: [
-                "Car Mold Making",
-                "Hand Molding",
-                "Injection Molding",
-                "Pressure Molding",
-                "Thermo Forming",
-                "Vacuum Former"
-              ]
-            },
-            rapidPrototype: {
-              name: "Rapid Prototype",
-              subcategories: ["3D Printing"]
-            },
-            welding: {
-              name: "Welding",
-              subcategories: ["Arc Welding", "Tig Welding"]
-            }
-          }
-        },
-        services: {
-          name: "Services",
-          categories: {
-            cleaning: {
-              name: "Cleaning",
-              subcategories: ["Warehouse Cleaning"]
-            },
-            extraction: {
-              name: "Extraction",
-              subcategories: ["Concrete Extraction"]
-            },
-            prototype: {
-              name: "Prototype",
-              subcategories: [
-                "Industrial Welders",
-                "Mold Makers",
-                "Precision Welding"
-              ]
-            },
-            roofSealing: {
-              name: "Roof Sealing",
-              subcategories: ["Hydro Stop"]
-            }
-          }
-        }
-      }
-    };
-  },
+  //props: ["resources"],
   components: {
     categoryMenu: SliderCategoriesMenu
+  },
+  computed: {
+    resources() {
+      console.log("Inside computed before getResources ");
+      //return this.getResources();
+      return this.$store.getters.getResources;
+    }
+  },
+  methods: {
+    ...mapActions(["setResources"]),
+    ...mapGetters(["getResources"]),
+    getMaterials() {
+      this.$http
+        .get("", {
+          params: { endpoint: "material", code: "1" }
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.$store.state.resources.materials = data;
+        });
+    }
+  },
+  mounted() {
+    this.setResources();
   }
 };
 </script>

@@ -6,7 +6,7 @@
                 v-for="(subcategory, index) in category.subcategories"
                 :key="index"
             >
-            <a href="#">{{subcategory}}</a>
+            <a href="#">{{subcategory.name}}</a>
             </li>
         </ul>
     </li>
@@ -14,8 +14,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  props: ["category"]
+  props: ["cKey", "rKey", "category"],
+
+  computed: {
+    ...mapGetters(["getCategorySubCategories"])
+  }
 };
 </script>
 

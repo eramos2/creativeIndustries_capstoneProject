@@ -46,10 +46,9 @@
 </template>
 
 <script>
-import "owl.carousel";
 export default {
   mounted() {
-    window.$(".slider-active-2").owlCarousel({
+    $(".slider-active-2").owlCarousel({
       loop: true,
       items: 1,
       dots: true,

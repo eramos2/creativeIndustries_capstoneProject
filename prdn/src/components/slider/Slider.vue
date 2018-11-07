@@ -20,6 +20,7 @@ import SliderResourcesMenu from "./SliderResourcesMenu.vue";
 import SliderCarousel from "./SliderCarousel.vue";
 
 export default {
+  props: ["resources"],
   components: {
     sliderResourcesMenu: SliderResourcesMenu,
     sliderCarousel: SliderCarousel

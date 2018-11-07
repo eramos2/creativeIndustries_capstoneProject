@@ -4,8 +4,10 @@
     <ul class="right-mega-menu">
 
         <sub-category-menu
-            v-for="(category, index) in resource.categories"
-            :key="index"
+            v-for="(category, key) in resource.categories"
+            :key="key"
+            :cKey="key"
+            :rKey="resourceKey" 
             :category="category"
         >
             {{category.name}}
@@ -18,11 +20,21 @@
 
 <script>
 import SliderSubCategoryMenu from "./SliderSubCategoryMenu.vue";
-
+import { mapGetters } from "vuex";
 export default {
-  props: ["resource"],
+  props: ["resourceKey", "resource"],
   components: {
     subCategoryMenu: SliderSubCategoryMenu
+  },
+  computed: {
+    resourceCategories: function() {
+      console.log("Inside computed before getResourceCategories");
+      console.log(this.$store.state.resources[this.resourceKey]);
+      return this.$store.state.resources[this.resourceKey];
+    }
+  },
+  methods: {
+    ...mapGetters(["getResourceCategories"])
   }
 };
 </script>
