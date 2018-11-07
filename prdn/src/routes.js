@@ -1,6 +1,8 @@
 import Home from "./pages/Home.vue"
 import CategoriesPage from "./pages/CategoriesPage.vue";
 import SubCategoriesPage from "./pages/SubCategoriesPage.vue";
+import SingleItemPage from "./pages/SingleItemPage.vue";
+
 
 
 export const routes = [{
@@ -16,10 +18,13 @@ export const routes = [{
     {
         path: '/:resourceName/:categoryName',
         name: 'subcategoriesLink',
-        alias: '/materials/concrete',
         component: SubCategoriesPage
     },
-
+    {
+        path: '/:resourceName/:categoryName/:subcategoryName',
+        name: 'singleitemLink',
+        component: SingleItemPage
+    },
     {
         path: '*',
         redirect: '/'
