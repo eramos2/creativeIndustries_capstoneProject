@@ -3,7 +3,7 @@
             <div class="login-page-area">
                 <div class="container">
                     <div class="login-area">
-                    <login-new-customer> </login-new-customer>
+                    <!-- <login-new-customer> </login-new-customer> -->
                     <login-returning-customer> </login-returning-customer>
 
                     </div>
