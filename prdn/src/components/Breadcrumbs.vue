@@ -5,8 +5,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">Shop</li>
+                        <router-link to="/" tag="li" active-class="active" class="breadcrumb-item"><a>home</a></router-link>
+
+                        <breadcrumbs-single-item 
+                            v-for="(crumb, index) in crumbs"
+                            :key="index"
+                            :crumb="crumb"
+                        >
+                        {{crumb}}
+                        </breadcrumbs-single-item>
+
                     </ul>
                 </div>
             </div>
@@ -16,7 +24,20 @@
 </template>
 
 <script>
-export default {};
+import BreadcrumbsSingleItem from "./BreadcrumbsSingleItem.vue";
+
+export default {
+  components: {
+    breadcrumbsSingleItem: BreadcrumbsSingleItem
+  },
+  computed: {
+    crumbs() {
+      let crumbs = this.$route.params;
+      console.log(this.$route.params);
+      return crumbs;
+    }
+  }
+};
 </script>
 
 <style>

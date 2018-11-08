@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import resources from './modules/resources';
+import businesses from './modules/businesses';
 
 import * as actions from './actions';
 import * as getters from './getters';
@@ -15,7 +16,8 @@ export const store = new Vuex.Store({
     mutations,
     actions,
     modules: {
-        resources
+        resources,
+        businesses
     }
 
 })

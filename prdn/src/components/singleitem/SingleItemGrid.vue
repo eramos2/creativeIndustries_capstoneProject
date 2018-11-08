@@ -33,7 +33,7 @@ export default {
       return subcategories;
     },
     categories() {
-      console.log("Inside computed category ListBox ");
+      //console.log("Inside computed category ListBox ");
       //return this.getResources();
       return this.$store.getters.getResourceCategories(
         this.$route.params.resourceName

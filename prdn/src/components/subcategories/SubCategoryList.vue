@@ -16,17 +16,18 @@
                             <!-- single-benner start -->
                         </div>
                         <div class="col-lg-9 order-1 order-lg-2">
+                          <!--
                             <div class="row">
                                 <div class="col">
                                     <div class="shop-top-bar mt-60">
                                         <div class="shop-bar-inner">
                                             <div class="product-view-mode" >
-                                                <!-- shop-item-filter-list start -->
+                                                <!-- shop-item-filter-list start 
                                                 <ul role="tablist" class="nav shop-item-filter-list">
                                                     <li role="presentation" class="active"><a href="#grid" aria-controls="grid" role="tab" data-toggle="tab" class="active show" aria-selected="true"><i class="fa fa-th"></i></a></li>
                                                     <li role="presentation"><a href="#list" aria-controls="list" role="tab" data-toggle="tab"><i class="fa fa-th-list"></i></a></li>
                                                 </ul>
-                                                <!-- shop-item-filter-list end -->
+                                                <!-- shop-item-filter-list end 
                                             </div>
                                             <div class="toolbar-amount">
                                                 <span>Showing 1 to 9 of 15</span>
@@ -58,7 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="shop-products-wrapper">
                                 <div class="tab-content">
                                     <subcategory-grid :categories="resources.materials.categories"></subcategory-grid>

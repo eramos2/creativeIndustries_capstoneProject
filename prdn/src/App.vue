@@ -32,10 +32,10 @@
 
 
 <script>
-import SideBar from "./components/SideBar.vue";
-import AppHeader from "./components/header/AppHeader.vue";
+//import SideBar from "./components/SideBar.vue";
+//import AppHeader from "./components/header/AppHeader.vue";
 import Header from "./components/header/Header.vue";
-import MainMenu from "./components/header/MainMenu.vue";
+//import MainMenu from "./components/header/MainMenu.vue";
 import Slider from "./components/slider/Slider.vue";
 import ResourcesList from "./components/resourcesList/ResourcesList.vue";
 import Breadcrumbs from "./components/Breadcrumbs.vue";

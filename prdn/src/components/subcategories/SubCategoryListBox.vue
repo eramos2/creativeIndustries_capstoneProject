@@ -4,6 +4,15 @@
             <h2>{{category}}</h2>
         </div>
         <div class="sidebar-categores-inner">
+            <ul>
+                <subcategory-list-box-single-item
+                    v-for="(subcategory, key, index) in subcategories"
+                    :key="index"
+                    :subcategory="key"
+                >
+                {{subcategory.name}}
+                </subcategory-list-box-single-item>
+            </ul><!--
             <div class="filter-group">
                 <a 
                     href="#"
@@ -12,13 +21,17 @@
                 >   
                 {{subcategory.name}}
                 </a>
-            </div>
+            </div>-->
         </div>
     </div>
 </template>
 
 <script>
+import SubCategoryListBoxSingleItem from "./SubCategoryListBoxSingleItem.vue";
 export default {
+  components: {
+    subcategoryListBoxSingleItem: SubCategoryListBoxSingleItem
+  },
   computed: {
     subcategories() {
       console.log(

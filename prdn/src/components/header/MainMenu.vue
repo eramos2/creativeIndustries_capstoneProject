@@ -301,7 +301,7 @@ export default {};
   position: absolute;
   right: 0;
   top: 50%;
-  width: 1px;
+  /*width: 1px;*/
 }
 
 .header-cart-box .btn-group .btn-link {

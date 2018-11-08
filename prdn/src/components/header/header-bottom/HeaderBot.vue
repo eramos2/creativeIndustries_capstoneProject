@@ -9,7 +9,11 @@
                                         <form action="#">
                                             <div class="search-form-input">
                                                 <select id="select" name="select" class="nice-select">
-                                                    <option value="">All Categories</option>
+                                                  <option value="1">Materials</option>
+                                                  <option value="2">Processes</option>
+                                                  <option value="3">Services</option>
+                                                  <option value="4">Businesses</option>
+                                                    <!--<option value="">All Categories</option>
                                                     <option 
                                                         v-if="resources"
                                                         v-for="(category, index) in resources.materials.categories"
@@ -32,9 +36,9 @@
                                                     >
                                                     {{category.name}}
                                                     </option>
-                                                    <option value="12">Uncategorized</option>
+                                                    <option value="12">Uncategorized</option>-->
                                                 </select>
-                                                <input type="text" placeholder="Search product...">
+                                                <input type="text" placeholder="Search...">
                                                 <button class="top-search-btn" type="submit"><i class="ion-ios-search-strong"></i> Search</button>
                                             </div>
                                         </form>
@@ -53,14 +57,14 @@
                                             </button>
                                             <div class="dropdown-menu">
                                                 <ul>
-                                                   <li><a href="login-register.html">Register</a></li>
-                                                   <li><a href="login-register.html">Login</a></li>
+                                                  <router-link to="/" tag="li" active-class="active"><a>Register</a></router-link>
+                                                  <router-link to="/" tag="li" active-class="active"><a>Login</a></router-link>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- setting-account end -->
-                                    <!-- top-shopoing-cart start -->
+                                    <!-- top-shopoing-cart start --><!--
                                     <div id="top-shopoing-cart" class="btn-group">
                                         <button class="btn-link shopping-cart home-two dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="ion-ios-cart"></i>
@@ -107,7 +111,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                  </div>
+                                  </div>-->
                                     <!-- top-shopoing-cart end -->
                                 </div>
                                 <!-- header-cart-box end -->
@@ -309,7 +313,7 @@ export default {
   position: absolute;
   right: 0;
   top: 50%;
-  width: 1px;
+  /*--width: 1px;--*/
 }
 
 .header-cart-box .btn-group .btn-link {

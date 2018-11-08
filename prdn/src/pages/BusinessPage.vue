@@ -1,6 +1,6 @@
 <template>
 <div>
-    <breadcrumbs></breadcrumbs>
+    <!--<breadcrumbs></breadcrumbs>-->
     <div class="content-wraper bg-gray">
                 <div class="container">
                     <div class="row">
@@ -41,8 +41,8 @@
                                         <!-- product-thumbnail-content start -->
                                         <div class="quick-view-content">
                                             <div class="product-info">
-                                                <h2>Brand Galaxy Tab A</h2>
-                                                <div class="rating-box">
+                                                <h2>Business A</h2>
+                                                <!--<div class="rating-box">
                                                     <ul class="rating d-flex">
                                                         <li><i class="ion-ios-star"></i></li>
                                                         <li><i class="ion-ios-star"></i></li>
@@ -50,17 +50,19 @@
                                                         <li><i class="ion-android-star-outline"></i></li>
                                                         <li><i class="ion-android-star-outline"></i></li>
                                                     </ul>
-                                                </div>
-                                                <div class="price-box">
+                                                </div>-->
+                                                <!--<div class="price-box">
                                                    <span class="new-price">$25.50</span>
                                                    <span class="old-price">$30.50</span>
-                                               </div>
+                                               </div>-->
                                                <ul class="list-unstyled">
-                                                    <li>Brand: <a href="#">Hewlett-Packard</a></li>
-                                                    <li>Product Code: Digital</li>
-                                                    <li>Reward Points: 1000</li>
-                                                    <li>Availability: In Stock</li>
+                                                    <li>Telephone: <a href="#">123-456-7890</a></li>
+                                                    <li>Website: <a href="#">www.businessa.com</a></li>
+                                                    <li>E-mail: info@businessa.com</li>
+                                                    <li>Address: Carr #123 Km 4.5 PR 00123</li>
+                                                    <li>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
                                                 </ul>
+                                                <!--
                                                <div class="quick-add-to-cart">
                                                     <form class="modal-cart">
                                                         <div class="quantity">
@@ -75,12 +77,12 @@
                                                             <li><a class="compare" href="#"><i class="ion-arrow-swap"></i> Compare this Product</a></li>
                                                         </ul>
                                                     </form>
-                                               </div>
+                                               </div>-->
                                             </div>
                                         </div>
                                         <!-- product-thumbnail-content end -->
                                     </div>
-                                </div>
+                                </div><!--
                                 <div class="row">
                                     <div class="col">
                                         <div class="product-info-detailed">
@@ -164,7 +166,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -174,7 +176,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="secton-title">
-                                            <h2>Related Products</h2>
+                                            <h2>All Resources</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +198,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-info">
-                                                    <div class="rating-box">
+                                                    <!--<div class="rating-box">
                                                         <ul class="rating d-flex">
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-ios-star"></i></li>
@@ -204,11 +206,11 @@
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                         </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">Compete Track Tote</a></h4>
-                                                    <div class="price-box">
+                                                    </div>-->
+                                                    <h4 class="product-name"><a href="single-product.html">Material A</a></h4>
+                                                    <!--<div class="price-box">
                                                         <span class="new-price">$98.00</span>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <!-- sinle-product-item end -->
@@ -228,7 +230,7 @@
                                                         <a class="btn-cart" href="#"><span> Add to Cart </span></a>
                                                     </div>
                                                 </div>
-                                                <div class="product-info">
+                                                <div class="product-info"><!--
                                                     <div class="rating-box">
                                                         <ul class="rating d-flex">
                                                             <li><i class="ion-ios-star"></i></li>
@@ -237,11 +239,11 @@
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                         </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">Brand Galaxy Tab A</a></h4>
-                                                    <div class="price-box">
+                                                    </div>-->
+                                                    <h4 class="product-name"><a href="single-product.html">Material C</a></h4>
+                                                    <!--<div class="price-box">
                                                         <span class="new-price">$241.99</span>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <!-- sinle-product-item end -->
@@ -263,7 +265,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-info">
-                                                    <div class="rating-box">
+                                                   <!-- <div class="rating-box">
                                                         <ul class="rating d-flex">
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-ios-star"></i></li>
@@ -271,11 +273,11 @@
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                         </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">Lenovo Ideacentre 300</a></h4>
-                                                    <div class="price-box">
+                                                    </div>-->
+                                                    <h4 class="product-name"><a href="single-product.html">Service B</a></h4>
+                                                    <!--<div class="price-box">
                                                         <span class="new-price">$116.00</span>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <!-- sinle-product-item end -->
@@ -292,11 +294,11 @@
                                                         <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
                                                     </div>
                                                     <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
+                                                        <a class="btn-cart" href="#"><span> Learn More </span></a>
                                                     </div>
                                                 </div>
                                                 <div class="product-info">
-                                                    <div class="rating-box">
+                                                    <!--<div class="rating-box">
                                                         <ul class="rating d-flex">
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-ios-star"></i></li>
@@ -304,11 +306,11 @@
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                         </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">ASUS ZenPad 3S</a></h4>
-                                                    <div class="price-box">
+                                                    </div>-->
+                                                    <h4 class="product-name"><a href="single-product.html">Process B</a></h4>
+                                                    <!--<div class="price-box">
                                                         <span class="new-price">$98.00</span>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <!-- sinle-product-item end -->
@@ -322,14 +324,14 @@
                                                     </a>
                                                     <div class="action-links">
                                                         <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
+                                                        <!--<a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
                                                     </div>
                                                     <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
+                                                        <a class="btn-cart" href="#"><span> Learn More </span></a>
                                                     </div>
                                                 </div>
                                                 <div class="product-info">
-                                                    <div class="rating-box">
+                                                    <!--<div class="rating-box">
                                                         <ul class="rating d-flex">
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-ios-star"></i></li>
@@ -337,11 +339,11 @@
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                         </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">ASUS UX360CA</a></h4>
-                                                    <div class="price-box">
+                                                    </div>-->
+                                                    <h4 class="product-name"><a href="single-product.html">Process C</a></h4>
+                                                    <!--<div class="price-box">
                                                         <span class="new-price">$98.00</span>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <!-- sinle-product-item end -->
@@ -353,17 +355,16 @@
                                                     <a href="single-product.html" >
                                                         <img class="primary-image" src="img/product/9.jpg" alt="">
                                                     </a>
-                                                    <div class="label-product label-sale">-7%</div>
                                                     <div class="action-links">
                                                         <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
+                                                       <!-- <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
                                                     </div>
                                                     <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
+                                                        <a class="btn-cart" href="#"><span> Learn More </span></a>
                                                     </div>
                                                 </div>
                                                 <div class="product-info">
-                                                    <div class="rating-box">
+                                                    <!--<div class="rating-box">
                                                         <ul class="rating d-flex">
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-ios-star"></i></li>
@@ -371,84 +372,18 @@
                                                             <li><i class="ion-ios-star"></i></li>
                                                             <li><i class="ion-android-star-outline"></i></li>
                                                         </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">Acer R240HY bidx</a></h4>
-                                                    <div class="price-box">
+                                                    </div>-->
+                                                    <h4 class="product-name"><a href="single-product.html">Process D</a></h4>
+                                                    <!--<div class="price-box">
                                                         <span class="new-price">$80.00</span>
                                                         <span class="new-price">$86.00</span>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
                                             <!-- sinle-product-item end -->
                                         </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/10.jpg" alt="">
-                                                    </a>
-                                                    <div class="label-product label-sale">-10%</div>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">HP Pavilion 22cwa</a></h4>
-                                                    <div class="price-box">
-                                                        <span class="new-price">$80.00</span>
-                                                        <span class="new-price">$86.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/11.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>
-                                                    <h4 class="product-name"><a href="single-product.html">Radiant Tee</a></h4>
-                                                    <div class="price-box">
-                                                        <span class="new-price">$210.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
+                                        
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -471,7 +406,7 @@ export default {
     ...mapActions(["setResources"])
   },
   mounted() {
-    console.log("Inside mount of categoriespage");
+    console.log("Inside mount of Businesspage");
     this.setResources();
     $(".single-product-active").owlCarousel({
       loop: false,

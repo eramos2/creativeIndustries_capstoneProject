@@ -4,8 +4,9 @@
             <div class="row">
                 
                 <grid-single-item
-                    v-for="(subcategory, index) in subcategories"
-                    :key="index"
+                    v-for="(subcategory, key) in subcategories"
+                    :key="key"
+                    :subcategoryKey="key"
                     :subcategory="subcategory"   
                 >
                 </grid-single-item>
@@ -33,7 +34,7 @@ export default {
       return subcategories;
     },
     categories() {
-      console.log("Inside computed category ListBox ");
+      //console.log("Inside computed category Grid ");
       //return this.getResources();
       return this.$store.getters.getResourceCategories(
         this.$route.params.resourceName

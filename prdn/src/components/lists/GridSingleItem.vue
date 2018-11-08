@@ -7,15 +7,15 @@
                 </a>
                 <div class="action-links">
                     <a href="#" class="action-btn btn-wishlist"><i class="ion-android-favorite-outline"></i></a>
-                    <a href="#" class="action-btn btn-compare"><i class="ion-arrow-swap"></i></a>
-                    <a href="#" data-target="#exampleModalCenter" data-toggle="modal" class="action-btn btn-quickview"><i class="ion ion-ios-eye"></i></a>
+                    <!--<a href="#" class="action-btn btn-compare"><i class="ion-arrow-swap"></i></a>
+                    <a href="#" data-target="#exampleModalCenter" data-toggle="modal" class="action-btn btn-quickview"><i class="ion ion-ios-eye"></i></a>-->
                 </div>
                 <div class="add-to-cart">
-                    <a href="#" class="btn-cart"><span> See more </span></a>
+                    <a href="#" class="btn-cart"><span> Learn More </span></a>
                 </div>
             </div>
             <div class="product-info">
-                <div class="rating-box">
+                <!--<div class="rating-box">
                     <ul class="rating d-flex">
                         <li><i class="ion-ios-star"></i></li>
                         <li><i class="ion-ios-star"></i></li>
@@ -23,8 +23,9 @@
                         <li><i class="ion-ios-star"></i></li>
                         <li><i class="ion-android-star-outline"></i></li>
                     </ul>
-                </div>
-                <h4 class="product-name"><a href="single-product.html">{{subcategory.name}}</a></h4>
+                </div>-->
+                <!--<router-link to="/" tag="h4" active-class="active" class="product-name"><a>{{subcategory.name}}</a></router-link>-->
+                <h4 class="product-name"><a style="cursor: pointer;" @click="scLink">{{subcategory.name}}</a></h4>
                 <!--<div class="price-box">
                     <span class="new-price">$98.00</span>
                 </div>-->
@@ -35,7 +36,12 @@
 
 <script>
 export default {
-  props: ["subcategory"]
+  props: ["subcategory", "subcategoryKey"],
+  methods: {
+    scLink() {
+      console.log("Go To subcategory page of " + this.subcategory.name);
+    }
+  }
 };
 </script>
 

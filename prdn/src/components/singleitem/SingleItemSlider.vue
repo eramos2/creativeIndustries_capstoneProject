@@ -1,12 +1,12 @@
 <template>
-        <div class="slider-active-2 owl-carousel mt-20">
+        <div class="slider-active-2 owl-carousel mt-60">
             <!-- slider-wrapper start -->
             <div class="slider-wrapper" style="background-image:url(img/slider/acrylic-850-390-2.png)">
                 <div class="container">
                     <div class="row justify-content-end">
                         <div class="col-lg-11 col-md-11">
                             <div class="slider-text-info style-3 acrylic slider-text-animation">
-                                <h1 class="title-1">Acrylic</h1>
+                                <h1 class="title-1">SubCategory A</h1>
                                 <div class="slider-1-des">
                                     <p>Compared to glass of the same thickness, <br>The weight is less than half! </p>
                                 </div>
@@ -25,7 +25,7 @@
                     <div class="row justify-content-end">
                         <div class="col-lg-7 col-md-7 col-10">
                             <div class="slider-text-info style-3 sand-blasted slider-text-animation">
-                                <h1 class="title-1">Sand Blasted</h1>
+                                <h1 class="title-1">SubCategory B</h1>
                       
                                 <div class="slider-1-des">
                                     <p>Remove Rust And Prepare Surfaces <br> for High Performance Coating</p>

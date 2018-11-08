@@ -33,21 +33,30 @@ const getters = {
     },
     getCategorySubCategories(state) {
         return (payload) => {
-            //console.log('test getCategorySubCategories');
+            console.log('inside getCategorySubCategories ');
             //console.log(payload);
-            //console.log(state.resources[payload.rK].categories[payload.cK]);
-            return state.resources[payload.rK].categories[payload.cK].subcategories;
+            console.log(state.resources[payload.rK].categories[payload.cK]);
+            if(typeof state.resources[payload.rK].categories[payload.cK]=== 'undefined'){
+                return {};
+            }else{
+                return state.resources[payload.rK].categories[payload.cK].subcategories;
+
+            }
         }
+        //console.log('test Get Resources');
+        //console.log(state.resources);
+        //return state.resources;
     }
 }
 
 const mutations = {
     setMaterials: (state, data) => {
+        let categories = {};
         for (var category in data.resp) {
             let categoryName = data.resp[category].materialName;
             let categoryKey = data.resp[category].materialName.replace(/ +/g, "").toLowerCase();
-            if (typeof state.resources.materials.categories[categoryKey] === "undefined") {
-                state.resources.materials.categories[categoryKey] = {
+            if (typeof categories[categoryKey] === "undefined") {
+                categories[categoryKey] = {
                     id: data.resp[category].materialId,
                     name: categoryName,
                     subcategories: {}
@@ -55,11 +64,30 @@ const mutations = {
             }
             let subcategoryKey = data.resp[category].subMaterialName.replace(/ +/g, "").toLowerCase();
             let subcategoryName = data.resp[category].subMaterialName;
-            state.resources.materials.categories[categoryKey].subcategories[subcategoryKey] = {
+            categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subMaterialId,
                 name: subcategoryName
             }
         }
+
+        // for (var category in data.resp) {
+        //     let categoryName = data.resp[category].materialName;
+        //     let categoryKey = data.resp[category].materialName.replace(/ +/g, "").toLowerCase();
+        //     if (typeof state.resources.materials.categories[categoryKey] === "undefined") {
+        //         state.resources.materials.categories[categoryKey] = {
+        //             id: data.resp[category].materialId,
+        //             name: categoryName,
+        //             subcategories: {}
+        //         };
+        //     }
+        //     let subcategoryKey = data.resp[category].subMaterialName.replace(/ +/g, "").toLowerCase();
+        //     let subcategoryName = data.resp[category].subMaterialName;
+        //     state.resources.materials.categories[categoryKey].subcategories[subcategoryKey] = {
+        //         id: data.resp[category].subMaterialId,
+        //         name: subcategoryName
+        //     }
+        // }
+        state.resources.materials.categories = categories;
         state.resources = { ...state.resources
         }
     },

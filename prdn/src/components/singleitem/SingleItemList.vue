@@ -4,7 +4,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-3 order-2 order-lg-1">
-                            <singleitem-list-box></singleitem-list-box>
+                            <singleitem-list-box
+                                v-for="(tag, key) in tags"
+                                :key="key"
+                                :tag="tag"
+                            >{{key}}</singleitem-list-box>
                         
                 
                             <!-- single-benner start -->
@@ -17,17 +21,18 @@
                         </div>
                         <div class="col-lg-9 order-1 order-lg-2">
                             <singleitem-slider></singleitem-slider>
+
+                            <singleitem-businesses></singleitem-businesses>
+                            <!--
                             <div class="row">
                                 <div class="col">
                                     <div class="shop-top-bar mt-60">
                                         <div class="shop-bar-inner">
                                             <div class="product-view-mode" >
-                                                <!-- shop-item-filter-list start -->
                                                 <ul role="tablist" class="nav shop-item-filter-list">
                                                     <li role="presentation" class="active"><a href="#grid" aria-controls="grid" role="tab" data-toggle="tab" class="active show" aria-selected="true"><i class="fa fa-th"></i></a></li>
                                                     <li role="presentation"><a href="#list" aria-controls="list" role="tab" data-toggle="tab"><i class="fa fa-th-list"></i></a></li>
                                                 </ul>
-                                                <!-- shop-item-filter-list end -->
                                             </div>
                                             <div class="toolbar-amount">
                                                 <span>Showing 1 to 9 of 15</span>
@@ -66,7 +71,6 @@
                                     
                                     <singleitem-row-list :categories="resources.materials.categories"></singleitem-row-list>
                                     
-                                    <!-- paginatoin-area start -->
                                     <div class="paginatoin-area">
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
@@ -86,9 +90,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- paginatoin-area end -->
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -101,19 +104,33 @@ import SingleItemListBox from "./SingleItemListBox.vue";
 import SingleItemSlider from "./SingleItemSlider.vue";
 import SingleItemGrid from "./SingleItemGrid.vue";
 import SingleItemRowList from "./SingleItemRowList.vue";
+import SingleItemBusinesses from "./SingleItemBusinesses.vue";
 
 export default {
   components: {
     singleitemListBox: SingleItemListBox,
     singleitemSlider: SingleItemSlider,
     singleitemGrid: SingleItemGrid,
-    singleitemRowList: SingleItemRowList
+    singleitemRowList: SingleItemRowList,
+    singleitemBusinesses: SingleItemBusinesses
   },
   computed: {
     resources() {
-      console.log("Inside computed before getResources ");
+      //console.log("Inside computed before getResources SingleItemList ");
+      //console.log(this.$store.getters.getResources);
       //return this.getResources();
       return this.$store.getters.getResources;
+    },
+    tags() {
+      //console.log("Inside computed category ListBox ");
+      //return this.getResources();
+      //return this.$store.getters.getResourceCategories(this.$route.params.resourceName);
+      let tags = {
+        applications: ["Cavity Filling", "Insulation", "Soil Stabilization"],
+        cost: ["High", "Moderate", "Low"],
+        qualities: ["Clear", "Opaque", "Vivid Colors"]
+      };
+      return tags;
     }
   }
 };
