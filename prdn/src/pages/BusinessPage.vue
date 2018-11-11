@@ -41,7 +41,7 @@
                                         <!-- product-thumbnail-content start -->
                                         <div class="quick-view-content">
                                             <div class="product-info">
-                                                <h2>Business A</h2>
+                                                <h2>{{currentBusiness.companyName}}</h2>
                                                 <!--<div class="rating-box">
                                                     <ul class="rating d-flex">
                                                         <li><i class="ion-ios-star"></i></li>
@@ -56,11 +56,11 @@
                                                    <span class="old-price">$30.50</span>
                                                </div>-->
                                                <ul class="list-unstyled">
-                                                    <li>Telephone: <a href="#">123-456-7890</a></li>
-                                                    <li>Website: <a href="#">www.businessa.com</a></li>
-                                                    <li>E-mail: info@businessa.com</li>
-                                                    <li>Address: Carr #123 Km 4.5 PR 00123</li>
-                                                    <li>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+                                                    <li>Telephone: <a href="#">{{currentBusiness.phone}}</a></li>
+                                                    <li>Website: <a href="#">{{currentBusiness.website}}</a></li>
+                                                    <li>E-mail: {{currentBusiness.email}}</li>
+                                                    <li>Address: {{currentBusiness.line}} {{currentBusiness.city}}, PR {{currentBusiness.zipcode}}</li>
+                                                    <li>Description:  {{currentBusiness.description}}</li>
                                                 </ul>
                                                 <!--
                                                <div class="quick-add-to-cart">
@@ -397,17 +397,27 @@
 <script>
 import Breadcrumbs from "../components/Breadcrumbs.vue";
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     breadcrumbs: Breadcrumbs
   },
   methods: {
-    ...mapActions(["setResources"])
+    ...mapActions(["setResources", "setCurrentBusiness"]),
+    ...mapGetters(["getCurrentBusiness"])
+  },
+  computed: {
+    currentBusiness() {
+      return this.getCurrentBusiness();
+    }
   },
   mounted() {
     console.log("Inside mount of Businesspage");
-    this.setResources();
+    //this.setResources();
+    let businessName = this.$route.params.businessName;
+    console.log(businessName);
+    this.setCurrentBusiness(businessName);
     $(".single-product-active").owlCarousel({
       loop: false,
       items: 4,

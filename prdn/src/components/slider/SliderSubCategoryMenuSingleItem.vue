@@ -20,16 +20,31 @@
 <script>
 export default {
   /**
-   *
-   * @alias HomePageSubCategoryMenuLink
-   *
-   * @description Menu entry for a subcategory, Displays subcategory name and contains router link to the subcategory page.
-   *
-   * @prop {String} rKey - resource Key i.e. materials
-   * @prop {String} cKey - category Key i.e. concrete
-   * @prop {String} subcategoryKey - subcategory Key i.e. digital concrete
+   * Home page menu entry for a subcategory.
    */
-  props: ["rKey", "cKey", "subcategoryKey"]
+  props: {
+    /**
+     * Resource key i.e. materials
+     */
+    rKey: {
+      type: String,
+      default: ""
+    },
+    /**
+     * Category Key i.e. concrete
+     */
+    cKey: {
+      type: String,
+      default: ""
+    },
+    /**
+     * Subcategory Key i.e. digital concrete
+     */
+    subcategoryKey: {
+      type: String,
+      default: ""
+    }
+  }
 };
 </script>
 

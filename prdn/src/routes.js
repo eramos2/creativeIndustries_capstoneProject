@@ -12,7 +12,7 @@ export const routes = [{
         component: Home
     },
     {
-        path: '/business',
+        path: '/businesses/:businessName',
         name: 'businessLink',
         component: BusinessPage
     },

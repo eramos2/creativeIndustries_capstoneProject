@@ -24,7 +24,21 @@
                         <li><i class="ion-android-star-outline"></i></li>
                     </ul>
                 </div>-->
-                <h4 class="product-name"><a href="single-product.html">{{businessName}}</a></h4>
+                <router-link 
+                  :to="{
+                    name: 'businessLink', 
+                    params: {
+                      businessName: businessName
+                    }
+                  }" 
+                  tag="h4" 
+                  active-class="active"
+                  class="product-name"
+                >
+                  <!-- @slot Subcategory Name-->
+                  <a>{{businessName}}</a>
+                </router-link>
+                <!--<h4 class="product-name"><a href="single-product.html">{{businessName}}</a></h4>-->
                 <!--<div class="price-box">
                     <span class="new-price">$116.00</span>
                 </div>-->
