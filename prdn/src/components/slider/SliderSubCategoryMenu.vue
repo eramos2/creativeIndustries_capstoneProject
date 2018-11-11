@@ -14,7 +14,7 @@
                 :key="key"
                 :cKey="cKey"
                 :rKey="rKey"
-                :subcategoryKey="key"
+                :subcategoryKey="key | addWhitespace"
             >
             {{subcategory.name}}
             </slider-sub-category-menu-single-item>

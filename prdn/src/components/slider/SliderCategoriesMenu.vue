@@ -6,11 +6,11 @@
         <sub-category-menu
             v-for="(category, key) in resource.categories"
             :key="key"
-            :cKey="key"
-            :rKey="resourceKey" 
+            :cKey="key | addWhitespace"
+            :rKey="resourceKey | addWhitespace" 
             :category="category"
         >
-            {{category.name}}
+            {{category.name }}
         </sub-category-menu>
        
     </ul>

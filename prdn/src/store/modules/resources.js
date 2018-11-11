@@ -34,11 +34,12 @@ const getters = {
     getCategorySubCategories(state) {
         return (payload) => {
             console.log('inside getCategorySubCategories ');
-            //console.log(payload);
+            console.log(payload.cK);
+            payload.cK = payload.cK.replace(/ +/g, "%20");
             console.log(state.resources[payload.rK].categories[payload.cK]);
-            if(typeof state.resources[payload.rK].categories[payload.cK]=== 'undefined'){
+            if (typeof state.resources[payload.rK].categories[payload.cK] === 'undefined') {
                 return {};
-            }else{
+            } else {
                 return state.resources[payload.rK].categories[payload.cK].subcategories;
 
             }
@@ -54,7 +55,7 @@ const mutations = {
         let categories = {};
         for (var category in data.resp) {
             let categoryName = data.resp[category].materialName;
-            let categoryKey = data.resp[category].materialName.replace(/ +/g, "").toLowerCase();
+            let categoryKey = data.resp[category].materialName.replace(/ +/g, "%20").toLowerCase();
             if (typeof categories[categoryKey] === "undefined") {
                 categories[categoryKey] = {
                     id: data.resp[category].materialId,
@@ -62,7 +63,7 @@ const mutations = {
                     subcategories: {}
                 };
             }
-            let subcategoryKey = data.resp[category].subMaterialName.replace(/ +/g, "").toLowerCase();
+            let subcategoryKey = data.resp[category].subMaterialName.replace(/ +/g, "%20").toLowerCase();
             let subcategoryName = data.resp[category].subMaterialName;
             categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subMaterialId,
@@ -94,7 +95,7 @@ const mutations = {
     setProcesses: (state, data) => {
         for (var category in data.resp) {
             let categoryName = data.resp[category].processName;
-            let categoryKey = data.resp[category].processName.replace(/ +/g, "").toLowerCase();
+            let categoryKey = data.resp[category].processName.replace(/ +/g, "%20").toLowerCase();
             if (typeof state.resources.processes.categories[categoryKey] === "undefined") {
                 state.resources.processes.categories[categoryKey] = {
                     id: data.resp[category].processId,
@@ -102,7 +103,7 @@ const mutations = {
                     subcategories: {}
                 };
             }
-            let subcategoryKey = data.resp[category].subProcessName.replace(/ +/g, "").toLowerCase();
+            let subcategoryKey = data.resp[category].subProcessName.replace(/ +/g, "%20").toLowerCase();
             let subcategoryName = data.resp[category].subProcessName;
             state.resources.processes.categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subProcessId,
@@ -115,7 +116,7 @@ const mutations = {
     setServices: (state, data) => {
         for (var category in data.resp) {
             let categoryName = data.resp[category].serviceName;
-            let categoryKey = data.resp[category].serviceName.replace(/ +/g, "").toLowerCase();
+            let categoryKey = data.resp[category].serviceName.replace(/ +/g, "%20").toLowerCase();
             if (typeof state.resources.services.categories[categoryKey] === "undefined") {
                 state.resources.services.categories[categoryKey] = {
                     id: data.resp[category].serviceId,
@@ -123,7 +124,7 @@ const mutations = {
                     subcategories: {}
                 };
             }
-            let subcategoryKey = data.resp[category].subServiceName.replace(/ +/g, "").toLowerCase();
+            let subcategoryKey = data.resp[category].subServiceName.replace(/ +/g, "%20").toLowerCase();
             let subcategoryName = data.resp[category].subServiceName;
             state.resources.services.categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subServiceId,

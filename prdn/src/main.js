@@ -19,15 +19,21 @@ import {
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
-Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/prds.php";
+Vue.http.options.root = "http://localhost:80/Server/prds.php";
 
 const router = new VueRouter({
   routes: routes
 });
 
 
-
-//Vue.use(BootstrapVue);
+/** 
+ * Adds a global filter for replacing %20 with whitespace in a string.
+ */
+Vue.filter('addWhitespace', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.replace(/%20/g, " ");
+});
 
 
 

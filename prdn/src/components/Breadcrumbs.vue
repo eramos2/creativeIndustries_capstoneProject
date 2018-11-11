@@ -32,6 +32,7 @@ export default {
   },
   computed: {
     crumbs() {
+      console.log("Inside Breadcrumbs.vue");
       let crumbs = this.$route.params;
       console.log(this.$route.params);
       return crumbs;

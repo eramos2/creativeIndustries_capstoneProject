@@ -105,6 +105,7 @@ import SingleItemSlider from "./SingleItemSlider.vue";
 import SingleItemGrid from "./SingleItemGrid.vue";
 import SingleItemRowList from "./SingleItemRowList.vue";
 import SingleItemBusinesses from "./SingleItemBusinesses.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -113,6 +114,9 @@ export default {
     singleitemGrid: SingleItemGrid,
     singleitemRowList: SingleItemRowList,
     singleitemBusinesses: SingleItemBusinesses
+  },
+  methods: {
+    ...mapActions(["setSubCategoryBusinesses"])
   },
   computed: {
     resources() {
@@ -132,6 +136,9 @@ export default {
       };
       return tags;
     }
+  },
+  mounted() {
+    console.log("Inside Single Item list");
   }
 };
 </script>

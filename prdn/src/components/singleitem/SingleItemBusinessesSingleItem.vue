@@ -38,19 +38,20 @@
 import { mapGetters } from "vuex";
 
 export default {
-  props: ["bKey"],
+  props: ["bKey", "business"],
   methods: {
     ...mapGetters(["getBusinesses"])
   },
   computed: {
     businessName() {
-      //console.log("computed business SingleItemBusinessesSingleItem.vue");
-      //console.log(this.bKey);
-      let businesses = this.getBusinesses();
-      if (typeof businesses[this.bKey] === "undefined") {
+      console.log("computed business SingleItemBusinessesSingleItem.vue");
+      console.log(this.business);
+      let businesses = this.$store.state.businesses;
+      if (typeof this.business === "undefined") {
+        console.log("undef");
         return "";
       } else {
-        return businesses[this.bKey].companyName;
+        return this.business.companyName;
       }
     }
   }
