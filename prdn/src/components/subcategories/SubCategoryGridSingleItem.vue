@@ -3,7 +3,7 @@
         <div class="sinle-product-item mb-20">
             <div class="product-thumb">
                 <a href="single-product.html">
-                    <img alt="" src="img/product/3.jpg" class="primary-image">
+                    <img alt="" :src="imgUrl" class="primary-image">
                 </a>
                 <div class="action-links">
                     <a href="#" class="action-btn btn-wishlist"><i class="ion-android-favorite-outline"></i></a>
@@ -40,6 +40,15 @@ export default {
   methods: {
     scLink() {
       console.log("Go to subcategory page of " + this.subcategory.name);
+    }
+  },
+  computed: {
+    /**
+     * Returns subcategory image url by appending the image id to the google drive folder url
+     * @name imgUrl
+     */
+    imgUrl() {
+      return this.$store.state.driveUrl + this.subcategory.image;
     }
   }
 };

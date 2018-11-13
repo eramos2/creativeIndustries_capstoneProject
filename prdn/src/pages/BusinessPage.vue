@@ -170,225 +170,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="related-products box-module mb-60">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="secton-title">
-                                            <h2>All Resources</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="prodict-two-active owl-carousel">
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/5.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <!--<div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>-->
-                                                    <h4 class="product-name"><a href="single-product.html">Material A</a></h4>
-                                                    <!--<div class="price-box">
-                                                        <span class="new-price">$98.00</span>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/9.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info"><!--
-                                                    <div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>-->
-                                                    <h4 class="product-name"><a href="single-product.html">Material C</a></h4>
-                                                    <!--<div class="price-box">
-                                                        <span class="new-price">$241.99</span>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/11.jpg" alt="">
-                                                        <img class="secondary-image" src="img/product/6.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Add to Cart </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                   <!-- <div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>-->
-                                                    <h4 class="product-name"><a href="single-product.html">Service B</a></h4>
-                                                    <!--<div class="price-box">
-                                                        <span class="new-price">$116.00</span>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/7.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Learn More </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <!--<div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>-->
-                                                    <h4 class="product-name"><a href="single-product.html">Process B</a></h4>
-                                                    <!--<div class="price-box">
-                                                        <span class="new-price">$98.00</span>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/8.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                        <!--<a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Learn More </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <!--<div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>-->
-                                                    <h4 class="product-name"><a href="single-product.html">Process C</a></h4>
-                                                    <!--<div class="price-box">
-                                                        <span class="new-price">$98.00</span>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <!-- sinle-product-item start -->
-                                            <div class="sinle-product-item">
-                                                <div class="product-thumb">
-                                                    <a href="single-product.html" >
-                                                        <img class="primary-image" src="img/product/9.jpg" alt="">
-                                                    </a>
-                                                    <div class="action-links">
-                                                        <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                                                       <!-- <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <a class="btn-cart" href="#"><span> Learn More </span></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-info">
-                                                    <!--<div class="rating-box">
-                                                        <ul class="rating d-flex">
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-ios-star"></i></li>
-                                                            <li><i class="ion-android-star-outline"></i></li>
-                                                        </ul>
-                                                    </div>-->
-                                                    <h4 class="product-name"><a href="single-product.html">Process D</a></h4>
-                                                    <!--<div class="price-box">
-                                                        <span class="new-price">$80.00</span>
-                                                        <span class="new-price">$86.00</span>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <!-- sinle-product-item end -->
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <medium-carousel
+                        :carouselItems="currentBusiness"
+                    >
+                        All Resources
+                    </medium-carousel>
+
                 </div>
             </div>
 </div>
@@ -396,12 +184,14 @@
 
 <script>
 import Breadcrumbs from "../components/Breadcrumbs.vue";
+import MediumCarousel from "../components/business/MediumCarousel.vue";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
-    breadcrumbs: Breadcrumbs
+    breadcrumbs: Breadcrumbs,
+    mediumCarousel: MediumCarousel
   },
   methods: {
     ...mapActions(["setResources", "setCurrentBusiness"]),
@@ -410,6 +200,13 @@ export default {
   computed: {
     currentBusiness() {
       return this.getCurrentBusiness();
+    },
+    currentBusinessSubcategories() {
+      let subcategories = [];
+
+      for (subcategory in this.getCurrentBusiness().submaterials) {
+        resources.push(resource);
+      }
     }
   },
   mounted() {
@@ -572,7 +369,7 @@ export default {
 }
 
 .sinle-product-item .add-to-cart .btn-cart:before {
-  content: "";
+  content: "\F44D";
   display: inline-block;
   font-family: "Ionicons";
   font-size: 22px;

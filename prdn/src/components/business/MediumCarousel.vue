@@ -5,20 +5,22 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="secton-title">
-                <h2>Featured Businesses</h2>
+                <!-- @slot Carousel Title Header -->
+                <h2><slot></slot></h2>
               </div>
             </div>
           </div>
           <div class="row">
-            <!-- Featured Businesses Carousel  -->
+            <!--  Carousel  -->
             <div class="prodict-two-active owl-carousel">
-              <singleitem-business
-                v-for="(business, key) in subcategoryBusinesses"
+              <!-- Carousel Items -->
+              <medium-carousel-item
+                v-for="(carouselItem, key) in carouselItems"
                 :key="key"
-                :bKey="key"
-                :business="business"
+                :itemKey="key"
+                :item="carouselItem"
               >
-              </singleitem-business> 
+              </medium-carousel-item> 
             </div>
           </div>
         </div>
@@ -27,14 +29,15 @@
 </template>
 
 <script>
-import SingleItemBusiness from "./SingleItemBusinessesSingleItem.vue";
+import MediumCarouselItem from "./MediumCarouselItem.vue";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "SingleItemBusinesses",
+  name: "MediumCarousel",
+  props: ["carouselItems"],
   components: {
-    singleitemBusiness: SingleItemBusiness
+    mediumCarouselItem: MediumCarouselItem
   },
   methods: {
     ...mapActions(["setSubCategoryBusinesses", "setResources"]),
@@ -79,6 +82,29 @@ export default {
         return this.getBusinesses();
       }
     }
+  },
+  mounted() {
+    this.$nextTick(function() {
+      // DOM updated
+      $(".prodict-two-active").owlCarousel({
+        loop: true,
+        items: 4,
+        dots: false,
+        lazyLoad: true,
+        nav: true,
+        navText: [
+          '<i class="fa fa-angle-left"></i>',
+          '<i class="fa fa-angle-right"></i>'
+        ],
+        responsive: {
+          0: { items: 1 },
+          480: { items: 2 },
+          768: { items: 3 },
+          992: { items: 4 },
+          1200: { items: 5 }
+        }
+      });
+    });
   }
 };
 </script>

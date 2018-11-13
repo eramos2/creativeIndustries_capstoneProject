@@ -23,12 +23,19 @@ export default {
     gridSingleItem: GridSingleItem
   },
   computed: {
+    /**
+     * Returns object containing all available subcategories, it adds the parent category so
+     * we can access it later for the route link parameter in the grid single item component
+     */
     subcategories: function() {
       var subcategories = [];
       var categories = this.categories;
       for (var category in categories) {
         for (var subCat in categories[category].subcategories) {
-          subcategories.push(categories[category].subcategories[subCat]);
+          let subcategory = categories[category].subcategories[subCat];
+          //Add the subcategory's parent so we can pass it to the router for each individual grid item
+          subcategory["category"] = category;
+          subcategories.push(subcategory);
         }
       }
       return subcategories;

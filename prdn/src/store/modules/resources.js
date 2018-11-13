@@ -60,6 +60,7 @@ const mutations = {
                 categories[categoryKey] = {
                     id: data.resp[category].materialId,
                     name: categoryName,
+                    image: data.resp[category].catImage,
                     subcategories: {}
                 };
             }
@@ -67,7 +68,8 @@ const mutations = {
             let subcategoryName = data.resp[category].subMaterialName;
             categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subMaterialId,
-                name: subcategoryName
+                name: subcategoryName,
+                image: data.resp[category].subcatImage
             }
         }
 
@@ -100,6 +102,7 @@ const mutations = {
                 state.resources.processes.categories[categoryKey] = {
                     id: data.resp[category].processId,
                     name: categoryName,
+                    image: data.resp[category].catImage,
                     subcategories: {}
                 };
             }
@@ -107,7 +110,8 @@ const mutations = {
             let subcategoryName = data.resp[category].subProcessName;
             state.resources.processes.categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subProcessId,
-                name: subcategoryName
+                name: subcategoryName,
+                image: data.resp[category].subcatImage
             }
         }
         state.resources = { ...state.resources
@@ -121,6 +125,7 @@ const mutations = {
                 state.resources.services.categories[categoryKey] = {
                     id: data.resp[category].serviceId,
                     name: categoryName,
+                    image: data.resp[category].catImage,
                     subcategories: {}
                 };
             }
@@ -128,7 +133,8 @@ const mutations = {
             let subcategoryName = data.resp[category].subServiceName;
             state.resources.services.categories[categoryKey].subcategories[subcategoryKey] = {
                 id: data.resp[category].subServiceId,
-                name: subcategoryName
+                name: subcategoryName,
+                image: data.resp[category].subcatImage
             }
         }
         //Replace that Object with a fresh one. For example, 

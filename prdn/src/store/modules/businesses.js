@@ -80,6 +80,7 @@ const mutations = {
     setCurrentBusiness: (state, data) => {
         state.currentBusiness = data
 
+
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -96,6 +97,10 @@ const mutations = {
      */
     setCurrentBusinessSubServices: (state, data) => {
         state.currentBusiness['subservices'] = data
+
+        state.currentBusiness
+
+
 
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
