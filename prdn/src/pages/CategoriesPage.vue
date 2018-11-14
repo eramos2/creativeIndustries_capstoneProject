@@ -20,7 +20,7 @@ export default {
     ...mapActions(["setResources"])
   },
   mounted() {
-    console.log("Inside mount of categoriespage");
+    //console.log("Inside mount of categoriespage");
     this.setResources();
   }
 };

@@ -95,7 +95,7 @@ export default {
      */
     businessSubcategories() {
       //$(".prodict-two-active").owlCarousel("destroy");
-      console.log("currentBusiness");
+      //console.log("currentBusiness");
       //console.log(this.curBus !== this.$route.params.businessName);
       // if (this.curBus !== this.$route.params.businessName) {
       //   console.log("This is curBus " + this.curBus);
@@ -105,12 +105,12 @@ export default {
       //   this.curBus = this.$route.params.businessName;
       // }
       if ($.isEmptyObject(this.getCurrentBusiness().subcategories) == true) {
-        console.log("undef");
-        console.log($.isEmptyObject(this.getCurrentBusiness().subcategories));
+        //console.log("undef");
+        //console.log($.isEmptyObject(this.getCurrentBusiness().subcategories));
         return {};
       } else {
         this.$nextTick(function() {
-          console.log("Entered next tick in single item business");
+          //console.log("Entered next tick in single item business");
           var $owl = $(".prodict-two-active");
           $owl.trigger("destroy.owl.carousel");
           // After destory, the markup is still not the same with the initial.
@@ -123,7 +123,7 @@ export default {
             .removeClass("owl-loaded");
           $owl.owlCarousel({
             // your initial option here, again.
-            loop: false,
+            loop: true,
             margin: 10,
             items: 4,
             dots: false,
@@ -144,8 +144,8 @@ export default {
         });
       }
 
-      console.log("Curren Subcategories");
-      console.log(this.getCurrentBusinessSubCategories());
+      //console.log("Curren Subcategories");
+      //console.log(this.getCurrentBusinessSubCategories());
       return this.getCurrentBusinessSubCategories();
     }
   }

@@ -32,8 +32,8 @@ export default {
   },
   computed: {
     resources() {
-      console.log("Inside computed before getResources ");
-      console.log(this.$store.getters.getResources);
+      //console.log("Inside computed before getResources ");
+      //console.log(this.$store.getters.getResources);
       //return this.getResources();
       return this.$store.getters.getResources;
     }

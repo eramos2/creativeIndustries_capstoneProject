@@ -68,7 +68,7 @@ export default {
     businessName() {
       //let businesses = this.$store.state.businesses;
       if (typeof this.curBusiness === "undefined") {
-        console.log("undef");
+        //console.log("undef");
         return "";
       } else {
         return this.curBusiness.companyName.toLowerCase();

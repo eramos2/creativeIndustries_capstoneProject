@@ -33,10 +33,10 @@ const getters = {
     },
     getCategorySubCategories(state) {
         return (payload) => {
-            console.log('inside getCategorySubCategories ');
-            console.log(payload.cK);
+            //console.log('inside getCategorySubCategories ');
+            //console.log(payload.cK);
             payload.cK = payload.cK.replace(/ +/g, "%20");
-            console.log(state.resources[payload.rK].categories[payload.cK]);
+            //console.log(state.resources[payload.rK].categories[payload.cK]);
             if (typeof state.resources[payload.rK].categories[payload.cK] === 'undefined') {
                 return {};
             } else {

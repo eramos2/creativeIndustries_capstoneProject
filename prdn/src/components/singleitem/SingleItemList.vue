@@ -131,14 +131,14 @@ export default {
       return this.$store.getters.getResources;
     },
     subcatBusinesses() {
-      console.log("current subcategory");
-      console.log(this.data.curSubcat);
-      console.log(this.curSubcat !== this.$route.params.subcategoryName);
+      //console.log("current subcategory");
+      //console.log(this.data.curSubcat);
+      //console.log(this.curSubcat !== this.$route.params.subcategoryName);
       if (this.curSubcat !== this.$route.params.subcategoryName) {
-        console.log("This is curSubcat " + this.curSubcat);
-        console.log(
-          "This is subcategoryname " + this.$route.params.subcategoryName
-        );
+        //console.log("This is curSubcat " + this.curSubcat);
+        //console.log(
+        //  "This is subcategoryname " + this.$route.params.subcategoryName
+        //);
         //$(".prodict-two-activeds").owlCarousel("destroy");
         this.curSubcat = this.$route.params.subcategoryName;
         this.setSubCategoryBusinesses({
@@ -160,7 +160,7 @@ export default {
     }
   },
   mounted() {
-    console.log("Inside Single Item list");
+    //console.log("Inside Single Item list");
   }
 };
 </script>

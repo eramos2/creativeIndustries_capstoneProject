@@ -90,7 +90,9 @@ const mutations = {
      * @param {Object} data - Server response containing the business. 
      */
     setCurrentBusiness: (state, data) => {
-        state.currentBusiness = data
+
+        state.currentBusiness = data;
+
         state.currentBusiness['subcategories'] = {}
 
         //Replace that Object with a fresh one. For example, 
@@ -98,8 +100,37 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.currentBusiness = { ...state.currentBusiness
         }
-        console.log("After commiting currentBusiness in business.js");
-        console.log(state.currentBusiness);
+        //console.log("After commiting currentBusiness in business.js");
+        //console.log(state.currentBusiness);
+
+
+    },
+    /**
+     * Sets state.currentBusiness with the given full business profile
+     * @param {Object} data - Server response containing the full business. 
+     */
+    setFullCurrentBusiness: (state, data) => {
+        //Get business images into one array
+        let images = [];
+        for (let key in data) {
+            images.push({
+                image: data[key].imageData,
+                imageName: data[key].imageName,
+                imageType: data[key].imageType
+            });
+        }
+
+        state.currentBusiness = data['0'];
+        state.currentBusiness['images'] = images
+        state.currentBusiness['subcategories'] = {}
+
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.currentBusiness = { ...state.currentBusiness
+        }
+        //console.log("After commiting currentBusiness in business.js");
+        //console.log(state.currentBusiness);
 
 
     },
@@ -110,8 +141,8 @@ const mutations = {
     setCurrentBusinessSubServices: (state, data) => {
         var subcats = data;
         for (var category in subcats) {
-            console.log("category");
-            console.log(category);
+            //console.log("category");
+            //console.log(category);
             subcats[category].resName = "services";
             subcats[category].catName = subcats[category].serviceName;
             subcats[category].name = subcats[category].subServiceName;
@@ -128,7 +159,7 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.currentBusiness = { ...state.currentBusiness
         }
-        console.log(state.currentBusiness);
+        //console.log(state.currentBusiness);
 
 
     },
@@ -140,8 +171,8 @@ const mutations = {
 
         var subcats = data;
         for (var category in subcats) {
-            console.log("category");
-            console.log(category);
+            //console.log("category");
+            //console.log(category);
             subcats[category].resName = "processes";
             subcats[category].catName = subcats[category].processName;
             subcats[category].name = subcats[category].subProcessName;
@@ -153,7 +184,7 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.currentBusiness = { ...state.currentBusiness
         }
-        console.log(state.currentBusiness);
+        //console.log(state.currentBusiness);
 
 
     },
@@ -164,8 +195,8 @@ const mutations = {
     setCurrentBusinessSubMaterials: (state, data) => {
         var subcats = data;
         for (var category in subcats) {
-            console.log("category inside ");
-            console.log(category);
+            //console.log("category inside ");
+            //console.log(category);
             subcats[category].resName = "materials";
             subcats[category].catName = subcats[category].materialName;
             subcats[category].name = subcats[category].subMaterialName;
@@ -179,7 +210,7 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.currentBusiness = { ...state.currentBusiness
         }
-        console.log(state.currentBusiness);
+        //console.log(state.currentBusiness);
 
 
     },
@@ -218,7 +249,7 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.currentBusiness = { ...state.currentBusiness
         }
-        console.log(state.currentBusiness);
+        //console.log(state.currentBusiness);
 
 
     }
@@ -294,8 +325,8 @@ const actions = {
                     })
                     .then(data => {
                         let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-
-                        context.commit('setCurrentBusiness', dataObject['0']); //get the wrapped object
+                        console.log(dataObject);
+                        context.commit('setFullCurrentBusiness', dataObject); //get the wrapped object
 
                         return state.currentBusiness.companyId;
 
@@ -333,7 +364,7 @@ const actions = {
                                     .then(data => {
                                         let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                                         context.commit('setCurrentBusinessSubProcesses', dataObject);
-                                    }).then(data => {
+                                    }).then(() => {
                                         Vue.http
                                             .get("", {
                                                 params: {
@@ -348,8 +379,8 @@ const actions = {
                                             .then(data => {
                                                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                                                 context.commit('setCurrentBusinessSubMaterials', dataObject);
-                                            }).then(data => {
-                                                console.log("Set CurrentBusinessSubCategories");
+                                            }).then(() => {
+                                                //console.log("Set CurrentBusinessSubCategories");
                                                 context.commit('setCurrentBusinessSubCategories');
                                             });
                                     });
@@ -367,8 +398,8 @@ const actions = {
     setSubCategoryBusinesses: (context, payload) => {
         state.businesses = {};
         let code;
-        console.log("setSubCategoryBusinesses");
-        console.log(payload.scK);
+        //console.log("setSubCategoryBusinesses");
+        //console.log(payload.scK);
         if (payload.rK == 'processes') {
             code = '16'; //code for getting companies that offer subprocess by its name
         } else if (payload.rK == 'services') {
@@ -386,15 +417,15 @@ const actions = {
                 }
             })
             .then(response => {
-                console.log("Inside json response of setSubCategoryBusinesses in businesses.js");
-                console.log(response);
+                //console.log("Inside json response of setSubCategoryBusinesses in businesses.js");
+                //console.log(response);
                 return response.json();
             })
             .then(data => {
-                console.log('Inside setSubCategoryBusinesses in businesses.js');
+                //console.log('Inside setSubCategoryBusinesses in businesses.js');
 
                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-                console.log(dataObject);
+                //console.log(dataObject);
                 context.commit('setBusinesses', dataObject);
             });
     }

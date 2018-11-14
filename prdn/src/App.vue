@@ -240,8 +240,8 @@ export default {
   },
   mounted() {
     this.setResources();
-    console.log("inside App.vue after setting resources");
-    console.log(this.$store.state.resources);
+    //console.log("inside App.vue after setting resources");
+    //console.log(this.$store.state.resources);
 
     $(window).on("scroll", function() {
       var scroll = $(window).scrollTop();

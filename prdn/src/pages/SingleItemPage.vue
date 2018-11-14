@@ -20,7 +20,7 @@ export default {
     ...mapActions(["setResources", "setSubCategoryBusinesses"])
   },
   mounted() {
-    console.log("Inside mount of categoriespage");
+    //console.log("Inside mount of categoriespage");
     let rKey = this.$route.params.resourceName;
     let scKey = this.$route.params.subcategoryName;
     let payload = { rK: rKey, scK: scKey };

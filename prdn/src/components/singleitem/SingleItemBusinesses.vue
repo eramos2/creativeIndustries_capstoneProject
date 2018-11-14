@@ -40,8 +40,8 @@ export default {
     let rKey = this.$route.params.resourceName;
     let scKey = this.$route.params.subcategoryName;
     let payload = { rK: rKey, scK: scKey };
-    console.log("beforeMOunt this is the payload:");
-    console.log(payload);
+    //console.log("beforeMOunt this is the payload:");
+    //console.log(payload);
     //this.setResources();
     this.setSubCategoryBusinesses(payload);
   },
@@ -66,16 +66,16 @@ export default {
      * @returns {object} - Array containing businesses that offer this subcategory
      */
     subcategoryBusinesses() {
-      console.log("Entered subcategoryBusiness in Singleitembusiness");
+      //console.log("Entered subcategoryBusiness in Singleitembusiness");
       if ($.isEmptyObject(this.getBusinesses()) == true) {
-        console.log("undef");
-        console.log($.isEmptyObject(this.getBusinesses()));
-        console.log(this.getBusinesses());
+        //console.log("undef");
+        //console.log($.isEmptyObject(this.getBusinesses()));
+        //console.log(this.getBusinesses());
         return {};
       } else {
         this.$nextTick(function() {
-          console.log("Entered next tick in single item business");
-          console.log(this.getBusinesses());
+          //console.log("Entered next tick in single item business");
+          //console.log(this.getBusinesses());
           var $owl = $(".prodict-two-active");
           $owl.trigger("destroy.owl.carousel");
           // After destory, the markup is still not the same with the initial.

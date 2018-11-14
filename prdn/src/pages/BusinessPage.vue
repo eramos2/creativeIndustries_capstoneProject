@@ -11,13 +11,21 @@
                                         <div class="single-product-tab">
                                             <div class="zoomWrapper">
                                                 <div id="img-1" class="zoomWrapper single-zoom">
-                                                    <a href="#">
-                                                        <img id="zoom1" src="img/product/larg-1.jpg" data-zoom-image="img/product/larg-1.jpg" alt="big-1">
+                                                    <a href="#" v-if="currentBusiness.logo">
+                                                        <img id="zoom1" :src="businessLogo" alt="big-1">
                                                     </a>
                                                 </div>
                                                 <div class="single-zoom-thumb">
                                                     <ul class="s-tab-zoom single-product-active owl-carousel" id="gallery_01">
-                                                        <li>
+                                                        <business-carousel-image
+                                                          v-for="(image,key) in currentBusinessImages"
+                                                          :key="key"
+                                                          :image="image.image"
+                                                          :imageName="image.imageName"
+                                                          :imageType="image.imageType"
+                                                        >
+                                                        </business-carousel-image>
+                                                        <!-- <li class="">
                                                             <a href="#" class="elevatezoom-gallery active" data-update="" data-image="img/product/larg-1.jpg" data-zoom-image="img/product/larg-1.jpg"><img src="img/product/larg-1.jpg" alt="zo-th-1"/></a>
                                                         </li>
                                                         <li class="">
@@ -31,7 +39,7 @@
                                                         </li>
                                                         <li class="">
                                                             <a href="#" class="elevatezoom-gallery" data-image="img/product/larg-5.jpg" data-zoom-image="img/product/larg-5.jpg"><img src="img/product/larg-5.jpg" alt="zo-th-5"></a>
-                                                        </li>
+                                                        </li> -->
                                                     </ul>
                                                 </div>
                                             </div>
@@ -184,6 +192,7 @@
 
 <script>
 import Breadcrumbs from "../components/Breadcrumbs.vue";
+import BusinessImageCarousel from "../components/business/BusinessCarouselImage.vue";
 import MediumCarousel from "../components/business/MediumCarousel.vue";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
@@ -191,6 +200,7 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     breadcrumbs: Breadcrumbs,
+    businessCarouselImage: BusinessImageCarousel,
     mediumCarousel: MediumCarousel
   },
   data() {
@@ -206,41 +216,79 @@ export default {
     currentBusiness() {
       return this.getCurrentBusiness();
     },
+    currentBusinessImages() {
+      console.log(this.getCurrentBusiness());
+      console.log(this.getCurrentBusiness().images);
+      console.log("Is it empty?");
+      console.log($.isEmptyObject(this.getCurrentBusiness().images));
+      if ($.isEmptyObject(this.getCurrentBusiness().images) == true) {
+        //console.log("undef");
+        //console.log($.isEmptyObject(this.getCurrentBusiness().subcategories));
+        return {};
+      } else {
+        this.$nextTick(function() {
+          //console.log("Entered next tick in single item business");
+          var $owl = $(".single-product-active");
+          $owl.trigger("destroy.owl.carousel");
+          // After destory, the markup is still not the same with the initial.
+          // The differences are:
+          //   1. The initial content was wrapped by a 'div.owl-stage-outer';
+          //   2. The '.owl-carousel' itself has an '.owl-loaded' class attached;
+          //   We have to remove that before the new initialization.
+          $owl
+            .html($owl.find(".owl-stage-outer").html())
+            .removeClass("owl-loaded");
+          $owl.owlCarousel({
+            // your initial option here, again.
+            loop: true,
+            items: 1,
+            margin: 15,
+            dots: false,
+            lazyLoad: true,
+            nav: true,
+            navText: [
+              '<i class="fa fa-angle-left"></i>',
+              '<i class="fa fa-angle-right"></i>'
+            ],
+            responsive: {
+              0: { items: 1 },
+              480: { items: 1 },
+              768: { items: 1 },
+              992: { items: 1 },
+              1200: { items: 1 }
+            }
+          });
+        });
+      }
+      return this.getCurrentBusiness().images;
+    },
     currentBusinessSubcategories() {
       let subcategories = [];
 
       for (subcategory in this.getCurrentBusiness().submaterials) {
         resources.push(resource);
       }
+    },
+    /**
+     * Returns business logo blob(base64) for the img src div to display it
+     */
+    businessLogo() {
+      return (
+        "data:" +
+        this.currentBusiness.logoType +
+        ";base64," +
+        this.currentBusiness.logo
+      );
     }
   },
   beforeMount() {
     let businessName = this.$route.params.businessName;
-    console.log(businessName);
+    //console.log(businessName);
     this.setCurrentBusiness(businessName);
   },
   mounted() {
-    console.log("Inside mount of Businesspage");
+    //console.log("Inside mount of Businesspage");
     //this.setResources();
-
-    $(".single-product-active").owlCarousel({
-      loop: false,
-      items: 4,
-      margin: 15,
-      dots: false,
-      nav: true,
-      navText: [
-        '<i class="fa fa-angle-left"></i>',
-        '<i class="fa fa-angle-right"></i>'
-      ],
-      responsive: {
-        0: { items: 2 },
-        480: { items: 3 },
-        768: { items: 4 },
-        992: { items: 4 },
-        1200: { items: 4 }
-      }
-    });
   }
 };
 </script>
