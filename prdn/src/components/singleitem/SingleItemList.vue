@@ -22,7 +22,7 @@
                         <div class="col-lg-9 order-1 order-lg-2">
                             <singleitem-slider></singleitem-slider>
 
-                            <singleitem-businesses></singleitem-businesses>
+                            <singleitem-businesses :key="curSubcat"></singleitem-businesses>
                             <!--
                             <div class="row">
                                 <div class="col">
@@ -118,12 +118,34 @@ export default {
   methods: {
     ...mapActions(["setSubCategoryBusinesses"])
   },
+  data() {
+    return {
+      curSubcat: this.$route.params.subcategoryName.toLowerCase()
+    };
+  },
   computed: {
     resources() {
       //console.log("Inside computed before getResources SingleItemList ");
       //console.log(this.$store.getters.getResources);
       //return this.getResources();
       return this.$store.getters.getResources;
+    },
+    subcatBusinesses() {
+      console.log("current subcategory");
+      console.log(this.data.curSubcat);
+      console.log(this.curSubcat !== this.$route.params.subcategoryName);
+      if (this.curSubcat !== this.$route.params.subcategoryName) {
+        console.log("This is curSubcat " + this.curSubcat);
+        console.log(
+          "This is subcategoryname " + this.$route.params.subcategoryName
+        );
+        //$(".prodict-two-activeds").owlCarousel("destroy");
+        this.curSubcat = this.$route.params.subcategoryName;
+        this.setSubCategoryBusinesses({
+          rK: this.$route.params.resourceName,
+          scK: this.$route.params.subcategoryName
+        });
+      }
     },
     tags() {
       //console.log("Inside computed category ListBox ");

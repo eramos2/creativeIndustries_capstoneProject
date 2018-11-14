@@ -148,6 +148,20 @@ const mutations = {
 
 const actions = {
     setResources: (context) => {
+        state.resources = {
+            materials: {
+                name: 'Materials',
+                categories: {}
+            },
+            services: {
+                name: 'Services',
+                categories: {}
+            },
+            processes: {
+                name: 'Processes',
+                categories: {}
+            }
+        };
         Vue.http
             .get("", {
                 params: {

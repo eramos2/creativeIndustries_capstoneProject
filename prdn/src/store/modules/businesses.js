@@ -39,6 +39,18 @@ const getters = {
         //console.log(state.resources[payload].categories);
         return state.currentBusiness;
     },
+    /** 
+     * returns current business subcategories
+     * @returns {object} subcategories
+     */
+    getCurrentBusinessSubCategories: state => {
+        //console.log('inside getResourceCategories ');
+        //console.log(payload);
+        //console.log(state.resources[payload].categories);
+
+
+        return state.currentBusiness.subcategories;
+    },
     getBusinessCategorySubCategories(state) {
         return (payload) => {
             //console.log('test getCategorySubCategories');
@@ -79,7 +91,7 @@ const mutations = {
      */
     setCurrentBusiness: (state, data) => {
         state.currentBusiness = data
-
+        state.currentBusiness['subcategories'] = {}
 
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -96,9 +108,18 @@ const mutations = {
      * @param {Object} data - Server response containing the subservices. 
      */
     setCurrentBusinessSubServices: (state, data) => {
-        state.currentBusiness['subservices'] = data
+        var subcats = data;
+        for (var category in subcats) {
+            console.log("category");
+            console.log(category);
+            subcats[category].resName = "services";
+            subcats[category].catName = subcats[category].serviceName;
+            subcats[category].name = subcats[category].subServiceName;
+        }
 
-        state.currentBusiness
+        state.currentBusiness['subservices'] = subcats;
+
+
 
 
 
@@ -116,8 +137,17 @@ const mutations = {
      * @param {Object} data - Server response containing the subprocesses. 
      */
     setCurrentBusinessSubProcesses: (state, data) => {
-        state.currentBusiness['subprocesses'] = data
 
+        var subcats = data;
+        for (var category in subcats) {
+            console.log("category");
+            console.log(category);
+            subcats[category].resName = "processes";
+            subcats[category].catName = subcats[category].processName;
+            subcats[category].name = subcats[category].subProcessName;
+        }
+
+        state.currentBusiness['subprocesses'] = subcats;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -132,7 +162,56 @@ const mutations = {
      * @param {Object} data - Server response containing the submaterials. 
      */
     setCurrentBusinessSubMaterials: (state, data) => {
-        state.currentBusiness['submaterials'] = data
+        var subcats = data;
+        for (var category in subcats) {
+            console.log("category inside ");
+            console.log(category);
+            subcats[category].resName = "materials";
+            subcats[category].catName = subcats[category].materialName;
+            subcats[category].name = subcats[category].subMaterialName;
+        }
+
+        state.currentBusiness['submaterials'] = subcats;
+
+
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.currentBusiness = { ...state.currentBusiness
+        }
+        console.log(state.currentBusiness);
+
+
+    },
+    /**
+     * Sets state.currentBusiness.submaterials with the given submaterials
+     * @param {Object} data - Server response containing the submaterials. 
+     */
+    setCurrentBusinessSubCategories: (state) => {
+
+        let subcategories = {};
+
+        let submaterials = state.currentBusiness.submaterials;
+        let subprocesses = state.currentBusiness.subprocesses;
+        let subservices = state.currentBusiness.subservices;
+        for (let key in submaterials) {
+            subcategories[
+                submaterials[key].subMaterialName.replace(/ +/g, "").toLowerCase()
+            ] = submaterials[key];
+        }
+        for (let key in subprocesses) {
+            subcategories[
+                subprocesses[key].subProcessName.replace(/ +/g, "").toLowerCase()
+            ] = subprocesses[key];
+        }
+        for (let key in subservices) {
+            subcategories[
+                subservices[key].subServiceName.replace(/ +/g, "").toLowerCase()
+            ] = subservices[key];
+        }
+        state.currentBusiness['subcategories'] = subcategories;
+
+
 
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -173,6 +252,7 @@ const actions = {
      * @constant {String} code - Code to look for a company by name
      */
     setCurrentBusiness: (context, compName) => {
+        state.currentBusiness = {};
         let code = '5';
         let kword = compName;
         let endpoint = 'company'
@@ -238,37 +318,44 @@ const actions = {
 
                                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                                 context.commit('setCurrentBusinessSubServices', dataObject);
+                            }).then(() => {
+                                Vue.http
+                                    .get("", {
+                                        params: {
+                                            endpoint: endpoint,
+                                            code: '3', //Code for getting all subproceses of a business
+                                            cid: compId //business id
+                                        }
+                                    })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
+                                        context.commit('setCurrentBusinessSubProcesses', dataObject);
+                                    }).then(data => {
+                                        Vue.http
+                                            .get("", {
+                                                params: {
+                                                    endpoint: endpoint,
+                                                    code: '4', //Code for getting all submaterials of a business
+                                                    cid: compId //business id
+                                                }
+                                            })
+                                            .then(response => {
+                                                return response.json();
+                                            })
+                                            .then(data => {
+                                                let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
+                                                context.commit('setCurrentBusinessSubMaterials', dataObject);
+                                            }).then(data => {
+                                                console.log("Set CurrentBusinessSubCategories");
+                                                context.commit('setCurrentBusinessSubCategories');
+                                            });
+                                    });
                             });
-                        Vue.http
-                            .get("", {
-                                params: {
-                                    endpoint: endpoint,
-                                    code: '3', //Code for getting all subproceses of a business
-                                    cid: compId //business id
-                                }
-                            })
-                            .then(response => {
-                                return response.json();
-                            })
-                            .then(data => {
-                                let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-                                context.commit('setCurrentBusinessSubProcesses', dataObject);
-                            });
-                        Vue.http
-                            .get("", {
-                                params: {
-                                    endpoint: endpoint,
-                                    code: '4', //Code for getting all submaterials of a business
-                                    cid: compId //business id
-                                }
-                            })
-                            .then(response => {
-                                return response.json();
-                            })
-                            .then(data => {
-                                let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-                                context.commit('setCurrentBusinessSubMaterials', dataObject);
-                            });
+
+
                     });
             });
     },
@@ -278,8 +365,10 @@ const actions = {
      * @param {Object} payload - Contains resource name (rK) and subcategory name (scK)
      */
     setSubCategoryBusinesses: (context, payload) => {
+        state.businesses = {};
         let code;
-
+        console.log("setSubCategoryBusinesses");
+        console.log(payload.scK);
         if (payload.rK == 'processes') {
             code = '16'; //code for getting companies that offer subprocess by its name
         } else if (payload.rK == 'services') {
@@ -297,15 +386,15 @@ const actions = {
                 }
             })
             .then(response => {
-                //console.log("Inside json response of setSubCategoryBusinesses in businesses.js");
-                //console.log(response);
+                console.log("Inside json response of setSubCategoryBusinesses in businesses.js");
+                console.log(response);
                 return response.json();
             })
             .then(data => {
-                //console.log('Inside setSubCategoryBusinesses in businesses.js');
+                console.log('Inside setSubCategoryBusinesses in businesses.js');
 
                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-                //console.log(dataObject);
+                console.log(dataObject);
                 context.commit('setBusinesses', dataObject);
             });
     }

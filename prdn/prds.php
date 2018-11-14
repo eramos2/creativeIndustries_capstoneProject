@@ -383,21 +383,21 @@ function requestGetCompany(){
             $sql = "SELECT * FROM company NATURAL JOIN address WHERE address.city = '". $theCity ."' AND active = 0;";
             break;
 
-        case '2': //View all subservices of a business //prdn2.0 added serviceName - to help with routing on webapp
+        case '2': //View all subservices of a business //prdn2.0 added serviceName, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
-            $sql = "SELECT serviceId, serviceName, subServiceId, subServiceName, model, limitation, application FROM (company NATURAL JOIN CAS NATURAL JOIN " .
+            $sql = "SELECT serviceId, serviceName, subServiceId, subServiceName, subcatImage model, limitation, application FROM (company NATURAL JOIN CAS NATURAL JOIN " .
                     "subService) NATURAL JOIN serviceType WHERE companyId = '" . $cid . "' AND active = 0;";
             break;
 
-        case '3': //View all subprocesss of a business //prdn2.0 added processName - to help with routing on webapp
+        case '3': //View all subprocesss of a business //prdn2.0 added processName, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
-            $sql = "SELECT processId, processName, subProcessId, subProcessName, model, limitation, application FROM (company NATURAL JOIN CAP NATURAL JOIN " .
+            $sql = "SELECT processId, processName, subProcessId, subProcessName, subcatImage model, limitation, application FROM (company NATURAL JOIN CAP NATURAL JOIN " .
                     " subProcess) NATURAL JOIN processType WHERE companyId = '" . $cid . "' AND active = 0;";
             break;
 
-        case '4': //View all submaterials of a business //prdn2.0 added material Name - to help with routing on webapp
+        case '4': //View all submaterials of a business //prdn2.0 added material Name, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
-            $sql = "SELECT materialId, materialName, subMaterialId, subMaterialName, model, limitation, application FROM (company NATURAL JOIN CAM NATURAL JOIN ".
+            $sql = "SELECT materialId, materialName, subMaterialId, subMaterialName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAM NATURAL JOIN ".
                     " subMaterial) NATURAL JOIN materialType WHERE companyId = '" . $cid . "' AND active = 0;";
             break;
 

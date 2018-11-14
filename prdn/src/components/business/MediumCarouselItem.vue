@@ -5,16 +5,18 @@
             <div class="product-thumb">
                 <router-link 
                   :to="{
-                    name: 'businessLink', 
+                    name: 'singleitemLink', 
                     params: {
-                      businessName: businessName
+                        resourceName: subcat.resName,
+                        categoryName: subcat.catName, 
+                        subcategoryName: subcat.name
                     }
                   }" 
                   tag="a" 
                   active-class="active"
                   class="product-name"
                 >
-                  <img class="primary-image" :src="businessLogo" alt="">
+                  <img alt="" :src="imgUrl" class="primary-image">
                 </router-link>
                 
                 <div class="action-links">
@@ -28,9 +30,11 @@
             <div class="product-info">
                 <router-link 
                   :to="{
-                    name: 'businessLink', 
+                    name: 'singleitemLink', 
                     params: {
-                      businessName: businessName
+                      resourceName: subcat.resName,
+                      categoryName: subcat.catName, 
+                      subcategoryName: subcat.name
                     }
                   }" 
                   tag="h4" 
@@ -38,7 +42,7 @@
                   class="product-name"
                 >
                   <!-- @slot Subcategory Name-->
-                  <a>{{businessName}}</a>
+                  <a>{{subcat.name}}</a>
                 </router-link>
                 <!--<h4 class="product-name"><a href="single-product.html">{{businessName}}</a></h4>-->
                 <!--<div class="price-box">
@@ -57,25 +61,17 @@ import { mapGetters } from "vuex";
  * This component is used to display a business logo and name in the single item(subcategory) component
  */
 export default {
-  props: ["bKey", "business"],
-  methods: {
-    ...mapGetters(["getBusinesses"])
-  },
+  props: ["bKey", "subcategory"],
   computed: {
-    businessName() {
-      let businesses = this.$store.state.businesses;
-      if (typeof this.business === "undefined") {
-        console.log("undef");
-        return "";
-      } else {
-        return this.business.companyName;
-      }
+    subcat() {
+      return this.subcategory;
     },
     /**
-     * Returns business logo blob(base64) for the img src div to display it
+     * Returns subcategory image url by appending the image id to the google drive folder url
+     * @name imgUrl
      */
-    businessLogo() {
-      return "data:" + this.business.logoType + ";base64," + this.business.logo;
+    imgUrl() {
+      return this.$store.state.driveUrl + this.subcat.subcatImage;
     }
   }
 };

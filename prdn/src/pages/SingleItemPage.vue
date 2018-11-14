@@ -24,8 +24,8 @@ export default {
     let rKey = this.$route.params.resourceName;
     let scKey = this.$route.params.subcategoryName;
     let payload = { rK: rKey, scK: scKey };
-    this.setResources();
-    this.setSubCategoryBusinesses(payload);
+    //this.setResources();
+    //this.setSubCategoryBusinesses(payload);
   }
 };
 </script>

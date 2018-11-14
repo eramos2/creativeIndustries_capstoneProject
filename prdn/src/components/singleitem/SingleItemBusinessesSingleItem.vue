@@ -62,20 +62,25 @@ export default {
     ...mapGetters(["getBusinesses"])
   },
   computed: {
+    curBusiness() {
+      return this.business;
+    },
     businessName() {
-      let businesses = this.$store.state.businesses;
-      if (typeof this.business === "undefined") {
+      //let businesses = this.$store.state.businesses;
+      if (typeof this.curBusiness === "undefined") {
         console.log("undef");
         return "";
       } else {
-        return this.business.companyName;
+        return this.curBusiness.companyName.toLowerCase();
       }
     },
     /**
      * Returns business logo blob(base64) for the img src div to display it
      */
     businessLogo() {
-      return "data:" + this.business.logoType + ";base64," + this.business.logo;
+      return (
+        "data:" + this.curBusiness.logoType + ";base64," + this.curBusiness.logo
+      );
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div :key="curBusiness">
     <!--<breadcrumbs></breadcrumbs>-->
     <div class="content-wraper bg-gray">
                 <div class="container">
@@ -172,7 +172,7 @@
                     </div>
 
                     <medium-carousel
-                        :carouselItems="currentBusiness"
+                      :key="curBusiness"
                     >
                         All Resources
                     </medium-carousel>
@@ -193,6 +193,11 @@ export default {
     breadcrumbs: Breadcrumbs,
     mediumCarousel: MediumCarousel
   },
+  data() {
+    return {
+      curBusiness: this.$route.params.businessName.toLowerCase()
+    };
+  },
   methods: {
     ...mapActions(["setResources", "setCurrentBusiness"]),
     ...mapGetters(["getCurrentBusiness"])
@@ -209,12 +214,15 @@ export default {
       }
     }
   },
-  mounted() {
-    console.log("Inside mount of Businesspage");
-    //this.setResources();
+  beforeMount() {
     let businessName = this.$route.params.businessName;
     console.log(businessName);
     this.setCurrentBusiness(businessName);
+  },
+  mounted() {
+    console.log("Inside mount of Businesspage");
+    //this.setResources();
+
     $(".single-product-active").owlCarousel({
       loop: false,
       items: 4,
@@ -231,23 +239,6 @@ export default {
         768: { items: 4 },
         992: { items: 4 },
         1200: { items: 4 }
-      }
-    });
-    $(".prodict-two-active").owlCarousel({
-      loop: true,
-      items: 4,
-      dots: false,
-      nav: true,
-      navText: [
-        '<i class="fa fa-angle-left"></i>',
-        '<i class="fa fa-angle-right"></i>'
-      ],
-      responsive: {
-        0: { items: 1 },
-        480: { items: 2 },
-        768: { items: 3 },
-        992: { items: 4 },
-        1200: { items: 5 }
       }
     });
   }
