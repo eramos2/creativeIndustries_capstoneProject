@@ -1,4 +1,5 @@
 <template>
+<form @submit.prevent="validateBeforeSubmit"> 
 <!-- My Account page content Start -->
             <div id="myaccount-page-content">
                 <div class="container">
@@ -52,16 +53,45 @@
     <!-- <form name="addBsnForm"> -->
         <div>
         <div class="row">
-            <div class="col-md-6"><input type="text" name="companyName" id="addBsnCompanyName" placeholder="Business Name" v-model="bussiness" required></div>
-            <div class="col-md-6"><input type="text" name="website"  id="addBsnWebsite" placeholder="Website" v-model="website" required></div>
-            <div class="col-md-6"><input type="text" name="address" id="addBsnAddress" placeholder="Address" v-model="address" required></div>
-            <div class="col-md-2"><input type="text" name="city" id="addBsnCity" placeholder="City" v-model="city" required></div>
+            <div class="col-md-6">
+                <!-- <input type="text" name="companyName" id="addBsnCompanyName" placeholder="Business Name" v-model="bussiness"> -->
+                <input name="companyName" v-validate="'required|max:20'" type="text"  id = "companyName"  placeholder="Company Name" class="form-control" >
+                <p class="text-danger" v-if="errors.has('companyName')">{{ errors.first('companyName') }}</p>
+                </div>
+            <div class="col-md-6">
+                <input name="website" v-validate="'required|url'" type="url"  id = "website"  placeholder="Website" class="form-control" >
+                <p class="text-danger" v-if="errors.has('website')">{{ errors.first('website') }}</p>
+                </div>
+
+            <div class="col-md-6">
+                <input name="addressID" v-validate="'required|max:40'" type="text"  id = "addressID"  placeholder="Address" class="form-control" >
+                <p class="text-danger" v-if="errors.has('addressID')">{{ errors.first('addressID') }}</p>
+                </div>
+
+            <div class="col-md-2">
+                <input name="status" v-validate="'required|max:10'" type="text"  id = "status"  placeholder="Status" class="form-control" >
+                <p class="text-danger" v-if="errors.has('status')">{{ errors.first('status') }}</p>
+                </div>
+<!--                 
             <div class="col-md-2"><input type="text" name="country" id="addBsnCountry" placeholder="Country" v-model="country" required></div>
-            <div class="col-md-2"><input type="text" name="zipcode" id="addBsnZipCode" maxlength="5" placeholder="Zip Code" v-model="zipcode" required></div>
-            <div class="col-md-4"><input type="phone" name="phone" id="addBsnPhone" maxlength="10" placeholder="Telephone" v-model="telephone" required></div>
-            <div class="col-md-4"><input type="email" name="email"  id="addBsnEmail" placeholder="Email" v-model="email" required></div>
-            <div class="col-md-4"><input type="text" name="videoURL"  id="addBsnVideoURL" placeholder="Video URL" v-model="video" required></div>
-            <div class="col-md-12"><textarea class="form-control textArea" name="description" id="addBsnDescription" placeholder="Description" rows="7"></textarea></div>
+            <div class="col-md-2"><input type="text" name="zipcode" id="addBsnZipCode" maxlength="5" placeholder="Zip Code" v-model="zipcode" required></div> -->
+
+            <div class="col-md-4">
+                <input name="phone" v-validate="'required|max:10|min:10'" type="text"  id = "phone"  placeholder="Phone" class="form-control" >
+                <p class="text-danger" v-if="errors.has('phone')">{{ errors.first('phone') }}</p>
+                </div>
+                
+            <div class="col-md-4">
+                <input name="subDate" v-validate="'date_format:DD/MM/YYYY|date_between:01/01/1950,01/01/2018|required'"  type="text"  id = "subDate"  placeholder="Sub-Date DD/MM/YYYY" class="form-control" >
+                <p class="text-danger" v-if="errors.has('subDate')">{{ errors.first('subDate') }}</p>
+                </div>
+            
+            <!-- <div class="col-md-4"><input type="text" name="videoURL"  id="addBsnVideoURL" placeholder="Video URL" v-model="video" required></div> -->
+
+            <div class="col-md-12">
+            <textarea class="form-control textArea" name="description" v-validate="'required'" id="description" placeholder="Description" rows="7"></textarea>
+            <p class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</p>
+            </div>
         </div>
 
 
@@ -70,7 +100,8 @@
                 <p>
                     <!-- <button type="button" class="btn btn-primary btn-lg" onClick="validateAddBsn(this.form)">Add</button>
                     <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                    <button @click="add">Add</button>
+                    <!-- <button>Add</button> -->
+                     <button :disabled="errors.any()" type="submit">Add</button>
                 </p>
             </div>
         </div>
@@ -105,8 +136,8 @@
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
                         <input type="text" class="form-control" name="newSubMat" id="newSubMat" v-model="subMaterial" placeholder="Enter Sub-Material" onclick="showMatConnections()">
-                        <a data-toggle="modal" href="#subMatModal" class="btn btn-primary subMatModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a>
-                        <button @click="sMaterial">Add</button>
+                        <!-- <a data-toggle="modal" href="#subMatModal" class="btn btn-primary subMatModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a> -->
+                        <button>Add</button>
                     </div>
                 </div>
             </div>
@@ -164,8 +195,8 @@
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
                         <input type="text" class="form-control" name="newSubProc" id="newSubProc" v-model="subProcess" placeholder="Enter Sub-Process"  onclick="showProcConnections() ">
-                        <a data-toggle="modal" href="#subProcModal" class="btn btn-primary subProcModalBtn"><span class="glyphicon glyphicon-question-sign"></span></a>
-                        <button @click="sProcess">Add</button>
+                        <!-- <a data-toggle="modal" href="#subProcModal" class="btn btn-primary subProcModalBtn"><span class="glyphicon glyphicon-question-sign"></span></a> -->
+                        <button>Add</button>
                     </div>
                 </div>
             </div>
@@ -220,8 +251,8 @@
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
                         <input type="text" class="form-control" name="newSubServ" id="newSubServ" v-model="subService" placeholder="Enter Sub-Service" onclick="showServConnections() ">
-                        <a data-toggle="modal" href="#subServModal" class="btn btn-primary subServModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a>
-                        <button @click="sProcess">Add</button>
+                        <!-- <a data-toggle="modal" href="#subServModal" class="btn btn-primary subServModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a> -->
+                        <button >Add</button>
                     </div>
                 </div>
             </div>
@@ -277,8 +308,8 @@
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
                         <input type="text" class="form-control" name="newSubServ" id="newSubServ" v-model="tagConnections"  placeholder="Enter Tag-Connections" onclick="showServConnections() ">
-                        <a data-toggle="modal" href="#subServModal" class="btn btn-primary subServModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a>
-                        <button @click="sTag">Add</button>
+                        <!-- <a data-toggle="modal" href="#subServModal" class="btn btn-primary subServModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a> -->
+                        <button>Add</button>
                     </div>
                 </div>
             </div>
@@ -325,7 +356,6 @@
                                                     <th>Add Materials</th>
                                                 </tr>
                                                 </thead>
-
                                                 <tbody>
                                                 <tr>
                                                     <td>Haven - Free Real Estate PSD Template</td>
@@ -372,7 +402,7 @@
             <p>
                 <!-- <button type="button" class="btn btn-primary btn-lg" onclick="validateEditBsn(this.form)">Edit</button>
                 <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                <button @click="edit">Edit</button>
+                <button>Edit</button>
             </p>
         </div>
     </div>
@@ -413,7 +443,7 @@
                     <p>
                         <!-- <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditMatConn(this.form)">Edit</button>
                         <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="editSubMaterial">Edit</button>
+                        <button>Edit</button>
                         
                     </p>
                 </div>
@@ -459,7 +489,7 @@
                     <p>
                         <!-- <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditProcConn(this.form)">Edit</button>
                         <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="editSubProcess">Edit</button>
+                        <button>Edit</button>
                     </p>
                 </div>
             </div>
@@ -503,7 +533,7 @@
                     <p>
                         <!-- <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditServConn(this.form)">Edit</button>
                         <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="editSubService">Edit</button>
+                        <button >Edit</button>
                     </p>
                 </div>
             </div>
@@ -537,7 +567,7 @@
                     <p>
                         <!-- <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditServConn(this.form)">Edit</button>
                         <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="editTagConnections">Edit</button>
+                        <button >Edit</button>
                     </p>
                 </div>
             </div>
@@ -577,7 +607,7 @@
                         <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                                 data-target="#basicModal">Remove</button>
                         <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="removeMaterials">Remove</button>
+                        <button >Remove</button>
 
                     <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                         <div class="modal-dialog">
@@ -625,7 +655,7 @@
                         <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                                 data-target="#basicModal">Remove</button>
                         <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="removeProcesses">Remove</button>
+                        <button>Remove</button>
 
                     <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                         <div class="modal-dialog">
@@ -673,7 +703,7 @@
                         <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                                 data-target="#basicModal">Remove</button>
                         <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="removeServices">Remove</button>
+                        <button>Remove</button>
 
                     <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                         <div class="modal-dialog">
@@ -720,7 +750,7 @@
                         <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
                                 data-target="#basicModal">Remove</button>
                         <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button @click="removeTags">Remove</button>
+                        <button>Remove</button>
 
                     <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                         <div class="modal-dialog">
@@ -778,7 +808,7 @@
         <div class="col-md-4  pull-right">
             <!-- <button type="button" class="btn btn-primary btn-lg" onClick="getPendingRequestRadio()">View</button>
             <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-            <button @click="pending">View</button>
+            <button>View</button>
         </div>
 
     </div>
@@ -793,116 +823,35 @@
                     </div>
                     </div>
                 </div>
+                
             </div>
+            </form>
             <!-- My Account page content end -->
+            
 </template>
 <script>
+import Vue from "vue";
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate);
+
 export default {
-  data() {
+  data: () => {
     return {
-      bussiness: "",
-      website: "",
-      address: "",
-      city: "",
-      country: "",
-      zipcode: "",
-      telephone: "",
-      email: "",
-      video: "",
-      description: "",
-      subMaterial: "",
-      subProcess: "",
-      subService: "",
-      tagConnections: ""
+      companyName: "",
+      firstName: "",
+      firstNameEdit: ""
     };
   },
   methods: {
-    add() {
-      console.log(
-        "Bussiness: " +
-          this.bussiness +
-          " Website: " +
-          this.website +
-          " Address: " +
-          this.address +
-          " City: " +
-          this.city +
-          " Country: " +
-          this.country +
-          " ZipCode: " +
-          this.zipcode +
-          " Telephone: " +
-          this.telephone +
-          " Email: " +
-          this.telephone +
-          " Video: " +
-          this.video +
-          " Description: " +
-          this.description
-      );
-    },
-    sMaterial() {
-      console.log("Material Added: " + this.subMaterial);
-    },
-    sProcess() {
-      console.log("Process Added: " + this.subProcess);
-    },
-    sService() {
-      console.log("Service Added: " + this.subService);
-    },
-    sTag() {
-      console.log("Tag Added: " + this.tagConnections);
-    },
-    edit() {
-      console.log(
-        "Bussiness: " +
-          this.bussiness +
-          " Website: " +
-          this.website +
-          " Address: " +
-          this.address +
-          " City: " +
-          this.city +
-          " Country: " +
-          this.country +
-          " ZipCode: " +
-          this.zipcode +
-          " Telephone: " +
-          this.telephone +
-          " Email: " +
-          this.telephone +
-          " Video: " +
-          this.video +
-          " Description: " +
-          this.description
-      );
-    },
-    editSubMaterial() {
-      console.log("There are no Materials to Edit");
-    },
-    editSubProcess() {
-      console.log("There are no Process to Edit");
-    },
-    editSubService() {
-      console.log("There are no Service to Edit");
-    },
-    editTagConnections() {
-      console.log("There are no Tags to Edit");
-    },
-    removeMaterials() {
-      console.log("There are no Materials to remove");
-    },
-    removeProcesses() {
-      console.log("There are no Process to remove");
-    },
-    removeServices() {
-      console.log("There are no Service to remove");
-    },
-    removeTags() {
-      console.log("There are no Tag to remove");
-    },
-    pending() {
-      console.log("There are no pending requests");
+    validateBeforeSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          alert("Submitted");
+          return;
+        }
+
+        alert("Empty Field(s)");
+      });
     }
   }
 };
@@ -922,6 +871,14 @@ export default {
 @media only screen and (max-width: 575px) {
   .myaccount-content {
     padding: 20px 15px;
+  }
+}
+@media (min-width: 786px) {
+  .col-md-4 {
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 33.3%;
   }
 }
 

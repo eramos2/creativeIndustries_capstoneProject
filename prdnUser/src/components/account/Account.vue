@@ -130,10 +130,12 @@
                                                                  {{errors.first('projectName')}}
                                                                  </p>
                                                         </div>
+                                                 <div class="col-md-12">
                                                 <div class="single-input-item">
                                                     <label for="description" class="required">Description</label>
                                                      <input name ="description" v-validate="'required|max:40'" type="text" class="form-control" id="description" placeholder="Brief Description">
                                                     <p class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</p>
+                                                </div>
                                                 </div>
                                                 <fieldset>
                                                     <legend>Select 3 tags for your Project</legend>

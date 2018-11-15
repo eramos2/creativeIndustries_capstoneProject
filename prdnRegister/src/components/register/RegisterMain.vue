@@ -66,7 +66,8 @@
                                             <p class="text-danger" v-if="errors.has('active')">{{ errors.first('active') }}</p>
                                         </div>
                                     </div>
-                                    <button>Submit</button>
+                                    <!-- <button>Submit</button> -->
+                                     <button :disabled="errors.any()" type="submit">Submit</button>
                                 </fieldset>
                              </form>
                             </div>

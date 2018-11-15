@@ -5,6 +5,9 @@
 
 <script>
 import Account from "./components/account/Account.vue";
+import Vue from "vue";
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate);
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
