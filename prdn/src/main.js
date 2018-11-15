@@ -19,7 +19,10 @@ import {
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
+//For production build
 Vue.http.options.root = "http://localhost:80/Server/prds.php";
+//For local Development
+//Vue.http.options.root = "http://localhost:80/Server/prds.php";
 
 const router = new VueRouter({
   routes: routes
