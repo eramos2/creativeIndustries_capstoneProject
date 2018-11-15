@@ -9,14 +9,14 @@
                                     <div :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('firstName') }">
                                         <label class="control-label col-md-2" for="firstName"><span class="require"></span>First Name</label>
                                         <div class="col-md-10">
-                                            <input name="firstName" v-validate="'required|alpha'" type="text"  id = "firstName"  placeholder="First Name" class="form-control" >
+                                            <input name="firstName" v-validate="'required|alpha|max:15'" type="text"  id = "firstName"  placeholder="First Name" class="form-control" >
                                             <p class="text-danger" v-if="errors.has('firstName')">{{ errors.first('firstName') }}</p>
                                         </div>
                                     </div>
                                     <div :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('lastName') }">
                                         <label class="control-label col-md-2" for="lastName"><span class="require"></span>Last Name</label>
                                         <div class="col-md-10">
-                                            <input name ="lastName" v-validate="'required|alpha'" type="text" class="form-control" id="lastName" placeholder="Last Name">
+                                            <input name ="lastName" v-validate="'required|alpha|max:15'" type="text" class="form-control" id="lastName" placeholder="Last Name">
                                             <p class="text-danger" v-if="errors.has('lastName')">{{ errors.first('lastName') }}</p>
                                         </div>
                                     </div>
