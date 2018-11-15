@@ -15,10 +15,6 @@
 <script>
 import LoginNewCustomer from "./LoginNewCustomer.vue";
 import LoginReturningCustomer from "./LoginReturningCustomer.vue";
-import Vue from "vue";
-import VuePassword from "vue-password";
-
-Vue.component(VuePassword);
 
 export default {
   components: {
