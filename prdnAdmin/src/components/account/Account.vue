@@ -345,33 +345,6 @@
                                 <div class="tab-pane fade" id="edit" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Edit</h3>
-
-                                        <!-- <div class="myaccount-table table-responsive text-center">
-                                            <table class="table table-bordered">
-                                                <thead class="thead-light">
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Date</th>
-                                                    <th>Expire</th>
-                                                    <th>Add Materials</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Haven - Free Real Estate PSD Template</td>
-                                                    <td>Aug 22, 2018</td>
-                                                    <td>Yes</td>
-                                                    <td><a href="#" class="btn">Add Materials File</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>HasTech - Profolio Business Template</td>
-                                                    <td>Sep 12, 2018</td>
-                                                    <td>Never</td>
-                                                    <td><a href="#" class="btn">Add Materials File</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div> -->
                                         <div class="container" id="editBsnPage">
 
     <div class="row marginTop">
@@ -381,17 +354,45 @@
     <!-- <form name="editBsnForm"> -->
         <div>
     <div class="row">
-        <div><input type="text" style="display: none" name="companyId" id="companyId"></div>
-        <div class="col-md-6"><input type="text" name="companyName" placeholder="Business Name" id="editBsnName" v-model="bussiness" ></div>
-        <div class="col-md-6"><input type="text" name="website"  placeholder="Website" id="editBsnWebsite" v-model="website"></div>
-        <div class="col-md-6"><input type="text" name="address" placeholder="Address" id="editBsnAddress" v-model="address"></div>
-        <div class="col-md-2"><input type="text" name="city" placeholder="City" id="editBsnCity" v-model="city"></div>
-        <div class="col-md-2"><input type="text" name="country" placeholder="Country" id="editBsnCountry" v-model="country"></div>
-        <div class="col-md-2"><input type="text" name="zipcode" maxlength="5" placeholder="Zip Code" id="editBsnZipCode" v-model="zipcode"></div>
-        <div class="col-md-4"><input type="text" name="phone" maxlength="10" placeholder="Telephone" id="editBsnTelephone" v-model="telephone"></div>
-        <div class="col-md-4"><input type="email" name="email"  placeholder="Email" id="editBsnEmail" v-model="email"></div>
-        <div class="col-md-4"><input type="text" name="videoURL"  placeholder="Video URL" id="editBsnVideoURL" v-model="video"></div>
-        <div class="col-md-12"><textarea class="form-control textArea" name="description" placeholder="Description" rows="7" id="editBsnDescription" v-model="description"></textarea></div>
+        <div class="col-md-6">
+                <!-- <input type="text" name="companyName" id="addBsnCompanyName" placeholder="Business Name" v-model="bussiness"> -->
+                <input name="companyName" v-validate="'required|max:20'" type="text"  id = "companyName"  placeholder="Company Name" class="form-control" >
+                <p class="text-danger" v-if="errors.has('companyName')">{{ errors.first('companyName') }}</p>
+                </div>
+            <div class="col-md-6">
+                <input name="website" v-validate="'required|url'" type="url"  id = "website"  placeholder="Website" class="form-control" >
+                <p class="text-danger" v-if="errors.has('website')">{{ errors.first('website') }}</p>
+                </div>
+
+            <div class="col-md-6">
+                <input name="addressID" v-validate="'required|max:40'" type="text"  id = "addressID"  placeholder="Address" class="form-control" >
+                <p class="text-danger" v-if="errors.has('addressID')">{{ errors.first('addressID') }}</p>
+                </div>
+
+            <div class="col-md-2">
+                <input name="status" v-validate="'required|max:10'" type="text"  id = "status"  placeholder="Status" class="form-control" >
+                <p class="text-danger" v-if="errors.has('status')">{{ errors.first('status') }}</p>
+                </div>
+<!--                 
+            <div class="col-md-2"><input type="text" name="country" id="addBsnCountry" placeholder="Country" v-model="country" required></div>
+            <div class="col-md-2"><input type="text" name="zipcode" id="addBsnZipCode" maxlength="5" placeholder="Zip Code" v-model="zipcode" required></div> -->
+
+            <div class="col-md-4">
+                <input name="phone" v-validate="'required|max:10|min:10'" type="text"  id = "phone"  placeholder="Phone" class="form-control" >
+                <p class="text-danger" v-if="errors.has('phone')">{{ errors.first('phone') }}</p>
+                </div>
+                
+            <div class="col-md-4">
+                <input name="subDate" v-validate="'date_format:DD/MM/YYYY|date_between:01/01/1950,01/01/2018|required'"  type="text"  id = "subDate"  placeholder="Sub-Date DD/MM/YYYY" class="form-control" >
+                <p class="text-danger" v-if="errors.has('subDate')">{{ errors.first('subDate') }}</p>
+                </div>
+            
+            <!-- <div class="col-md-4"><input type="text" name="videoURL"  id="addBsnVideoURL" placeholder="Video URL" v-model="video" required></div> -->
+
+            <div class="col-md-12">
+            <textarea class="form-control textArea" name="description" v-validate="'required'" id="description" placeholder="Description" rows="7"></textarea>
+            <p class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</p>
+            </div>
     </div>
 
 

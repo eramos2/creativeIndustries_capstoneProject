@@ -7,6 +7,7 @@
 import Account from "./components/account/Account.vue";
 import Vue from "vue";
 import VeeValidate from "vee-validate";
+import VueMq from "vue-mq";
 Vue.use(VeeValidate);
 
 import "bootstrap/dist/css/bootstrap.min.css";
