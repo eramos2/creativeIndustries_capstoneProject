@@ -74,6 +74,7 @@ const mutations = {
      * @param {Object} data - Server response containing the businesses. 
      */
     setBusinesses: (state, data) => {
+        console.log(data);
         state.businesses = data
 
         //Replace that Object with a fresh one. For example, 
@@ -258,6 +259,30 @@ const mutations = {
 
 const actions = {
 
+    /** 
+     * Gets businesses that match the keyword or all if no kword is given 
+     * @param {String} kword - String to search business by 
+     */
+    getBusinessesByName: (context, kword) => {
+        Vue.http
+            .get("", {
+                params: {
+                    endpoint: 'company',
+                    code: '5', //code for getting all businesses
+                    keyword: kword
+                }
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                context.commit('setBusinesses', data.resp);
+            });
+
+
+
+    },
+
     /** Gets all businesses and sets state.businesses with this companies */
     setBusinesses: (context) => {
         Vue.http
@@ -272,7 +297,7 @@ const actions = {
             })
             .then(data => {
                 //console.log(data.resp);
-                context.commit('setBusinesses', data);
+                context.commit('setBusinesses', data.resp);
             });
     },
     /** 

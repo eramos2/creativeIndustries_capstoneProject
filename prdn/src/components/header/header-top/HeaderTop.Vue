@@ -21,20 +21,29 @@
                                     <router-link to="/materials" tag="li" active-class="active"><a>Materials</a></router-link>
                                     <router-link to="/services" tag="li" active-class="active"><a>Services</a></router-link>
                                     <router-link to="/processes" tag="li" active-class="active"><a>Processes</a></router-link>
-                                    <!--<li><a href="index.html">Home</a></li>-->
-                                    <!--<li><a href="index.html">Businesses</a></li>-->
-                                    <!--<li><a href="index.html">Articles</a></li>-->
-                                    <!--li><a href="index.html">About us</a></li>-->
-                                    <!--<li><a href="index.html">Contact us</a></li>-->
+                                    
                                 </ul>
                             </nav>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-3 col-md-7">
                         <!-- top-box-lang start -->
                         <div class="top-box-lang top-box-lang-2 text-right">
                             <ul>
+                                <li class="currency">
+                                            <div class="btn-group">
+                                                <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                   My Account <i class="fa fa-angle-down"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <ul>
+                                                       <router-link to="/" tag="li" active-class="active"><a>Register</a></router-link>
+                                                  <router-link to="/" tag="li" active-class="active"><a>Login</a></router-link>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
                                 <li class="language">
                                     <div class="btn-group">
                                         <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +62,7 @@
                         <!-- top-box-lang end -->
                     </div>
                 </div>
+                
             </div>
         </div>
         
@@ -61,6 +71,7 @@
 
 <script>
 import "popper.js";
+
 export default {};
 </script>
 

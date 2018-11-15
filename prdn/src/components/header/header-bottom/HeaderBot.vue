@@ -6,128 +6,162 @@
                                 <!-- top-search-area start -->
                                 <div class="top-search-area home-two-shearch">
                                     <div class="search-categories">
-                                        <form action="#">
+                                        <div class="form">
                                             <div class="search-form-input">
-                                                <select id="select" name="select" class="nice-select">
-                                                  <option value="1">Materials</option>
-                                                  <option value="2">Processes</option>
-                                                  <option value="3">Services</option>
-                                                  <option value="4">Businesses</option>
-                                                    <!--<option value="">All Categories</option>
-                                                    <option 
-                                                        v-if="resources"
-                                                        v-for="(category, index) in resources.materials.categories"
-                                                        :key="index"
-                                                        :value="index"
-                                                    >
-                                                    {{category.name}}
-                                                    </option>
-                                                    <option 
-                                                        v-for="(category, index) in resources.processes.categories"
-                                                        :key="index"
-                                                        :value="index"
-                                                    >
-                                                    {{category.name}}
-                                                    </option>
-                                                    <option 
-                                                        v-for="(category, index) in resources.services.categories"
-                                                        :key="index"
-                                                        :value="index"
-                                                    >
-                                                    {{category.name}}
-                                                    </option>
-                                                    <option value="12">Uncategorized</option>-->
+                                                <select v-model="selected" id="select" name="select" class="nice-select" >
+                                                  <option 
+                                                      v-for="(option, key) in searchOptions" 
+                                                      :key="key"
+                                                      v-bind:value="option.value"
+                                                      
+                                                  > 
+                                                  {{option.text}}
+                                                  </option>
+                                                
+                                                    
                                                 </select>
-                                                <input type="text" placeholder="Search...">
-                                                <button class="top-search-btn" type="submit"><i class="ion-ios-search-strong"></i> Search</button>
+                                                <input id="search-input" type="text" placeholder="Search..." v-model="searchText">
+                                                <button class="top-search-btn" type="submit" @click="autoSearch"><i class="ion-ios-search-strong"></i> Search</button>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- top-search-area end -->
                             </div>
-                            <div class="col-lg-3 col-md-4"> 
-                                <!-- header-cart-box start -->
-                                <div class="header-cart-box header-cart-box-2">
-                                    <!-- setting-account start -->
-                                    <div class="setting-account home-two-setting">
-                                        <div class="btn-group">
-                                            <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                               My Account <i class="fa fa-angle-down"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <ul>
-                                                  <router-link to="/" tag="li" active-class="active"><a>Register</a></router-link>
-                                                  <router-link to="/" tag="li" active-class="active"><a>Login</a></router-link>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- setting-account end -->
-                                    <!-- top-shopoing-cart start --><!--
-                                    <div id="top-shopoing-cart" class="btn-group">
-                                        <button class="btn-link shopping-cart home-two dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="ion-ios-cart"></i>
-                                            <span class="top-cart-total home-two">
-                                                <span class="item-text-number">2</span>
-                                                <span class="cart-text-items">My List</span>
-                                            </span>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <ul class="mini-cart-sub mini-cart-2">
-                                                <li class="single-cart">
-                                                    <div class="cart-img">
-                                                        <a href="single-product.html"><img src="img/small-product/1.jpg" alt=""></a>
-                                                    </div>
-                                                    <div class="cart-info">
-                                                        <a href="single-product.html">Chaz Kangeroo Hoodie</a>
-                                                        <p class="cart-quantity">×1</p>
-                                                        <p class="cart-price">$78.80</p>
-                                                    </div>
-                                                    <button class="cart-remove" title="Remove"><i class="ion-ios-close-empty"></i></button>
-                                                </li>
-                                                <li class="single-cart">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img src="img/small-product/2.jpg" alt=""></a>
-                                                    </div>
-                                                    <div class="cart-info">
-                                                        <a href="single-product.html">Voyage Yoga Bag</a>
-                                                        <p class="cart-quantity">×1</p>
-                                                        <p class="cart-price">$242.00</p>
-                                                    </div>
-                                                    <button class="cart-remove" title="Remove"><i class="ion-ios-close-empty"></i></button>
-                                                </li>
-                                                <li class="cart-total-box">
-                                                    <h5>Sub-Total :<span class="float-right">$264.00</span></h5>
-                                                    <h5>Eco Tax (-2.00) :<span class="float-right">$4.00</span></h5>
-                                                    <h5>VAT (20%) :<span class="float-right">$52.80</span></h5>
-                                                    <h5>Total :<span class="float-right">$320.80</span></h5>
-                                                </li>
-                                                <li>
-                                                    <p class="text-center cart-button">
-                                                        <a href="cart.html">View Cart</a>
-                                                        <a href="checkout.html">Checkout</a>
-                                                    </p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                  </div>-->
-                                    <!-- top-shopoing-cart end -->
-                                </div>
-                                <!-- header-cart-box end -->
+                            
+                            
+                            <!-- mobile-categorei-menu start -->
+                <div class="container d-block d-lg-none">
+                    <div class="vertical-menu pb-30">
+                        <span class="categorie-title mobile-categorei-menu">All Categories</span>
+                        <nav>  
+                            <div class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden " id="cate-mobile-toggle">
+                                <ul>
+                                    <li class="has-sub"><a href="#">Home </a>
+                                        
+                                        <!-- category submenu end-->
+                                    </li>
+                                    <li class="has-sub"><a href="#">Materials </a>
+                                        <ul class="category-sub">
+                                            <li class="menu-tile">Concrete</li>
+                                            <li><a href="">Digital Concrete</a></li>
+                                            <li><a href="">Geometrical Concrete</a></li>
+                  
+                                        </ul>
+                                        <!-- category submenu end-->
+                                    </li>
+                                    <li class="has-sub"><a href="#">Processes</a>
+                                        <ul class="category-sub">
+                                            <li><a href="#">process a</a></li>
+                                            <li><a href="#">process b</a></li>
+                                        
+                                        </ul>
+                                        <!-- category submenu end-->
+                                    </li>
+                                    <li class="has-sub"><a href="#">Services</a>
+                                        <ul class="category-sub">
+                                            <li><a href="#">subservice a</a></li>
+                                            <li><a href="#">subservice b</a></li>
+                                          
+                                        </ul>
+                                        <!-- category submenu end-->
+                                    </li>
+                                    <li><a href="#">Businesses</a></li>
+                                    
+                                   <!--
+                                    <li><a href="#">test</a></li>
+                                    <li><a href="#">test</a></li>-->
+                                </ul>
                             </div>
+                            <!-- category-menu-end -->
+                        </nav>
+                    </div>
+                </div>
+                <!-- mobile-categorei-menu end -->
                         </div>
+                           
+                        
                     </div>
                 </div> 
 </template>
 
 <script>
+import "popper.js";
+
 export default {
-  props: ["resources"]
+  props: ["resources"],
+  data() {
+    return {
+      searchText: "",
+      selected: "materials",
+      searchOptions: [
+        { text: "Materials", value: "materials" },
+        { text: "Processes", value: "processes" },
+        { text: "Services", value: "services" },
+        { text: "Businesses", value: "businesses" }
+      ]
+    };
+  },
+
+  methods: {
+    autoSearch() {
+      console.log(this.selected + " " + this.searchText);
+    }
+  },
+
+  mounted() {
+    /*--
+    02. jQuery MeanMenu
+------------------------- */
+    $("#mobile-menu-active").meanmenu({
+      meanScreenWidth: "991",
+      meanMenuContainer: ".mobile-menu-area .mobile-menu"
+    });
+    /*--
+  Vertical-Menu Activation
+-----------------------------*/
+    $(".categorie-title,.mobile-categorei-menu").on("click", function() {
+      $(".vertical-menu-list,.mobile-categorei-menu-list").slideToggle();
+    });
+
+    /*--
+  Category menu Activation
+------------------------------*/
+    $("#cate-toggle li.has-sub>a,#cate-mobile-toggle li.has-sub>a").on(
+      "click",
+      function() {
+        $(this).removeAttr("href");
+        var element = $(this).parent("li");
+        if (element.hasClass("open")) {
+          element.removeClass("open");
+          element.find("li").removeClass("open");
+          element.find("ul").slideUp();
+        } else {
+          element.addClass("open");
+          element.children("ul").slideDown();
+          element
+            .siblings("li")
+            .children("ul")
+            .slideUp();
+          element.siblings("li").removeClass("open");
+          element
+            .siblings("li")
+            .find("li")
+            .removeClass("open");
+          element
+            .siblings("li")
+            .find("ul")
+            .slideUp();
+        }
+      }
+    );
+  }
 };
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
+
 .top-search-area {
   margin: 27px 0;
   position: relative;
@@ -317,7 +351,7 @@ export default {
 }
 
 .header-cart-box .btn-group .btn-link {
-  color: #ffffff;
+  color: black;
   font-size: 14px;
   font-weight: 500;
   line-height: 30px;
@@ -390,7 +424,7 @@ export default {
 #top-shopoing-cart .item-text-number {
   background: #e64545 none repeat scroll 0 0;
   border-radius: 100%;
-  color: #ffffff;
+  color: #000000;
   display: inline-block;
   font-size: 10px;
   font-style: normal;
@@ -755,5 +789,173 @@ export default {
 
 .main-menu.main-menu-style-2 ul > li > a:hover {
   color: #ff6a00;
+}
+/*--- top-box-lang css ----*/
+.top-box-lang ul li button {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.top-box-lang ul li button:hover {
+  color: #0879c9;
+}
+
+.top-box-lang ul li {
+  display: inline-block;
+}
+
+.top-box-lang .dropdown-menu li {
+  display: block;
+}
+
+.top-box-lang .language img {
+  margin-right: 5px;
+}
+
+.top-box-lang.top-box-lang-2 ul li button:hover {
+  color: #ff6a00;
+}
+
+.top-box-lang-2 .btn-group .dropdown-menu li > a:hover {
+  color: #ff6a00;
+}
+
+.top-box-lang.top-box-lang-3 ul li button {
+  color: #fff;
+}
+
+.top-box-lang.top-box-lang-3 ul li button:hover {
+  color: #ffc833;
+}
+
+.top-box-lang-3 .btn-group .dropdown-menu li > a:hover {
+  color: #ffc833;
+}
+
+.top-box-lang.top-box-lang-4 ul li button:hover {
+  color: #e54545;
+}
+
+.top-box-lang.top-box-lang-4 .btn-group .dropdown-menu li > a:hover {
+  color: #e54545;
+}
+
+/*---- cate-mobile-toggle ------ */
+.vertical-menu > span {
+  background: #0879c9 none repeat scroll 0 0;
+  color: #ffffff;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  padding-left: 45px;
+  position: relative;
+  text-transform: uppercase;
+}
+
+#cate-mobile-toggle {
+  height: 265px;
+  overflow-y: auto;
+}
+
+#cate-mobile-toggle > ul {
+  padding: 22px 0 0;
+}
+
+.sidbar-style ul li {
+  padding-top: 10px;
+}
+
+#cate-mobile-toggle > ul li > a {
+  font-size: 15px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.sidebar-menu li:hover > a,
+.sidebar-menu li.has-sub:hover > a,
+.sidebar-menu li.has-sub.open > a {
+  color: #0879c9;
+}
+
+.sidebar-menu .category-sub {
+  padding-left: 10px;
+}
+
+#cate-mobile-toggle .category-sub li a {
+  display: block;
+  padding-left: 20px;
+  position: relative;
+}
+
+#cate-mobile-toggle .category-sub > li > a:before {
+  color: #0879c9;
+  content: "";
+  font-family: "Ionicons";
+  font-size: 9px;
+  left: 10px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.vertical-menu > span:after {
+  content: "";
+  font-family: "Ionicons";
+  font-size: 27px;
+  font-weight: normal;
+  left: 16px;
+  position: absolute;
+}
+
+.menu-hidden {
+  display: none;
+}
+
+.category-menu ul.category-sub {
+  display: none;
+}
+
+#cate-mobile-toggle > ul {
+  background: #f1f1f1 none repeat scroll 0 0;
+  padding: 20px 5px 20px 20px;
+}
+
+.sidbar-style > ul > li:first-child {
+  padding-top: 0;
+}
+
+.sidebar-menu ul li {
+  position: relative;
+}
+
+.sidbar-style li {
+  -webkit-transition: all 300ms ease-in 0s;
+  transition: all 300ms ease-in 0s;
+}
+
+#cate-mobile-toggle > ul li > a {
+  font-size: 15px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.category-menu.sidebar-menu .has-sub a span.holder:after,
+.category-menu.sidebar-menu li.has-sub > a:after {
+  content: "";
+  font-family: "Ionicons";
+  font-size: 14px;
+  position: absolute;
+  right: 20px;
+}
+
+.category-menu.sidebar-menu .has-sub.open a span.holder:after,
+.category-menu.sidebar-menu li.has-sub.open > a:after {
+  content: "";
 }
 </style>
