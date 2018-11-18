@@ -9,14 +9,14 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["loginUser"])
+    ...mapActions(["loginAdmin"])
   },
   components: {
     slider: Slider
   },
   beforeMount() {
-    this.loginUser({
-      email: "emmanuel.ramos2@upr.edu",
+    this.loginAdmin({
+      email: "willmer.lopez@upr.edu",
       password: "123456"
     });
   }

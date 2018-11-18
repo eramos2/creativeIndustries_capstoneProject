@@ -4,7 +4,7 @@ const state = {
     /** 
      * Object that holds current logged in user information 
      */
-    user: {}
+    administrator: {}
 };
 
 const getters = {};
@@ -12,20 +12,23 @@ const getters = {};
 
 const mutations = {
     /** 
-     * Sets state.user data to the received response from http call
+     * Sets state.administrator data to the received response from http call
      * if credentials were correct.
-     * @param {Array} data - Contains object with user data if login was valid, empty otherwise
+     * @param {Array} data - Contains object with admin data if login was valid, empty otherwise
      */
-    loginUser: (state, data) => {
+    loginAdmin: (state, data) => {
         if (data.length > 0) {
-            state.user = data[0];
+            state.administrator = data[0];
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
-            state.user = { ...state.user
+            state.administrator = { ...state.administrator
             }
         }
-
+        console.log("Data received in mutations loginAdmin administrators.js");
+        console.log(data);
+        console.log("This is the administrator");
+        console.log(state.administrator);
 
     }
 };
@@ -33,25 +36,26 @@ const mutations = {
 
 const actions = {
 
-    loginUser: (context, data) => {
+    /** 
+     * Makes http call to validate admin login credentials.
+     * @param {Array} data - Contains object with admin email and password
+     */
+    loginAdmin: (context, data) => {
         let email = data.email;
         let pass = data.password;
         Vue.http
             .post(
                 "", {
-                    //for testing
-                    //uemail: "emmanuel.ramos2@upr.edu",
-                    //upass: "123456"
-                    uemail: email,
-                    upass: pass
+                    aemail: email,
+                    apass: pass
                 }, {
                     emulateJSON: true,
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
                     },
                     params: {
-                        endpoint: "users",
-                        code: "0" //validate user credentials
+                        endpoint: "admin",
+                        code: "1" //validate admin credentials
                     }
                 }
             )
@@ -59,7 +63,7 @@ const actions = {
                 return response.json();
             })
             .then(data => {
-                context.commit('loginUser', data.resp);
+                context.commit('loginAdmin', data.resp);
             });
     }
 };
