@@ -1,4 +1,5 @@
 import Vue from 'vue';
+let serverfile = "prds.php";
 
 const state = {
     /**  
@@ -265,7 +266,7 @@ const actions = {
      */
     getBusinessesByName: (context, kword) => {
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: 'company',
                     code: '5', //code for getting all businesses
@@ -286,7 +287,7 @@ const actions = {
     /** Gets all businesses and sets state.businesses with this companies */
     setBusinesses: (context) => {
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: 'company',
                     code: '0' //code for getting all businesses
@@ -315,7 +316,7 @@ const actions = {
 
         // Query the server for a business with name like the given keyword
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: endpoint,
                     code: code,
@@ -338,7 +339,7 @@ const actions = {
                  * Get full business profile
                  */
                 Vue.http
-                    .get("", {
+                    .get(serverfile, {
                         params: {
                             endpoint: endpoint,
                             code: '7', //code to get business profile
@@ -360,7 +361,7 @@ const actions = {
                          * Get subproceses, submaterials, subservices of the current business
                          */
                         Vue.http
-                            .get("", {
+                            .get(serverfile, {
                                 params: {
                                     endpoint: endpoint,
                                     code: '2', //Code for getting all subservices of a business
@@ -376,7 +377,7 @@ const actions = {
                                 context.commit('setCurrentBusinessSubServices', dataObject);
                             }).then(() => {
                                 Vue.http
-                                    .get("", {
+                                    .get(serverfile, {
                                         params: {
                                             endpoint: endpoint,
                                             code: '3', //Code for getting all subproceses of a business
@@ -391,7 +392,7 @@ const actions = {
                                         context.commit('setCurrentBusinessSubProcesses', dataObject);
                                     }).then(() => {
                                         Vue.http
-                                            .get("", {
+                                            .get(serverfile, {
                                                 params: {
                                                     endpoint: endpoint,
                                                     code: '4', //Code for getting all submaterials of a business
@@ -434,7 +435,7 @@ const actions = {
         }
         // Query the server for businesses based on the subcategory name
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: 'company',
                     code: code,

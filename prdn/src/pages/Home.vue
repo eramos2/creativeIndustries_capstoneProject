@@ -9,15 +9,14 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["loginAdmin"])
+    ...mapActions(["verifyAdminEmail"])
   },
   components: {
     slider: Slider
   },
   beforeMount() {
-    this.loginAdmin({
-      email: "willmer.lopez@upr.edu",
-      password: "123456"
+    this.verifyAdminEmail({
+      email: "emmanuel.ramos2@upr.edu"
     });
   }
 };

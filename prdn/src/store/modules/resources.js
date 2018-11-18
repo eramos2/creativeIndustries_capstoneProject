@@ -1,4 +1,5 @@
 import Vue from 'vue';
+let serverfile = "prds.php";
 
 const state = {
     resources: {
@@ -163,7 +164,7 @@ const actions = {
             }
         };
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: 'material',
                     code: '2'
@@ -177,7 +178,7 @@ const actions = {
                 context.commit('setMaterials', data);
             });
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: 'service',
                     code: '2'
@@ -190,7 +191,7 @@ const actions = {
                 context.commit('setServices', data);
             });
         Vue.http
-            .get("", {
+            .get(serverfile, {
                 params: {
                     endpoint: 'process',
                     code: '2'
