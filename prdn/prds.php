@@ -159,6 +159,7 @@ function requestGetUser(){
             $uemail = mysqli_real_escape_string($con,$_GET['uemail']);
             $passcode = mysqli_real_escape_string($con,$_GET['passcode']);
             $utype = $_GET['utype'];
+            
             if($utype == 0)
                 $sql = "SELECT userId, email, firstName, lastName FROM recovery NATURAL JOIN users WHERE email = '". $uemail ."' AND passcode = '". $passcode ."' AND userType = '".$utype."';";
             else
@@ -456,7 +457,7 @@ function requestGetCompany(){
                     $sql = "INSERT INTO company (adminId, companyName, videoURL, website, phone, description, email, active)".
                             " VALUES ('".$aid."','".$name."','".$URL."','".$site."','".$phone."','".$descr."','".$email."','0'); ";
 
-                    $sql .= "SET @maxId := (select max(companyId) from company);";
+                    $sql .= "SET @maxId := (select max(companyId) from company);";  //Get last entered companyId prdn2.0 comment
 
                     $sql .= "INSERT INTO address (companyId, line, city, country, zipcode, latitude, longitude) VALUES (@maxId,'".$line."','".$city."','".$count."','".$zip."','".$lat."','".$lon."' );";
 
@@ -464,8 +465,8 @@ function requestGetCompany(){
                     if  (count($spids) >= 1){
                         $sql = $sql."INSERT INTO CAP(companyId, subProcessId, model, application, limitation) VALUES ";
                         if (count($spids) > 1){
-                            for ($x = 0; $x < count($spids); $x++) {
-                                if ($x < count($spids)-1){
+                            for ($x = 0; $x < count($spids); $x++) {  //Adds model(a) application(b) limitation (a) if any is given prdn2.0 comment
+                                if ($x < count($spids)-1){ //index is not the last one prdn2.0 comment 
 
         							if( !empty($spids[$x][3]) and !empty($spids[$x][4]) and !empty($spids[$x][5]) ){// !a!b!c
         								$sql = $sql."(@maxId,'".$spids[$x][1]."','".$spids[$x][3]."','".$spids[$x][4]."','".$spids[$x][5]."'), ";
@@ -492,7 +493,7 @@ function requestGetCompany(){
         								$sql = $sql."(@maxId,'".$spids[$x][1]."', NULL, NULL, NULL), ";
         							}
 
-        						}elseif($x == (count($spids) - 1)){
+        						}elseif($x == (count($spids) - 1)){ // Last item in array prdn 2.0 comment
 
         							if( !empty($spids[$x][3]) and !empty($spids[$x][4]) and !empty($spids[$x][5]) ){// !a!b!c
         								$sql = $sql."(@maxId,'".$spids[$x][1]."','".$spids[$x][3]."','".$spids[$x][4]."','".$spids[$x][5]."');";
@@ -520,7 +521,7 @@ function requestGetCompany(){
         							}
         						}
                             }
-                        }elseif(count($spids) == 1){
+                        }elseif(count($spids) == 1){ // only one item in array prdn2.0 comment
                             //$sql = $sql."(@maxId,'".$spids[0][1]."','".$spids[0][3]."','".$spids[0][4]."','".$spids[0][5]."');";
         					if( !empty($spids[0][3]) and !empty($spids[0][4]) and !empty($spids[0][5]) ){// !a!b!c
         						$sql = $sql."(@maxId,'".$spids[0][1]."','".$spids[0][3]."','".$spids[0][4]."','".$spids[0][5]."');";
@@ -551,7 +552,7 @@ function requestGetCompany(){
 
 
 
-                    if  (count($smids) >= 1){
+                    if  (count($smids) >= 1){ 
                         $sql = $sql."INSERT INTO CAM(companyId, subMaterialId, model, application, limitation) VALUES ";
                         if (count($smids) > 1){
                             for ($x = 0; $x < count($smids); $x++) {
