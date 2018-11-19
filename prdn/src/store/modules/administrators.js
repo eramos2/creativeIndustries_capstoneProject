@@ -7,7 +7,11 @@ const state = {
      */
     administrator: {},
 
-    recoveryAdminEmail: ""
+    recoveryAdminEmail: "",
+
+    businessRequests: {},
+
+
 };
 
 const getters = {};
@@ -57,6 +61,17 @@ const mutations = {
             console.log('Recover Admin Email Sent');
         }
 
+    },
+
+    setBusinessRequests: (state, data) => {
+
+        state.businessRequests = data;
+        console.log(state.businessRequests);
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.businessRequests = { ...state.businessRequests
+        }
     }
 };
 
@@ -157,6 +172,29 @@ const actions = {
                     //console.log("Email is not in db");
                     context.commit('recoveryAdminEmail', false);
                 }
+            });
+    },
+
+    /** 
+     * Makes http call to get all business submission requests.
+     */
+    getBusinessRequests: (context) => {
+
+        Vue.http
+            .get(
+                serverfile, {
+                    params: {
+                        endpoint: "submissions",
+                        code: "0" //get all business submissions
+                    }
+                }
+            )
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                //console.log(data);
+                context.commit('setBusinessRequests', data.resp);
             });
     }
 };

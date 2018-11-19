@@ -9,15 +9,13 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["verifyAdminEmail"])
+    ...mapActions(["getSubResourceByName"])
   },
   components: {
     slider: Slider
   },
   beforeMount() {
-    this.verifyAdminEmail({
-      email: "emmanuel.ramos2@upr.edu"
-    });
+    this.getSubResourceByName({ resource: "materials", name: "concrete" });
   }
 };
 </script>

@@ -15,7 +15,8 @@ const state = {
             name: 'Processes',
             categories: {}
         }
-    }
+    },
+    resourceSearchResult: {}
 };
 
 const getters = {
@@ -143,6 +144,20 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.resources = { ...state.resources
         }
+    },
+    /**   
+     * Sets state.resourceSearchResult to the received data 
+     * @param {object} data - Contains the result of the resource search
+     */
+    setResourceSearchResult: (state, data) => {
+        state.resourceSearchResult = data;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.resourceSearchResult = { ...state.resourceSearchResult
+        }
+        console.log(state.resourceSearchResult);
+
     }
 
 }
@@ -202,6 +217,38 @@ const actions = {
             })
             .then(data => {
                 context.commit('setProcesses', data);
+            });
+    },
+    /**  
+     * Gets sub material|service|process by name 
+     * @param {object} data - contains endpoint (material, service, process) and its name
+     */
+    getSubResourceByName: (context, data) => {
+        let endpnt;
+        let name = data.name;
+
+        if (data.resource == 'materials') {
+            endpnt = 'material';
+        } else if (data.resource == 'services') {
+            endpnt = 'service'
+        } else {
+            endpnt = 'process'
+        }
+
+        Vue.http
+            .get(serverfile, {
+                params: {
+                    endpoint: endpnt,
+                    code: '0', // get sub resource by name 
+                    keyword: name
+                }
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.resp);
+                context.commit('setResourceSearchResult', data.resp);
             });
     }
 
