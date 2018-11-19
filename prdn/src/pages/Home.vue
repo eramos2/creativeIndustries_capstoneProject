@@ -9,13 +9,31 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["getSubResourceByName"])
+    ...mapActions(["editBusinessInfo"])
   },
   components: {
     slider: Slider
   },
   beforeMount() {
-    this.getSubResourceByName({ resource: "materials", name: "concrete" });
+    // this.editBusinessInfo({
+    //   companyId: "97",
+    //   companyName: "McDonalds",
+    //   video: "",
+    //   website: "",
+    //   phone: "",
+    //   description: "",
+    //   logo: "",
+    //   email: "",
+    //   processes: [],
+    //   materials: [],
+    //   services: [],
+    //   line: "",
+    //   city: "",
+    //   country: "",
+    //   zipcode: "",
+    //   lati: "",
+    //   longi: ""
+    // });
   }
 };
 </script>

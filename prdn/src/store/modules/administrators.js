@@ -7,6 +7,8 @@ const state = {
      */
     administrator: {},
 
+    administrators: {},
+
     recoveryAdminEmail: "",
 
     businessRequests: {},
@@ -78,6 +80,40 @@ const mutations = {
 
 const actions = {
 
+    /**   
+     * Adds New admin to system db (Assumes email is not already on the system).
+     * @param {object} data - Receives email, password, firsName, lastName, occupation, birthday and city of new administrator
+     * 
+     */
+    addNewAdmin: (context, data) => {
+
+        Vue.http.post(
+            serverfile, {
+                aemail: data.email,
+                apass: data.pass,
+                aname: data.firstName,
+                alname: data.lastName,
+                aoccu: data.occupation,
+                abdate: data.birthday,
+                acity: data.city
+            }, {
+                emulateJSON: true,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                params: {
+                    endpoint: "admin",
+                    code: "0", //add new admin
+                    du: true
+                }
+            }
+        ).then(response => {
+            return response.json();
+        }).then(data => {
+            console.log(data.resp);
+            //context.commit('addNewAdmin', data);
+        });
+    },
     /** 
      * Makes http call to validate admin login credentials.
      * @param {Array} data - Contains object with admin email and password

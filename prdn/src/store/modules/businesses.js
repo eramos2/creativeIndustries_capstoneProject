@@ -1,5 +1,6 @@
 import Vue from 'vue';
 let serverfile = "prds.php";
+let serverPath = "http://localhost:80/Server/prds.php";
 
 const state = {
     /**  
@@ -454,6 +455,53 @@ const actions = {
                 //console.log(dataObject);
                 context.commit('setBusinesses', dataObject);
             });
+    },
+    /** 
+     * Edit Business Info
+     * @param {object} data - Receives companyId, companyName, video, website, phone, description,
+     * logo, email, processes, materials, services, line, city, country, zipcode, lati, longi
+     */
+    editBusinessInfo: (context, data) => {
+        console.log("I'm modifying company " + id);
+        var dataToSend = {
+            endpoint: 'company',
+            code: '9',
+            du: true,
+            multi: true,
+            cid: data.companyId,
+            name: data.companyName,
+            URL: data.video,
+            site: data.website,
+            phone: data.phone,
+            descr: data.description,
+            img: data.logo,
+            cemail: data.email,
+            spids: data.processes,
+            smids: data.materials,
+            ssids: data.services,
+            line: data.line,
+            city: data.city,
+            count: data.country,
+            zip: data.zipcode,
+            lat: data.lati,
+            lon: data.longi
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                console.log('Company Edited');
+                console.log(data);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
     }
 
 }
