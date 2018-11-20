@@ -1,11 +1,20 @@
 <template>
-  <div id="app">
+  <div>
    <login></login>
-  </div>
+   <!-- <user></user> -->
+   <!-- <admin></admin> -->
+   <!-- <superadmin></superadmin> -->
+   <!-- <register></register> -->
+    
+    </div>
 </template>
 
 <script>
-import Login from "./components/login/Login.vue";
+import Login from "./pages/Login.vue";
+import User from "./pages/User.vue";
+import Admin from "./pages/Admin.vue";
+import Superadmin from "./pages/Superadmin.vue";
+import Register from "./pages/Register.vue";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -14,7 +23,11 @@ import "bootstrap";
 export default {
   name: "app",
   components: {
-    login: Login
+    login: Login,
+    user: User,
+    admin: Admin,
+    superadmin: Superadmin,
+    register: Register
   }
 };
 </script>
