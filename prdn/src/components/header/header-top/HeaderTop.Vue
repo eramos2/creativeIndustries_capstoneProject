@@ -38,7 +38,7 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <ul>
-                                                       <router-link to="/" tag="li" active-class="active"><a>Register</a></router-link>
+                                                       <router-link to="/user" tag="li" active-class="active"><a>Register</a></router-link>
                                                   <router-link to="/" tag="li" active-class="active"><a>Login</a></router-link>
                                                     </ul>
                                                 </div>

@@ -4,6 +4,7 @@ import SubCategoriesPage from "./pages/SubCategoriesPage.vue";
 import SingleItemPage from "./pages/SingleItemPage.vue";
 import BusinessPage from "./pages/BusinessPage.vue";
 import SearchPage from "./pages/SearchPage.vue";
+import User from "./pages/User.vue";
 
 /**
  * Where we set all the routes for the webapp's body and its components
@@ -18,6 +19,11 @@ export const routes = [{
         path: '/businesses/:businessName',
         name: 'businessLink',
         component: BusinessPage
+    },
+    {
+        path: '/user',
+        name: 'userLink',
+        component: User
     },
     {
         path: '/search',
