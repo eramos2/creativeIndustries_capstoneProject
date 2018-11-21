@@ -14,6 +14,13 @@ const state = {
      */
     currentBusiness: {
 
+    },
+    /**
+     * Edit business flag (1=success, 0=nothing happened, -1=failed)
+     * 
+     */
+    editedBusiness: {
+        value: ""
     }
 };
 
@@ -255,6 +262,19 @@ const mutations = {
         //console.log(state.currentBusiness);
 
 
+    },
+    /** 
+     * Set editBusiness flag
+     */
+    editBusinessInfo: (state, data) => {
+        console.log(data);
+        state.editedBusiness['value'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.editedBusiness = { ...state.editedBusiness
+        }
+        console.log(state.editedBusiness);
     }
 
 }
@@ -457,54 +477,79 @@ const actions = {
             });
     },
     /** 
-     * Edit Business Info
+     * Edit Business Info, calculates latitude and longitude from the given address
      * @param {object} data - Receives companyId, companyName, video, website, phone, description,
-     * logo, email, processes, materials, services, line, city, country, zipcode, lati, longi
+     * logo, email, processes, materials, services, line, city, country, zipcode
      */
     editBusinessInfo: (context, data) => {
-        console.log("I'm modifying company " + id);
-        var dataToSend = {
-            endpoint: 'company',
-            code: '9',
-            du: true,
-            multi: true,
-            cid: data.companyId,
-            name: data.companyName,
-            URL: data.video,
-            site: data.website,
-            phone: data.phone,
-            descr: data.description,
-            img: data.logo,
-            cemail: data.email,
-            spids: data.processes,
-            smids: data.materials,
-            ssids: data.services,
-            line: data.line,
-            city: data.city,
-            count: data.country,
-            zip: data.zipcode,
-            lat: data.lati,
-            lon: data.longi
-        };
+        console.log("I'm modifying company " + data.companyId);
+        let geocoder = new google.maps.Geocoder();
+        let addressLatLong = data.address + ', ' + data.city + ', ' + data.country;
 
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                console.log('Company Edited');
-                console.log(data);
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+        //Get google maps latitute and longitude from the business address
+        //Then proceeds to do call to edit business with the given info
+        geocoder.geocode({
+            'address': addressLatLong
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                let latitudeAdd = '';
+                let longitudeAdd = '';
+                console.log(results);
+                latitudeAdd = results[0].geometry.location.lat();
+                longitudeAdd = results[0].geometry.location.lng();
+                console.log(data.companyName + "\n" + data.video + "\n" + data.website + "\n" + data.phone + "\n" + data.description + "\n" +
+                    null + "\n" + data.email + "\n" + data.processes + "\n" + data.services + "\n" + data.materials + "\n" + data.address + "\n" + data.city + "\n" +
+                    data.country + "\n" + data.zipcode + "\n" + latitudeAdd + "\n" + longitudeAdd);
+
+                var dataToSend = {
+                    endpoint: 'company',
+                    code: '9',
+                    du: true,
+                    multi: true,
+                    cid: data.companyId,
+                    name: data.companyName,
+                    URL: data.video,
+                    site: data.website,
+                    phone: data.phone,
+                    descr: data.description,
+                    img: data.logo,
+                    cemail: data.email,
+                    spids: data.processes, //subprocesses id array
+                    smids: data.materials, //submaterials id array
+                    ssids: data.services, //subservices id array
+                    line: data.address,
+                    city: data.city,
+                    count: data.country,
+                    zip: data.zipcode,
+                    lat: latitudeAdd,
+                    lon: longitudeAdd
+                };
+
+                $.ajax({
+                    url: serverPath,
+                    data: dataToSend,
+                    contentType: "application/json",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data, textStatus, jqXHR) {
+                        console.log('Company Edited');
+                        console.log(data);
+                        context.commit('editBusinessInfo', data.resp);
+                    },
+                    error: function (data, textStatus, jqXHR) {
+                        console.log("textStatus: " + textStatus);
+                        console.log("Server Not Found: Please Try Again Later!");
+                    }
+                });
+            } else {
+                console.log("Geocode was not successful for the following reason: " + status);
             }
-        });
+        })
     }
-
 }
+
+
+
 
 export default {
     state,

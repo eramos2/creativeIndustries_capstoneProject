@@ -1,5 +1,7 @@
 import Vue from 'vue';
 let serverfile = "prds.php";
+//For local development
+let serverPath = "http://localhost:80/Server/prds.php";
 
 const state = {
     /** 
@@ -7,7 +9,11 @@ const state = {
      */
     user: {},
 
-    recoveryUserEmail: ""
+    recoveryUserEmail: "",
+    userFlags: {
+        passChanged: "",
+        infoChanged: ""
+    }
 };
 
 const getters = {};
@@ -54,6 +60,32 @@ const mutations = {
             console.log('Recover Email Sent');
         }
 
+    },
+    /** 
+     * Set userFlags passChanged flag
+     */
+    changeUserPassword: (state, data) => {
+        console.log(data);
+        state.userFlags['passChanged'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = { ...state.userFlags
+        }
+        console.log(state.userFlags);
+    },
+    /** 
+     * Set userFlags infoChanged flag
+     */
+    editUserInfo: (state, data) => {
+        console.log(data);
+        state.userFlags['infoChanged'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = { ...state.userFlags
+        }
+        console.log(state.userFlags);
     }
 };
 
@@ -96,9 +128,9 @@ const actions = {
     },
 
     /**  
-     * Http calls verifies if given email is in the database, if it is
+     * Http call verifies if given email is in the database, if it is
      * it will proceed to send email with recovery password
-     * @param {String} data - Object that contains user email 
+     * @param {object} data - Object that contains user email 
      * @return {boolean} - Returns true if email is in db, and recover email sent was sucessfull, and false otherwise
      */
     verifyUserEmail: (context, data) => {
@@ -158,6 +190,75 @@ const actions = {
                     context.commit('recoveryUserEmail', false);
                 }
             });
+    },
+    /**  
+     * Changes user password 
+     * @param {object} data - Contains user email, new user password, and user id
+     */
+    changeUserPassword: (context, data) => {
+        console.log("I'm changing password for " + data.email + " and userId = " + data.id);
+        state.userFlags['passChanged'] = "";
+
+        var dataToSend = {
+            endpoint: 'users',
+            code: '4',
+            du: true,
+            uemail: data.email,
+            upass: data.pass,
+            uid: data.id
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                console.log(data.resp);
+                context.commit("changeUserPassword", data.resp);
+
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**  
+     * Changes user firstName, lastName, occupation and city 
+     * @param {object} data - Contains user firstName, user lastName, and user occupation, and user city
+     */
+    editUserInfo: (context, data) => {
+        console.log("I'm modifying user " + data.firstName);
+
+        state.userFlags['infoChanged'] = "";
+
+        var dataToSend = {
+            endpoint: 'users',
+            code: '2',
+            uid: data.id,
+            uname: data.firstName,
+            ulname: data.lastName,
+            uoccu: data.occupation,
+            ucity: data.city,
+            du: true
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                context.commit("editUserInfo", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
     }
 
 

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 let serverfile = "prds.php";
+//For local development
+let serverPath = "http://localhost:80/Server/prds.php";
 
 const state = {
     /** 
@@ -12,6 +14,11 @@ const state = {
     recoveryAdminEmail: "",
 
     businessRequests: {},
+
+    adminFlags: {
+        passChanged: "",
+        infoChanged: ""
+    }
 
 
 };
@@ -74,6 +81,32 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.businessRequests = { ...state.businessRequests
         }
+    },
+    /** 
+     * Set adminPassChanged flag
+     */
+    changeAdminPassword: (state, data) => {
+        console.log(data);
+        state.adminFlags['passChanged'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.adminFlags = { ...state.adminFlags
+        }
+        console.log(state.adminFlags);
+    },
+    /** 
+     * Set adminFlags infoChanged flag
+     */
+    editAdminInfo: (state, data) => {
+        console.log(data);
+        state.adminFlags['infoChanged'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.adminFlags = { ...state.adminFlags
+        }
+        console.log(state.adminFlags);
     }
 };
 
@@ -232,6 +265,76 @@ const actions = {
                 //console.log(data);
                 context.commit('setBusinessRequests', data.resp);
             });
+    },
+    /**  
+     * Changes admin password 
+     * @param {object} data - Contains admin email, new admin password, and admin id
+     */
+    changeAdminPassword: (context, data) => {
+        console.log("I'm recovering password for " + data.email + "and adminId = " + data.id);
+        state.adminFlags['passChanged'] = "";
+
+        var dataToSend = {
+            endpoint: 'admin',
+            code: '4',
+            du: true,
+            aemail: data.email,
+            aid: data.id,
+            apass: data.pass
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                context.commit("changeAdminPassword", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**  
+     * Changes admin firstName, lastName, occupation and city 
+     * @param {object} data - Contains admin firstName, lastName,occupation, adn city
+     */
+    editAdminInfo: (context, data) => {
+        console.log("I'm adding admin " + data.firstName);
+
+
+        state.adminFlags['infoChanged'] = "";
+
+        var dataToSend = {
+            endpoint: 'admin',
+            code: '2',
+            du: true,
+            aid: data.id,
+            aname: data.firstName,
+            alname: data.lastName,
+            aoccu: data.occupation,
+            acity: data.city
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/x-www-form-urlencoded",
+            type: "POST",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+
+                context.commit("editAdminInfo", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+
     }
 };
 

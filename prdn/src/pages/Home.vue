@@ -9,30 +9,21 @@ import { mapActions } from "vuex";
 
 export default {
   methods: {
-    ...mapActions(["editBusinessInfo"])
+    ...mapActions(["editAdminInfo"])
   },
   components: {
     slider: Slider
   },
   beforeMount() {
-    // this.editBusinessInfo({
-    //   companyId: "97",
-    //   companyName: "McDonalds",
-    //   video: "",
-    //   website: "",
-    //   phone: "",
-    //   description: "",
-    //   logo: "",
-    //   email: "",
-    //   processes: [],
-    //   materials: [],
-    //   services: [],
-    //   line: "",
-    //   city: "",
-    //   country: "",
-    //   zipcode: "",
-    //   lati: "",
-    //   longi: ""
+    // this.editAdminInfo({
+    // id: "47",
+    // id: "31",
+    // firstName: "Emmanuel",
+    // lastName: "Ramos",
+    // occupation: "Soft v",
+    // city: "Mayaguez"
+    //  email: "emmanuel.ramos2@upr.edu",
+    // pass: "12345678"
     // });
   }
 };
