@@ -24,7 +24,7 @@ Vue.use(VeeValidate);
 //For production build
 //Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/prds.php";
 //For local Development
-Vue.http.options.root = "http://localhost/Server/prds.php";
+Vue.http.options.root = "http://localhost/Server/";
 
 const router = new VueRouter({
   routes: routes
