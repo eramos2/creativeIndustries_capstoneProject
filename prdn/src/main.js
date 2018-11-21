@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import VeeValidate from 'vee-validate'
+
 //import BootstrapVue from 'bootstrap-vue'
 
 import 'bootstrap'
@@ -18,7 +20,7 @@ import {
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
-
+Vue.use(VeeValidate);
 //For production build
 //Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/prds.php";
 //For local Development

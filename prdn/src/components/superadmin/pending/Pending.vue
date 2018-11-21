@@ -1,0 +1,37 @@
+<template>
+    <div class="tab-pane fade" id="pending-requests" role="tabpanel">
+        <div class="myaccount-content">
+            <h3>Pending Requests</h3>
+                <div class="container">
+                    <div class="row addMarginTop">
+                        <h2><span class="glyphicon glyphicon-exclamation-sign"></span> Pending Requests</h2>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped table-hover table-bordered tableContainer" id="pendingRequestTable">
+            <thead>
+            <th>#</th>
+            <th data-field="name" data-sortable="true">Name</th>
+            <th data-field="description" data-sortable="true">Status</th>
+            <th data-field="city" data-sortable="true">Date</th>
+            </thead>
+            <tbody id="requestsList">
+            </tbody>
+        </table>
+
+        <div class="col-md-4  pull-right">
+            <!-- <button type="button" class="btn btn-primary btn-lg" onClick="getPendingRequestRadio()">View</button>
+            <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
+            <button>View</button>
+        </div>
+
+    </div>
+</div>
+
+                                    </div>
+                                </div>
+</template>
+<script>
+</script>
+<style>
+</style>
