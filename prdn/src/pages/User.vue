@@ -1,5 +1,4 @@
 <template>
-<!-- <form @submit.prevent="validateBeforeSubmit">  -->
  <!-- My Account page content Start -->
             <div id="myaccount-page-content">
                 <div class="container">
@@ -19,19 +18,9 @@
                          <!-- My Account Tab Content Start -->
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
-
-                              
-                                    
-                                
-                                   <useraccount></useraccount>
-                                    <userprojects></userprojects>
-                                    <usernewbusiness></usernewbusiness>
-                               
-
-                                 
-                                
-
-
+                                   <useraccount></useraccount> 
+                                    <!-- <userprojects></userprojects> -->
+                                    <!-- <usernewbusiness></usernewbusiness> -->
                         </div>
                         </div>
                          <!-- My Account Tab Content End -->
@@ -40,9 +29,6 @@
                          </div>
                         </div>
                         <!-- My Account Tab Menu End -->
-
-                       
-
 </template>
 <script>
 import UserAccount from "../components/user/UserAccount.vue";

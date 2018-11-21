@@ -1,8 +1,9 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit">      
+    
                                     <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="orders" role="tabpanel">
                                     <div class="myaccount-content">
+                                      <form @submit.prevent="validateBeforeSubmit">  
                                         <h3>My Projects Details</h3>
 
                                         <div class="account-details-form checkout-form-list">
@@ -54,13 +55,44 @@
                                                 </div>
                                             </form>
                                         </div>
+                                        </form>
                                     </div>
                                 </div>
 
-                                            </form>
+                                            
                                 <!-- Single Tab Content End -->
 </template>
 <script>
+/**
+ * Custom Messages for messages if an error appear after validation
+ */
+import { Validator } from "vee-validate";
+const dictionary = {
+  en: {
+    custom: {
+      firstName: {
+        required: "Please enter your first name.",
+        alpha: "The first name field may only contain alphabetic characters.",
+        max: "The first name field may not be greater than 15 characters."
+      },
+      lastName: {
+        required: "Please enter your last name.",
+        alpha: "The last name field may only contain alphabetic characters.",
+        max: "The last name field may not be greater than 15 characters."
+      },
+      confirmedpassword: {
+        required: " The confirmed password field is required.",
+        min: " The confirmed password field must be at least 8 characters",
+        max:
+          " The confirmed password field may not be greater than 10 characters.",
+        confirmed: "The confirmed password confirmation does not match."
+      }
+    }
+  }
+};
+
+Validator.localize(dictionary);
+
 export default {
   data: () => ({
     firstName: "",
