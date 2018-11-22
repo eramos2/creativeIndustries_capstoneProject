@@ -6,53 +6,66 @@ import BusinessPage from "./pages/BusinessPage.vue";
 import SearchPage from "./pages/SearchPage.vue";
 import User from "./pages/User.vue";
 import Login from "./pages/Login.vue";
+import Register from "./pages/Register.vue";
+import Admin from "./pages/Admin.vue"
 
 /**
  * Where we set all the routes for the webapp's body and its components
  * 
  */
 export const routes = [{
-        path: '/',
-        name: 'homeLink',
-        component: Home
-    },
-    {
-        path: '/businesses/:businessName',
-        name: 'businessLink',
-        component: BusinessPage
-    },
-    {
-        path: '/user',
-        name: 'userLink',
-        component: User
-    },
-    {
-        path: '/login',
-        name: 'loginLink',
-        component: Login
-    },
-    {
-        path: '/search',
-        name: 'searchLink',
-        component: SearchPage
-    },
-    {
-        path: '/:resourceName',
-        name: 'categoriesLink',
-        component: CategoriesPage
-    },
-    {
-        path: '/:resourceName/:categoryName',
-        name: 'subcategoriesLink',
-        component: SubCategoriesPage
-    },
-    {
-        path: '/:resourceName/:categoryName/:subcategoryName',
-        name: 'singleitemLink',
-        component: SingleItemPage
-    },
-    {
-        path: '*',
-        redirect: '/'
-    }
+    path: '/',
+    name: 'homeLink',
+    component: Home
+},
+{
+    path: '/businesses/:businessName',
+    name: 'businessLink',
+    component: BusinessPage
+},
+{
+    path: '/user',
+    name: 'userLink',
+    component: User
+},
+{
+    path: '/admin',
+    name: 'adminLink',
+    component: Admin
+
+},
+{
+    path: '/register',
+    name: 'registerLink',
+    component: Register
+},
+{
+    path: '/login',
+    name: 'loginLink',
+    component: Login
+},
+{
+    path: '/search',
+    name: 'searchLink',
+    component: SearchPage
+},
+{
+    path: '/:resourceName',
+    name: 'categoriesLink',
+    component: CategoriesPage
+},
+{
+    path: '/:resourceName/:categoryName',
+    name: 'subcategoriesLink',
+    component: SubCategoriesPage
+},
+{
+    path: '/:resourceName/:categoryName/:subcategoryName',
+    name: 'singleitemLink',
+    component: SingleItemPage
+},
+{
+    path: '*',
+    redirect: '/'
+}
 ]

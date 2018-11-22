@@ -44,7 +44,7 @@
                                                 <div class="col-lg-6">
                                                 <div class="single-input-item">
                                                     <label for="telephone" class="required">Telephone</label>
-                                                   <input name="telephone" v-validate="'required|numeric|max:10|min:10'" type="text" v-model="telephone" id = "telephone"  placeholder="Telephone" class="form-control" >
+                                                   <input name="telephone" v-validate="'required|numeric|max:10|min:10'" type="text" v-model="telephone" id = "telephone"  placeholder="Telephone: 7877775555" class="form-control" >
                                                     <p class="text-danger" v-if="errors.has('telephone')">{{ errors.first('telephone') }}</p>
                                                 </div>
                                                 </div>

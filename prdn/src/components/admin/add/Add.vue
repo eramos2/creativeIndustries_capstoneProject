@@ -1,9 +1,9 @@
 <template>
  <form @submit.prevent="validateBeforeSubmit">  
        <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="add" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <h3>Add</h3>
+    <div class="tab-pane fade" id="add" role="tabpanel">
+        <div class="myaccount-content">
+            <h3>Add</h3>
 
         <div class="container" id="addBsnPage">
         <div class="row marginTop">

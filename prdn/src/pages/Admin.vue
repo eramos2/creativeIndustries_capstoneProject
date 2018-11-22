@@ -77,8 +77,48 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.account-text-wrapper {
+  background-color: #fff;
+  padding: 50px 30px;
+}
+.myaccount-tab-menu {
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.myaccount-tab-menu a {
+  border: 1px solid #ededed;
+  border-bottom: none;
+  color: #727272;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  display: block;
+  padding: 15px;
+  text-transform: uppercase;
+}
+
+.myaccount-tab-menu a:last-child {
+  border-bottom: 1px solid #ededed;
+}
+
+.myaccount-tab-menu a:hover,
+.myaccount-tab-menu a.active {
+  background-color: #12a4dd;
+  color: #fff;
+}
+
+.myaccount-tab-menu a i.fa {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  width: 25px;
+}
+
 .myaccount-content {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
   border: 1px solid #ededed;
   padding: 30px;
@@ -91,14 +131,6 @@ export default {
 @media only screen and (max-width: 575px) {
   .myaccount-content {
     padding: 20px 15px;
-  }
-}
-@media (min-width: 786px) {
-  .col-md-4 {
-    -webkit-box-flex: 0;
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: 33.3%;
   }
 }
 
@@ -128,8 +160,68 @@ export default {
   color: #39b0ff;
 }
 
-.row {
-  margin-bottom: 2.5rem;
-  margin-top: 2px;
+.myaccount-table {
+  white-space: nowrap;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.myaccount-table table th,
+.myaccount-table .table th {
+  color: #262626;
+  padding: 10px;
+}
+
+.myaccount-table table td,
+.myaccount-table .table td {
+  padding: 15px 10px;
+  vertical-align: middle;
+}
+
+.myaccount-table table .btn,
+.myaccount-table .table .btn {
+  padding: 10px 20px;
+}
+#myaccount-page-content fieldset {
+  border: none;
+  padding: 0;
+}
+
+#myaccount-page-content fieldset legend {
+  border-bottom: 1px solid #c5c5c5;
+  color: #000;
+  font-size: 24px;
+  line-height: 1.5;
+  padding-bottom: 10px;
+  text-transform: capitalize;
+  margin-bottom: 0;
+}
+
+#myaccount-page-content .btn {
+  background: #12a4dd;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 0;
+}
+
+#myaccount-page-content fieldset .single-input-item {
+  margin-top: 30px;
+}
+
+#myaccount-page-content .single-input-item input[type="password"] {
+  background: #fff;
+  border: 1px solid #ebebeb;
+  border-radius: 0;
+  width: 100%;
+  padding: 0 0 0 10px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  height: 45px;
+}
+.account-details-form .btn {
+  margin-top: 30px;
+}
+.account-details-form .btn {
+  margin-top: 30px;
 }
 </style>
