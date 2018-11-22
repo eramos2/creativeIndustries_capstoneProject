@@ -1,7 +1,7 @@
 <template>
   <div>
-   <!-- <login></login> -->
-   <user></user>
+   <login></login>
+   <!-- <user></user> -->
    <!-- <admin></admin> -->
    <!-- <superadmin></superadmin> -->
    <!-- <register></register> -->
