@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper home-2">
-  <div>
+  
    <!--<login></login>-->
    <!-- <user></user> -->
    <!-- <admin></admin> -->

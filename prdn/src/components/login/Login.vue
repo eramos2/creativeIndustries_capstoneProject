@@ -3,11 +3,10 @@
             <div class="login-page-area">
                 <div class="container">
                     <div class="login-area">
-                    <!-- <login-new-customer> </login-new-customer> -->
-                    <!-- <login-returning-customer> </login-returning-customer> -->
+                    <login-returning-customer> </login-returning-customer>
                     <!-- <login-admin></login-admin> -->
                     <!-- <recoverpassword></recoverpassword> -->
-                    <changepassword></changepassword>
+                    <!-- <changepassword></changepassword> -->
 
                     </div>
                     </div>
@@ -16,7 +15,6 @@
 </template>
 
 <script>
-import LoginNewCustomer from "./LoginNewCustomer.vue";
 import LoginReturningCustomer from "./LoginReturningCustomer.vue";
 import LoginAdmin from "./LoginAdmin.vue";
 import RecoverPassword from "./RecoverPassword.vue";
@@ -24,7 +22,6 @@ import ChangePassword from "./ChangePassword.vue";
 
 export default {
   components: {
-    loginNewCustomer: LoginNewCustomer,
     loginReturningCustomer: LoginReturningCustomer,
     loginadmin: LoginAdmin,
     recoverpassword: RecoverPassword,

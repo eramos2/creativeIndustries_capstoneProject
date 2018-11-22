@@ -5,6 +5,7 @@ import SingleItemPage from "./pages/SingleItemPage.vue";
 import BusinessPage from "./pages/BusinessPage.vue";
 import SearchPage from "./pages/SearchPage.vue";
 import User from "./pages/User.vue";
+import Login from "./pages/Login.vue";
 
 /**
  * Where we set all the routes for the webapp's body and its components
@@ -24,6 +25,11 @@ export const routes = [{
         path: '/user',
         name: 'userLink',
         component: User
+    },
+    {
+        path: '/login',
+        name: 'loginLink',
+        component: Login
     },
     {
         path: '/search',
