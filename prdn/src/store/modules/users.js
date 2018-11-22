@@ -2,6 +2,8 @@ import Vue from 'vue';
 let serverfile = "prds.php";
 //For local development
 let serverPath = "http://localhost:80/Server/prds.php";
+//For production build
+//let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
 
 const state = {
     /** 
@@ -12,7 +14,9 @@ const state = {
     recoveryUserEmail: "",
     userFlags: {
         passChanged: "",
-        infoChanged: ""
+        infoChanged: "",
+        recoverPassword: "",
+        loggedIn: true //Is user loggedIn - for testing purposes
     }
 };
 
@@ -80,6 +84,20 @@ const mutations = {
     editUserInfo: (state, data) => {
         console.log(data);
         state.userFlags['infoChanged'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = { ...state.userFlags
+        }
+        console.log(state.userFlags);
+    },
+
+    /** 
+     * Set userFlags recoverPassword flag
+     */
+    recoverUserPassword: (state, data) => {
+        console.log(data);
+        state.userFlags['recoverPassword'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -192,7 +210,7 @@ const actions = {
             });
     },
     /**  
-     * Changes user password 
+     * Changes user password (Assumes user is logged in)
      * @param {object} data - Contains user email, new user password, and user id
      */
     changeUserPassword: (context, data) => {
@@ -253,6 +271,73 @@ const actions = {
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
                 context.commit("editUserInfo", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**     
+     * Checks if the provided email and passcode are correct, it will proceed to change the user's password
+     * to the one provided
+     * @param {object} data - Contains user's email, passcode, and new password
+     */
+    recoverUserPassword: (context, data) => {
+        console.log("I'm verifying passcode for " + data.email);
+
+        var dataToSend = {
+            endpoint: 'users',
+            code: '3',
+            passcode: data.passcode,
+            uemail: data.email,
+            utype: 0 //User type = 0, admin type = 1 
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+
+                var response = data.resp;
+                console.log(response);
+                if (response.length > 0) {
+
+                    console.log("I'm recovering password for " + data.email);
+
+                    dataToSend = {
+                        endpoint: 'users',
+                        code: '3',
+                        du: true,
+                        multi: true,
+                        uemail: data.email,
+                        upass: data.password,
+                        uid: data.id,
+                        type: 0
+                    };
+
+                    $.ajax({
+                        url: serverPath,
+                        data: dataToSend,
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            context.commit("recoverUserPassword", data.resp);
+                        },
+                        error: function (data, textStatus, jqXHR) {
+                            console.log("textStatus: " + textStatus);
+                            console.log("Server Not Found: Please Try Again Later!");
+                        }
+                    });
+                } else {
+                    console.log("Invalid Email or Passcode");
+                    context.commit("recoverUserPassword", data.resp);
+                }
+
             },
             error: function (data, textStatus, jqXHR) {
                 console.log("textStatus: " + textStatus);

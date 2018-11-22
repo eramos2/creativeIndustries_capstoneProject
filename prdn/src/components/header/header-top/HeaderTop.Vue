@@ -38,8 +38,30 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <ul>
-                                                       <router-link to="/user" tag="li" active-class="active"><a>Register</a></router-link>
-                                                  <router-link to="/" tag="li" active-class="active"><a>Login</a></router-link>
+                                                        <router-link 
+                                                          to="/user" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="!loggedIn"
+                                                        >
+                                                        <a>Register</a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="!loggedIn"
+                                                        >
+                                                        <a>Login</a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/user" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="loggedIn"
+                                                        >
+                                                        <a>Account Details</a>
+                                                        </router-link>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -72,7 +94,13 @@
 <script>
 import "popper.js";
 
-export default {};
+export default {
+  computed: {
+    loggedIn() {
+      return this.$store.state.users.userFlags.loggedIn;
+    }
+  }
+};
 </script>
 
 <style>

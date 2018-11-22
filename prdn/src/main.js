@@ -4,7 +4,6 @@ import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
 
 //import BootstrapVue from 'bootstrap-vue'
-
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'owl.carousel'
@@ -22,7 +21,7 @@ Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
 //For production build
-//Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/prds.php";
+//Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/";
 //For local Development
 Vue.http.options.root = "http://localhost/Server/";
 

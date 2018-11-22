@@ -2,6 +2,8 @@ import Vue from 'vue';
 let serverfile = "prds.php";
 //For local development
 let serverPath = "http://localhost:80/Server/prds.php";
+//For production build
+//let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
 
 const state = {
     /** 
@@ -17,7 +19,8 @@ const state = {
 
     adminFlags: {
         passChanged: "",
-        infoChanged: ""
+        infoChanged: "",
+        recoverPassword: ""
     }
 
 
@@ -96,9 +99,22 @@ const mutations = {
         console.log(state.adminFlags);
     },
     /** 
-     * Set adminFlags infoChanged flag
+     * Set adminFlags recoverPassword flag
      */
     editAdminInfo: (state, data) => {
+        console.log(data);
+        state.adminFlags['recoverPassword'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.adminFlags = { ...state.adminFlags
+        }
+        console.log(state.adminFlags);
+    },
+    /** 
+     * Set adminFlags infoChanged flag
+     */
+    recoverAdminPassword: (state, data) => {
         console.log(data);
         state.adminFlags['infoChanged'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
@@ -335,6 +351,73 @@ const actions = {
             }
         });
 
+    },
+    /**     
+     * Checks if the provided email and passcode are correct, it will proceed to change the admin's password
+     * to the one provided
+     * @param {object} data - Contains admin's email, passcode, and new password
+     */
+    recoverAdminPassword: (context, data) => {
+        console.log("I'm verifying passcode for " + data.email);
+
+        var dataToSend = {
+            endpoint: 'users',
+            code: '3',
+            passcode: data.passcode,
+            uemail: data.email,
+            utype: 1 //User type = 0, admin type = 1 
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+
+                var response = data.resp;
+                console.log(response);
+                if (response.length > 0) {
+
+                    console.log("I'm recovering password for admin " + data.email);
+
+                    dataToSend = {
+                        endpoint: 'admin',
+                        code: '3',
+                        du: true,
+                        multi: true,
+                        aemail: data.email,
+                        apass: data.password,
+                        aid: data.id,
+                        type: 1 //to remove it from recovery table
+                    };
+
+                    $.ajax({
+                        url: serverPath,
+                        data: dataToSend,
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            context.commit("recoverAdminPassword", data.resp);
+                        },
+                        error: function (data, textStatus, jqXHR) {
+                            console.log("textStatus: " + textStatus);
+                            console.log("Server Not Found: Please Try Again Later!");
+                        }
+                    });
+                } else {
+                    console.log("Invalid Email or Passcode");
+                    context.commit("recoverAdminPassword", data.resp);
+                }
+
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
     }
 };
 
