@@ -1,5 +1,11 @@
 <template>
   <div class="wrapper home-2">
+  <div>
+   <!--<login></login>-->
+   <!-- <user></user> -->
+   <!-- <admin></admin> -->
+   <!-- <superadmin></superadmin> -->
+   <!-- <register></register> -->
     
     <!--<app-header></app-header>-->
     <header-bar

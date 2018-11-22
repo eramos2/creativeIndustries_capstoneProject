@@ -7,53 +7,46 @@
                                         <h3>My Projects Details</h3>
 
                                         <div class="account-details-form checkout-form-list">
-                                            <form action="#">
+                                          <!-- PROJECT NAME -->
                                                         <div class="single-input-item">
                                                             <label for="projectName" class="required">Project Name</label>
-                                                             <input name="projectName" v-validate="'required|max:15'" type="text"  id = "projectName"  placeholder="Project Name" class="form-control" >
+                                                             <input name="projectName" v-validate="'required|max:20|alpha_spaces'" v-model="projectName" type="text"  id = "projectName"  placeholder="Project Name" class="form-control" >
                                                              <p class="text-danger" v-if="errors.has('projectName')">
                                                                  {{errors.first('projectName')}}
                                                                  </p>
                                                         </div>
-                                                 <!-- <div class="col-md-12"> -->
+                                                        <!-- DESCRIPTION -->
                                                 <div class="single-input-item">
                                                     <label for="description" class="required">Description</label>
-                                                     <input name ="description" v-validate="'required|max:80'" type="text" class="form-control" id="description" placeholder="Brief Description">
+                                                     <input name ="description" v-validate="'required|max:80|alpha_spaces'" v-model="description" type="text" class="form-control" id="description" placeholder="Brief Description">
                                                     <p class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</p>
                                                 </div>
-                                                <!-- </div> -->
                                                 <fieldset>
+                                                  <!-- SELECT TAGS TO DESCRIBE PROJECT -->
                                                     <legend>Select tags for your Project</legend>
                                                 <div class="single-input-item">
                                                     <label for="tag1" class="required">Tag#1</label>
-                                                    <!-- <input name ="tag1" v-validate="'required'" type="text" class="form-control" id="tag1" placeholder="Tag 1">
-                                                    <p class="text-danger" v-if="errors.has('tag1')">{{ errors.first('tag1') }}</p> -->
                                                     <select class="form-control" onchange="addMat()" id="matTypes">
                                                     <option disabled selected>Choose Tag #1</option>
                                                     </select>
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="tag2" class="required">Tag #2</label>
-                                                    <!-- <input name ="tag2" v-validate="'required'" type="text" class="form-control" id="tag2" placeholder="Tag 2 ">
-                                                    <p class="text-danger" v-if="errors.has('tag2')">{{ errors.first('tag2') }}</p> -->
                                                     <select class="form-control" onchange="addMat()" id="matTypes">
                                                     <option disabled selected>Choose Tag #2</option>
                                                     </select>
                                                 </div>
                                                 <div class="single-input-item">
                                                     <label for="tag3" class="required">Tag#3</label>
-                                                    <!-- <input name ="tag3" v-validate="'required'" type="text" class="form-control" id="tag3" placeholder="Tag 3">
-                                                    <p class="text-danger" v-if="errors.has('tag3')">{{ errors.first('tag3') }}</p> -->
                                                     <select class="form-control" onchange="addMat()" id="matTypes">
                                                     <option disabled selected>Choose Tag#3</option>
                                                     </select>
                                                 </div>
                                                 </fieldset>
                                                 <div class="single-input-item">
-                                                    <!-- <button class="btn">Save Changes</button> -->
                                                     <button :disabled="errors.any()" type="submit">Submit</button>
                                                 </div>
-                                            </form>
+                                       
                                         </div>
                                         </form>
                                     </div>
@@ -70,22 +63,17 @@ import { Validator } from "vee-validate";
 const dictionary = {
   en: {
     custom: {
-      firstName: {
-        required: "Please enter your first name.",
-        alpha: "The first name field may only contain alphabetic characters.",
-        max: "The first name field may not be greater than 15 characters."
+      projectName: {
+        required: "Please enter your project name.",
+        alpha_spaces:
+          "The project name field may only contain alphabetic characters.",
+        max: "The project name field may not be greater than 15 characters."
       },
-      lastName: {
-        required: "Please enter your last name.",
-        alpha: "The last name field may only contain alphabetic characters.",
+      description: {
+        required: "Please enter a brief description for your project.",
+        // alpha_spaces:
+        //   "The description field may only contain alphabetic characters.",
         max: "The last name field may not be greater than 15 characters."
-      },
-      confirmedpassword: {
-        required: " The confirmed password field is required.",
-        min: " The confirmed password field must be at least 8 characters",
-        max:
-          " The confirmed password field may not be greater than 10 characters.",
-        confirmed: "The confirmed password confirmation does not match."
       }
     }
   }
@@ -95,18 +83,26 @@ Validator.localize(dictionary);
 
 export default {
   data: () => ({
-    firstName: "",
-    password: ""
+    projectName: "",
+    description: ""
   }),
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
           alert("Submitted");
+          this.test();
           return;
         }
         alert("Empty Field(s)");
       });
+    },
+    test() {
+      let data = {
+        projectName: this.projectName,
+        description: this.description
+      };
+      console.log(data);
     }
   }
 };
