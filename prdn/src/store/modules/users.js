@@ -16,6 +16,8 @@ const state = {
         passChanged: "",
         infoChanged: "",
         recoverPassword: "",
+        registerUser: "",
+        addSubmission: "",
         loggedIn: true //Is user loggedIn - for testing purposes
     }
 };
@@ -91,13 +93,38 @@ const mutations = {
         }
         console.log(state.userFlags);
     },
-
     /** 
      * Set userFlags recoverPassword flag
      */
     recoverUserPassword: (state, data) => {
         console.log(data);
         state.userFlags['recoverPassword'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = { ...state.userFlags
+        }
+        console.log(state.userFlags);
+    },
+    /** 
+     * Set userFlags registerUser flag
+     */
+    registerNewUser: (state, data) => {
+        console.log(data);
+        state.userFlags['registerUser'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = { ...state.userFlags
+        }
+        console.log(state.userFlags);
+    },
+    /** 
+     * Set userFlags addSubmission flag
+     */
+    addSubmission: (state, data) => {
+        console.log(data);
+        state.userFlags['addSubmission'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -147,11 +174,11 @@ const actions = {
 
     /**  
      * Http call verifies if given email is in the database, if it is
-     * it will proceed to send email with recovery password
+     * it will proceed to send email with recovery passcode
      * @param {object} data - Object that contains user email 
      * @return {boolean} - Returns true if email is in db, and recover email sent was sucessfull, and false otherwise
      */
-    verifyUserEmail: (context, data) => {
+    sendUserPasscode: (context, data) => {
         let email = data.email;
 
         Vue.http
@@ -285,6 +312,7 @@ const actions = {
      */
     recoverUserPassword: (context, data) => {
         console.log("I'm verifying passcode for " + data.email);
+        state.userFlags['recoverPassword'] = "";
 
         var dataToSend = {
             endpoint: 'users',
@@ -338,6 +366,116 @@ const actions = {
                     context.commit("recoverUserPassword", data.resp);
                 }
 
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**     
+     * Register a new user (checks email doesn't exist in db)
+     * @param {object} data - Contains user's email, password, firstName, lastName, occupation, birthday, and city
+     */
+    registerNewUser: (context, data) => {
+        console.log("Verifying email " + data.email + " is not in db");
+        state.userFlags["registerUser"] = "";
+        var dataToSend = {
+            endpoint: 'users',
+            code: '4',
+            uemail: data.email
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (dataGet, textStatus, jqXHR) {
+                var response = dataGet.resp;
+                if (response.length != 0) {
+                    console.log("The email entered already exists. Please enter another email.");
+                    context.commit("registerNewUser", {
+                        0: {
+                            number: '0'
+                        }
+                    });
+                } else {
+                    console.log("I'm adding user " + name);
+
+                    dataToSend = {
+                        endpoint: 'users',
+                        code: '1',
+                        du: true,
+                        uemail: data.email,
+                        upass: data.password,
+                        uname: data.firstName,
+                        ulname: data.lastName,
+                        uoccu: data.occupation,
+                        ubdate: data.birthday,
+                        ucity: data.city
+                    };
+
+                    $.ajax({
+                        url: serverPath,
+                        data: dataToSend,
+                        contentType: "application/x-www-form-urlencoded",
+                        type: "POST",
+                        dataType: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            context.commit("registerNewUser", data.resp);
+                        },
+                        error: function (data, textStatus, jqXHR) {
+                            console.log("textStatus: " + textStatus);
+                            console.log("Server Not Found: Please Try Again Later!");
+                        }
+                    });
+
+                }
+
+
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+
+    /**   
+     * Submits a new business request
+     * @param {object} data - Contains the company's name, website, description, phone, email, address, city, country, zipcode
+     */
+    addSubmission: (context, data) => {
+        console.log("Adding submission");
+
+        state.userFlags['addSubmission'] = "";
+
+        var dataToSend = {
+            endpoint: 'submissions',
+            uid: data.id,
+            du: true,
+            sname: data.name,
+            swebsite: data.website,
+            sdescription: data.description,
+            sphone: data.phone,
+            semail: data.email,
+            sline: data.address,
+            scity: data.city,
+            scountry: data.country,
+            szip: data.zipcode,
+            code: '3'
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                context.commit("addSubmission", data.resp);
             },
             error: function (data, textStatus, jqXHR) {
                 console.log("textStatus: " + textStatus);

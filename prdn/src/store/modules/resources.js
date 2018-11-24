@@ -24,6 +24,9 @@ const state = {
         subprocesses: {},
         subservices: {}
     },
+    resourceFlags: {
+        removeSubResource: ""
+    }
 
 };
 
@@ -219,6 +222,18 @@ const mutations = {
         state.changedSubResourceCon = { ...state.changedSubResourceCon
         }
         //console.log(state.addedNewResource);
+    },
+    /**    
+     * Sets removeSubResource flag
+     */
+    removeSubResource: (state, data) => {
+        state.resourceFlags['removeSubResource'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.resourceFlags = { ...state.resourceFlags
+        }
+        console.log(state.resourceFlags);
     }
 
 
@@ -283,6 +298,55 @@ const actions = {
             .then(data => {
                 //console.log(data.resp[0].number);
                 context.commit('confirmAddedNewResource', data.resp);
+            });
+    },
+    /** 
+     * Removes a sub resource from the system
+     * @param {object} data - contains subresourceId, and resource category (materials|services|processes)
+     *  
+     */
+    removeSubResource: (context, data) => {
+        console.log("Removing subresource");
+        state.resourceFlags['removeSubResource'] = ""; //reinitalize flag 
+        let prms;
+        let code = '4';
+
+        if (data.resource == 'materials') {
+            prms = {
+                endpoint: 'material',
+                code: code,
+                du: true,
+                multi: true,
+                smid: data.submaterialId
+            };
+        } else if (data.resource == 'services') {
+            prms = {
+                endpoint: 'service',
+                code: '4',
+                du: true,
+                multi: true,
+                ssid: data.subserviceId
+            };
+        } else {
+            prms = {
+                endpoint: 'process',
+                code: '4',
+                du: true,
+                multi: true,
+                spid: data.subprocessId
+            };
+        }
+
+        Vue.http
+            .get(serverfile, {
+                params: prms
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                //console.log(data.resp[0].number);
+                context.commit('removeSubResource', data.resp);
             });
     },
     /** 

@@ -17,10 +17,15 @@ const state = {
 
     businessRequests: {},
 
+    currentBusinessRequest: {
+
+    },
+
     adminFlags: {
         passChanged: "",
         infoChanged: "",
-        recoverPassword: ""
+        recoverPassword: "",
+        removeAdministrator: ""
     }
 
 
@@ -49,6 +54,20 @@ const mutations = {
         console.log("This is the administrator");
         console.log(state.administrator);
 
+    },
+    /** 
+     * Sets state.administrators to the data received response from http call
+     * @param {Array} data - Contains object with admins data, adminId, adminTypeName, email, firstName, lastName, occupation, birthDate, and city
+     */
+    getAdministrators: (state, data) => {
+        state.administrators = data;
+
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.administrators = { ...state.administrators
+        }
+        console.log(state.administrators);
     },
     /** 
      * Sets recoveryAdminEmail to false if the given admin email is not in the database, otherwise
@@ -84,6 +103,22 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.businessRequests = { ...state.businessRequests
         }
+    },
+    /**   
+     * Sets state.currentBusinessRequest to the data received
+     * @param {object} data - Contains submissionId, companyName, website, phone, description
+     * email,address, city, country, city, and zipcode
+     */
+    getBusinessSubmission: (state, data) => {
+        state.currentBusinessRequest = data;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.currentBusinessRequest = { ...state.currentBusinessRequest
+        }
+        console.log(state.currentBusinessRequest);
+
+
     },
     /** 
      * Set adminPassChanged flag
@@ -123,7 +158,20 @@ const mutations = {
         state.adminFlags = { ...state.adminFlags
         }
         console.log(state.adminFlags);
-    }
+    },
+    /** 
+     * Set adminFlags infoChanged flag
+     */
+    removeAdministrator: (state, data) => {
+        console.log(data);
+        state.adminFlags['removeAdministrator'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.adminFlags = { ...state.adminFlags
+        }
+        console.log(state.adminFlags);
+    },
 };
 
 
@@ -199,7 +247,7 @@ const actions = {
      * @param {String} data - Object that contains admin email 
      * @return {boolean} - Returns true if admin email is in db, and recover email sent was sucessfull, and false otherwise
      */
-    verifyAdminEmail: (context, data) => {
+    sendAdminPasscode: (context, data) => {
         let email = data.email;
 
         Vue.http
@@ -359,6 +407,7 @@ const actions = {
      */
     recoverAdminPassword: (context, data) => {
         console.log("I'm verifying passcode for " + data.email);
+        stat.adminFlags['recoverPassword'] = "";
 
         var dataToSend = {
             endpoint: 'users',
@@ -418,7 +467,97 @@ const actions = {
                 console.log("Server Not Found: Please Try Again Later!");
             }
         });
+    },
+    /**   
+     * Get a particular business submission
+     * @param {object} data - Contains the submissionId
+     */
+    getBusinessSubmission: (context, data) => {
+        console.log("Getting submission " + data.submissionId);
+        state.currentBusinessRequest = {};
+
+        var dataToSend = {
+            endpoint: 'submissions',
+            code: '5',
+            subid: data.submissionId
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                console.log(data.resp);
+                context.commit("getBusinessSubmission", data.resp[0])
+
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**     
+     * Gets all administrators in the system
+     */
+    getAdministrators: (context) => {
+        state.administrators = {};
+        console.log("Im getting Admins");
+
+        var dataToSend1 = {
+            endpoint: 'admin',
+            code: '0'
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend1,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                context.commit("getAdministrators", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**    
+     * Remove administrator can only be done by Super Administrator
+     * @param {object} data - Contains the administrator's adminId to remove
+     */
+    removeAdministrator: (context, data) => {
+        console.log("I'm deleting admin: " + data.adminId);
+        state.adminFlags["removeAdministrator"] = "";
+        var dataToSend = {
+            endpoint: 'admin',
+            code: '2', //code to remove administrator from system
+            du: true,
+            aid: data.adminId
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+
+                context.commit("removeAdministrator", data.resp);
+
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
     }
+
 };
 
 export default {

@@ -17,14 +17,16 @@ const state = {
     currentBusiness: {
 
     },
-    /**
-     * Edit business flag (1=success, 0=nothing happened, -1=failed)
-     * 
-     */
-    editedBusiness: {
-        value: ""
+    businessesFlags: {
+        //(1=success, 0=nothing happened, -1=failed)
+        editedBusiness: "",
+        addNewBusiness: "",
+        removeSubmission: "",
+        removeBusiness: ""
+
+
     }
-};
+}
 
 const getters = {
     getBusinesses: state => {
@@ -270,15 +272,53 @@ const mutations = {
      */
     editBusinessInfo: (state, data) => {
         console.log(data);
-        state.editedBusiness['value'] = data['0'].number;
+        state.businessesFlags['editedBusiness'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.editedBusiness = { ...state.editedBusiness
+        state.businessesFlags = { ...state.businessesFlags
         }
-        console.log(state.editedBusiness);
+        console.log(state.businessesFlags);
+    },
+    /** 
+     * Set addNewBusiness flag
+     */
+    addNewBusiness: (state, data) => {
+        console.log(data);
+        state.businessesFlags['addNewBusiness'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.businessesFlags = { ...state.businessesFlags
+        }
+        console.log(state.businessesFlags);
+    },
+    /** 
+     * Set removeSubmission flag
+     */
+    removeSubmission: (state, data) => {
+        console.log(data);
+        state.businessesFlags['removeSubmission'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.businessesFlags = { ...state.businessesFlags
+        }
+        console.log(state.businessesFlags);
+    },
+    /** 
+     * Set removeBusiness flag
+     */
+    removeBusiness: (state, data) => {
+        console.log(data);
+        state.businessesFlags['removeBusiness'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.businessesFlags = { ...state.businessesFlags
+        }
+        console.log(state.businessesFlags);
     }
-
 }
 
 const actions = {
@@ -547,6 +587,153 @@ const actions = {
                 console.log("Geocode was not successful for the following reason: " + status);
             }
         })
+    },
+    /** 
+     * Add new business to system(only administrators), calculates latitude and longitude from the given address
+     * @param {object} data - Receives adminId, companyName, videoURL, website, phone, description,
+     * email, processes, materials, services, address, city, country, zipcode
+     * The materials, services, and procceses are arrays structure in the following way:
+     *  Array of arrays (subarrays are each a subcategory) 
+     * [arrayindex - value]:
+     * 0- subcategory name, 1 -subcategory id, 2- categoryid ,3- model, 4 -application, 5 -limitation
+     */
+    addNewBusiness: (context, data) => {
+        console.log("Getting geocode for new business " + data.companyName);
+        var currentAdmin = data.adminId;
+        var companyName = data.companyName;
+        var description = data.description;
+        var website = data.website;
+        var address = data.address;
+        var city = data.city;
+        var country = data.country;
+        var zipcode = data.zipcode;
+        var phone = data.phone;
+        var email = data.email;
+        var videoURL = data.videoURL;
+        var materials = data.materials;
+        var processes = data.processes;
+        var services = data.services;
+
+        var geocoder = new google.maps.Geocoder();
+        var addressLatLong = address + ', ' + city + ', ' + country;
+        var latitudeAdd = '';
+        var longitudeAdd = '';
+
+        geocoder.geocode({
+            'address': addressLatLong
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                latitudeAdd = results[0].geometry.location.lat();
+                longitudeAdd = results[0].geometry.location.lng();
+                console.log(currentAdmin + "\n" + companyName + "\n" + videoURL + "\n" + website + "\n" + phone + "\n" + description + "\n" +
+                    null + "\n" + email + "\n" + processes + "\n" + services + "\n" + materials + "\n" + address + "\n" + city + "\n" +
+                    country + "\n" + zipcode + "\n" + latitudeAdd + "\n" + longitudeAdd);
+            }
+
+            console.log("Tesing mod, app and limit null values: " + processes);
+            console.log("I'm adding a new business");
+            console.log(materials);
+            console.log(processes);
+            console.log(services);
+
+            var dataToSend = {
+                endpoint: 'company',
+                code: '8',
+                aid: currentAdmin,
+                du: true,
+                multi: true,
+                name: companyName,
+                URL: videoURL,
+                site: website,
+                phone: phone,
+                descr: description,
+                img: null, //add Images separetly ?
+                cemail: email,
+                spids: processes,
+                smids: materials,
+                ssids: services,
+                line: address,
+                city: city,
+                count: country,
+                zip: zipcode,
+                lat: latitudeAdd,
+                lon: longitudeAdd
+            };
+
+            $.ajax({
+                url: serverPath,
+                data: dataToSend,
+                contentType: "application/json",
+                type: "GET",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    context.commit("addNewBusiness", data.resp);
+                },
+                error: function (data, textStatus, jqXHR) {
+                    console.log("textStatus: " + textStatus);
+                    console.log("Server Not Found: Please Try Again Later!");
+                }
+            });
+        });
+    },
+    /**    
+     * Deletes a particular business submission (Admin action)
+     * @param {object} data - Contains the submissionId
+     */
+    removeSubmission: (context, data) => {
+        state.businessesFlags['removeSubmission'] = "";
+        console.log("Removing submission with id " + data.submissionId);
+        var dataToSend = {
+            endpoint: 'submissions',
+            code: '1',
+            du: true,
+            subid: data.submissionId
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                context.commit("removeSubmission", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
+    },
+    /**    
+     * Deletes a particular business (Admin action)
+     * @param {object} data - Contains the company to remove companyId
+     */
+    removeBusiness: (context, data) => {
+        state.businessesFlags['removeBusiness'] = "";
+        console.log("Removing business with id " + data.companyId);
+
+        var dataToSend = {
+            endpoint: 'company',
+            code: '6',
+            du: true,
+            cid: data.companyId
+        };
+
+        $.ajax({
+            url: serverPath,
+            data: dataToSend,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                context.commit("removeBusiness", data.resp);
+            },
+            error: function (data, textStatus, jqXHR) {
+                console.log("textStatus: " + textStatus);
+                console.log("Server Not Found: Please Try Again Later!");
+            }
+        });
     }
 }
 
