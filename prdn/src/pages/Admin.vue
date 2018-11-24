@@ -69,14 +69,6 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 .account-text-wrapper {
   background-color: #fff;
   padding: 50px 30px;
@@ -223,5 +215,9 @@ export default {
 }
 .account-details-form .btn {
   margin-top: 30px;
+}
+
+.cpMarginTop {
+  margin-top: 70px;
 }
 </style>

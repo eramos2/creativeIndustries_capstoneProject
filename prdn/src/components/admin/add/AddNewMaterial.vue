@@ -78,4 +78,24 @@ export default {
 };
 </script>
 <style>
+.row .subCatField {
+  padding-left: 15px;
+}
+
+.input-group .form-control {
+}
+.addCategoryList .col-md-12 {
+  padding-right: 0;
+}
+.buttonMargin {
+  margin: 50px 0 100px 0;
+}
+.listContainer {
+  text-align: left;
+  padding-bottom: 30px;
+}
+.addMarginTop {
+  margin-top: 60px;
+  height: 135px;
+}
 </style>

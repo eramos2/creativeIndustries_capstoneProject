@@ -30,8 +30,12 @@
                                     <div :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('email') }">
                                         <label class="control-label col-md-2" for="email"><span class="require"></span>Email</label>
                                         <div class="col-md-10">
-                                            <input name ="email" v-validate="'required|email'" type="email" class="form-control" id="email" data-vv-delay="2000" v-model="email" placeholder="Email">
-                                            <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+                                            <!-- <input name ="email" v-validate="'required|email'" type="email" class="form-control" id="email" data-vv-delay="2000" v-model="email" placeholder="Email">
+                                            <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p> -->
+                                            <input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="email" v-model="email" id="email" data-vv-delay="500" placeholder="Email address" class="form-control"  >
+                                                <!-- <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p> -->
+                                                <i v-show="errors.has('email')" class="text-danger"></i>
+                                                <span v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</span>
                                         </div>
                                     </div>
                                                         <!-- OCCUPATION -->
@@ -66,14 +70,14 @@
                                     <div :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('password') }">
                                         <label class="control-label col-md-2" for="password"><span class="require"></span>Password</label>
                                         <div class="col-md-10">
-                                            <input name ="password"  v-validate="'required|min:8|max:10'" type="password"  data-vv-delay="1000" class="form-control" id="password" v-model="password" placeholder="Password" ref="password">
+                                            <input name ="password"  v-validate="'required|min:8|max:15'" type="password"  data-vv-delay="5000" class="form-control" id="password" v-model="password" placeholder="Password" ref="password">
                                             <p class="text-danger" v-if="errors.has('password')">{{ errors.first('password') }}</p>
                                         </div>
                                     </div>
                                      <div :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('confirmedpassword') }">
                                         <label class="control-label col-md-2" for="confirmedpassword"><span class="require"></span>Confirm Password</label>
                                         <div class="col-md-10">
-                                            <input name ="confirmedpassword"  v-validate="'required|min:8|max:10|confirmed:password'"  type="password" data-vv-delay="1000" class="form-control" id="confirmedpassword" v-model="confirmedpassword" placeholder="Confirm Password">
+                                            <input name ="confirmedpassword"  v-validate="'required|min:8|max:15|confirmed:password'"  type="password" data-vv-delay="5000" class="form-control" id="confirmedpassword" v-model="confirmedpassword" placeholder="Confirm Password">
                                             <p class="text-danger" v-if="errors.has('confirmedpassword')">{{ errors.first('confirmedpassword') }}</p>
                                         </div>
                                     </div>
@@ -124,11 +128,14 @@ const dictionary = {
 
 Validator.localize(dictionary);
 
+const emailsDB = ["test@upr.edu", "carlos.rodriguez75@upr.edu"];
+
 export default {
+  name: "backend-example",
   data: () => ({
     firstName: "",
     lastName: "",
-    email: "",
+    email: null,
     occupation: "",
     city: "",
     birthdate: "",
@@ -139,12 +146,10 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          alert("Registration Form Submitted");
           this.test();
           return;
         }
-
-        alert("Empty Field(s)");
+        alert("Verify Field(s)");
       });
     },
 
