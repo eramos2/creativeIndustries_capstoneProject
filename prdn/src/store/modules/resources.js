@@ -20,9 +20,9 @@ const state = {
     addedNewResource: {},
     changedSubResourceCon: {},
     subcatConnections: {
-        submaterials: {},
-        subprocesses: {},
-        subservices: {}
+        submaterials: [],
+        subprocesses: [],
+        subservices: []
     },
     resourceFlags: {
         removeSubResource: ""
@@ -185,12 +185,27 @@ const mutations = {
         }
         //console.log(state.addedNewResource);
     },
+    /**  
+     * Clears subcatConections object
+     */
+    clearResourceConnections: (state) => {
+        state.subcatConnections = {
+            submaterials: [],
+            subprocesses: [],
+            subservices: []
+        }
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.subcatConnections = { ...state.subcatConnections
+        }
+    },
     setRelatedProcesses: (state, data) => {
         state.subcatConnections['subprocesses'] = data;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.subcatConnections['subprocesses'] = { ...state.subcatConnections['subprocesses']
+        state.subcatConnections = { ...state.subcatConnections
         }
 
     },
@@ -199,7 +214,7 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.subcatConnections['subservices'] = { ...state.subcatConnections['subservices']
+        state.subcatConnections = { ...state.subcatConnections
         }
     },
     setRelatedMaterials: (state, data) => {
@@ -207,7 +222,7 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.subcatConnections['submaterials'] = { ...state.subcatConnections['submaterials']
+        state.subcatConnections = { ...state.subcatConnections
         }
 
     },
@@ -497,6 +512,13 @@ const actions = {
                 console.log(data.resp);
                 context.commit('setResourceSearchResult', data.resp);
             });
+    },
+
+    /**    
+     * Clears subcatConnections
+     */
+    clearResourceConnections: (context) => {
+        context.commit("clearResourceConnections");
     },
     /**   
      * Gets related process for the given category and subcategory

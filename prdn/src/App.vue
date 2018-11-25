@@ -14,6 +14,7 @@
     </header-bar>
 
     <router-view></router-view>
+    <footer style="padding:2rem;"></footer>
     <!--
     <slider
       :resources="resources"

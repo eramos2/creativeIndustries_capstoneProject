@@ -21,7 +21,8 @@
                                     <router-link to="/materials" tag="li" active-class="active"><a>Materials</a></router-link>
                                     <router-link to="/services" tag="li" active-class="active"><a>Services</a></router-link>
                                     <router-link to="/processes" tag="li" active-class="active"><a>Processes</a></router-link>
-                                    
+                                    <router-link to="/map" tag="li" active-class="active"><a>Map</a></router-link>
+
                                 </ul>
                             </nav>
                         </div>

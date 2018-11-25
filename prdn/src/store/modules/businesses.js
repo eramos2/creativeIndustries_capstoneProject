@@ -99,6 +99,16 @@ const mutations = {
 
 
     },
+    /**Clear state.businesses */
+    clearBusinesses: (state) => {
+        state.businesses = {};
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.businesses = { ...state.businesses
+        }
+    },
+
     /**
      * Sets state.currentBusiness with the given business
      * @param {Object} data - Server response containing the business. 
@@ -364,6 +374,10 @@ const actions = {
                 context.commit('setBusinesses', data.resp);
             });
     },
+    /** Clear state.businesses */
+    clearBusinesses: (context) => {
+        context.commit("clearBusinesses");
+    },
     /** 
      * Gets a business and sets state.currentBusiness with it
      * 
@@ -484,16 +498,19 @@ const actions = {
      * Gets businesses that offer the subcategory item and sets state.businesses with this companies
      * @param {Object} payload - Contains resource name (rK) and subcategory name (scK)
      */
-    setSubCategoryBusinesses: (context, payload) => {
+    setSubCategoryBusinesses: ({
+        commit,
+        dispatch
+    }, payload) => {
         state.businesses = {};
         let code;
-        //console.log("setSubCategoryBusinesses");
-        //console.log(payload.scK);
-        if (payload.rK == 'processes') {
+        console.log("setSubCategoryBusinesses");
+        console.log(payload);
+        if (payload.rK.toLowerCase() == 'processes') {
             code = '16'; //code for getting companies that offer subprocess by its name
-        } else if (payload.rK == 'services') {
+        } else if (payload.rK.toLowerCase() == 'services') {
             code = '17'; //code for getting companies that offer subservice by its name
-        } else if (payload.rK == 'materials') {
+        } else if (payload.rK.toLowerCase() == 'materials') {
             code = '18'; //code for getting companies that offer submaterial by its name
         }
         // Query the server for businesses based on the subcategory name
@@ -502,7 +519,7 @@ const actions = {
                 params: {
                     endpoint: 'company',
                     code: code,
-                    scname: payload.scK //subcategory name
+                    scname: payload.scK.toLowerCase() //subcategory name
                 }
             })
             .then(response => {
@@ -511,11 +528,14 @@ const actions = {
                 return response.json();
             })
             .then(data => {
-                //console.log('Inside setSubCategoryBusinesses in businesses.js');
+                console.log('Inside setSubCategoryBusinesses in businesses.js');
 
                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-                //console.log(dataObject);
-                context.commit('setBusinesses', dataObject);
+                console.log(dataObject);
+                commit('setBusinesses', dataObject);
+                dispatch("setMapMarkers", data, {
+                    root: true
+                });
             });
     },
     /** 

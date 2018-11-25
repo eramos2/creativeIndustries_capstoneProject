@@ -4,8 +4,10 @@ import SubCategoriesPage from "./pages/SubCategoriesPage.vue";
 import SingleItemPage from "./pages/SingleItemPage.vue";
 import BusinessPage from "./pages/BusinessPage.vue";
 import SearchPage from "./pages/SearchPage.vue";
+import Map from "./pages/MapPage.vue";
 import User from "./pages/User.vue";
 import Login from "./pages/Login.vue";
+
 
 /**
  * Where we set all the routes for the webapp's body and its components
@@ -26,6 +28,12 @@ export const routes = [{
         name: 'userLink',
         component: User
     },
+    {
+        path: '/map',
+        name: 'mapLink',
+        component: Map
+    },
+
     {
         path: '/login',
         name: 'loginLink',
