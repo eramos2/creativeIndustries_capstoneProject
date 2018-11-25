@@ -129,8 +129,8 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           console.log(result);
-          alert("Submitted");
           this.test();
+          alert("Submitted");
           return;
         }
         alert("Empty Field(s)");

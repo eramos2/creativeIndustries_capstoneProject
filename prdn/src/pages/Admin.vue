@@ -23,11 +23,11 @@
                         <!-- My Account Tab Content Start -->
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
-                                    <welcomeadmin></welcomeadmin>
-                                    <add></add>
+                                    <!-- <welcomeadmin></welcomeadmin> -->
+                                    <!-- <add></add> -->
                                     <edit></edit>
-                                    <remove></remove>
-                                    <pending></pending>
+                                   <!-- <remove></remove>
+                                    <pending></pending> -->
                                 </div>
                              </div>
                         </div>
@@ -174,6 +174,20 @@ export default {
 .myaccount-table .table .btn {
   padding: 10px 20px;
 }
+
+.saved-message {
+  background-color: #e9ecef;
+  border-top: 3px solid #12a4dd;
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #262626;
+  padding: 20px;
+}
+
 #myaccount-page-content fieldset {
   border: none;
   padding: 0;
@@ -210,14 +224,12 @@ export default {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
   height: 45px;
 }
-.account-details-form .btn {
-  margin-top: 30px;
-}
-.account-details-form .btn {
-  margin-top: 30px;
+
+.account-details-form {
+  margin-top: 50px;
 }
 
-.cpMarginTop {
-  margin-top: 70px;
+.account-details-form .btn {
+  margin-top: 30px;
 }
 </style>

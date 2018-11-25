@@ -1,9 +1,9 @@
 <template>
  <form @submit.prevent="validateBeforeSubmit">  
        <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="edit" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <h3>Edit</h3>
+    <div class="tab-pane fade" id="edit" role="tabpanel">
+        <div class="myaccount-content">
+            <h3>Edit</h3>
 
         <div class="container" id="editBsnPage">
         <div class="row marginTop">
@@ -13,63 +13,63 @@
     <div id="error"></div>
     <!-- <form name="addBsnForm"> -->
 
-                <div class="single-input-item">
-                <label for="companyName" class="required">Business Name</label>
-                    <input name="companyName" v-validate="'required|max:20'" type="text"  id = "companyName"  placeholder="Business Name" class="form-control" >
-                        <p class="text-danger" v-if="errors.has('companyName')">{{ errors.first('companyName') }}</p>
-                        </div>
+    <div class="single-input-item">
+     <label for="companyName" class="required">Company Name</label>
+        <input name="companyName" v-validate="'required|max:20'" type="text"  id = "companyName"  placeholder="Company Name" v-model="companyName" class="form-control" >
+         <p class="text-danger" v-if="errors.has('companyName')">{{ errors.first('companyName') }}</p>
+            </div>
                    
 
            <div class="single-input-item">
             <label for="addressID" class="required">Address</label>
-                <input name="addressID" v-validate="'required|max:40'" type="text"  id = "addressID"  placeholder="Address" class="form-control" >
+                <input name="addressID" v-validate="'required|max:40'" type="text"  id = "addressID"  placeholder="Address" v-model="addressID" class="form-control" >
                     <p class="text-danger" v-if="errors.has('addressID')">{{ errors.first('addressID') }}</p>
                         </div>
 <div class="row">
          <div class="col-lg-6">
             <div class="single-input-item">
                 <label for="city" class="required">City</label>
-                    <input name="city" v-validate="'required|max:15'" type="text"  id = "city"  placeholder="City" class="form-control" >
+                    <input name="city" v-validate="'required|max:15'" type="text"  id = "city"  placeholder="City" v-model="city" class="form-control" >
                         <p class="text-danger" v-if="errors.has('city')">{{ errors.first('city') }}</p>
                             </div>
                                 </div>
         <div class="col-lg-6">
              <div class="single-input-item">
                     <label for="country" class="required">Country</label>
-                        <input name="country" v-validate="'required|max:15'" type="text"  id = "country"  placeholder="Country" class="form-control" >
+                        <input name="country" v-validate="'required|max:15'" type="text"  id = "country"  placeholder="Country" v-model="country" class="form-control" >
                             <p class="text-danger" v-if="errors.has('country')">{{ errors.first('country') }}</p>
                                         </div>
                                     </div>
         <div class="col-lg-6">
                  <div class="single-input-item">
                     <label for="zipcode" class="required">ZipCode</label>
-                        <input name="zipcode" v-validate="'required|numeric|max:6'" type="text"  id = "zipcode"  placeholder="ZipCode" class="form-control" >
+                        <input name="zipcode" v-validate="'required|numeric|max:5|min:5'" type="text"  id = "zipcode" v-model="zipcode"  placeholder="ZipCode" class="form-control" >
                             <p class="text-danger" v-if="errors.has('zipcode')">{{ errors.first('zipcode') }}</p>
                                  </div>
                              </div>
         <div class="col-lg-6">
                 <div class="single-input-item">
                     <label for="phone" class="required">Telephone</label>
-                        <input name="phone" v-validate="'required|numeric|max:10'" type="text"  id = "phone"  placeholder="Telephone" class="form-control" >
+                        <input name="phone" v-validate="'required|numeric|max:10|min:10'" v-model="phone" type="text"  id = "phone"  placeholder="Telephone" class="form-control" >
                             <p class="text-danger" v-if="errors.has('phone')">{{ errors.first('phone') }}</p>
                                                 </div>
                                                 </div>
                                                 </div>
         <div class="single-input-item">
             <label for="website" class="required">Website</label>
-                <input name="website" v-validate="'required|url'" type="url"  id = "website"  placeholder="Website" class="form-control" >
+                <input name="website" v-validate="'required|url'" v-model="website" type="url"  id = "website"  placeholder="Website" class="form-control" >
                     <p class="text-danger" v-if="errors.has('website')">{{ errors.first('website') }}</p>
                         </div>
                     <div class="row"></div>
         <div class="single-input-item">
             <label for="description" class="required">Description</label>
-                <textarea class="form-control textArea" name="description" v-validate="'required'" id="description" placeholder="Description" rows="7"></textarea>
+                <textarea class="form-control textArea" v-model="description" name="description" v-validate="'required'" id="description" placeholder="Description" rows="7"></textarea>
                     <p class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</p>
                         </div>
                           <div class="row"></div>
         <div class="single-input-item">
             <label for="logo" class="required">Business Photo</label>
-                <file-upload :url='url' :thumb-url='thumbUrl' :headers="headers" @change="onFileChange" name="logo" v-validate="'required|url'"></file-upload>
+               <p> <input v-validate="'image'"  data-vv-as="image" name="logo" type="file"></p>
                     <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
                         </div>
         <div class="row"></div>
@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
                 <p>
-                     <button :disabled="errors.any()" type="submit"  >Submit</button>
+                     <button :disabled="errors.any()" type="submit">Edit</button>
                 </p>
             </div>
         </div>
@@ -95,6 +95,20 @@
     
 </template>
 <script>
+import { Validator } from "vee-validate";
+const dictionary = {
+  en: {
+    custom: {
+      companyName: {
+        required: "Please enter your company name.",
+        max: "The company name field may not be greater than 20 characters."
+      }
+    }
+  }
+};
+
+Validator.localize(dictionary);
+
 import EditMaterial from "./EditMaterial.vue";
 import EditProcess from "./EditProcess.vue";
 import EditServices from "./EditServices.vue";
@@ -110,34 +124,49 @@ export default {
     edittag: EditTag
   },
   data: () => ({
-    firstName: "",
-    password: ""
+    companyName: "My First Company",
+    addressID: "Orocovis",
+    city: "Orocovis",
+    country: "OR",
+    zipcode: "43017",
+    phone: "7873727550",
+    website: "https://mail.google.com",
+    description: "Testing",
+    logo: ""
   }),
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
+          this.test();
           alert("Submitted");
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
       });
-    }
-  },
-  data2() {
-    return {
-      url: "http://your-post.url",
-      headers: { "access-token": "<your-token>" },
-      filesUploaded: []
-    };
-  },
-  methods2: {
-    thumbUrl(file) {
-      return file.myThumbUrlProperty;
     },
-    onFileChange(file) {
-      // Handle files like:
-      this.fileUploaded = file;
+    test() {
+      let data = {
+        companyName: this.companyName,
+        addressID: this.addressID,
+        city: this.city,
+        country: this.country,
+        zipcode: this.zipcode,
+        phone: this.phone,
+        website: this.website,
+        description: this.description,
+        logo: this.logo
+      };
+      this.companyName = "";
+      this.addressID = "";
+      this.city = "";
+      this.country = "";
+      this.zipcode = "";
+      this.phone = "";
+      this.website = "";
+      this.description = "";
+      console.log(data);
     }
   }
 };
