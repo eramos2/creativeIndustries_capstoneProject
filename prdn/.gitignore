@@ -3,6 +3,7 @@ node_modules
 dist/
 /vendor/
 node_modules/
+package-lock.json
 
 # local env files
 .env.local
