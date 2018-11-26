@@ -18,15 +18,7 @@
 
             </div>
 
-            <!-- <div class="row">
-                <div class="col-md-4 pull-right buttonMargin" id="editProcConnBtn">
-                    <p> -->
-                        <!-- <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditProcConn(this.form)">Edit</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <!-- <button>Edit</button>
-                    </p>
-                </div>
-            </div> -->
+
         </div>
         </div>
     <!-- </form> -->

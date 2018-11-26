@@ -48,6 +48,7 @@ import ResourcesList from "./components/resourcesList/ResourcesList.vue";
 import Breadcrumbs from "./components/Breadcrumbs.vue";
 import CategoryList from "./components/lists/CategoryList.vue";
 import { mapActions } from "vuex";
+import Admin from "./pages/Admin.vue";
 
 export default {
   name: "app",
@@ -240,7 +241,8 @@ export default {
     slider: Slider,
     resourcesLists: ResourcesList,
     breadcrumbs: Breadcrumbs,
-    categoryList: CategoryList
+    categoryList: CategoryList,
+    admin: Admin
   },
   methods: {
     ...mapActions(["setResources"])

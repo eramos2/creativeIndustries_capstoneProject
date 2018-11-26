@@ -50,7 +50,7 @@
                                                             <div class="single-input-item">
                                                                 <label for="new-pwd" class="required">New
                                                                     Password</label>
-                                                                <input name ="password"  v-validate="'required|min:8|max:10'" type="password" v-model="password" class="form-control" id="password" placeholder="Password" ref="password">
+                                                                <input name ="password"  v-validate="'required|min:8|max:15'" type="password" v-model="password" class="form-control" id="password" placeholder="Password" ref="password">
                                                                 <p class="text-danger" v-if="errors.has('password')">{{ errors.first('password') }}</p>
                                                             </div>
                                                         </div>
@@ -59,7 +59,7 @@
                                                             <div class="single-input-item">
                                                                 <label for="confirmedpassword" class="required">Confirm
                                                                     Password</label>
-                                                                 <input name ="confirmedpassword"  v-validate="'required|min:8|max:10|confirmed:password'" data-vv-delay="10000"  type="password" class="form-control" id="confirmedpassword" placeholder="Confirm Password">
+                                                                 <input name ="confirmedpassword"  v-validate="'required|min:8|max:15|confirmed:password'" data-vv-delay="10000"  type="password" class="form-control" id="confirmedpassword" placeholder="Confirm Password">
                                                                 <p class="text-danger" v-if="errors.has('confirmedpassword')">{{ errors.first('confirmedpassword') }}</p>
                                                             </div>
                                                         </div>
@@ -129,8 +129,8 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           console.log(result);
-          alert("Submitted");
           this.test();
+          alert("Submitted");
           return;
         }
         alert("Empty Field(s)");

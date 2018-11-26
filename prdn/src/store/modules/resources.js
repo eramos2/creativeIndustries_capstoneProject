@@ -257,7 +257,7 @@ const mutations = {
 const actions = {
     /** 
      * Adds a new sub resource to the system with any connections
-     * @param {object} data - contains resource name, categoryId, subcategoryName, and array with the ids of any connections it has, if it doesnt have any connections it should set it to an empty array
+     * @param {object} data - contains categoryId, subcategoryName, and array with the ids of any connections it has, if it doesnt have any connections it should set it to an empty array
      *  
      */
     addNewSubResource: (context, data) => {
@@ -271,11 +271,10 @@ const actions = {
                 code: code,
                 multi: true,
                 du: true,
-                smid: data.mid, //categoryId, not an array
+                smid: data.cid, //categoryId, not an array
                 ssid: data.sid,
                 spid: data.pid,
                 subName: data.subresName,
-                name: data.resName
             };
         } else if (data.resource == 'services') {
             prms = {
@@ -283,11 +282,10 @@ const actions = {
                 code: code,
                 multi: true,
                 du: true,
-                ssid: data.sid, //categoryId, not an array
+                ssid: data.cid, //categoryId, not an array
                 smid: data.mid,
                 spid: data.pid,
                 subName: data.subresName,
-                name: data.resName
             };
         } else {
             prms = {
@@ -295,11 +293,10 @@ const actions = {
                 code: code,
                 multi: true,
                 du: true,
-                spid: data.pid, //categoryId, not an array
+                spid: data.cid, //categoryId, not an array
                 smid: data.mid,
                 ssid: data.sid,
                 subName: data.subresName,
-                name: data.resName
             };
         }
 

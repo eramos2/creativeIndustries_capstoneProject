@@ -334,7 +334,7 @@ const mutations = {
 const actions = {
 
     /** 
-     * Gets businesses that match the keyword or all if no kword is given 
+     * Gets businesses that match the keyword or all businesses if no kword is given 
      * @param {String} kword - String to search business by 
      */
     getBusinessesByName: (context, kword) => {

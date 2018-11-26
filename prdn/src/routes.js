@@ -7,6 +7,8 @@ import SearchPage from "./pages/SearchPage.vue";
 import Map from "./pages/MapPage.vue";
 import User from "./pages/User.vue";
 import Login from "./pages/Login.vue";
+import Register from "./pages/Register.vue";
+import Admin from "./pages/Admin.vue"
 
 
 /**
@@ -18,11 +20,7 @@ export const routes = [{
         name: 'homeLink',
         component: Home
     },
-    {
-        path: '/businesses/:businessName',
-        name: 'businessLink',
-        component: BusinessPage
-    },
+
     {
         path: '/user',
         name: 'userLink',
@@ -33,7 +31,17 @@ export const routes = [{
         name: 'mapLink',
         component: Map
     },
+    {
+        path: '/admin',
+        name: 'adminLink',
+        component: Admin
 
+    },
+    {
+        path: '/register',
+        name: 'registerLink',
+        component: Register
+    },
     {
         path: '/login',
         name: 'loginLink',
@@ -43,6 +51,11 @@ export const routes = [{
         path: '/search',
         name: 'searchLink',
         component: SearchPage
+    },
+    {
+        path: '/businesses/:businessName',
+        name: 'businessLink',
+        component: BusinessPage
     },
     {
         path: '/:resourceName',

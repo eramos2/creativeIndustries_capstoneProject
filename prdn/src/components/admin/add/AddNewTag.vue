@@ -9,29 +9,45 @@
         <div>
         <div class="row">
             <div class="col-md-4 addCategoryList">
-                <h5>Enter New Tag</h5>
-                 <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newTag" id="newTag" v-validate="'required|max:10'" v-model="newTag"  placeholder="Enter New Tag" onclick="showServConnections() ">
-                        <p class="text-danger" v-if="errors.has('newTag')">{{ errors.first('newTag') }}</p>
-                        <!-- <a data-toggle="modal" href="#subServModal" class="btn btn-primary subServModalBtn" ><span class="glyphicon glyphicon-question-sign"></span></a> -->
-                        <button>Add</button>
-                    </div>
-                </div>
+                <h5>Tag</h5>
                 <div class="form-group">
-                    <select class="form-control" onchange="addServ()" id="servTypes">
-                        <option disabled selected>Choose One Tag</option>
-                        <option id="addNewServ" value="addNewServ">New Tag</option>
+                    <select class="form-control" v-model="value"  onchange="addServ()" id="servTypes">
+                        <option value="none" disabled selected>Choose One Tag</option>
+                        <option id="addNewTag" value="addNewTag">New Tag</option>
+                        <option value="1">Tubing</option>
+                        <option value="3">Ornaments</option>
+                        <option value="4">Decorative</option>
+                        <option value="5">Opaque</option>
+                        <option value="6">Breathable</option>
+                        <option value="7">Long Lasting</option>   
                     </select>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div 
+                            id="newTag"
+                            v-if="displayNewTag"
+                        
+                        >
+                            <input type="text" class="form-control" name="newTagField" placeholder="Enter New Tag" v-validate="'required|max:15'" v-model="newTagField" id="newTagField"></div>
+                            <p class="text-danger" v-if="errors.has('newTagField')">{{ errors.first('newTagField') }}</p>
+
+                        </div>
+                    </div>    
                 <h5>Tags - Connections</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="tagConn" id="tagConn" v-validate="'required|max:10'" v-model="tagConnections"  placeholder="Tag-Connections" onclick="showServConnections() ">
+                        <input type="text" class="form-control" name="tagConn" id="tagConn" v-validate="'required|max:15'" v-model="tagConn"  placeholder="Tag-Connections" onclick="showServConnections() ">
                        <p class="text-danger" v-if="errors.has('tagConn')">{{ errors.first('tagConn') }}</p>
-                        <button>Add</button>
+                        <!-- <button>Add</button> -->
                     </div>
                 </div>
+
+                <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
+                <p>
+                     <button :disabled="errors.any()" type="submit">Add</button>
+                </p>
+            </div>
             </div>
 
             <div id="matConn" class="col-md-4 addCategoryList" style="display: none">
@@ -60,20 +76,76 @@
 </form>
 </template>
 <script>
+/**
+ * Custom Messages for Alerts if an error appear after validation
+ */
+import { Validator } from "vee-validate";
+const dictionary = {
+  en: {
+    custom: {
+      newTagField: {
+        required: "The new tag field is required.",
+        max: "The new tag field may not be greater than 15 characters."
+      },
+      tagConn: {
+        required: "The tag connection field is required.",
+        max: "The tag connection field may not be greater than 15 characters."
+      },
+      newMatField: {
+        required: "The new material field is required.",
+        max: "The new material field may not be greater than 15 characters."
+      }
+    }
+  }
+};
+
+Validator.localize(dictionary);
+
 export default {
   data: () => ({
-    firstName: "",
-    password: ""
+    value: "",
+    newTagField: "",
+    tagConn: ""
   }),
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
+          this.test();
           alert("Tag Added");
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
       });
+    },
+    test() {
+      if (this.newTagField == "") {
+        let data = {
+          value: this.value,
+          tagConn: this.tagConn
+        };
+        this.value = "";
+        this.newTagField = "";
+        this.tagConn = "";
+        console.log(data);
+      } else {
+        let data = {
+          value: this.value,
+          newTagField: this.newTagField,
+          tagConn: this.tagConn
+        };
+        this.value = "";
+        this.newTagField = "";
+        this.tagConn = "";
+
+        console.log(data);
+      }
+    }
+  },
+  computed: {
+    displayNewTag() {
+      return this.value == "addNewTag";
     }
   }
 };

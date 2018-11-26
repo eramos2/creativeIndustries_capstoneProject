@@ -10,27 +10,63 @@
         <div>
         <div class="row">
             <div class="col-md-4 addCategoryList">
-                <h5>Enter New Material</h5>
-                <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newMaterial" id="newMaterial" v-validate="'required|max:10'" v-model="newMaterial" placeholder="Enter New Material" onclick="showMatConnections()">
-                        <p class="text-danger" v-if="errors.has('newMaterial')">{{ errors.first('newMaterial') }}</p>
-                        <button>Add</button>
-                    </div>
-                </div>
+                <h5>Material</h5>
                 <div class="form-group">
-                    <select class="form-control" onchange="addMat()" id="matTypes">
-                        <option disabled selected>Choose One Material</option>
+                    <select class="form-control" v-model="value" onchange="addMat()" id="matTypes">
+                        <option value="none" disabled selected>Choose One Material</option>
+                        <option id="addNewMat" value="addNewMat">New Material</option>
+                        <option 
+                        
+                        v-for="(category,key) in materialCat"
+                        :key="key"
+                        :value="category.id"
+                        >
+                        {{category.name}}
+                        </option>
+
+                        <!-- <option value="1">Concrete</option>
+                        <option value="7">Fabrics</option>
+                        <option value="6">Glass and Ceramics</option>
+                        <option value="3">Metal</option>
+                        <option value="8">Papers Coating and Surfaces</option>
+                        <option value="4">Plastic</option>
+                        <option value="5">Rubber</option>
+                        <option value="2">Wood</option> -->
                     </select>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div 
+                            id="newMat"
+                            v-if="displayNewMat"
+                        
+                        >
+                            <input type="text" class="form-control" name="newMatField" placeholder="Enter New Material" v-validate="'required|max:15'" v-model="newMatField" id="newMaterialField"></div>
+                            <p class="text-danger" v-if="errors.has('newMatField')">{{ errors.first('newMatField') }}</p>
+                            <!-- <button>Add</button> -->
+                        </div>
+                    </div>
+                    <!-- <div class="input-group input_fields_wrap subCatField col-md-12">
+                        <input type="text" class="form-control" name="newMaterial" id="newMaterial" v-validate="'required|max:15'" v-model="newMaterial" placeholder="Enter New Material" onclick="showMatConnections()"> -->
+                        
+                        
                 <h5>Sub-Materials</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newSubMat" id="newSubMat" v-validate="'required|max:10'" v-model="subMaterial" placeholder="Enter Sub-Material" onclick="showMatConnections()">
+                        <input type="text" class="form-control" name="newSubMat" id="newSubMat" v-validate="'required|max:15'" v-model="newSubMat" placeholder="Enter Sub-Material" onclick="showMatConnections()">
                         <p class="text-danger" v-if="errors.has('newSubMat')">{{ errors.first('newSubMat') }}</p>
-                        <button>Add</button>
                     </div>
                 </div>
+                
+                <!-- <a data-toggle="modal" href="#subMatModal" class="btn btn-primary subMatModalBtn"></a> -->
+                    <!-- <button>Add</button> -->
+                    <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
+                <p>
+                     <button :disabled="errors.any()" type="submit">Add</button>
+                </p>
+            </div>
+              
+                
             </div>
 
             <div id="procConn" class="col-md-4 addCategoryList" style="display: none">
@@ -59,23 +95,106 @@
 </form>
 </template>
 <script>
+/**
+ * Custom Messages for Alerts if an error appear after validation
+ */
+import { Validator } from "vee-validate";
+const dictionary = {
+  en: {
+    custom: {
+      newMaterial: {
+        required: "The new material field is required.",
+        max: "The new material field may not be greater than 15 characters."
+      },
+      newSubMat: {
+        required: "The sub material field is required.",
+        max: "The sub material field may not be greater than 15 characters."
+      },
+      newMatField: {
+        required: "The new material field is required.",
+        max: "The new material field may not be greater than 15 characters."
+      }
+    }
+  }
+};
+
+Validator.localize(dictionary);
+
 export default {
   data: () => ({
-    firstName: "",
-    password: ""
+    value: "",
+    newMatField: "",
+    newSubMat: ""
   }),
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          alert("Service Added");
+          this.test();
+          this.$validator.reset();
+          alert("Material Added");
+
           return;
         }
         alert("Empty Field(s)");
       });
+    },
+    test() {
+      if (this.newMatField == "") {
+        let data = {
+          resource: "materials",
+          subresName: this.newSubMat,
+          cid: this.value
+        };
+
+        this.value = "";
+        this.newSubMat = "";
+        console.log(data);
+        this.$store.dispatch("addNewSubResource", data);
+      } else {
+        let data = {
+          resource: "materials",
+          resName: this.newMatField,
+          subresName: this.newSubMat
+        };
+        this.value = "";
+        this.newMatField = "";
+        this.newSubMat = "";
+
+        console.log(data);
+        this.$store.dispatch("addNewResource", data);
+      }
+    }
+  },
+  computed: {
+    materialCat() {
+      return this.$store.state.resources.resources.materials.categories;
+    },
+    displayNewMat() {
+      return this.value == "addNewMat";
     }
   }
 };
 </script>
 <style>
+.row .subCatField {
+  padding-left: 15px;
+}
+
+.input-group .form-control {
+}
+.addCategoryList .col-md-12 {
+  padding-right: 0;
+}
+.buttonMargin {
+  margin: 50px 0 100px 0;
+}
+.listContainer {
+  text-align: left;
+  padding-bottom: 30px;
+}
+.addMarginTop {
+  margin-top: 20px;
+  height: 60px;
+}
 </style>

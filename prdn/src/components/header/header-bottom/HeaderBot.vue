@@ -21,7 +21,23 @@
                                                     
                                                 </select>
                                                 <input id="search-input" type="text" placeholder="Search..." v-model="searchText">
-                                                <button class="top-search-btn" type="submit" @click="autoSearch"><i class="ion-ios-search-strong"></i> Search</button>
+                                                <router-link 
+                                                  v-show="!onSearchPage"
+                                                  :to="{
+                                                    name: 'searchLink', 
+                                                    params: {
+                                                        searchValue: searchText
+                                                    }
+                                                  }" 
+                                                  tag="button" 
+                                                  active-class="active"
+                                                  class="top-search-btn"
+                                                  type="submit"
+                                                  
+                                                >
+                                                  <i class="ion-ios-search-strong"></i> Search
+                                                </router-link>
+                                                <button class="top-search-btn" type="submit" v-show="onSearchPage" @click="searchForBusinesses"><i class="ion-ios-search-strong"></i> Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -102,8 +118,18 @@ export default {
       ]
     };
   },
-
+  computed: {
+    onSearchPage() {
+      console.log(this.$route.name == "searchLink");
+      return this.$route.name == "searchLink";
+    }
+  },
   methods: {
+    searchForBusinesses() {
+      console.log("SearchForBusinesses in headerBot");
+      console.log(this.searchText);
+      this.$store.dispatch("getBusinessesByName", this.searchText);
+    },
     autoSearch() {
       console.log(this.selected + " " + this.searchText);
     }

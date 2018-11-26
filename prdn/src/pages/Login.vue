@@ -12,7 +12,6 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import "bootstrap";
 
 export default {
-  name: "app",
   components: {
     login: Login
   }
@@ -20,14 +19,6 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 .custom-title {
   color: #333333;
   font-size: 25px;
@@ -116,9 +107,9 @@ a:hover {
   width: 250px;
   margin: 0 auto;
 }
-form {
+/* form {
   margin-left: 15%;
   margin-right: 15%;
   width: 70%;
-}
+} */
 </style>

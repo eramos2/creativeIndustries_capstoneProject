@@ -48,20 +48,29 @@ export default {
   components: {
     searchRowBusiness: SearchRowBusiness
   },
+  watch: {
+    // call again the method if the route changes
+    $route: "fetchData"
+  },
   methods: {
     ...mapActions(["setBusinesses", "getBusinessesByName"]),
     ...mapGetters(["getBusinesses"])
   },
   beforeMount() {
     // this.setBusinesses();
-    this.getBusinessesByName("Cast");
+    this.getBusinessesByName(this.searchValue);
   },
   computed: {
+    searchValue() {
+      //console.log(this.$router.params.searchValue);
+      return this.$route.params.searchValue;
+    },
     businesses() {
-      return this.getBusinesses();
+      console.log(this.searchValue);
+      return this.$store.state.businesses.businesses;
     },
     searchForBusinesses(keyword) {
-      this.getBusinessesByName("Cast");
+      this.$store.dispatch("getBusinessesByName", this.searchValue);
     }
   }
 };
