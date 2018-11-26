@@ -24,8 +24,8 @@
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
                                     <!-- <welcomeadmin></welcomeadmin> -->
-                                    <!-- <add></add> -->
-                                    <edit></edit>
+                                    <add></add>
+                                    <!-- <edit></edit> -->
                                    <!-- <remove></remove>
                                     <pending></pending> -->
                                 </div>

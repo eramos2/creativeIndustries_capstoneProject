@@ -8,7 +8,7 @@
     <!-- <form name="editMaterialForm"> -->
         <div>
     <div class="row">
-        <div class="col-md-4 categoryList">
+        <div class="col-md-6 categoryList">
             <h5>Materials</h5>
             <select class="form-control" id="editMatTypes" onchange="getMaterialRelated()">
                 <option value="none" disabled="" selected="">Choose One Material</option>
@@ -77,86 +77,87 @@
                 </div>
 
         </div>
-        <div class="row mt-3"></div>
-        <div class="row">
-        <div style="overflow-y: scroll; height:400px;">
+
+        <div class="row">   
         <div class="col-md-6 categoryList">
+            <div style="overflow-y: scroll; height:400px;">
                 <h5>Processes Connections</h5>
                 <ul class="list-group navList" id="editMatProcCons">
                 <li class="input-group" name="process" value="2"><strong>Engraving</strong></li>
                 <li class="catMargins">
                 <div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="7">CNC Engraving</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="6">Laser Engraving</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="9">Prefabricated Panels</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="8">Sand Blasted</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="7" >CNC Engraving</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="6">Laser Engraving</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="9">Prefabricated Panels</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="8">Sand Blasted</label></div></li>
                 <li class="input-group" name="process" value="3"><strong>Extrusion</strong></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="12">Extrusion Bowl Making</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="12">Extrusion Bowl Making</label></div></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="11">Metal Extrusion</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="11">Metal Extrusion</label></div></li>
                 <li class="catMargins"><div class="checkbox"><label>
-                <input type="checkbox" name="subProcess" value="10">Plastic Extrusion</label></div></li>
-                <li class="input-group" name="process" value="7"><strong>Fabric Machinery</strong></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="28">Industrial Sewing</label></div></li>
+                <input type="checkbox" name="subProcess" v-model="spids" value="10">Plastic Extrusion</label></div></li>
+                <li class="input-group" name="process"  value="7"><strong>Fabric Machinery</strong></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="28">Industrial Sewing</label></div></li>
                 <li class="input-group" name="process" value="4"><strong>Geometrical Precision Cutting</strong></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="22">CNC 3 Axis Milling</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="22">CNC 3 Axis Milling</label></div></li>
                 <li class="catMargins"><div class="checkbox"><label>
-                <input type="checkbox" name="subProcess" value="23">CNC 5 Axis Milling</label></div></li>
+                <input type="checkbox" name="subProcess" v-model="spids" value="23">CNC 5 Axis Milling</label></div></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="17">CNC Drilling</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="17">CNC Drilling</label></div></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="20">CNC Foam</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="20">CNC Foam</label></div></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="18">CNC Metal</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="18">CNC Metal</label></div></li>
                 <li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="19">CNC Wood</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="19">CNC Wood</label></div></li>
                 <li class="catMargins">
-                <div class="checkbox"><label><input type="checkbox" name="subProcess" value="15">Laser Cutting</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="13">Plasma Cutter</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="16">Precision Machinery</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="21">Punching</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="14">Water Jet</label></div></li>
+                <div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="15">Laser Cutting</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="13">Plasma Cutter</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="16">Precision Machinery</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="21">Punching</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="14">Water Jet</label></div></li>
                 <li class="input-group" name="process" value="6"><strong>Hand Made</strong></li>
                 <li class="catMargins"><div class="checkbox"><label>
-                <input type="checkbox" name="subProcess" value="26">Ceramic Sampler</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="27">Fabric Patterns</label></div></li>
+                <input type="checkbox" name="subProcess" v-model="spids" value="26">Ceramic Sampler</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="27">Fabric Patterns</label></div></li>
                 <li class="input-group"  name="process" value="9"><strong>Metal Workshop</strong></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="31">Forming and Shaping</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="30">Metal Casting</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="31">Forming and Shaping</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="30">Metal Casting</label></div></li>
                 <li class="input-group" name="process" value="1"><strong>Molding</strong></li><li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="2">Car Mold Making</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="32">Hand Molding</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="3">Injection Molding</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="1">Pressure Molding</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="5">Thermo Forming</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="4">Vacuum Former</label></div></li>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="2">Car Mold Making</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="32">Hand Molding</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="3">Injection Molding</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="1">Pressure Molding</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="5">Thermo Forming</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="4">Vacuum Former</label></div></li>
                 <li class="input-group" name="process" value="8"><strong>Rapid Prototype</strong></li><li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="29">3D Printing</label></div></li>
-                <li class="input-group" name="process" value="5"><strong>Welding</strong></li><li class="catMargins"><div class="checkbox">
-                <label><input type="checkbox" name="subProcess" value="24">Arc Welding</label></div></li>
-                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" value="25">Tig Welding</label></div></li></ul>
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="29">3D Printing</label></div></li>
+                <li class="input-group" name="process" value="5" ><strong>Welding</strong></li><li class="catMargins"><div class="checkbox">
+                <label><input type="checkbox" name="subProcess" v-model="spids" value="24">Arc Welding</label></div></li>
+                <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="25">Tig Welding</label></div></li></ul>
             </div>
             </div>
-        
-        <div style="overflow-y: scroll; height:400px;">
+            
         <div class="col-md-6 categoryList">
+            <div style="overflow-y: scroll; height:400px;">
                 <h5>Services Connections</h5>
                 <ul class="list-group navList" id="editMatServCons">
                 <li class="input-group" name="service" value="24"><strong>Cleaning</strong></li>
-                <li><div class="checkbox"><label><input type="checkbox" name="subService" value="40">Warehouse Cleaning</label></div></li>
+                <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids" value="40">Warehouse Cleaning</label></div></li>
                 <li class="input-group" name="service" value="23">Extraction</li>
-                <li><div class="checkbox"><label><input type="checkbox" name="subService" value="38">Concrete extraction</label></div></li>
+                <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids" value="38">Concrete extraction</label></div></li>
                 <li class="input-group" name="service" value="1"><strong>Prototype</strong></li>
-                <li><div class="checkbox"><label><input type="checkbox" name="subService" value="3">Industrial Welders</label></div></li>
-                <li><div class="checkbox"><label><input type="checkbox" name="subService" value="1">Mold Makers</label></div></li>
-                <li><div class="checkbox"><label><input type="checkbox" name="subService" value="2">Precision Welding</label></div></li>
+                <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids" value="3">Industrial Welders</label></div></li>
+                <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids" value="1">Mold Makers</label></div></li>
+                <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids" value="2">Precision Welding</label></div></li>
                 <li class="input-group" name="service" value="37"><strong>Roof Sealing</strong></li>
-                <li><div class="checkbox"><label><input type="checkbox" name="subService" value="56">Hydro Stop</label></div></li></ul>
+                <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids"  value="56">Hydro Stop</label></div></li></ul>
             </div>
              </div>
              </div>
+
 
 
         
@@ -168,6 +169,11 @@
     
 </template>
 <script>
+export default {
+  data() {
+    return { spids: [], ssids: [] };
+  }
+};
 </script>
 <style>
 </style>
