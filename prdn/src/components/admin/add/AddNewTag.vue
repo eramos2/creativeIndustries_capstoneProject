@@ -9,7 +9,7 @@
         <div>
         <div class="row">
             <div class="col-md-4 addCategoryList">
-                <h5>Tag</h5>
+                <h5>Tag Connections</h5>
                 <div class="form-group">
                     <select class="form-control" v-model="value"  onchange="addServ()" id="servTypes">
                         <option value="none" disabled selected>Choose One Tag</option>
@@ -34,10 +34,10 @@
 
                         </div>
                     </div>    
-                <h5>Tags - Connections</h5>
+                <h5>Tags - Name</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="tagConn" id="tagConn" v-validate="'required|max:15'" v-model="tagConn"  placeholder="Tag-Connections" onclick="showServConnections() ">
+                        <input type="text" class="form-control" name="tagConn" id="tagConn" v-validate="'required|max:15'" v-model="tagConn"  placeholder="Tag-Name" onclick="showServConnections() ">
                        <p class="text-danger" v-if="errors.has('tagConn')">{{ errors.first('tagConn') }}</p>
                         <!-- <button>Add</button> -->
                     </div>

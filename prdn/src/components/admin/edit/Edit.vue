@@ -5,14 +5,24 @@
         <div class="myaccount-content">
             <h3>Edit</h3>
 
+    
+     <companyselector></companyselector>
+
+    <!-- <b-btn v-b-toggle.collapse1 variant="primary">Edit Business Data</b-btn>
+    <b-collapse id="collapse1" class="mt-2"> -->
+
+        <!-- <button v-on:click="collapseAll">Collapse All</button> -->
+
         <div class="container" id="editBsnPage">
         <div class="row marginTop">
             <h2><span class="glyphicon glyphicon-plus-sign marginTop"></span> Edit a Business</h2>
+           
             
         </div>
     <div id="error"></div>
     <!-- <form name="addBsnForm"> -->
-
+    
+    
     <div class="single-input-item">
      <label for="companyName" class="required">Company Name</label>
         <input name="companyName" v-validate="'required|max:20'" type="text"  id = "companyName"  placeholder="Company Name" v-model="companyName" class="form-control" >
@@ -75,6 +85,7 @@
         <div class="row"></div>
 
         <div class="row">
+            <edittag></edittag>
             <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
                 <p>
                      <button :disabled="errors.any()" type="submit">Edit</button>
@@ -83,10 +94,12 @@
         </div>
         </div>
 
+        <!-- </b-collapse> -->
+        
         <editmaterial></editmaterial>
         <editprocess></editprocess>
         <editservices></editservices>
-        <edittag></edittag>
+        
 
                                     </div>
                                 </div>
@@ -112,6 +125,7 @@ Validator.localize(dictionary);
 import EditMaterial from "./EditMaterial.vue";
 import EditProcess from "./EditProcess.vue";
 import EditServices from "./EditServices.vue";
+import CompanySelector from "./CompanySelector.vue";
 import EditTag from "./EditTag.vue";
 import Vue from "vue";
 import FileUpload from "v-file-upload";
@@ -121,7 +135,8 @@ export default {
     editmaterial: EditMaterial,
     editprocess: EditProcess,
     editservices: EditServices,
-    edittag: EditTag
+    edittag: EditTag,
+    companyselector: CompanySelector
   },
   data: () => ({
     companyName: "My First Company",
@@ -135,6 +150,9 @@ export default {
     logo: ""
   }),
   methods: {
+    collapseAll() {
+      this.$refs.collapsible.map(c => (c.collapsed = true));
+    },
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {

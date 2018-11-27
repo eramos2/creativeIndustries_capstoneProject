@@ -9,26 +9,20 @@
         <div>
     <div class="row">
         <div class="col-md-4 categoryList">
-            <h5>Tags Connections</h5>
-            <div>
-                <select class="form-control" id="editServTypes" onchange="getServiceRelated(this.form)">
-                    <!--<option disabled selected>Choose One Material</option>-->
-                </select>
-            </div>
-
-        </div>
-
-
-
-            <!-- <div class="row">
-                <div class="col-md-4 pull-right buttonMargin" id="editServConnBtn">
-                    <p> -->
-                        <!-- <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditServConn(this.form)">Edit</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <!-- <button >Edit</button>
-                    </p>
+                <h5>Tag Connections</h5>
+                <div class="form-group">
+                    <select class="form-control" v-model="value"  id="editServTypes" onchange="getServiceRelated(this.form)">
+                        <option value="none" disabled selected>Choose One Tag</option>
+                        <option id="addNewTag" value="addNewTag">New Tag</option>
+                        <option value="1">Tubing</option>
+                        <option value="3">Ornaments</option>
+                        <option value="4">Decorative</option>
+                        <option value="5">Opaque</option>
+                        <option value="6">Breathable</option>
+                        <option value="7">Long Lasting</option>   
+                    </select>
                 </div>
-            </div> -->
+        </div>
         </div>
         </div>
     <!-- </form> -->
