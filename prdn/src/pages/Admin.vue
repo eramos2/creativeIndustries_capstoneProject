@@ -24,10 +24,11 @@
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
                                     <!-- <welcomeadmin></welcomeadmin> -->
-                                    <add></add>
+                                    <!-- <add></add> -->
                                     <!-- <edit></edit> -->
-                                   <!-- <remove></remove>
-                                    <pending></pending> -->
+                                    <!-- <remove></remove> -->
+                                    <pending></pending>
+                                    <!-- <newrequest></newrequest> -->
                                 </div>
                              </div>
                         </div>
@@ -47,6 +48,7 @@ import Add from "../components/admin/add/Add.vue";
 import Edit from "../components/admin/edit/Edit.vue";
 import Remove from "../components/admin/remove/Remove.vue";
 import Pending from "../components/admin/pending/Pending.vue";
+import NewRequest from "../components/admin/pending/NewRequest.vue";
 import Vue from "vue";
 import VeeValidate from "vee-validate";
 Vue.use(VeeValidate);

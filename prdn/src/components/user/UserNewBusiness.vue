@@ -66,11 +66,10 @@
                                                         </div>
                                                         <!-- UPLOAD BUSINESS PHOTO -->
                                                         <div class="single-input-item">
-                                                        <label for="logo" class="required">Business Photo</label>
-                                                        <file-upload :url='url' :thumb-url='thumbUrl' :headers="headers" @change="onFileChange" name="logo" ></file-upload>
-                                                        <!-- <textarea class="form-control textArea" name="logo" v-validate="'required'" id="logo" placeholder="Business Photo" rows="7"></textarea> -->
-                                                        <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
-                                                        </div>
+                                                          <label for="logo" class="required">Business Photo</label>
+                                                             <p> <input v-validate="'required|image'" data-vv-as="image" name="logo" type="file"></p>
+                                                                <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
+                                                                   </div>
                                     
 
                                             
@@ -224,25 +223,6 @@ export default {
       logo: this.logo
     };
     console.log(data);
-  },
-  /**
-   * Validate Business Photo uploaded by the user
-   */
-  data2() {
-    return {
-      url: "http://your-post.url",
-      headers: { "access-token": "<your-token>" },
-      filesUploaded: []
-    };
-  },
-  methods2: {
-    thumbUrl(file) {
-      return file.myThumbUrlProperty;
-    },
-    onFileChange(file) {
-      // Handle files like:
-      this.fileUploaded = file;
-    }
   }
 };
 </script>
