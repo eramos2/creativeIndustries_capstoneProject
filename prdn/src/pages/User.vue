@@ -8,9 +8,31 @@
                             <div class="myaccount-tab-menu nav" role="tablist">
                                 <!-- <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
                                     Home</a> -->
-                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
-                                <a href="#orders" data-toggle="tab"><i class="fa fa-user"></i> My Projects</a>
-                                <a href="#dashboard" data-toggle="tab"><i class="fa fa-user"></i>New Business</a>
+                                    <router-link 
+                                      to="/user"
+                                      tag="a" 
+                                      active-class="active"
+                                     exact
+                                    >
+                                    <i class="fa fa-user"></i> Account Details
+                                   </router-link>
+                                   <router-link 
+                                      to="/user/projects" 
+                                      tag="a" 
+                                      active-class="active"
+                                    >
+                                    <i class="fa fa-user"></i> My Projects
+                                   </router-link>
+                                   <router-link 
+                                      to="/user/addBusiness" 
+                                      tag="a" 
+                                      active-class="active"
+                                    >
+                                    <i class="fa fa-user"></i> Submit Business
+                                   </router-link>
+                                <!-- <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a> -->
+                                <!-- <a href="#orders" data-toggle="tab"><i class="fa fa-user"></i> My Projects</a> -->
+                                <!-- <a href="#dashboard" data-toggle="tab"><i class="fa fa-user"></i>New Business</a> -->
 
                                 <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a>
                             </div>
@@ -20,12 +42,14 @@
                             <div class="tab-content" id="myaccountContent">
                                    <!-- <useraccount></useraccount>  -->
                                     <!-- <userprojects></userprojects> -->
-                                    <usernewbusiness></usernewbusiness>
+                                    <!-- <usernewbusiness></usernewbusiness> -->
+                                    <router-view></router-view>
                         </div>
                         </div>
                          <!-- My Account Tab Content End -->
                          </div>
                         </div>
+                        
                          </div>
                         </div>
                         <!-- My Account Tab Menu End -->
@@ -54,6 +78,12 @@ export default {
         }
         alert("Empty Field(s)");
       });
+    }
+  },
+  computed: {
+    isActasdaive() {
+      console.log(this.$route);
+      return false;
     }
   }
 };

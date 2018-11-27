@@ -7,6 +7,9 @@ import SearchPage from "./pages/SearchPage.vue";
 import Map from "./pages/MapPage.vue";
 import User from "./pages/User.vue";
 import Login from "./pages/Login.vue";
+import UserAccount from "./components/user/UserAccount.vue";
+import UserProjects from "./components/user/UserProjects.vue";
+import UserNewBusiness from "./components/user/UserNewBusiness.vue";
 import Register from "./pages/Register.vue";
 import Admin from "./pages/Admin.vue"
 
@@ -23,8 +26,20 @@ export const routes = [{
 
     {
         path: '/user',
-        name: 'userLink',
-        component: User
+        component: User,
+        children: [{
+                path: '',
+                component: UserAccount
+            },
+            {
+                path: 'projects',
+                component: UserProjects
+            },
+            {
+                path: 'addBusiness',
+                component: UserNewBusiness
+            }
+        ]
     },
     {
         path: '/map',

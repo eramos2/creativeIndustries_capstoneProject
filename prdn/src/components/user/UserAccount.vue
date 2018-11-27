@@ -2,7 +2,8 @@
 
                           
                                 <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="account-info" role="tabpanel">
+                                <!-- <div class="tab-pane fade" id="account-info" role="tabpanel"> -->
+                                <div class="" id="account-info" role="tabpanel">
                                     <div class="myaccount-content">
                                         <form @submit.prevent="validateBeforeSubmit">  
                                         <h3>Account Details</h3>
