@@ -48,7 +48,7 @@ export const routes = [{
         component: Login
     },
     {
-        path: '/search',
+        path: '/search/:resourceName',
         name: 'searchLink',
         component: SearchPage
     },

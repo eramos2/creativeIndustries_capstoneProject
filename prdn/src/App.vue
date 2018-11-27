@@ -260,8 +260,6 @@ export default {
         $(".sticky-header").addClass("sticky");
       }
     });
-
-    window.$(".nice-select").niceSelect();
   }
 };
 </script>
