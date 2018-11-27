@@ -19,8 +19,8 @@
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
                                    <!-- <useraccount></useraccount>  -->
-                                    <!-- <userprojects></userprojects> -->
-                                    <usernewbusiness></usernewbusiness>
+                                    <userprojects></userprojects>
+                                    <!-- <usernewbusiness></usernewbusiness> -->
                         </div>
                         </div>
                          <!-- My Account Tab Content End -->

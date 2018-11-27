@@ -3,7 +3,7 @@
   
    <!--<login></login>-->
    <!-- <user></user> -->
-   <admin></admin>
+   <!-- <admin></admin> -->
    <!-- <superadmin></superadmin> -->
    <!-- <register></register> -->
     
@@ -13,7 +13,7 @@
     >
     </header-bar>
 
-    <!-- <router-view></router-view> -->
+    <router-view></router-view>
     <!--
     <slider
       :resources="resources"

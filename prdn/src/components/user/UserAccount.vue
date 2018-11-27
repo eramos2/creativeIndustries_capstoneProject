@@ -67,6 +67,7 @@
                                                 </fieldset>
 
                                                 <div class="single-input-item">
+                                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicModal">Remove</button>
                                                    <button :disabled="errors.any()" type="submit">Save Changes</button>
                                                    <!-- <button class="btn btn-primary" @click.prevent="test"> </button> -->
 

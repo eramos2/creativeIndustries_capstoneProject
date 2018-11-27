@@ -65,6 +65,8 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           this.test();
+          alert("Welcome Back");
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
@@ -75,6 +77,8 @@ export default {
         email: this.email,
         password: this.password
       };
+      this.email = "";
+      this.password = "";
       console.log(data);
     }
   }
