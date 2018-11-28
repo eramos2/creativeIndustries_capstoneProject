@@ -16,20 +16,24 @@ import {
 import {
   store
 } from './store/store.js';
+import VueCookie from 'vue-cookie';
 
+Vue.use(VueCookie);
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(VeeValidate);
+
 //For production build
 //Vue.http.options.root = "http://www.uprm.edu/creativeindustries/Server/";
 //For local Development
 Vue.http.options.root = "http://localhost/Server/";
 
 const router = new VueRouter({
-  routes: routes
+  routes: routes,
+  //mode: 'history'
 });
 
-
+export default router
 /** 
  * Adds a global filter for replacing %20 with whitespace in a string.
  */

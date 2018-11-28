@@ -12,7 +12,22 @@
                                     <p>Compared to glass of the same thickness, <br>The weight is less than half! </p>
                                 </div>
                                 <div class="slier-btn-1">
-                                    <a title="shop now" href="#" class="shop-btn">Learn More</a>
+                                  <router-link 
+                                    :to="{
+                                      name: 'singleitemLink', 
+                                      params: {
+                                        resourceName: 'materials',
+                                        categoryName: 'plastic',
+                                        subcategoryName: 'acrylic'
+                                      }
+                                    }"
+                                    tag="a" 
+                                    class="shop-btn"
+                                    active-class="active"
+                                  >
+                                    Learn More
+                                  </router-link>
+                                    <!-- <a title="shop now" href="#" class="shop-btn">Learn More</a> -->
                                 </div>
                             </div>
                         </div>
@@ -32,7 +47,22 @@
                                     <p>Remove Rust And Prepare Surfaces <br> for High Performance Coating</p>
                                 </div>
                                 <div class="slier-btn-1">
-                                    <a title="shop now" href="#" class="shop-btn">Learn More</a>
+                                  <router-link 
+                                    :to="{
+                                      name: 'singleitemLink', 
+                                      params: {
+                                        resourceName: 'processes',
+                                        categoryName: 'engraving',
+                                        subcategoryName: 'sand blasted'
+                                      }
+                                    }"
+                                    tag="a" 
+                                    class="shop-btn"
+                                    active-class="active"
+                                  >
+                                    Learn More
+                                  </router-link>
+                                    <!-- <a title="shop now" href="#" class="shop-btn">Learn More</a> -->
                                 </div>
                             </div>
                         </div>

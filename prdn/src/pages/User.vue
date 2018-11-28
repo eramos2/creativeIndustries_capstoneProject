@@ -30,11 +30,15 @@
                                     >
                                     <i class="fa fa-user"></i> Submit Business
                                    </router-link>
+                                   <a href="/" @click="logout()"><i class="fa fa-sign-out"></i> Logout</a>
+                                    
+                                   
                                 <!-- <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a> -->
                                 <!-- <a href="#orders" data-toggle="tab"><i class="fa fa-user"></i> My Projects</a> -->
                                 <!-- <a href="#dashboard" data-toggle="tab"><i class="fa fa-user"></i>New Business</a> -->
 
-                                <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a>
+                                <!-- <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a> -->
+                                
                             </div>
                         </div>
                          <!-- My Account Tab Content Start -->
@@ -60,6 +64,7 @@ import UserProjects from "../components/user/UserProjects.vue";
 import UserNewBusiness from "../components/user/UserNewBusiness.vue";
 
 export default {
+  props: ["authenticated"],
   components: {
     useraccount: UserAccount,
     userprojects: UserProjects,
@@ -70,6 +75,15 @@ export default {
     password: ""
   }),
   methods: {
+    logout() {
+      // To delete a cookie use
+      this.$cookie.delete("userId");
+      this.$cookie.delete("userType");
+      this.$store.dispatch("userType");
+      //this.$store.state.users.userFlags.loggedIn = false;
+      console.log("Logged Out");
+      console.log(this.$store.state.users.userFlags.loggedIn);
+    },
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {

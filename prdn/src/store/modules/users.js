@@ -18,26 +18,65 @@ const state = {
         recoverPassword: "",
         registerUser: "",
         addSubmission: "",
-        loggedIn: true //Is user loggedIn - for testing purposes
+        userType: "",
+        loggedIn: false //Is user loggedIn - for testing purposes
     }
 };
 
-const getters = {};
+const getters = {
+
+};
 
 
 const mutations = {
+    /** Get user type when initializing app, checks if user is logged in and 
+     * if it is regular, admin user, unregistered
+     */
+    userType: (state) => {
+        let userType = Vue.cookie.get("userType");
+        if (userType == "regular") {
+            state.userFlags['userType'] = userType;
+            state.userFlags['loggedIn'] = true;
+        } else {
+            state.userFlags['userType'] = "";
+            state.userFlags['loggedIn'] = false;
+        }
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = { ...state.userFlags
+        }
+    },
     /** 
      * Sets state.user data to the received response from http call
      * if credentials were correct.
      * @param {Array} data - Contains object with user data if login was valid, empty otherwise
      */
     loginUser: (state, data) => {
+        console.log(data);
         if (data.length > 0) {
+            Vue.cookie.set("userId", data[0].userId, 1);
+            console.log("hello");
+            console.log(Vue.cookie.get("userId"));
+            Vue.cookie.set("userType", "regular", 1)
             state.user = data[0];
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
             state.user = { ...state.user
+            }
+            state.userFlags['loggedIn'] = true;
+            //Replace that Object with a fresh one. For example, 
+            //using the stage-3 object spread syntax we can write it like this:
+            //It gives reactivity and all components are aware if it changed
+            state.userFlags = { ...state.userFlags
+            }
+        } else {
+            state.userFlags['loggedIn'] = false;
+            //Replace that Object with a fresh one. For example, 
+            //using the stage-3 object spread syntax we can write it like this:
+            //It gives reactivity and all components are aware if it changed
+            state.userFlags = { ...state.userFlags
             }
         }
 
@@ -136,6 +175,13 @@ const mutations = {
 
 
 const actions = {
+    /**  Get user type when initializing app, checks if user is logged in and 
+     * if it is regular, admin user, unregistered
+     */
+    userType: (context) => {
+
+        context.commit("userType");
+    },
 
     /**  
      * Http call to validate user login
@@ -168,7 +214,10 @@ const actions = {
                 return response.json();
             })
             .then(data => {
+                console.log(data);
                 context.commit('loginUser', data.resp);
+                return data;
+
             });
     },
 
@@ -396,11 +445,15 @@ const actions = {
                 var response = dataGet.resp;
                 if (response.length != 0) {
                     console.log("The email entered already exists. Please enter another email.");
-                    context.commit("registerNewUser", {
-                        0: {
-                            number: '0'
-                        }
-                    });
+                    return {
+                        testObj: "email is in db"
+                    };
+
+                    // context.commit("registerNewUser", {
+                    //     0: {
+                    //         number: '0'
+                    //     }
+                    // });
                 } else {
                     console.log("I'm adding user " + name);
 

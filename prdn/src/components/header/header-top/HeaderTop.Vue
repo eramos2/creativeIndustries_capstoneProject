@@ -34,40 +34,82 @@
                             <ul>
                                 <li class="currency">
                                             <div class="btn-group">
-                                                <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                
+                                               <router-link 
+                                                  to="/login" 
+                                                  tag="button" 
+                                                  class="btn-link"
+                                                  active-class="active"
+                                                  v-if="!authenticated"
+                                                >
+                                                <a>Login</a>
+                                                </router-link>
+                                                <router-link 
+                                                  to="/register" 
+                                                  tag="button" 
+                                                  active-class="active"
+                                                  class="btn-link"
+                                                  v-if="!authenticated"
+                                                >
+                                                <a>Register</a>
+                                               </router-link>
+                                                
+                                                <button v-if="authenticated" class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                    My Account <i class="fa fa-angle-down"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <ul>
-                                                        <router-link 
-                                                          to="/user" 
+                                                        <!-- <router-link 
+                                                          to="/register" 
                                                           tag="li" 
                                                           active-class="active"
-                                                          v-if="!loggedIn"
+                                                          v-if="!authenticated"
                                                         >
                                                         <a>Register</a>
                                                         </router-link>
                                                         <router-link 
-                                                          to="/" 
+                                                          to="/login" 
                                                           tag="li" 
                                                           active-class="active"
-                                                          v-if="!loggedIn"
+                                                          v-if="!authenticated"
                                                         >
                                                         <a>Login</a>
-                                                        </router-link>
+                                                        </router-link> -->
                                                         <router-link 
                                                           to="/user" 
                                                           tag="li" 
                                                           active-class="active"
-                                                          v-if="loggedIn"
+                                                          v-if="authenticated"
                                                         >
                                                         <a>Account Details</a>
                                                         </router-link>
+                                                        <router-link 
+                                                          to="/user/projects" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="authenticated"
+                                                        >
+                                                        <a>My Projects</a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/user/addBusiness" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="authenticated"
+                                                        >
+                                                        <a>Submit Business</a>
+                                                        </router-link>
                                                     </ul>
                                                 </div>
+                                                <button
+                                                  class="btn-link"
+                                                  v-if="authenticated"
+                                                  @click="logout()">
+                                                    <a>Log Out</a>
+                                                </button>
                                             </div>
                                         </li>
-                                <li class="language">
+                                <!-- <li class="language">
                                     <div class="btn-group">
                                         <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="https://www.fixaflat.com/images/flag-us.png" alt=""> English <i class="fa fa-angle-down"></i>
@@ -79,7 +121,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <!-- top-box-lang end -->
@@ -96,6 +138,18 @@
 import "popper.js";
 
 export default {
+  props: ["authenticated"],
+  methods: {
+    logout() {
+      // To delete a cookie use
+      this.$cookie.delete("userId");
+      this.$cookie.delete("userType");
+      this.$store.dispatch("userType");
+      //this.$store.state.users.userFlags.loggedIn = false;
+      console.log("Logged Out");
+      console.log(this.$store.state.users.userFlags.loggedIn);
+    }
+  },
   computed: {
     loggedIn() {
       return this.$store.state.users.userFlags.loggedIn;

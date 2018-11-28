@@ -1,5 +1,5 @@
 <template>
-<div class="tab-pane fade" id="pending-requests" role="tabpanel">
+<div class="" id="pending-requests" role="tabpanel">
     <div class="myaccount-content">
 <div class="container">
 
