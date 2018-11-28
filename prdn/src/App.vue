@@ -10,10 +10,32 @@
     <!--<app-header></app-header>-->
     <header-bar
       :resources="resources"
+      :authenticated="authenticated"
     >
     </header-bar>
-
-    <router-view></router-view>
+    
+    <router-view :authenticated="authenticated"></router-view>
+    <footer style="padding:2rem;">
+      <button
+            class="btn btn-primary btn-margin"
+            v-show="!authenticated"
+            @click="login()">
+              Log In
+          </button>
+          <p>test</p>
+          <button
+            class="btn btn-primary btn-margin"
+            v-show="authenticated"
+            @click="logout()">
+              Log Out
+          </button>
+          <button
+            class="btn btn-primary btn-margin"
+            v-show="!authenticated"
+            @click="register()">
+              Register
+          </button>
+          </footer>
     <!--
     <slider
       :resources="resources"
@@ -51,7 +73,7 @@ import Admin from "./pages/Admin.vue";
 
 export default {
   name: "app",
-  data: function() {
+  data() {
     return {
       sideBarItems: ["This is a test"],
       resources: {
@@ -244,9 +266,49 @@ export default {
     admin: Admin
   },
   methods: {
-    ...mapActions(["setResources"])
+    ...mapActions(["setResources"]),
+    register() {
+      let userData = {
+        email: "emmanuel.ramosrios@gmail.com",
+        password: "12345678",
+        firstName: "registerTest",
+        lastName: "registerTest",
+        occupation: "test",
+        birthday: "1991-10-10",
+        city: "testCity"
+      };
+      console.log("Registering user");
+      console.log(userData);
+      this.$store.dispatch("registerNewUser", userData);
+      // this.$store.dispatch("registerUser", {
+      //   email: "emmanuel.ramos2@upr.edu",
+      //   password: "12345678"
+      // });
+    },
+    login() {
+      this.$store.dispatch("loginUser", {
+        email: "emmanuel.ramos2@upr.edu",
+        password: "12345678"
+      });
+    },
+    logout() {
+      // To delete a cookie use
+      this.$cookie.delete("userId");
+      this.$cookie.delete("userType");
+      this.$store.dispatch("userType");
+      //this.$store.state.users.userFlags.loggedIn = false;
+      console.log("Logged Out");
+      console.log(this.$store.state.users.userFlags.loggedIn);
+    }
+  },
+  computed: {
+    authenticated() {
+      //console.log(this.$cookie.get("userId"));
+      return this.$store.state.users.userFlags.loggedIn; //this.$cookie.get("userId") === "31";
+    }
   },
   mounted() {
+    //Check if user is logged in
     this.setResources();
     //console.log("inside App.vue after setting resources");
     //console.log(this.$store.state.resources);
@@ -259,8 +321,6 @@ export default {
         $(".sticky-header").addClass("sticky");
       }
     });
-
-    window.$(".nice-select").niceSelect();
   }
 };
 </script>

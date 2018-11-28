@@ -20,10 +20,13 @@ const state = {
     addedNewResource: {},
     changedSubResourceCon: {},
     subcatConnections: {
-        submaterials: {},
-        subprocesses: {},
-        subservices: {}
+        submaterials: [],
+        subprocesses: [],
+        subservices: []
     },
+    resourceFlags: {
+        removeSubResource: ""
+    }
 
 };
 
@@ -182,12 +185,27 @@ const mutations = {
         }
         //console.log(state.addedNewResource);
     },
+    /**  
+     * Clears subcatConections object
+     */
+    clearResourceConnections: (state) => {
+        state.subcatConnections = {
+            submaterials: [],
+            subprocesses: [],
+            subservices: []
+        }
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.subcatConnections = { ...state.subcatConnections
+        }
+    },
     setRelatedProcesses: (state, data) => {
         state.subcatConnections['subprocesses'] = data;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.subcatConnections['subprocesses'] = { ...state.subcatConnections['subprocesses']
+        state.subcatConnections = { ...state.subcatConnections
         }
 
     },
@@ -196,7 +214,7 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.subcatConnections['subservices'] = { ...state.subcatConnections['subservices']
+        state.subcatConnections = { ...state.subcatConnections
         }
     },
     setRelatedMaterials: (state, data) => {
@@ -204,7 +222,7 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.subcatConnections['submaterials'] = { ...state.subcatConnections['submaterials']
+        state.subcatConnections = { ...state.subcatConnections
         }
 
     },
@@ -219,6 +237,18 @@ const mutations = {
         state.changedSubResourceCon = { ...state.changedSubResourceCon
         }
         //console.log(state.addedNewResource);
+    },
+    /**    
+     * Sets removeSubResource flag
+     */
+    removeSubResource: (state, data) => {
+        state.resourceFlags['removeSubResource'] = data['0'].number;
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.resourceFlags = { ...state.resourceFlags
+        }
+        console.log(state.resourceFlags);
     }
 
 
@@ -227,7 +257,7 @@ const mutations = {
 const actions = {
     /** 
      * Adds a new sub resource to the system with any connections
-     * @param {object} data - contains resource name, categoryId, subcategoryName, and array with the ids of any connections it has, if it doesnt have any connections it should set it to an empty array
+     * @param {object} data - contains categoryId, subcategoryName, and array with the ids of any connections it has, if it doesnt have any connections it should set it to an empty array
      *  
      */
     addNewSubResource: (context, data) => {
@@ -241,11 +271,10 @@ const actions = {
                 code: code,
                 multi: true,
                 du: true,
-                smid: data.mid, //categoryId, not an array
+                smid: data.cid, //categoryId, not an array
                 ssid: data.sid,
                 spid: data.pid,
                 subName: data.subresName,
-                name: data.resName
             };
         } else if (data.resource == 'services') {
             prms = {
@@ -253,11 +282,10 @@ const actions = {
                 code: code,
                 multi: true,
                 du: true,
-                ssid: data.sid, //categoryId, not an array
+                ssid: data.cid, //categoryId, not an array
                 smid: data.mid,
                 spid: data.pid,
                 subName: data.subresName,
-                name: data.resName
             };
         } else {
             prms = {
@@ -265,11 +293,10 @@ const actions = {
                 code: code,
                 multi: true,
                 du: true,
-                spid: data.pid, //categoryId, not an array
+                spid: data.cid, //categoryId, not an array
                 smid: data.mid,
                 ssid: data.sid,
                 subName: data.subresName,
-                name: data.resName
             };
         }
 
@@ -283,6 +310,55 @@ const actions = {
             .then(data => {
                 //console.log(data.resp[0].number);
                 context.commit('confirmAddedNewResource', data.resp);
+            });
+    },
+    /** 
+     * Removes a sub resource from the system
+     * @param {object} data - contains subresourceId, and resource category (materials|services|processes)
+     *  
+     */
+    removeSubResource: (context, data) => {
+        console.log("Removing subresource");
+        state.resourceFlags['removeSubResource'] = ""; //reinitalize flag 
+        let prms;
+        let code = '4';
+
+        if (data.resource == 'materials') {
+            prms = {
+                endpoint: 'material',
+                code: code,
+                du: true,
+                multi: true,
+                smid: data.submaterialId
+            };
+        } else if (data.resource == 'services') {
+            prms = {
+                endpoint: 'service',
+                code: '4',
+                du: true,
+                multi: true,
+                ssid: data.subserviceId
+            };
+        } else {
+            prms = {
+                endpoint: 'process',
+                code: '4',
+                du: true,
+                multi: true,
+                spid: data.subprocessId
+            };
+        }
+
+        Vue.http
+            .get(serverfile, {
+                params: prms
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                //console.log(data.resp[0].number);
+                context.commit('removeSubResource', data.resp);
             });
     },
     /** 
@@ -433,6 +509,13 @@ const actions = {
                 console.log(data.resp);
                 context.commit('setResourceSearchResult', data.resp);
             });
+    },
+
+    /**    
+     * Clears subcatConnections
+     */
+    clearResourceConnections: (context) => {
+        context.commit("clearResourceConnections");
     },
     /**   
      * Gets related process for the given category and subcategory

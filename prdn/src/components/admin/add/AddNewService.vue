@@ -14,10 +14,18 @@
                     <select class="form-control" onchange="addServ()" v-model="value" id="servTypes">
                         <option value="none" disabled="" selected="">Choose One Service</option>
                         <option id="addNewServ" value="addNewServ">New Service</option>
-                        <option value="24">Cleaning</option>
+                        <option 
+
+                        v-for="(category,key) in serviceCat"
+                        :key="key"
+                        :value="category.id"
+                        >
+                        {{category.name}}
+                        </option>
+                        <!-- <option value="24">Cleaning</option>
                         <option value="23">Extraction</option>
                         <option value="1">Prototype</option>
-                        <option value="37">Roof Sealing</option>
+                        <option value="37">Roof Sealing</option> -->
                     </select>
                 </div>
                 <div class="row">
@@ -118,27 +126,33 @@ export default {
     test() {
       if (this.newServiceField == "") {
         let data = {
-          value: this.value,
-          newSubServ: this.newSubServ
+          resource: "services",
+          subresName: this.newSubServ,
+          cid: this.value
         };
         this.value = "";
         this.newSubServ = "";
         console.log(data);
+        this.$store.dispatch("addNewSubResource", data);
       } else {
         let data = {
-          value: this.value,
-          newServiceField: this.newServiceField,
-          newSubServ: this.newSubServ
+          resource: "services",
+          resName: this.newServiceField,
+          subresName: this.newSubServ
         };
 
         this.value = "";
         this.newServiceField = "";
         this.newSubServ = "";
         console.log(data);
+        this.$store.dispatch("addNewResource", data);
       }
     }
   },
   computed: {
+    serviceCat() {
+      return this.$store.state.resources.resources.services.categories;
+    },
     displayNewServ() {
       return this.value == "addNewServ";
     }

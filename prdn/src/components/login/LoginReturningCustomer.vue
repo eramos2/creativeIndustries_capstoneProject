@@ -64,12 +64,23 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.test();
-          alert("Welcome Back");
-          this.$validator.reset();
-          return;
+          this.login(this.email, this.password).then(datatt => {
+            console.log(datatt);
+            this.$validator.reset();
+            this.$router.replace("/");
+            console.log(this.$store.state.users.user);
+            alert("Login Sucessful");
+          });
+        } else {
+          alert("There are some empty Field(s)");
         }
-        alert("Empty Field(s)");
+      });
+    },
+    login(email, pass) {
+      console.log(email + pass);
+      return this.$store.dispatch("loginUser", {
+        email: email,
+        password: pass
       });
     },
     test() {

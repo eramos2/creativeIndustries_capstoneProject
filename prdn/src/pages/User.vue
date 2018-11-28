@@ -8,24 +8,52 @@
                             <div class="myaccount-tab-menu nav" role="tablist">
                                 <!-- <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
                                     Home</a> -->
-                                <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a>
-                                <a href="#orders" data-toggle="tab"><i class="fa fa-user"></i> My Projects</a>
-                                <a href="#dashboard" data-toggle="tab"><i class="fa fa-user"></i>New Business</a>
+                                    <router-link 
+                                      to="/user"
+                                      tag="a" 
+                                      active-class="active"
+                                     exact
+                                    >
+                                    <i class="fa fa-user"></i> Account Details
+                                   </router-link>
+                                   <router-link 
+                                      to="/user/projects" 
+                                      tag="a" 
+                                      active-class="active"
+                                    >
+                                    <i class="fa fa-user"></i> My Projects
+                                   </router-link>
+                                   <router-link 
+                                      to="/user/addBusiness" 
+                                      tag="a" 
+                                      active-class="active"
+                                    >
+                                    <i class="fa fa-user"></i> Submit Business
+                                   </router-link>
+                                   <a href="/" @click="logout()"><i class="fa fa-sign-out"></i> Logout</a>
+                                    
+                                   
+                                <!-- <a href="#account-info" data-toggle="tab"><i class="fa fa-user"></i> Account Details</a> -->
+                                <!-- <a href="#orders" data-toggle="tab"><i class="fa fa-user"></i> My Projects</a> -->
+                                <!-- <a href="#dashboard" data-toggle="tab"><i class="fa fa-user"></i>New Business</a> -->
 
-                                <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a>
+                                <!-- <a href="login.html"><i class="fa fa-sign-out"></i> Logout</a> -->
+                                
                             </div>
                         </div>
                          <!-- My Account Tab Content Start -->
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
                                    <!-- <useraccount></useraccount>  -->
-                                    <userprojects></userprojects>
+                                    <!-- <userprojects></userprojects> -->
                                     <!-- <usernewbusiness></usernewbusiness> -->
+                                    <router-view></router-view>
                         </div>
                         </div>
                          <!-- My Account Tab Content End -->
                          </div>
                         </div>
+                        
                          </div>
                         </div>
                         <!-- My Account Tab Menu End -->
@@ -36,6 +64,7 @@ import UserProjects from "../components/user/UserProjects.vue";
 import UserNewBusiness from "../components/user/UserNewBusiness.vue";
 
 export default {
+  props: ["authenticated"],
   components: {
     useraccount: UserAccount,
     userprojects: UserProjects,
@@ -46,6 +75,15 @@ export default {
     password: ""
   }),
   methods: {
+    logout() {
+      // To delete a cookie use
+      this.$cookie.delete("userId");
+      this.$cookie.delete("userType");
+      this.$store.dispatch("userType");
+      //this.$store.state.users.userFlags.loggedIn = false;
+      console.log("Logged Out");
+      console.log(this.$store.state.users.userFlags.loggedIn);
+    },
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -54,6 +92,12 @@ export default {
         }
         alert("Empty Field(s)");
       });
+    }
+  },
+  computed: {
+    isActasdaive() {
+      console.log(this.$route);
+      return false;
     }
   }
 };

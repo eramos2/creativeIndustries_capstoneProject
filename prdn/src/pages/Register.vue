@@ -29,7 +29,8 @@ export default {
 }
 
 a {
-  display: block;
+  /* Add it to the component that needs it*/
+  /* display: block; */
   text-decoration: none;
 }
 

@@ -1,7 +1,8 @@
 <template>
     
                                     <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="orders" role="tabpanel">
+                                <!-- <div class="tab-pane fade" id="orders" role="tabpanel"> -->
+                                  <div class="" id="orders" role="tabpanel">
                                     <div class="myaccount-content">
                                       <form @submit.prevent="validateBeforeSubmit">  
                                         <h3>My Projects Details</h3>

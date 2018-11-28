@@ -15,14 +15,23 @@
                     <select class="form-control" v-model="value" onchange="addMat()" id="matTypes">
                         <option value="none" disabled selected>Choose One Material</option>
                         <option id="addNewMat" value="addNewMat">New Material</option>
-                        <option value="1">Concrete</option>
+                        <option 
+                        
+                        v-for="(category,key) in materialCat"
+                        :key="key"
+                        :value="category.id"
+                        >
+                        {{category.name}}
+                        </option>
+
+                        <!-- <option value="1">Concrete</option>
                         <option value="7">Fabrics</option>
                         <option value="6">Glass and Ceramics</option>
                         <option value="3">Metal</option>
                         <option value="8">Papers Coating and Surfaces</option>
                         <option value="4">Plastic</option>
                         <option value="5">Rubber</option>
-                        <option value="2">Wood</option>
+                        <option value="2">Wood</option> -->
                     </select>
                 </div>
                 <div class="row">
@@ -133,27 +142,34 @@ export default {
     test() {
       if (this.newMatField == "") {
         let data = {
-          value: this.value,
-          newSubMat: this.newSubMat
+          resource: "materials",
+          subresName: this.newSubMat,
+          cid: this.value
         };
+
         this.value = "";
         this.newSubMat = "";
         console.log(data);
+        this.$store.dispatch("addNewSubResource", data);
       } else {
         let data = {
-          value: this.value,
-          newMatField: this.newMatField,
-          newSubMat: this.newSubMat
+          resource: "materials",
+          resName: this.newMatField,
+          subresName: this.newSubMat
         };
         this.value = "";
         this.newMatField = "";
         this.newSubMat = "";
 
         console.log(data);
+        this.$store.dispatch("addNewResource", data);
       }
     }
   },
   computed: {
+    materialCat() {
+      return this.$store.state.resources.resources.materials.categories;
+    },
     displayNewMat() {
       return this.value == "addNewMat";
     }

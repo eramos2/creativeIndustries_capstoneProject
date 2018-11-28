@@ -94,6 +94,7 @@
  * Custom Messages for Alerts if an error appear after validation
  */
 import { Validator } from "vee-validate";
+import { restElement } from "babel-types";
 const dictionary = {
   en: {
     custom: {
@@ -146,9 +147,10 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.test();
+          //this.test();
           alert("Registered");
           this.$validator.reset();
+          this.register();
           return;
         }
         alert("Verify Field(s)");
@@ -159,6 +161,20 @@ export default {
      * Clear all the variables after the user finish
      * the registration
      */
+    register() {
+      let userData = {
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        occupation: this.occupation,
+        birthday: "1991-10-10",
+        city: this.city
+      };
+      console.log("Registering user");
+      console.log(userData);
+      this.$store.dispatch("registerNewUser", userData);
+    },
     test() {
       let data = {
         firstName: this.firstName,

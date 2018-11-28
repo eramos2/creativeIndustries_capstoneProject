@@ -1,6 +1,6 @@
 <template>
     <header>
-        <header-top></header-top>
+        <header-top :authenticated="authenticated"></header-top>
         <header-bot
           :resources="resources"
         ></header-bot>
@@ -12,7 +12,7 @@ import HeaderTop from "./header-top/HeaderTop.vue";
 import HeaderBot from "./header-bottom/HeaderBot.vue";
 
 export default {
-  props: ["resources"],
+  props: ["resources", "authenticated"],
   components: {
     headerTop: HeaderTop,
     headerBot: HeaderBot

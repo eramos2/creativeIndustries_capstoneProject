@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
-/dist
+dist/
+/vendor/
+node_modules/
+package-lock.json
 
 # local env files
 .env.local

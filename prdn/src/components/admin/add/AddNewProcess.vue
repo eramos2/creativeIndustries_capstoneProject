@@ -15,7 +15,15 @@
                     <select class="form-control" v-model="value" onchange="addProc()" id="procTypes">
                         <option value="none" disabled selected>Choose One Process</option>
                         <option id="addNewProc" value="addNewProc">New Process</option>
-                        <option value="2">Engraving</option>
+                        <option 
+                        
+                        v-for="(category,key) in processCat"
+                        :key="key"
+                        :value="category.id"
+                        >
+                        {{category.name}}
+                        </option>
+                        <!-- <option value="2">Engraving</option>
                         <option value="3">Extrusion</option>
                         <option value="7">Fabric Machinery</option>
                         <option value="4">Geometrical Precision Cutting</option>
@@ -23,7 +31,7 @@
                         <option value="9">Metal Workshop</option>
                         <option value="1">Molding</option>
                         <option value="8">Rapid Prototype</option>
-                        <option value="5">Welding</option>
+                        <option value="5">Welding</option> -->
                     </select>
                 </div>
                 <div class="row">
@@ -129,27 +137,33 @@ export default {
     test() {
       if (this.newProcField == "") {
         let data = {
-          value: this.value,
-          newSubProc: this.newSubProc
+          resource: "processes",
+          subresName: this.newSubProc,
+          cid: this.value
         };
         this.value = "";
         this.newSubProc = "";
         console.log(data);
+        this.$store.dispatch("addNewSubResource", data);
       } else {
         let data = {
-          value: this.value,
-          newProcField: this.newProcField,
-          newSubProc: this.newSubProc
+          resource: "processes",
+          resName: this.newProcField,
+          subresName: this.newSubProc
         };
 
         this.value = "";
         this.newProcField = "";
         this.newSubProc = "";
         console.log(data);
+        this.$store.dispatch("addNewResource", data);
       }
     }
   },
   computed: {
+    processCat() {
+      return this.$store.state.resources.resources.processes.categories;
+    },
     displayNewProc() {
       return this.value == "addNewProc";
     }

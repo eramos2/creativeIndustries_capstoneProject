@@ -7,27 +7,69 @@
                         <div class="row">
                         <div class="col-md-3">
                             <div class="myaccount-tab-menu nav" role="tablist">
-                                <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-unlock-alt"></i>
-                                    Admininistrator</a>
+                                <!-- <a href="#dashboad" class="active" data-toggle="tab">
+                                  <i class="fa fa-unlock-alt"></i>
+                                    Admininistrator</a> -->
+                                <router-link 
+                                      to="/admin"
+                                      tag="a" 
+                                      active-class="active"
+                                     exact
+                                    >
+                                    <i class="fa fa-unlock-alt"></i>
+                                    Admininistrator
+                                   </router-link>
+                                <router-link 
+                                   to="/admin/add"
+                                   tag="a" 
+                                   active-class="active"
+                                  exact
+                                 >
+                                 <i class="fa fa-star"></i> Add
+                                </router-link>
+                                <router-link 
+                                   to="/admin/edit"
+                                   tag="a" 
+                                   active-class="active"
+                                  exact
+                                 >
+                                 <i class="fa fa-star"></i> Edit
+                                </router-link>
+                                <router-link 
+                                   to="/admin/remove"
+                                   tag="a" 
+                                   active-class="active"
+                                  exact
+                                 >
+                                 <i class="fa fa-star"></i> Remove
+                                </router-link>
+                                <router-link 
+                                   to="/admin/requests"
+                                   tag="a" 
+                                   active-class="active"
+                                  exact
+                                 >
+                                 <i class="fa fa-star"></i> Pending Requests
+                                </router-link>
+                                <!-- <a href="#add" data-toggle="tab"><i class="fa fa-star"></i> Add</a> -->
 
-                                <a href="#add" data-toggle="tab"><i class="fa fa-star"></i> Add</a>
+                                <!-- <a href="#edit" data-toggle="tab"><i class="fa fa-star"></i> Edit</a> -->
 
-                                <a href="#edit" data-toggle="tab"><i class="fa fa-star"></i> Edit</a>
+                                <!-- <a href="#remove" data-toggle="tab"><i class="fa fa-star"></i> Remove</a> -->
 
-                                <a href="#remove" data-toggle="tab"><i class="fa fa-star"></i> Remove</a>
-
-                                <a href="#pending-requests" data-toggle="tab"><i class="fa fa-star"></i> Pending Requests</a>
+                                <!-- <a href="#pending-requests" data-toggle="tab"><i class="fa fa-star"></i> Pending Requests</a> -->
 
                             </div>
                         </div>
                         <!-- My Account Tab Content Start -->
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
+                              <router-view></router-view>
                                     <!-- <welcomeadmin></welcomeadmin> -->
                                     <!-- <add></add> -->
                                     <!-- <edit></edit> -->
                                     <!-- <remove></remove> -->
-                                    <pending></pending>
+                                    <!-- <pending></pending> -->
                                     <!-- <newrequest></newrequest> -->
                                 </div>
                              </div>

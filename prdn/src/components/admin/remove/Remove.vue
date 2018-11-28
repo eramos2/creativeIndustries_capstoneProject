@@ -1,5 +1,5 @@
 <template>
-<div class="tab-pane fade" id="remove" role="tabpanel">
+<div class="" id="remove" role="tabpanel">
     <div class="myaccount-content">
         <h3>Remove</h3>
           <!-- <removematerials></removematerials> -->

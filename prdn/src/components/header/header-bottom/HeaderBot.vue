@@ -8,20 +8,57 @@
                                     <div class="search-categories">
                                         <div class="form">
                                             <div class="search-form-input">
-                                                <select v-model="selected" id="select" name="select" class="nice-select" >
+                                                <multiselect 
+                                                
+                                                track-by="name"
+                                                label="name"
+                                                v-model="selected" 
+                                                :options="searchOptions" 
+                                                :searchable="false"
+                                                :close-on-select="true"
+                                                :show-labels="false"
+                                                :allow-empty="false"
+                                                :preselectFirst="true"
+                                                placeholder="Pick a Value"
+                                                >
+                                                <template 
+                                                slot="singleLabel" 
+                                                slot-scope="{ option }">
+                                               {{ option.name }}
+                                                   </template>
+                                                </multiselect>
+                                                <!-- <select  id="select" name="select" class="nice-select" v-model="selectedType">
                                                   <option 
                                                       v-for="(option, key) in searchOptions" 
                                                       :key="key"
-                                                      v-bind:value="option.value"
+                                                      :value="option.value"
                                                       
                                                   > 
                                                   {{option.text}}
                                                   </option>
                                                 
                                                     
-                                                </select>
+                                                </select> -->
                                                 <input id="search-input" type="text" placeholder="Search..." v-model="searchText">
-                                                <button class="top-search-btn" type="submit" @click="autoSearch"><i class="ion-ios-search-strong"></i> Search</button>
+                                                <router-link 
+                                                  v-show="!onSearchPage"
+                                                  :to="{
+                                                    name: 'searchLink', 
+                                                    params: {
+                                                        resourceName: selected.value,
+                                                        searchValue: searchText
+
+                                                    }
+                                                  }" 
+                                                  tag="button" 
+                                                  active-class="active"
+                                                  class="top-search-btn"
+                                                  type="submit"
+                                                  
+                                                >
+                                                  <i class="ion-ios-search-strong"></i> Search
+                                                </router-link>
+                                                <button class="top-search-btn" type="submit" v-show="onSearchPage" @click="searchForBusinesses"><i class="ion-ios-search-strong"></i> Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -87,29 +124,60 @@
 
 <script>
 import "popper.js";
+import Multiselect from "vue-multiselect";
 
 export default {
+  components: {
+    Multiselect
+  },
   props: ["resources"],
   data() {
     return {
+      selected: "",
       searchText: "",
-      selected: "materials",
+      selectedType: "businesses",
       searchOptions: [
-        { text: "Materials", value: "materials" },
-        { text: "Processes", value: "processes" },
-        { text: "Services", value: "services" },
-        { text: "Businesses", value: "businesses" }
+        { name: "Materials", value: "materials" },
+        { name: "Processes", value: "processes" },
+        { name: "Services", value: "services" },
+        { name: "Businesses", value: "businesses" }
       ]
     };
   },
-
+  computed: {
+    onSearchPage() {
+      console.log(this.$route.name == "searchLink");
+      return this.$route.name == "searchLink";
+    },
+    selectedTyp() {
+      let selectElement = window.$(".nice-select")["0"];
+      console.log(selectElement);
+      if (selectElement != undefined) {
+        let selectedIndex = selectElement.options.selectedIndex;
+        this.selectedType = selectElement.options[selectedIndex].value;
+      }
+      return this.selectedType;
+    },
+    test() {
+      console.log(this.selectedType);
+      return this.selectedType;
+    }
+  },
   methods: {
+    searchForBusinesses() {
+      console.log(this.selected.value);
+      this.$store.dispatch("getBusinessesByName", this.searchText);
+    },
     autoSearch() {
-      console.log(this.selected + " " + this.searchText);
+      console.log(this.selectedType);
+
+      console.log(this.selectedType + " " + this.searchText);
     }
   },
 
   mounted() {
+    /**Nice Select */
+    //$(".nice-select").niceSelect();
     /*--
     02. jQuery MeanMenu
 ------------------------- */
@@ -161,7 +229,32 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
+/* start multiselect style */
+.multiselect {
+  position: absolute;
+  z-index: 9;
+  width: 164px;
+  margin-top: 0.095rem;
+  margin-left: 0.2rem;
+}
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 0.65rem 40px 0 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+  font-size: 14px;
+  border-color: white;
+  border-right-color: #ff6a00;
+  border-right-width: 0.08rem;
+  border-radius: 0;
+}
 
+.multiselect__select {
+  padding-top: 0.55rem;
+}
+/* end multiselect style */
 .top-search-area {
   margin: 27px 0;
   position: relative;
