@@ -92,6 +92,7 @@ export default {
         if (result) {
           alert("Submitted");
           this.test();
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
@@ -102,6 +103,8 @@ export default {
         projectName: this.projectName,
         description: this.description
       };
+      projectName = "";
+      description = "";
       console.log(data);
     }
   }

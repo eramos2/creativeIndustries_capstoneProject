@@ -203,6 +203,7 @@ export default {
         if (result) {
           alert("Submitted");
           this.test();
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
@@ -211,7 +212,7 @@ export default {
   },
   test() {
     let data = {
-      companytName: this.companytName,
+      companyName: this.companyName,
       addressID: this.addressID,
       city: this.city,
       country: this.country,
@@ -221,6 +222,15 @@ export default {
       description: this.description,
       logo: this.logo
     };
+    companyName = "";
+    addressID = "";
+    city = "";
+    country = "";
+    zipcode = "";
+    telephone = "";
+    website = "";
+    description = "";
+    logo = "";
     console.log(data);
   }
 };

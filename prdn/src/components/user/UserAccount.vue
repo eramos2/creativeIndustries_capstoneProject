@@ -69,10 +69,7 @@
                                                 <div class="single-input-item">
                                                     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicModal">Remove</button>
                                                    <button :disabled="errors.any()" type="submit">Save Changes</button>
-                                                   <!-- <button class="btn btn-primary" @click.prevent="test"> </button> -->
-
                                                 </div>
-                                            <!-- </form> -->
                                         </div>
                                         </form>
                                     </div>
@@ -113,10 +110,10 @@ Validator.localize(dictionary);
 
 export default {
   data: () => ({
-    firstName: "",
-    lastName: "",
-    occupation: "",
-    city: "",
+    firstName: "Emmanuel",
+    lastName: "Ramos",
+    occupation: "student",
+    city: "Bayamon",
     password: "",
     confirmedpassword: ""
   }),
@@ -132,6 +129,7 @@ export default {
           console.log(result);
           this.test();
           alert("Submitted");
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
@@ -146,6 +144,11 @@ export default {
         city: this.city,
         password: this.password
       };
+      firstName = "";
+      lastName = "";
+      occupation = "";
+      city = "";
+      password = "";
       console.log(data);
     }
   }

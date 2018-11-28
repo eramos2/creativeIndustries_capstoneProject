@@ -30,10 +30,7 @@
                                     <div :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('email') }">
                                         <label class="control-label col-md-2" for="email"><span class="require"></span>Email</label>
                                         <div class="col-md-10">
-                                            <!-- <input name ="email" v-validate="'required|email'" type="email" class="form-control" id="email" data-vv-delay="2000" v-model="email" placeholder="Email">
-                                            <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p> -->
-                                            <input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="email" v-model="email" id="email" data-vv-delay="500" placeholder="Email address" class="form-control"  >
-                                                <!-- <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p> -->
+                                            <input name="email" v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" type="email" v-model="email" id="email" data-vv-delay="500" placeholder="Email address" class="form-control"  >                    
                                                 <i v-show="errors.has('email')" class="text-danger"></i>
                                                 <span v-show="errors.has('email')" class="text-danger">{{ errors.first('email') }}</span>
                                         </div>
@@ -142,17 +139,26 @@ export default {
     password: "",
     confirmedpassword: ""
   }),
+  dataCollected() {
+    return { registerId: [] };
+  },
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
           this.test();
+          alert("Registered");
+          this.$validator.reset();
           return;
         }
         alert("Verify Field(s)");
       });
     },
-
+    /**
+     * Return all Data the user enter for credentials
+     * Clear all the variables after the user finish
+     * the registration
+     */
     test() {
       let data = {
         firstName: this.firstName,
@@ -163,6 +169,13 @@ export default {
         password: this.password,
         confirmedpassword: this.confirmedpassword
       };
+      this.firstName = "";
+      this.lastName = "";
+      this.occupation = "";
+      this.city = "";
+      this.birthdate = "";
+      this.password = "";
+      this.confirmedpassword = "";
       console.log(data);
     }
   }
