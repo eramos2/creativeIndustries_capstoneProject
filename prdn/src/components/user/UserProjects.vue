@@ -5,6 +5,15 @@
                                   <div class="" id="orders" role="tabpanel">
                                     <div class="myaccount-content">
                                       <form @submit.prevent="validateBeforeSubmit">  
+                                        <h3>Select your Project</h3> 
+                                        <div class="row">
+                                            <div class="form-group">
+                                          <select class="form-control" v-model="value"  onchange="addServ()" id="servTypes">
+                                              <option value="none" disabled selected>Choose Your Project</option>
+                                              <option value="1">My Project</option>
+                                          </select>
+                                         </div>
+                                         </div>
                                         <h3>My Projects Details</h3>
 
                                         <div class="account-details-form checkout-form-list">
@@ -24,32 +33,37 @@
                                                 </div>
                                                 <fieldset>
                                                   <!-- SELECT TAGS TO DESCRIBE PROJECT -->
-                                                    <legend>Select tags for your Project</legend>
-                                                <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag#1</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #1</option>
-                                                    </select>
-                                                </div>
-                                                <div class="single-input-item">
-                                                    <label for="tag2" class="required">Tag #2</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #2</option>
-                                                    </select>
-                                                </div>
-                                                <div class="single-input-item">
-                                                    <label for="tag3" class="required">Tag#3</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag#3</option>
-                                                    </select>
-                                                </div>
+                                                   <div class="row">
+                                                     <div class="col-md-12 categoryList" id="tag-column-project">
+                                                        <div style="overflow-y: scroll; height:400px;">
+                                                          <ul class="list-group navList" id="editMatProcCons">
+                                                            <h3>Select 3 Tags to describe your project</h3>
+                                                            <li class="input-group" name="tags" value="2"><strong>Applications</strong></li>
+                                                                <li class="catMargins">
+                                                                    <div class="checkbox">
+                                                                      <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(0)==-1" v-model="spids" :value="0" />Tubing</label></div></li>
+                                                                     <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(1)==-1" v-model="spids" :value="1" />Ornaments</label></div></li>
+                                                                     <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(2)==-1" v-model="spids" :value="2" />Decorative</label></div></li>
+                                                                    <li class="input-group" name="tags" value="2"><strong>Qualities</strong></li>
+                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(3)==-1" v-model="spids" :value="3" />Opaque</label></div></li>
+                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(4)==-1" v-model="spids" :value="4" />Breathable</label></div></li>
+                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(5)==-1" v-model="spids" :value="5" />Long Lasting</label></div></li>                                             
+                                                                  </div> 
+                                                                </li>  
+                                                                </ul>     
+                                                          </div>
+                                                     </div>
+                                                   </div>
+                                                   
                                                 </fieldset>
                                                 <div class="single-input-item">
                                                     <button :disabled="errors.any()" type="submit">Submit</button>
                                                 </div>
-                                       
+                                              
                                         </div>
                                         </form>
+                                    <singleitems id="single-item-column"></singleitems>
+
                                     </div>
                                 </div>
 
@@ -61,9 +75,12 @@
  * Custom Messages for messages if an error appear after validation
  */
 import { Validator } from "vee-validate";
+import SingleItems from "./UserSingleItemBusinesses.vue";
+
 const dictionary = {
   en: {
     custom: {
+      singleitems: SingleItems,
       projectName: {
         required: "Please enter your project name.",
         alpha_spaces:
@@ -83,10 +100,13 @@ const dictionary = {
 Validator.localize(dictionary);
 
 export default {
-  data: () => ({
-    projectName: "",
-    description: ""
-  }),
+  data() {
+    return {
+      projectName: "",
+      description: "",
+      spids: []
+    };
+  },
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
@@ -108,10 +128,19 @@ export default {
       description = "";
       console.log(data);
     }
+  },
+  components: {
+    singleitems: SingleItems
   }
 };
 </script>
 <style>
+#single-item-column {
+  padding-top: 1.5rem;
+}
+#tag-column-project {
+  padding-top: 1.5rem;
+}
 .myaccount-content {
   font-size: 16px;
   line-height: 1.5;

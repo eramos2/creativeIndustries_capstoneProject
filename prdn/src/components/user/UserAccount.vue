@@ -3,9 +3,9 @@
                           
                                 <!-- Single Tab Content Start -->
                                 <!-- <div class="tab-pane fade" id="account-info" role="tabpanel"> -->
-                                <div class="" id="account-info" role="tabpanel">
+                                <div class="" id="account-info" href="#editUserData" role="tabpanel">
                                     <div class="myaccount-content">
-                                        <form @submit.prevent="validateBeforeSubmit">  
+                                        <form @submit.prevent="validateBeforeSubmit" >  
                                         <h3>Account Details</h3>
 
                                         <div class="account-details-form checkout-form-list">
@@ -46,7 +46,7 @@
                                                 <fieldset>
                                                     <legend>Password change</legend>
                                                     <!--  NEW PASSWORD -->
-                                                    <div class="row">
+                                                    <div class="row" >
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item">
                                                                 <label for="new-pwd" class="required">New
@@ -68,11 +68,14 @@
                                                 </fieldset>
 
                                                 <div class="single-input-item">
-                                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicModal">Remove</button>
-                                                   <button :disabled="errors.any()" type="submit">Save Changes</button>
+                                                    <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicModal">Remove</button> -->
+                                                   <button :disabled="errors.any()" type="submit" id="saves-btn"  >Save Changes</button>
+                                                   
+
                                                 </div>
                                         </div>
                                         </form>
+                                        <button @click="editUserData">Populate</button>
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
@@ -110,14 +113,16 @@ const dictionary = {
 Validator.localize(dictionary);
 
 export default {
-  data: () => ({
-    firstName: "Emmanuel",
-    lastName: "Ramos",
-    occupation: "student",
-    city: "Bayamon",
-    password: "",
-    confirmedpassword: ""
-  }),
+  data() {
+    return {
+      firstName: "",
+      lastName: "",
+      occupation: "",
+      city: "",
+      password: "",
+      confirmedpassword: ""
+    };
+  },
   methods: {
     /**
      * Validate the input data from the User using v-validate rules such as
@@ -151,11 +156,26 @@ export default {
       city = "";
       password = "";
       console.log(data);
+    },
+    editUserData() {
+      let data = {
+        firstName: "Emmanuel",
+        lastName: "Ramos",
+        occupation: "student",
+        city: "Naranjito"
+      };
+      this.firstName = data.firstName;
+      this.lastName = data.lastName;
+      this.occupation = data.occupation;
+      this.city = data.city;
     }
   }
 };
 </script>
 <style>
+#saves-btn {
+  margin-top: 1.5rem;
+}
 </style>
 
 

@@ -42,7 +42,7 @@
                 </router-link>
                 <!--<h4 class="product-name"><a href="single-product.html">{{businessName}}</a></h4>-->
                 <!--<div class="price-box">
-                <span class="new-price">$116.00</span>
+                    <span class="new-price">$116.00</span>
                 </div>-->
             </div>
         </div>
