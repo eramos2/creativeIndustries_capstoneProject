@@ -93,15 +93,11 @@ const dictionary = {
     custom: {
       newServiceField: {
         required: "The new service field is required.",
-        max: "The new material field may not be greater than 15 characters."
+        max: "The new service field may not be greater than 15 characters."
       },
       newSubServ: {
         required: "The sub service field is required.",
         max: "The sub service field may not be greater than 15 characters."
-      },
-      newMatField: {
-        required: "The new material field is required.",
-        max: "The new material field may not be greater than 15 characters."
       }
     }
   }
@@ -124,30 +120,66 @@ export default {
 
       this.$validator.validateAll().then(result => {
         if (result) {
-          let data = {
-            resource: "services",
-            subresName: this.newSubServ,
-            cid: this.value
-          };
-          this.$store
-            .dispatch("addNewSubResource", data)
-            .then(response => {
-              console.log("after dispatch add new subservice");
-              console.log(response);
+          if (this.newServiceField == "") {
+            //Catefory already exists add new subcategory only
+            let data = {
+              resource: "services",
+              subresName: this.newSubServ,
+              cid: this.value
+            };
 
-              if (response > 0) {
-                this.reloadResources();
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                return { modalShow: false, modalShowCred: true };
-              }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
-            });
+            this.$store
+              .dispatch("addNewSubResource", data)
+              .then(response => {
+                console.log("after dispatch add new submaterial");
+                console.log(response);
+
+                if (response > 0) {
+                  this.reloadResources();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            this.$validator.reset();
+            this.value = "";
+            this.newSubServ = "";
+            return;
+          } else {
+            let data = {
+              resource: "services",
+              resName: this.newSubServ, //new category name
+              subresName: this.newSubServ //new subcategory name
+            };
+            this.$store
+              .dispatch("addNewResource", data)
+              .then(response => {
+                console.log("after dispatch add new material and submaterial");
+                console.log(response);
+
+                if (response > 0) {
+                  this.reloadResources();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          }
           this.$validator.reset();
+          this.value = "";
+          this.newServiceField = "";
+          this.newSubServ = "";
           return;
+
+          console.log(data);
         } else {
           this.modalShowFail = true;
         }

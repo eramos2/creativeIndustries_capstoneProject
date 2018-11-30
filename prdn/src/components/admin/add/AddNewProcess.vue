@@ -129,30 +129,62 @@ export default {
 
       this.$validator.validateAll().then(result => {
         if (result) {
-          let data = {
-            resource: "processes",
-            subresName: this.newSubProc,
-            cid: this.value
-          };
-          this.$store
-            .dispatch("addNewSubResource", data)
-            .then(response => {
-              console.log("after dispatch add new sub-resource");
-              console.log(response);
-
-              if (response > 0) {
-                this.reloadResources();
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                return { modalShow: false, modalShowCred: true };
-              }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
-            });
+          if ((this.newProcField = "")) {
+            let data = {
+              resource: "processes",
+              subresName: this.newSubProc,
+              cid: this.value
+            };
+            this.$store
+              .dispatch("addNewSubResource", data)
+              .then(response => {
+                console.log("after dispatch add new sub-resource");
+                console.log(response);
+                if (response > 0) {
+                  this.reloadResources();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            this.$validator.reset();
+            this.value = "";
+            this.newSubProc = "";
+            return;
+          } else {
+            let data = {
+              resource: "processes",
+              resName: this.newProcField,
+              subresName: this.newSubProc
+            };
+            this.$store
+              .dispatch("addNewResource", data)
+              .then(response => {
+                console.log("after dispatch add new material and submaterial");
+                console.log(response);
+                if (response > 0) {
+                  this.reloadResources();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          }
           this.$validator.reset();
+          this.value = "";
+          this.newProcField = "";
+          this.newSubProc = "";
           return;
+
+          console.log(data);
         } else {
           this.modalShowFail = true;
         }

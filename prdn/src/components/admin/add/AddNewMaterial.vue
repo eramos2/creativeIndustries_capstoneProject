@@ -198,65 +198,6 @@ export default {
     okModal() {
       this.$router.replace("/admin/add");
     },
-
-    // validateBeforeSubmit() {
-    //   this.$validator.validateAll().then(result => {
-    //     if (result) {
-    //       if (this.newMatField == "") {
-    //         //Catefory already exists add new subcategory only
-    //         let data = {
-    //           resource: "materials",
-    //           subresName: this.newSubMat,
-    //           cid: this.value
-    //         };
-    //         this.$store.dispatch("addNewSubResource", data).then(response => {
-    //           console.log("after dispatch add new submaterial");
-    //           console.log(response);
-
-    //           if (response > 0) {
-    //             //added new subresource sucessfully
-    //             this.reloadResources();
-    //             alert("added new subresource successfully");
-    //           } else {
-    //             //add new subresource failed
-    //             alert("Failed to add new subresource");
-    //           }
-    //         });
-
-    //         this.value = "";
-    //         this.newSubMat = "";
-    //         console.log(data);
-    //       } else {
-    //         let data = {
-    //           resource: "materials",
-    //           resName: this.newMatField, //new category name
-    //           subresName: this.newSubMat //new subcategory name
-    //         };
-    //         this.$store.dispatch("addNewResource", data).then(response => {
-    //           console.log("after dispatch add new material and submaterial");
-    //           console.log(response);
-
-    //           if (response > 0) {
-    //             //added new subresource sucessfully
-    //             this.reloadResources();
-    //             alert("added new material and submaterial successfully");
-    //           } else {
-    //             //add new subresource failed
-    //             alert("Failed to add new material and submaterial");
-    //           }
-    //         });
-    //         this.value = "";
-    //         this.newMatField = "";
-    //         this.newSubMat = "";
-
-    //         console.log(data);
-    //       }
-    //       this.$validator.reset();
-    //       return;
-    //     }
-    //     alert("Empty Field(s)");
-    //   });
-    // },
     reloadResources() {
       this.$store.dispatch("setResources");
     },

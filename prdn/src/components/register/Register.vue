@@ -80,7 +80,7 @@
                                     </div>
                                     <!-- <button>Submit</button> -->
                                      <button :disabled="errors.any()" type="submit">Submit</button>
-                                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
+                                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome">
                                         <p class="my-4">{{email}}</p>
                                       </b-modal>
                                       <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
