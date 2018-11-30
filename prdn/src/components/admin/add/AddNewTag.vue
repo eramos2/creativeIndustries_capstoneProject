@@ -9,7 +9,7 @@
         <div>
         <div class="row">
             <div class="col-md-4 addCategoryList">
-                <h5>Tag Connections</h5>
+                <h5>Tag - Category</h5>
                 <div class="form-group">
                     <select class="form-control" v-model="value" id="tagTypes">
                         <option value="none" disabled selected>Choose One Tag</option>
@@ -17,11 +17,11 @@
 
                         <!-- Tag Categories -->
                         <option 
-                        v-for="(category,key) in tagCat"
+                        v-for="(tagCategory,key) in tagCat"
                         :key="key"
-                        :value="category.id"
+                        :value="tagCategory.name"
                         >
-                        {{category.name}}
+                        {{tagCategory.name}}
                         </option>
 
                         <!-- <option value="1">Tubing</option>
@@ -44,10 +44,10 @@
 
                         </div>
                     </div>    
-                <h5>Tags - Name</h5>
+                <h5>Tag - Name</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Tag-Name" onclick="showServConnections() ">
+                        <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Tag-Name" >
                        <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
                         <!-- <button>Add</button> -->
                     </div>
@@ -133,7 +133,7 @@ export default {
 
               if (response > 0) {
                 //added new subresource sucessfully
-                this.reloadResources();
+                this.reloadTags();
                 alert("added new subservice successfully");
               } else {
                 //add new subresource failed
@@ -156,11 +156,13 @@ export default {
 
               if (response > 0) {
                 //added new subresource sucessfully
-                this.reloadResources();
+                this.reloadTags();
                 alert("added new service and subservice successfully");
+                this.$validator.reset();
               } else {
                 //add new subresource failed
                 alert("Failed to add new service and subservice");
+                this.$validator.reset();
               }
             });
             this.value = "";
@@ -169,11 +171,15 @@ export default {
 
             console.log(data);
           }
-          this.$validator.reset();
+
           return;
         }
         alert("Empty Field(s)");
+        this.$validator.reset();
       });
+    },
+    reloadTags() {
+      this.$store.dispatch("setTags");
     },
     test() {
       if (this.newTagField == "") {

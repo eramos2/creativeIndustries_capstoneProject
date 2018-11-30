@@ -25,9 +25,9 @@
 
            <!-- <div class="single-input-item"> -->
              <div class="single-input-item">
-            <label for="addressID" class="required">Address</label>
-                <input name="addressID" v-validate="'required|max:40'" type="text"  id = "addressID" v-model="addressID" placeholder="Address" class="form-control" >
-                    <p class="text-danger" v-if="errors.has('addressID')">{{ errors.first('addressID') }}</p>
+            <label for="address" class="required">Address</label>
+                <input name="address" v-validate="'required|max:50'" type="text"  id = "address" v-model="address" placeholder="Address" class="form-control" >
+                    <p class="text-danger" v-if="errors.has('address')">{{ errors.first('address') }}</p>
                         </div>
 
 <!-- <div class="row"> -->
@@ -212,12 +212,17 @@ const dictionary = {
       companyName: {
         required: "Please enter your company name.",
         max: "The company name field may not be greater than 20 characters."
+      },
+      address: {
+        required: "Please enter the Address.",
+        max: "The address field may not be greater than 50 characters."
       }
     }
   }
 };
 
 Validator.localize(dictionary);
+
 import MaterialCheckbox from "./MaterialCheckbox.vue";
 import AddNewMaterial from "./AddNewMaterial.vue";
 import AddNewProcess from "./AddNewProcess.vue";
@@ -250,7 +255,7 @@ export default {
     smids: [], //selected sub materials ids
     ssids: [], //selected sub services ids
     companyName: "",
-    addressID: "",
+    address: "",
     city: "",
     country: "",
     zipcode: "",
@@ -264,18 +269,42 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.test();
-          alert("Submitted");
-          this.$validator.reset();
+          let data = {
+            companyName: this.companyName,
+            address: this.address,
+            city: this.city,
+            country: this.country,
+            zipcode: this.zipcode,
+            phone: this.phone,
+            website: this.website,
+            description: this.description,
+            logo: this.logo,
+            materials: this.smids,
+            services: this.ssids,
+            processes: this.spids
+          };
+          this.$store.dispatch("addNewBusiness", data).then(response => {
+            console.log("Helooowwe");
+            console.log(response);
+            if (response > 0) {
+              alert("Submitted");
+            } else {
+              alert("Error When submited please try again");
+            }
+            this.$validator.reset();
+          });
+
+          console.log("fuueegooo");
           return;
+        } else {
+          alert("Empty Field(s)");
         }
-        alert("Empty Field(s)");
       });
     },
     test() {
       let data = {
         companyName: this.companyName,
-        addressID: this.addressID,
+        address: this.address,
         city: this.city,
         country: this.country,
         zipcode: this.zipcode,
@@ -285,7 +314,7 @@ export default {
         logo: this.logo
       };
       this.companyName = "";
-      this.addressID = "";
+      this.address = "";
       this.city = "";
       this.country = "";
       this.zipcode = "";
