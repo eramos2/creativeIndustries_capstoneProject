@@ -49,13 +49,13 @@
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
                       <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
-                      <p class="my-4">{{newSubMat}}</p>
+                      <p class="my-4">The material was added.</p>
                       </b-modal>
                       <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
                       <p class="my-4">Try Again</p>
                       </b-modal>
                       <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                      <p class="my-4">Email/password combination failed</p>
+                      <p class="my-4">Combination failed</p>
                       </b-modal>
                 </p>
             </div>
@@ -160,7 +160,7 @@ export default {
       });
     },
     okModal() {
-      this.$router.replace("/");
+      this.$router.replace("/admin/add");
     },
 
     // validateBeforeSubmit() {

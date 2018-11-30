@@ -55,6 +55,15 @@
                 <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
+                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
+                      <p class="my-4">The Process was added.</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                      <p class="my-4">Try Again</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                      <p class="my-4">Combination failed</p>
+                      </b-modal>
                 </p>
             </div>
             </div>
@@ -107,78 +116,117 @@ Validator.localize(dictionary);
 
 export default {
   data: () => ({
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false,
     value: "",
     newProcField: "",
     newSubProc: ""
   }),
   methods: {
-    validateBeforeSubmit() {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
+
       this.$validator.validateAll().then(result => {
         if (result) {
-          if (this.newProcField == "") {
-            //Catefory already exists add new subcategory only
-            let data = {
-              resource: "processes",
-              subresName: this.newSubProc,
-              cid: this.value
-            };
-            //Dispatch the action to add the subresource
-            this.$store.dispatch("addNewSubResource", data).then(response => {
-              console.log("after dispatch add new subprocess");
+          let data = {
+            resource: "processes",
+            subresName: this.newSubProc,
+            cid: this.value
+          };
+          this.$store
+            .dispatch("addNewSubResource", data)
+            .then(response => {
+              console.log("after dispatch add new sub-resource");
               console.log(response);
 
               if (response > 0) {
-                //added new subprocess sucessfully
                 this.reloadResources();
-                alert("added new subprocess successfully");
+                return { modalShow: true, modalShowCred: false };
               } else {
-                //add new subprocess failed
-                alert("Failed to add new subprocess");
+                return { modalShow: false, modalShowCred: true };
               }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
             });
-
-            this.value = "";
-            this.newSubProc = "";
-            console.log(data);
-          } else {
-            //Add new process Category and add new subcategory
-            let data = {
-              resource: "processes",
-              resName: this.newProcField, //new category name
-              subresName: this.newSubProc //new subcategory name
-            };
-            //Dispatch the action to add the new process category and the new subprocess
-            this.$store.dispatch("addNewResource", data).then(response => {
-              console.log("after dispatch add new material and subprocess");
-              console.log(response);
-
-              if (response > 0) {
-                //added new subresource sucessfully
-                this.reloadResources();
-                alert("added new material and subprocess successfully");
-              } else {
-                //add new subresource failed
-                alert("Failed to add new material and subprocess");
-              }
-            });
-            this.value = "";
-            this.newProcField = "";
-            this.newSubProc = "";
-
-            console.log(data);
-          }
           this.$validator.reset();
-
           return;
+        } else {
+          this.modalShowFail = true;
         }
-        alert("Empty Field(s)");
       });
     },
+    okModal() {
+      this.$router.replace("/admin/add");
+    },
+    // validateBeforeSubmit() {
+    //   this.$validator.validateAll().then(result => {
+    //     if (result) {
+    //       if (this.newProcField == "") {
+    //         //Catefory already exists add new subcategory only
+    //         let data = {
+    //           resource: "processes",
+    //           subresName: this.newSubProc,
+    //           cid: this.value
+    //         };
+    //         //Dispatch the action to add the subresource
+    //         this.$store.dispatch("addNewSubResource", data).then(response => {
+    //           console.log("after dispatch add new subprocess");
+    //           console.log(response);
+
+    //           if (response > 0) {
+    //             //added new subprocess sucessfully
+    //             this.reloadResources();
+    //             alert("added new subprocess successfully");
+    //           } else {
+    //             //add new subprocess failed
+    //             alert("Failed to add new subprocess");
+    //           }
+    //         });
+
+    //         this.value = "";
+    //         this.newSubProc = "";
+    //         console.log(data);
+    //       } else {
+    //         //Add new process Category and add new subcategory
+    //         let data = {
+    //           resource: "processes",
+    //           resName: this.newProcField, //new category name
+    //           subresName: this.newSubProc //new subcategory name
+    //         };
+    //         //Dispatch the action to add the new process category and the new subprocess
+    //         this.$store.dispatch("addNewResource", data).then(response => {
+    //           console.log("after dispatch add new material and subprocess");
+    //           console.log(response);
+
+    //           if (response > 0) {
+    //             //added new subresource sucessfully
+    //             this.reloadResources();
+    //             alert("added new material and subprocess successfully");
+    //           } else {
+    //             //add new subresource failed
+    //             alert("Failed to add new material and subprocess");
+    //           }
+    //         });
+    //         this.value = "";
+    //         this.newProcField = "";
+    //         this.newSubProc = "";
+
+    //         console.log(data);
+    //       }
+    //       this.$validator.reset();
+
+    //       return;
+    //     }
+    //     alert("Empty Field(s)");
+    //   });
+    // },
 
     reloadResources() {
       this.$store.dispatch("setResources");
     },
-
     test() {
       if (this.newProcField == "") {
         let data = {
