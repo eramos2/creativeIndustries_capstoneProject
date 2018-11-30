@@ -258,10 +258,11 @@ const dictionary = {
         required: "Please enter your company name.",
         max: "The company name field may not be greater than 20 characters."
       },
-        required: "Please enter the Address.",
-        max: "The address field may not be greater than 50 characters."
-      }
-
+      required: "Please enter the Address.",
+      max: "The address field may not be greater than 50 characters."
+    }
+  }
+};
 import MaterialCheckbox from "./MaterialCheckbox.vue";
 import AddNewMaterial from "./AddNewMaterial.vue";
 import AddNewProcess from "./AddNewProcess.vue";

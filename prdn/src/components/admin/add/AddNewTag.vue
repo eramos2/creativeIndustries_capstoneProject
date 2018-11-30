@@ -194,7 +194,7 @@ export default {
   },
   computed: {
     tagCat() {
-      return this.$store.getters.getTags();
+      return this.$store.state.tags.categories;
     },
     displayNewTag() {
       return this.value == "addNewTag";
