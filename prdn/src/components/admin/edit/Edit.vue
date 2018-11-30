@@ -1,8 +1,9 @@
 <template>
- <form @submit.prevent="validateBeforeSubmit">  
+ 
        <!-- Single Tab Content Start -->
     <div class="" id="edit" role="tabpanel">
         <div class="myaccount-content">
+            <form @submit.prevent="validateBeforeSubmit">  
             <h3>Edit</h3>
 
     
@@ -100,12 +101,13 @@
         <editprocess></editprocess>
         <editservices></editservices>
         
-
+                                    </form>
+                                    <button @click="editUserData">Populate</button>
                                     </div>
                                 </div>
-                                <button @click="editUserData">Populate</button>
+                                
                                 <!-- Single Tab Content End -->
-                                </form>
+                                
                                 
     
 </template>
@@ -167,28 +169,28 @@ export default {
         alert("Empty Field(s)");
       });
     },
-    // test() {
-    //   let data = {
-    //     companyName: this.companyName,
-    //     address: this.address,
-    //     city: this.city,
-    //     country: this.country,
-    //     zipcode: this.zipcode,
-    //     phone: this.phone,
-    //     website: this.website,
-    //     description: this.description,
-    //     logo: this.logo
-    //   };
-    //   this.companyName = "";
-    //   this.address = "";
-    //   this.city = "";
-    //   this.country = "";
-    //   this.zipcode = "";
-    //   this.phone = "";
-    //   this.website = "";
-    //   this.description = "";
-    //   console.log(data);
-    // },
+    test() {
+      let data = {
+        companyName: this.companyName,
+        address: this.address,
+        city: this.city,
+        country: this.country,
+        zipcode: this.zipcode,
+        phone: this.phone,
+        website: this.website,
+        description: this.description,
+        logo: this.logo
+      };
+      this.companyName = "";
+      this.address = "";
+      this.city = "";
+      this.country = "";
+      this.zipcode = "";
+      this.phone = "";
+      this.website = "";
+      this.description = "";
+      console.log(data);
+    },
     editUserData() {
       let data = {
         companyName: "First Company",
@@ -201,8 +203,8 @@ export default {
         description: "This is the first company"
       };
       this.companyName = data.companyName;
-      this.adress = data.address;
-      this.city - data.city;
+      this.address = data.address;
+      this.city = data.city;
       this.country = data.country;
       this.zipcode = data.zipcode;
       this.phone = data.phone;

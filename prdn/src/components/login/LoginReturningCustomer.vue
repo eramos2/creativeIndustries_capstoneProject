@@ -15,9 +15,7 @@
                                                 <div :class="{'form-group': true, 'has-error': errors.has('email') }">
                                                 <h4>Email</h4>
                                                 <input name="email" v-validate="'required|email'"  type="email" v-model="email" id="email" data-vv-delay="500" placeholder="Email address" class="form-control"  >
-                                                <!-- <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p> -->
-                                                <i v-show="errors.has('email')" class="fa fa-warning"></i>
-                                               <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
+                                                <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
                                                 </div>
                                             </div>
                                                              <!-- PASSWORD -->
@@ -27,18 +25,32 @@
                                                 <h4>Password</h4>
                                                 <input name="password" type="password" v-validate="'required|min:8|max:15'"  placeholder="Password"  id="password" data-vv-delay="500"  v-model="password" class="form-control">
                                                 <p class="text-danger" v-if="errors.has('password')">{{ errors.first('password') }}</p>
-                                            </div>
-                                            </div>
-                                            <button  :disabled="errors.any()" type="submit">Login</button>
+                                                     </div>
+                                                      </div>
+
+                                              
+                                            
+                                            <!-- <b-btn @click="modalShow = errors.any() ">Login</b-btn> -->
+                                            <button  :disabled="errors.any()"  type="submit">Login</button>
+                                            <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
+                                             <p class="my-4">{{email}}</p>
+                                               </b-modal>
+                                               <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                                             <p class="my-4">Try Again</p>
+                                               </b-modal>
+                                               <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                                             <p class="my-4">Email/password combination failed</p>
+                                               </b-modal>
                                             <p class="lost-password">
+
                                               <a class="pull-left" href="forgot-password.html">Forgot password?</a>
                                           
                                              <a class="pull-right" onclick="loadPage('changePassword')">Have a passcode?</a></p> 
-                                            <!-- <button>Login</button> -->
-                                            <!-- <p ><a onclick="loadPage('recoverPassword')">Forgot Password?</a>
-                                            <a class="pull-right" onclick="loadPage('changePassword')">Have a passcode?</a></p> -->
+
                                         </div>
                                         </form>
+                                        <div>
+</div>
                                     </div>
                                 </div>
                             </div>
@@ -56,25 +68,55 @@ const emailsDB = ["test@upr.edu"];
 
 export default {
   data: () => ({
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false,
     email: "",
     password: "",
     testEmail: "test@upr.edu"
   }),
   methods: {
-    validateBeforeSubmit() {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
+
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.login(this.email, this.password).then(datatt => {
-            console.log(datatt);
-            this.$validator.reset();
-            this.$router.replace("/");
-            console.log(this.$store.state.users.user);
-            alert("Login Sucessful");
-          });
+          let data = {
+            email: this.email,
+            password: this.password
+          };
+          console.log(data);
+          console.log(result);
+          let loginResult;
+          this.$store
+            .dispatch("loginUser", data)
+            .then(response => {
+              console.log(response);
+              if (response.resp.length > 0) {
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                return { modalShow: false, modalShowCred: true };
+              }
+            })
+            .then(data => {
+              console.log(data);
+
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
+            });
+          this.$validator.reset();
+          return;
+          console.log(this.$store.state.users.user);
+
+          // alert("Login Sucessful");
         } else {
-          alert("There are some empty Field(s)");
+          this.modalShowFail = true;
+          // alert("There are some empty Field(s)");
         }
       });
+    },
+    okModal() {
+      this.$router.replace("/");
     },
     login(email, pass) {
       console.log(email + pass);
