@@ -30,8 +30,8 @@ const state = {
 
 const getters = {
     getBusinesses: state => {
-        //console.log('test Get Resources');
-        //console.log(state.resources);
+        console.log('test Get Resources');
+        console.log(state.businesses);
         return state.businesses;
     },
     getBusiness(state) {
@@ -93,7 +93,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.businesses = { ...state.businesses
+        state.businesses = {
+            ...state.businesses
         }
 
 
@@ -105,7 +106,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.businesses = { ...state.businesses
+        state.businesses = {
+            ...state.businesses
         }
     },
 
@@ -122,7 +124,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
         //console.log("After commiting currentBusiness in business.js");
         //console.log(state.currentBusiness);
@@ -151,7 +154,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
         //console.log("After commiting currentBusiness in business.js");
         //console.log(state.currentBusiness);
@@ -181,7 +185,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
         //console.log(state.currentBusiness);
 
@@ -206,7 +211,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
         //console.log(state.currentBusiness);
 
@@ -232,7 +238,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
         //console.log(state.currentBusiness);
 
@@ -271,7 +278,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
         //console.log(state.currentBusiness);
 
@@ -286,7 +294,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.businessesFlags = { ...state.businessesFlags
+        state.businessesFlags = {
+            ...state.businessesFlags
         }
         console.log(state.businessesFlags);
     },
@@ -299,7 +308,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.businessesFlags = { ...state.businessesFlags
+        state.businessesFlags = {
+            ...state.businessesFlags
         }
         console.log(state.businessesFlags);
     },
@@ -312,7 +322,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.businessesFlags = { ...state.businessesFlags
+        state.businessesFlags = {
+            ...state.businessesFlags
         }
         console.log(state.businessesFlags);
     },
@@ -325,7 +336,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.businessesFlags = { ...state.businessesFlags
+        state.businessesFlags = {
+            ...state.businessesFlags
         }
         console.log(state.businessesFlags);
     }

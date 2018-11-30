@@ -17,6 +17,9 @@ import {
   store
 } from './store/store.js';
 import VueCookie from 'vue-cookie';
+import { Modal } from 'bootstrap-vue/es/components';
+
+Vue.use(Modal);
 
 Vue.use(VueCookie);
 Vue.use(VueResource);

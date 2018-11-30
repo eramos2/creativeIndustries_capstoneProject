@@ -2,7 +2,7 @@
     <div class="col-lg-3">
         <!-- sinle-product-item start -->
         <div class="sinle-product-item">
-            <div id="featured-business" class="product-thumb">
+            <div class="product-thumb">
                 <router-link 
                   :to="{
                     name: 'businessLink', 
@@ -17,24 +17,12 @@
                   <img class="primary-image" :src="businessLogo" alt="">
                 </router-link>
                 
-                <!-- <div class="action-links">
+                <div class="action-links">
                     <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                    <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
-                </div> -->
+                    <!--<a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
+                </div>
                 <div class="add-to-cart">
-                  <router-link 
-                  :to="{
-                    name: 'businessLink', 
-                    params: {
-                      businessName: businessName
-                    }
-                  }" 
-                  tag="a" 
-                  active-class="active"
-                  class="btn-cart"
-                >
-                  <span> Learn More </span>
-                  </router-link>
+                    <a class="btn-cart" href="#"><span> Learn More </span></a>
                 </div>
             </div>
             <div class="product-info">
@@ -54,7 +42,7 @@
                 </router-link>
                 <!--<h4 class="product-name"><a href="single-product.html">{{businessName}}</a></h4>-->
                 <!--<div class="price-box">
-                <span class="new-price">$116.00</span>
+                    <span class="new-price">$116.00</span>
                 </div>-->
             </div>
         </div>
@@ -99,10 +87,4 @@ export default {
 </script>
 
 <style>
-#featured-business {
-  height: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto;
-}
 </style>

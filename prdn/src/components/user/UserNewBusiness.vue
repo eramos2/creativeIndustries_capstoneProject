@@ -70,85 +70,42 @@
                                                              <p> <input v-validate="'required|image'" data-vv-as="image" name="logo" type="file"></p>
                                                                 <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
                                                                    </div>
+
+                                                                   <fieldset>
+                                                                       <!-- SELECT TAGS TO DESCRIBE PROJECT -->
+                                                   <div class="row">
+                                                     <div class="col-md-12 categoryList" id="tag-column-project">
+                                                        <div style="overflow-y: scroll; height:400px;">
+                                                          <ul class="list-group navList" id="editMatProcCons">
+                                                            <h3>Select 6 Tags to describe your Business</h3>
+                                                            <li class="input-group" name="tags" value="2"><strong>Applications</strong></li>
+                                                                <li class="catMargins">
+                                                                    <div class="checkbox">
+                                                                      <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 4 && spids.indexOf(0)==-1" v-model="spids" :value="0" />Tubing</label></div></li>
+                                                                     <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 4 && spids.indexOf(1)==-1" v-model="spids" :value="1" />Ornaments</label></div></li>
+                                                                     <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 4 && spids.indexOf(2)==-1" v-model="spids" :value="2" />Decorative</label></div></li>
+                                                                    <li class="input-group" name="tags" value="2"><strong>Qualities</strong></li>
+                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 4 && spids.indexOf(3)==-1" v-model="spids" :value="3" />Opaque</label></div></li>
+                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 4 && spids.indexOf(4)==-1" v-model="spids" :value="4" />Breathable</label></div></li>
+                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 4 && spids.indexOf(5)==-1" v-model="spids" :value="5" />Long Lasting</label></div></li>                                             
+                                                                  </div> 
+                                                                </li>  
+                                                                </ul>     
+                                                          </div>
+                                                     </div>
+                                                   </div>
+                                                                   </fieldset>
                                     
 
                                             
                                                 <div class="single-input-item">
                                                     <div class="row">
-                                                        <div class="col-lg-4 col-sm-6 pull-right buttonMargin">
+                            
                                                             <p>
                                                      <!-- <button>Add</button> -->
                                                     <button :disabled="errors.any()" type="submit">Submit</button>
                                                     </p>
                                                      </div>
-                                                    </div>
-                                                    <!-- DESCRIPTION TAGS START -->
-                                                   <fieldset>
-                                                       <legend>Tags</legend>
-                                                       <!-- Tag # 1 -->
-                                                       <div class="row">
-                                                            <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag#1</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #1</option>
-                                                    </select>
-                                                </div>
-                                                       </div>
-                                                       <!-- Tag # 2 -->
-                                                          <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag# 2</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #2</option>
-                                                    </select>
-                                                </div>
-                                                       </div>
-                                                       </div>
-                                                       <!-- Tag # 3 -->
-                                                       <div class="row">
-                                                            <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag #3</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #3</option>
-                                                    </select>
-                                                </div>
-                                                       </div>
-                                                       <!-- Tag # 4 -->
-                                                          <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag #4</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #4</option>
-                                                    </select>
-                                                </div>
-                                                       </div>
-                                                       </div>
-
-
-                                                       <!-- Tag # 5 -->
-                                                       <div class="row">
-                                                            <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag #5</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #5</option>
-                                                    </select>
-                                                </div>
-                                                       </div>
-                                                       <!-- Tag # 6 -->
-                                                          <div class="col-lg-6">
-                                                    <div class="single-input-item">
-                                                    <label for="tag1" class="required">Tag#6</label>
-                                                    <select class="form-control" onchange="addMat()" id="matTypes">
-                                                    <option disabled selected>Choose Tag #6</option>
-                                                    </select>
-                                                </div>
-                                                       </div>
-                                                       </div>
-                                                   </fieldset>
-                                                    <!-- DESCRIPTION TAGS END -->
                                                     
                                                 </div>
                                         </div>
@@ -187,23 +144,27 @@ import Vue from "vue";
 import FileUpload from "v-file-upload";
 Vue.use(FileUpload);
 export default {
-  data: () => ({
-    companyName: "",
-    addressID: "",
-    city: "",
-    country: "",
-    zipcode: "",
-    telephone: "",
-    website: "",
-    description: "",
-    logo: ""
-  }),
+  data() {
+    return {
+      companyName: "",
+      addressID: "",
+      city: "",
+      country: "",
+      zipcode: "",
+      telephone: "",
+      website: "",
+      description: "",
+      logo: "",
+      spids: []
+    };
+  },
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
           alert("Submitted");
           this.test();
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
@@ -212,7 +173,7 @@ export default {
   },
   test() {
     let data = {
-      companytName: this.companytName,
+      companyName: this.companyName,
       addressID: this.addressID,
       city: this.city,
       country: this.country,
@@ -222,6 +183,15 @@ export default {
       description: this.description,
       logo: this.logo
     };
+    companyName = "";
+    addressID = "";
+    city = "";
+    country = "";
+    zipcode = "";
+    telephone = "";
+    website = "";
+    description = "";
+    logo = "";
     console.log(data);
   }
 };

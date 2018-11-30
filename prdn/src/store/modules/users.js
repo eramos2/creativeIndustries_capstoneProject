@@ -44,7 +44,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.userFlags = { ...state.userFlags
+        state.userFlags = {
+            ...state.userFlags
         }
     },
     /** 
@@ -63,20 +64,23 @@ const mutations = {
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
-            state.user = { ...state.user
+            state.user = {
+                ...state.user
             }
             state.userFlags['loggedIn'] = true;
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
-            state.userFlags = { ...state.userFlags
+            state.userFlags = {
+                ...state.userFlags
             }
         } else {
             state.userFlags['loggedIn'] = false;
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
-            state.userFlags = { ...state.userFlags
+            state.userFlags = {
+                ...state.userFlags
             }
         }
 
@@ -93,14 +97,16 @@ const mutations = {
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
-            state.recoveryUserEmail = { ...state.recoveryUserEmail
+            state.recoveryUserEmail = {
+                ...state.recoveryUserEmail
             }
         } else {
             state.recoveryUserEmail = true; //The email doesn't exist in the db
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
-            state.recoveryUserEmail = { ...state.recoveryUserEmail
+            state.recoveryUserEmail = {
+                ...state.recoveryUserEmail
             }
             console.log('Recover Email Sent');
         }
@@ -115,7 +121,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.userFlags = { ...state.userFlags
+        state.userFlags = {
+            ...state.userFlags
         }
         console.log(state.userFlags);
     },
@@ -128,7 +135,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.userFlags = { ...state.userFlags
+        state.userFlags = {
+            ...state.userFlags
         }
         console.log(state.userFlags);
     },
@@ -141,7 +149,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.userFlags = { ...state.userFlags
+        state.userFlags = {
+            ...state.userFlags
         }
         console.log(state.userFlags);
     },
@@ -154,7 +163,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.userFlags = { ...state.userFlags
+        state.userFlags = {
+            ...state.userFlags
         }
         console.log(state.userFlags);
     },
@@ -167,7 +177,8 @@ const mutations = {
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
-        state.userFlags = { ...state.userFlags
+        state.userFlags = {
+            ...state.userFlags
         }
         console.log(state.userFlags);
     }

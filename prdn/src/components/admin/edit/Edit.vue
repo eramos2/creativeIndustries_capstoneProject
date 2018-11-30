@@ -1,8 +1,9 @@
 <template>
- <form @submit.prevent="validateBeforeSubmit">  
+ 
        <!-- Single Tab Content Start -->
     <div class="" id="edit" role="tabpanel">
         <div class="myaccount-content">
+            <form @submit.prevent="validateBeforeSubmit">  
             <h3>Edit</h3>
 
     
@@ -31,9 +32,9 @@
                    
 
            <div class="single-input-item">
-            <label for="addressID" class="required">Address</label>
-                <input name="addressID" v-validate="'required|max:40'" type="text"  id = "addressID"  placeholder="Address" v-model="addressID" class="form-control" >
-                    <p class="text-danger" v-if="errors.has('addressID')">{{ errors.first('addressID') }}</p>
+            <label for="address" class="required">Address</label>
+                <input name="address" v-validate="'required|max:60'" type="text"  id = "address"  placeholder="Address" v-model="address" class="form-control" >
+                    <p class="text-danger" v-if="errors.has('address')">{{ errors.first('address') }}</p>
                         </div>
 <div class="row">
          <div class="col-lg-6">
@@ -100,11 +101,14 @@
         <editprocess></editprocess>
         <editservices></editservices>
         
-
+                                    </form>
+                                    <button @click="editUserData">Populate</button>
                                     </div>
                                 </div>
+                                
                                 <!-- Single Tab Content End -->
-                                </form>
+                                
+                                
     
 </template>
 <script>
@@ -129,6 +133,7 @@ import CompanySelector from "./CompanySelector.vue";
 import EditTag from "./EditTag.vue";
 import Vue from "vue";
 import FileUpload from "v-file-upload";
+import { thisTypeAnnotation } from "babel-types";
 Vue.use(FileUpload);
 export default {
   components: {
@@ -139,14 +144,14 @@ export default {
     companyselector: CompanySelector
   },
   data: () => ({
-    companyName: "My First Company",
-    addressID: "Orocovis",
-    city: "Orocovis",
-    country: "OR",
-    zipcode: "43017",
-    phone: "7873727550",
-    website: "https://mail.google.com",
-    description: "Testing",
+    companyName: "",
+    address: "",
+    city: "",
+    country: "",
+    zipcode: "",
+    phone: "",
+    website: "",
+    description: "",
     logo: ""
   }),
   methods: {
@@ -167,7 +172,7 @@ export default {
     test() {
       let data = {
         companyName: this.companyName,
-        addressID: this.addressID,
+        address: this.address,
         city: this.city,
         country: this.country,
         zipcode: this.zipcode,
@@ -177,7 +182,7 @@ export default {
         logo: this.logo
       };
       this.companyName = "";
-      this.addressID = "";
+      this.address = "";
       this.city = "";
       this.country = "";
       this.zipcode = "";
@@ -185,6 +190,26 @@ export default {
       this.website = "";
       this.description = "";
       console.log(data);
+    },
+    editUserData() {
+      let data = {
+        companyName: "First Company",
+        address: "Carr 596 Orocovis, P.R.",
+        city: "Orocovis",
+        country: "PR",
+        zipcode: "00720",
+        phone: "7873727550",
+        website: "https://mail.google.com",
+        description: "This is the first company"
+      };
+      this.companyName = data.companyName;
+      this.address = data.address;
+      this.city = data.city;
+      this.country = data.country;
+      this.zipcode = data.zipcode;
+      this.phone = data.phone;
+      this.website = data.website;
+      this.description = data.description;
     }
   }
 };
