@@ -88,12 +88,10 @@
                <p> <input v-validate="'required|image'" data-vv-as="image" name="logo" type="file"></p>
                     <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
                         </div>
-
-
-                         <div class="row">
-            <div class="col-md-6  categoryList">
+                        <div class="row" id="materials-process">
+            <div class="col-md-6  categoryList" >
                 <div style="overflow-y: scroll; height:400px;">
-                <h5>Materials</h5>
+                <h3>Materials</h3>
                 <ul class="list-group navList" id="editServMatCons">
                  <div 
                  v-for="(category, key) in materials"
@@ -120,7 +118,7 @@
             </div>
             <div class="col-md-6 categoryList">
                 <div style="overflow-y: scroll; height:400px;">
-                <h5>Processes</h5>
+                <h3>Processes</h3>
                 <ul class="list-group navList" id="editServProcCons">
 
                     <div 
@@ -149,10 +147,10 @@
         </div>
 
 
-        <div class="row">
-             <div class="col-md-12 categoryList">
+        <div class="row" id="services-tags">
+             <div class="col-md-6 categoryList">
             <div style="overflow-y: scroll; height:400px;">
-                <h5>Services</h5>
+                <h3>Services</h3>
                 <ul class="list-group navList" id="editMatServCons">
                     <div 
                  v-for="(category, key) in services"
@@ -176,7 +174,33 @@
               </ul>
             </div>
              </div>
+                <div class="col-md-6 categoryList" >
+                <div style="overflow-y: scroll; height:400px;">
+                     <ul class="list-group navList" id="editMatProcCons">
+                        <h3>Select 6 Tags</h3>
+                            <li class="input-group" name="tags" value="2"><strong>Applications</strong></li>
+                             <li class="catMargins">
+                            <div class="checkbox">
+                            <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(0)==-1" v-model="spids" :value="0" />Tubing</label></div></li>
+                         <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(1)==-1" v-model="spids" :value="1" />Ornaments</label></div></li>
+                         <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(2)==-1" v-model="spids" :value="2" />Decorative</label></div></li>
+                        <li class="input-group" name="tags" value="2"><strong>Qualities</strong></li>
+                        <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(3)==-1" v-model="spids" :value="3" />Opaque</label></div></li>
+                         <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(4)==-1" v-model="spids" :value="4" />Breathable</label></div></li>
+                        <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(5)==-1" v-model="spids" :value="5" />Long Lasting</label></div></li>                                             
+                         </div> 
+                    </li>  
+                    </ul>     
+                </div>
+            </div>
+
+
+
+
         </div>
+
+            
+
 
                      
             <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
@@ -302,6 +326,12 @@ export default {
 };
 </script>
 <style>
+#services-tags {
+  margin-top: 4rem;
+}
+#materials-process {
+  margin-top: 2rem;
+}
 /* form {
   margin-left: 0%;
   margin-right: 0%;

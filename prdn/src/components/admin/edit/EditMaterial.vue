@@ -78,10 +78,17 @@
 
         </div>
 
-        <div class="row">   
+         <div class="row" id="process-service-connection">   
+        <div class="col-md-6 categoryList">
+        <h3>Processes Connections</h3>
+        </div>
+         <div class="col-md-6 categoryList">
+        <h3>Services Connections</h3>
+        </div>
+        </div>
+       <div class="row" >   
         <div class="col-md-6 categoryList">
             <div style="overflow-y: scroll; height:400px;">
-                <h5>Processes Connections</h5>
                 <ul class="list-group navList" id="editMatProcCons">
                 <li class="input-group" name="process" value="2"><strong>Engraving</strong></li>
                 <li class="catMargins">
@@ -141,8 +148,7 @@
             </div>
             
         <div class="col-md-6 categoryList">
-            <div style="overflow-y: scroll; height:400px;">
-                <h5>Services Connections</h5>
+            <div style="overflow-y: scroll; height:400px;">               
                 <ul class="list-group navList" id="editMatServCons">
                 <li class="input-group" name="service" value="24"><strong>Cleaning</strong></li>
                 <li><div class="checkbox"><label><input type="checkbox" name="subService" v-model="ssids" value="40">Warehouse Cleaning</label></div></li>
@@ -176,4 +182,7 @@ export default {
 };
 </script>
 <style>
+#process-service-connection {
+  margin-top: 2rem;
+}
 </style>

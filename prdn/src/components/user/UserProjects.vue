@@ -58,6 +58,15 @@
                                                 </fieldset>
                                                 <div class="single-input-item">
                                                     <button :disabled="errors.any()" type="submit">Submit</button>
+                                                    <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
+                                                    <p class="my-4">{{email}}</p>
+                                                    </b-modal>
+                                                    <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                                                    <p class="my-4">Try Again</p>
+                                                     </b-modal>
+                                                    <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                                                     <p class="my-4">Email/password combination failed</p>
+                                               </b-modal>
                                                 </div>
                                               
                                         </div>

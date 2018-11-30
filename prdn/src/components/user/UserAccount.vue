@@ -60,7 +60,7 @@
                                                             <div class="single-input-item">
                                                                 <label for="confirmedpassword" >Confirm
                                                                     Password</label>
-                                                                 <input name ="confirmedpassword"  v-validate="'min:8|max:15|confirmed:password'" data-vv-delay="10000"  type="password" class="form-control" id="confirmedpassword" placeholder="Confirm Password">
+                                                                 <input name ="confirmedpassword"  v-validate="'min:8|max:15|confirmed:password'" data-vv-delay="2000"  type="password" class="form-control" id="confirmedpassword" placeholder="Confirm Password">
                                                                 <p class="text-danger" v-if="errors.has('confirmedpassword')">{{ errors.first('confirmedpassword') }}</p>
                                                             </div>
                                                         </div>
@@ -70,7 +70,15 @@
                                                 <div class="single-input-item">
                                                     <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicModal">Remove</button> -->
                                                    <button :disabled="errors.any()" type="submit" id="saves-btn"  >Save Changes</button>
-                                                   
+                                                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Received, thank you.">
+                                                      <p class="my-4">{{firstName +" " + lastName}}</p>
+                                                      </b-modal>
+                                                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                                                      <p class="my-4">Try Again</p>
+                                                      </b-modal>
+                                                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                                                      <p class="my-4">Email/password combination failed</p>
+                                                      </b-modal>
 
                                                 </div>
                                         </div>
@@ -115,6 +123,9 @@ Validator.localize(dictionary);
 export default {
   data() {
     return {
+      modalShow: false,
+      modalShowFail: false,
+      modalShowCred: false,
       firstName: "",
       lastName: "",
       occupation: "",
@@ -129,21 +140,43 @@ export default {
      * required, max, min, password
      * @return Submitted Alert if result is true else Empty Field(s) Alert
      */
-    validateBeforeSubmit() {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
       this.$validator.validateAll().then(result => {
         if (result) {
-          console.log(result);
-          this.test();
-          alert("Submitted");
+          let userData = {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            occupation: this.occupation,
+            city: this.city,
+            password: this.password
+          };
+          this.$store
+            .dispatch("registerNewUser", userData)
+            .then(response => {
+              if (response.length > 0) {
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                return { modalShow: false, modalShowCred: true };
+              }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
+              this.$validator.reset();
+            });
           this.$validator.reset();
           return;
+        } else {
+          this.modalShowFail = true;
         }
-        alert("Empty Field(s)");
       });
     },
-
+    okModal() {
+      this.$router.replace("/");
+    },
     test() {
-      let data = {
+      let userData = {
         firstName: this.firstName,
         lastName: this.lastName,
         occupation: this.occupation,
@@ -168,6 +201,7 @@ export default {
       this.lastName = data.lastName;
       this.occupation = data.occupation;
       this.city = data.city;
+      this.password = data.password;
     }
   }
 };
