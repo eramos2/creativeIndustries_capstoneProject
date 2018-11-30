@@ -636,7 +636,7 @@ const actions = {
                 ssid: data.sid,
             };
         }
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: prms
             })
@@ -646,6 +646,7 @@ const actions = {
             .then(data => {
                 //console.log(data.resp[0].number);
                 context.commit('confirmChangedSubResourceCon', data.resp);
+                return data.resp;
             });
     }
 

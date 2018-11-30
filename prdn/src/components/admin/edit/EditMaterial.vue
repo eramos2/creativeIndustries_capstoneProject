@@ -1,5 +1,5 @@
 <template>
- <form><!-- @submit.prevent="validateBeforeSubmit">   -->
+ <form @submit.prevent="validateBeforeSubmit">
 <div class="container listContainer">
     <div class="row addMarginTop">
         <h2><span class="glyphicon glyphicon-edit marginTop"></span> Edit Material Connections</h2>
@@ -118,6 +118,22 @@ export default {
     return { spids: [], ssids: [], selected: "" };
   },
   methods: {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
+      let data = {
+        resource: "materials",
+        mid: this.selected,
+        sid: this.ssids,
+        pid: this.spids
+      };
+      this.$store
+        .dispatch("changeSubResourceConnection", data)
+        .then(response => {
+          console.log("good morning");
+          console.log(response);
+          this.reloadResources();
+        });
+    },
     editResource() {
       console.log("Gooood mornginggg");
     },
@@ -138,6 +154,9 @@ export default {
           this.ssids.push(response[tagId].subServiceId);
         }
       });
+    },
+    reloadResources() {
+      this.$store.dispatch("setResources");
     }
   },
   computed: {
