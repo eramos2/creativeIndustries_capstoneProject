@@ -234,7 +234,7 @@
             <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
-                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
+                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Company Added:">
                     <p class="my-4">{{companyName}}</p>
                       </b-modal>
                       <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">

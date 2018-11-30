@@ -2,10 +2,10 @@
 <div class="" id="remove" role="tabpanel">
     <div class="myaccount-content">
         <h3>Remove</h3>
-          <!-- <removematerials></removematerials> -->
+          <removematerials></removematerials>
           <!-- <removeprocess></removeprocess> -->
           <!-- <removeservices></removeservices> -->
-          <removebusiness></removebusiness>
+          <!-- <removebusiness></removebusiness> -->
 
     </div>
     </div>
