@@ -520,7 +520,7 @@ const actions = {
         context.commit("clearResourceConnections");
     },
     /**   
-     * Gets related process for the given category and subcategory
+     * Gets related process ids for the given category and subcategory
      * @param {object} data - contains the category('mat'|'serv'|'proc') and subcategory Id we want to find process connections of 
      */
     getRelatedProcesses: (context, data) => {
@@ -528,7 +528,7 @@ const actions = {
         let endpnt = 'map';
         let pvtCol = data.category; // With wath category we want to find the conections
         let subcat = data.subcategoryId; //The subcategory id we want to find it relations of
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: {
                     endpoint: endpnt,
@@ -541,6 +541,7 @@ const actions = {
             }).then(data => {
                 console.log(data.resp);
                 context.commit('setRelatedProcesses', data.resp);
+                return data.resp;
             });
 
     },
@@ -553,7 +554,7 @@ const actions = {
         let endpnt = 'map';
         let pvtCol = data.category; // With wath category we want to find the conections
         let subcat = data.subcategoryId; //The subcategory id we want to find it relations of
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: {
                     endpoint: endpnt,
@@ -566,6 +567,7 @@ const actions = {
             }).then(data => {
                 console.log(data.resp);
                 context.commit('setRelatedServices', data.resp);
+                return data.resp;
             });
 
     },

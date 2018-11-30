@@ -162,7 +162,7 @@
                  <h3>Services</h3>
              </div>
              <div class="col-md-6 categoryList">
-                 <h3>Select 6 Tags</h3>
+                 <h3>Tags (Max. 6)</h3>
              </div>
         </div>
 
@@ -184,7 +184,7 @@
                 class="catMargins">
                     <div class="checkbox">
                     <label>
-                        <input type="checkbox" name="subService" v-model="smids" :value="subcategory.id">
+                        <input type="checkbox" name="subService" v-model="ssids" :value="subcategory.id">
                         {{subcategory.name}}
                     </label>
                     </div>
@@ -197,20 +197,27 @@
              </div>
                 <div class="col-md-6 categoryList" >
                 <div style="overflow-y: scroll; height:400px;">
-                     <ul class="list-group navList" id="editMatProcCons">
+                     <ul class="list-group navList" id="addTags">
                         
-                            <li class="input-group" name="tags" value="2"><strong>Applications</strong></li>
-                             <li class="catMargins">
-                            <div class="checkbox">
-                            <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(0)==-1" v-model="spids" :value="0" />Tubing</label></div></li>
-                         <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(1)==-1" v-model="spids" :value="1" />Ornaments</label></div></li>
-                         <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(2)==-1" v-model="spids" :value="2" />Decorative</label></div></li>
-                        <li class="input-group" name="tags" value="2"><strong>Qualities</strong></li>
-                        <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(3)==-1" v-model="spids" :value="3" />Opaque</label></div></li>
-                         <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(4)==-1" v-model="spids" :value="4" />Breathable</label></div></li>
-                        <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 5 && spids.indexOf(5)==-1" v-model="spids" :value="5" />Long Lasting</label></div></li>                                             
-                         </div> 
-                    </li>  
+                            <div 
+                 v-for="(tagCategory, key) in tags"
+                :key="key"
+                 >
+                <li class="input-group" name="tag" :value="tagCategory.name"><strong>{{tagCategory.name}}</strong></li>
+                <li 
+                v-for="(tag, tagKey) in tagCategory.tags"
+                :key="tagKey"
+                class="catMargins">
+                    <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="tag" v-model="tids" :value="tag.id">
+                        {{tag.name}}
+                    </label>
+                    </div>
+                </li>
+                
+
+                 </div>
                     </ul>     
                 </div>
             </div>
@@ -227,6 +234,15 @@
             <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
+                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
+                    <p class="my-4">{{companyName}}</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                    <p class="my-4">Try Again</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                    <p class="my-4">Email/password combination failed</p>
+                      </b-modal>
                 </p>
             </div>
         </div>
@@ -258,9 +274,13 @@ const dictionary = {
         required: "Please enter your company name.",
         max: "The company name field may not be greater than 20 characters."
       },
+      address: {
         required: "Please enter the Address.",
         max: "The address field may not be greater than 50 characters."
       }
+    }
+  }
+};
 
 import MaterialCheckbox from "./MaterialCheckbox.vue";
 import AddNewMaterial from "./AddNewMaterial.vue";
@@ -287,12 +307,19 @@ export default {
     },
     services() {
       return this.$store.state.resources.resources.services.categories;
+    },
+    tags() {
+      return this.$store.state.tags.categories;
     }
   },
   data: () => ({
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false,
     spids: [], //selected sub processes ids
     smids: [], //selected sub materials ids
     ssids: [], //selected sub services ids
+    tids: [], //selected tags ids
     companyName: "",
     address: "",
     city: "",
@@ -322,23 +349,34 @@ export default {
             services: this.ssids,
             processes: this.spids
           };
-          this.$store.dispatch("addNewBusiness", data).then(response => {
-            console.log("Helooowwe");
-            console.log(response);
-            if (response > 0) {
-              alert("Submitted");
-            } else {
-              alert("Error When submited please try again");
-            }
-            this.$validator.reset();
-          });
+          this.$store
+            .dispatch("addNewBusiness", data)
+            .then(response => {
+              console.log("Helooowwe");
+              console.log(response);
+              if (response > 0) {
+                //Added Business successfully, set the modal booleans
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                //Something went wrong when adding business
+                return { modalShow: false, modalShowCred: true };
+              }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
+            });
 
-          console.log("fuueegooo");
+          this.$validator.reset();
           return;
         } else {
-          alert("Empty Field(s)");
+          //Invalid or Empty fields
+          this.modalShowFail = true;
         }
       });
+    },
+    okModal() {
+      this.$router.replace("/admin/add");
     },
     test() {
       let data = {

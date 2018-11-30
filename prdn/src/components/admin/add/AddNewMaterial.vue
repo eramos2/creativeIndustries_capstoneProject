@@ -10,7 +10,7 @@
         <div>
         <div class="row">
             <div class="col-md-4 addCategoryList">
-                <h5>Material</h5>
+                <h5>Materials</h5>
                 <div class="form-group">
                     <select class="form-control" v-model="value" id="matTypes">
                         <option value="none" disabled selected>Choose One Material</option>
@@ -49,7 +49,7 @@
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
                       <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
-                      <p class="my-4">{{email}}</p>
+                      <p class="my-4">{{newSubMat}}</p>
                       </b-modal>
                       <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
                       <p class="my-4">Try Again</p>
@@ -77,8 +77,8 @@
             <div class="row">
                 <div class="col-md-4 pull-right buttonMargin" style="display: none" id="addProcServConnBtn">
                     <p>
-                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateAddNewMat(this.form)">Add</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button>
+                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" >Add</button>
+                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" >Cancel</button>
                     </p>
                 </div>
             </div>
@@ -116,6 +116,9 @@ Validator.localize(dictionary);
 
 export default {
   data: () => ({
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false,
     value: "",
     matCategory: "",
     newMatField: "",
