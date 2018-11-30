@@ -23,13 +23,6 @@
                         >
                         {{tagCategory.name}}
                         </option>
-
-                        <!-- <option value="1">Tubing</option>
-                        <option value="3">Ornaments</option>
-                        <option value="4">Decorative</option>
-                        <option value="5">Opaque</option>
-                        <option value="6">Breathable</option>
-                        <option value="7">Long Lasting</option>    -->
                     </select>
                 </div>
                 <div class="row">
@@ -107,8 +100,8 @@ const dictionary = {
         max: "The new tag field may not be greater than 15 characters."
       },
       tagName: {
-        required: "The tag connection field is required.",
-        max: "The tag connection field may not be greater than 15 characters."
+        required: "The tag-name field is required.",
+        max: "The tag-name field may not be greater than 15 characters."
       },
       newMatField: {
         required: "The new material field is required.",
