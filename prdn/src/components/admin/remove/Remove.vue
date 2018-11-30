@@ -4,17 +4,8 @@
 <div class="" id="remove" role="tabpanel">
     <div class="myaccount-content">
         <h3>Remove</h3>
-<<<<<<< HEAD
          
           <removebusiness></removebusiness>
-=======
-          <removematerials></removematerials>
-          <!-- <removeprocess></removeprocess> -->
-          <!-- <removeservices></removeservices> -->
-          <!-- <removebusiness></removebusiness> -->
-
-    </div>
->>>>>>> 188d05aa7855b42af6ad22fd9a016d7b0c2e222d
     </div>
     
            <removematerials></removematerials>
