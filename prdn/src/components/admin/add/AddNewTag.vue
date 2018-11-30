@@ -56,6 +56,15 @@
                 <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
+                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
+                      <p class="my-4">The tag was added.</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                      <p class="my-4">Try Again</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                      <p class="my-4">Combination failed</p>
+                      </b-modal>
                 </p>
             </div>
             </div>
@@ -113,68 +122,108 @@ Validator.localize(dictionary);
 
 export default {
   data: () => ({
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false,
     value: "",
     newTagField: "",
     tagName: ""
   }),
   methods: {
-    validateBeforeSubmit() {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
+
       this.$validator.validateAll().then(result => {
         if (result) {
-          if (this.newTagField == "") {
-            //Category already exists add new tag name only
-            let data = {
-              name: this.tagName,
-              category: this.value
-            };
-            this.$store.dispatch("addNewTag", data).then(response => {
+          let data = {
+            name: this.tagName,
+            category: this.value
+          };
+          this.$store
+            .dispatch("addNewTag", data)
+            .then(response => {
               console.log("after dispatch add new tag");
               console.log(response);
 
               if (response > 0) {
-                //added new subresource sucessfully
                 this.reloadResources();
-                alert("added new subservice successfully");
+                return { modalShow: true, modalShowCred: false };
               } else {
-                //add new subresource failed
-                alert("Failed to add new subservice");
+                return { modalShow: false, modalShowCred: true };
               }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
             });
-
-            this.value = "";
-            this.newSubServ = "";
-            console.log(data);
-          } else {
-            let data = {
-              resource: "services",
-              resName: this.newServiceField, //new category name
-              subresName: this.newSubServ //new subcategory name
-            };
-            this.$store.dispatch("addNewResource", data).then(response => {
-              console.log("after dispatch add new service and subservice");
-              console.log(response);
-
-              if (response > 0) {
-                //added new subresource sucessfully
-                this.reloadResources();
-                alert("added new service and subservice successfully");
-              } else {
-                //add new subresource failed
-                alert("Failed to add new service and subservice");
-              }
-            });
-            this.value = "";
-            this.newServiceField = "";
-            this.newSubServ = "";
-
-            console.log(data);
-          }
           this.$validator.reset();
           return;
+        } else {
+          this.modalShowFail = true;
         }
-        alert("Empty Field(s)");
       });
     },
+    okModal() {
+      this.$router.replace("/admin/add");
+    },
+
+    // validateBeforeSubmit() {
+    //   this.$validator.validateAll().then(result => {
+    //     if (result) {
+    //       if (this.newTagField == "") {
+    //         //Category already exists add new tag name only
+    //         let data = {
+    //           name: this.tagName,
+    //           category: this.value
+    //         };
+    //         this.$store.dispatch("addNewTag", data).then(response => {
+    //           console.log("after dispatch add new tag");
+    //           console.log(response);
+
+    //           if (response > 0) {
+    //             //added new subresource sucessfully
+    //             this.reloadResources();
+    //             alert("added new subservice successfully");
+    //           } else {
+    //             //add new subresource failed
+    //             alert("Failed to add new subservice");
+    //           }
+    //         });
+
+    //         this.value = "";
+    //         this.newSubServ = "";
+    //         console.log(data);
+    //       } else {
+    //         let data = {
+    //           resource: "services",
+    //           resName: this.newServiceField, //new category name
+    //           subresName: this.newSubServ //new subcategory name
+    //         };
+    //         this.$store.dispatch("addNewResource", data).then(response => {
+    //           console.log("after dispatch add new service and subservice");
+    //           console.log(response);
+
+    //           if (response > 0) {
+    //             //added new subresource sucessfully
+    //             this.reloadResources();
+    //             alert("added new service and subservice successfully");
+    //           } else {
+    //             //add new subresource failed
+    //             alert("Failed to add new service and subservice");
+    //           }
+    //         });
+    //         this.value = "";
+    //         this.newServiceField = "";
+    //         this.newSubServ = "";
+
+    //         console.log(data);
+    //       }
+    //       this.$validator.reset();
+    //       return;
+    //     }
+    //     alert("Empty Field(s)");
+    //   });
+    // },
     test() {
       if (this.newTagField == "") {
         let data = {
