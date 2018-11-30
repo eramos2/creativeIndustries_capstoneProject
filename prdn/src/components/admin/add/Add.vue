@@ -85,7 +85,7 @@
         <!-- <div class="single-input-item"> -->
             <div class="single-input-item">
             <label for="logo" class="required">Business Photo</label>
-               <p> <input v-validate="'required|image'" data-vv-as="image" name="logo" type="file"></p>
+               <p> <input v-validate="'image'" data-vv-as="image" name="logo" type="file"></p>
                     <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
                         </div>
 
