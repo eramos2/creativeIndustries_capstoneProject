@@ -1,7 +1,7 @@
 <template>
 <!-- <form @submit.prevent="validateBeforeSubmit">  -->
 <!-- My Account page content Start -->
-            <div id="myaccount-page-content">
+            <div id="myaccount-page-content" >
                 <div class="container">
                     <div class="account-text-wrapper">
                         <div class="row">

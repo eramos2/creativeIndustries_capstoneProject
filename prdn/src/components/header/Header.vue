@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header id="app-header">
         <header-top :authenticated="authenticated"></header-top>
         <header-bot
           :resources="resources"
@@ -21,4 +21,7 @@ export default {
 </script>
 
 <style>
+#app-header {
+  margin-bottom: 2.5rem;
+}
 </style>

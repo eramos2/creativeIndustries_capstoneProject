@@ -30,9 +30,7 @@
                       <!-- If new material selected show the input textbox -->
                         <div 
                             id="newMat"
-                            v-if="displayNewMat"
-                        
-                        >
+                            v-if="displayNewMat">
                             <input type="text" class="form-control" name="newMatField" placeholder="Enter New Material" v-validate="'required|max:15'" v-model="newMatField" id="newMaterialField"></div>
                             <p class="text-danger" v-if="errors.has('newMatField')">{{ errors.first('newMatField') }}</p>
                         </div>
@@ -46,12 +44,19 @@
                         <p class="text-danger" v-if="errors.has('newSubMat')">{{ errors.first('newSubMat') }}</p>
                     </div>
                 </div>
-                
-                <!-- <a data-toggle="modal" href="#subMatModal" class="btn btn-primary subMatModalBtn"></a> -->
-                    <!-- <button>Add</button> -->
+              
                     <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
                 <p>
                      <button :disabled="errors.any()" type="submit">Add</button>
+                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
+                      <p class="my-4">{{email}}</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                      <p class="my-4">Try Again</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                      <p class="my-4">Email/password combination failed</p>
+                      </b-modal>
                 </p>
             </div>
               
@@ -117,64 +122,102 @@ export default {
     newSubMat: ""
   }),
   methods: {
-    validateBeforeSubmit() {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
+
       this.$validator.validateAll().then(result => {
         if (result) {
-          if (this.newMatField == "") {
-            //Catefory already exists add new subcategory only
-            let data = {
-              resource: "materials",
-              subresName: this.newSubMat,
-              cid: this.value
-            };
-            this.$store.dispatch("addNewSubResource", data).then(response => {
+          let data = {
+            resource: "materials",
+            subresName: this.newSubMat,
+            cid: this.value
+          };
+          this.$store
+            .dispatch("addNewSubResource", data)
+            .then(response => {
               console.log("after dispatch add new submaterial");
               console.log(response);
 
               if (response > 0) {
-                //added new subresource sucessfully
                 this.reloadResources();
-                alert("added new subresource successfully");
+                return { modalShow: true, modalShowCred: false };
               } else {
-                //add new subresource failed
-                alert("Failed to add new subresource");
+                return { modalShow: false, modalShowCred: true };
               }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
             });
-
-            this.value = "";
-            this.newSubMat = "";
-            console.log(data);
-          } else {
-            let data = {
-              resource: "materials",
-              resName: this.newMatField, //new category name
-              subresName: this.newSubMat //new subcategory name
-            };
-            this.$store.dispatch("addNewResource", data).then(response => {
-              console.log("after dispatch add new material and submaterial");
-              console.log(response);
-
-              if (response > 0) {
-                //added new subresource sucessfully
-                this.reloadResources();
-                alert("added new material and submaterial successfully");
-              } else {
-                //add new subresource failed
-                alert("Failed to add new material and submaterial");
-              }
-            });
-            this.value = "";
-            this.newMatField = "";
-            this.newSubMat = "";
-
-            console.log(data);
-          }
           this.$validator.reset();
           return;
+        } else {
+          this.modalShowFail = true;
         }
-        alert("Empty Field(s)");
       });
     },
+    okModal() {
+      this.$router.replace("/");
+    },
+
+    // validateBeforeSubmit() {
+    //   this.$validator.validateAll().then(result => {
+    //     if (result) {
+    //       if (this.newMatField == "") {
+    //         //Catefory already exists add new subcategory only
+    //         let data = {
+    //           resource: "materials",
+    //           subresName: this.newSubMat,
+    //           cid: this.value
+    //         };
+    //         this.$store.dispatch("addNewSubResource", data).then(response => {
+    //           console.log("after dispatch add new submaterial");
+    //           console.log(response);
+
+    //           if (response > 0) {
+    //             //added new subresource sucessfully
+    //             this.reloadResources();
+    //             alert("added new subresource successfully");
+    //           } else {
+    //             //add new subresource failed
+    //             alert("Failed to add new subresource");
+    //           }
+    //         });
+
+    //         this.value = "";
+    //         this.newSubMat = "";
+    //         console.log(data);
+    //       } else {
+    //         let data = {
+    //           resource: "materials",
+    //           resName: this.newMatField, //new category name
+    //           subresName: this.newSubMat //new subcategory name
+    //         };
+    //         this.$store.dispatch("addNewResource", data).then(response => {
+    //           console.log("after dispatch add new material and submaterial");
+    //           console.log(response);
+
+    //           if (response > 0) {
+    //             //added new subresource sucessfully
+    //             this.reloadResources();
+    //             alert("added new material and submaterial successfully");
+    //           } else {
+    //             //add new subresource failed
+    //             alert("Failed to add new material and submaterial");
+    //           }
+    //         });
+    //         this.value = "";
+    //         this.newMatField = "";
+    //         this.newSubMat = "";
+
+    //         console.log(data);
+    //       }
+    //       this.$validator.reset();
+    //       return;
+    //     }
+    //     alert("Empty Field(s)");
+    //   });
+    // },
     reloadResources() {
       this.$store.dispatch("setResources");
     },

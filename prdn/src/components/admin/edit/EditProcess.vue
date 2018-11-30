@@ -54,10 +54,19 @@
                 </div>
             </div>
             </div>
+
+            <div class="row" id="material-service-connection">
+            <div class="col-md-6 categoryList">
+                <h3>Materials Connections</h3>
+            </div>
+            <div class="col-md-6 categoryList">
+            <h3>Services Connections</h3>
+            </div>
+            </div>
              <div class="row">
             <div class="col-md-6 categoryList">
                 <div style="overflow-y: scroll; height:400px;">
-                <h5>Materials Connections</h5>
+                
                 <ul class="list-group navList" id="editProcMatCons">
                 <li class="input-group" name="process" value="1"><strong>Concrete</strong></li>
                 <li class="catMargins"><div class="checkbox">
@@ -148,4 +157,7 @@ export default {
 };
 </script>
 <style>
+#material-service-connection {
+  margin-top: 2rem;
+}
 </style>

@@ -476,18 +476,18 @@ const actions = {
 
                 }, {
 
-                    emulateJSON: true,
+                        emulateJSON: true,
 
 
-                }).then(response => {
-                    return response.json();
-                }).then(data => {
+                    }).then(response => {
+                        return response.json();
+                    }).then(data => {
 
-                    console.log("registering user");
-                    console.log(data);
-                    context.commit("registerNewUser", data.resp);
-                    return data.resp;
-                });
+                        console.log("registering user");
+                        console.log(data);
+                        context.commit("registerNewUser", data.resp);
+                        return data.resp;
+                    });
             }
         })
         // return $.ajax({

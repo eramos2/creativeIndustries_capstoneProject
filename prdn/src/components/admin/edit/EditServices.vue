@@ -21,10 +21,19 @@
             </div>
         </div>
         </div>
+
+         <div class="row"  id="material-service-connection">
+            <div class="col-md-6  categoryList">
+                <h3>Materials Connections</h3>
+            </div>
+            <div class="col-md-6  categoryList">
+            <h3>Processes Connections</h3>
+            </div>
+            </div>
         <div class="row">
             <div class="col-md-6  categoryList">
                 <div style="overflow-y: scroll; height:400px;">
-                <h5>Materials Connections</h5>
+                
                 <ul class="list-group navList" id="editServMatCons">
                 <li class="input-group" name="process" value="1"><strong>Concrete</strong></li>
                 <li class="catMargins"><div class="checkbox">
@@ -86,7 +95,7 @@
             </div>
             <div class="col-md-6 categoryList">
                 <div style="overflow-y: scroll; height:400px;">
-                <h5>Processes Connections</h5>
+
                 <ul class="list-group navList" id="editServProcCons"><li class="input-group" name="process" value="2"><strong>Engraving</strong></li>
                 <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="7">CNC Engraving</label></div></li>
                 <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="subProcess" v-model="spids" value="6">Laser Engraving</label></div></li>
@@ -143,4 +152,7 @@ export default {
 };
 </script>
 <style>
+#material-service-connection {
+  margin-top: 2rem;
+}
 </style>
