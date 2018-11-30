@@ -72,8 +72,8 @@
             <div class="row">
                 <div class="col-md-4 pull-right buttonMargin" style="display: none" id="addMatProcConnBtn">
                     <p>
-                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateAddNewServ(this.form)">Add</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button>
+                        <button type="button" class="btn btn-primary btn-lg" id="addBttn">Add</button>
+                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn">Cancel</button>
                     </p>
                 </div>
             </div>

@@ -3,7 +3,11 @@ let serverfile = "prds-tags.php"
 
 const state = {
     /** Contains all tags in the system with their name and category */
-    categories: {}
+    categories: {},
+
+    tagFlags: {
+        addNewTag: ""
+    }
 };
 
 const getters = {
@@ -49,6 +53,12 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.categories = { ...state.categories
         }
+    },
+    addNewTag: (state, data) => {
+        state.tagFlags["addNewTag"] = data[0].number
+
+        state.tagFlags = { ...state.tagFlags
+        }
     }
 };
 
@@ -74,10 +84,7 @@ const actions = {
         });
     },
     addNewTag: (context, data) => {
-        let prms = {
-            name: data.name,
-            category: data.category
-        }
+
         return Vue.http
             .post(serverfile, {
                 name: data.name,
@@ -100,8 +107,8 @@ const actions = {
             .then(data => {
                 console.log("Add new tag!");
                 console.log(data.resp[0].number);
-                //context.commit('addNewTag', data.resp);
-                //return data.resp[0].number;
+                context.commit('addNewTag', data.resp);
+                return data.resp[0].number;
             });
     }
 };

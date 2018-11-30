@@ -1,4 +1,7 @@
 import Vue from 'vue';
+import {
+    resolve
+} from 'path';
 let serverfile = "prds.php";
 let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
@@ -304,7 +307,7 @@ const mutations = {
      */
     addNewBusiness: (state, data) => {
         console.log(data);
-        state.businessesFlags['addNewBusiness'] = data['0'].number;
+        state.businessesFlags['addNewBusiness'] = data[0].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -630,6 +633,7 @@ const actions = {
      * 0- subcategory name, 1 -subcategory id, 2- categoryid ,3- model, 4 -application, 5 -limitation
      */
     addNewBusiness: (context, data) => {
+        let result = 0;
         console.log("Getting geocode for new business " + data.companyName);
         var currentAdmin = data.adminId;
         var companyName = data.companyName;
@@ -648,65 +652,89 @@ const actions = {
 
         var geocoder = new google.maps.Geocoder();
         var addressLatLong = address + ', ' + city + ', ' + country;
-        var latitudeAdd = '';
-        var longitudeAdd = '';
+        // var latitudeAdd = '';
+        // var longitudeAdd = '';
 
-        geocoder.geocode({
-            'address': addressLatLong
-        }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                latitudeAdd = results[0].geometry.location.lat();
-                longitudeAdd = results[0].geometry.location.lng();
-                console.log(currentAdmin + "\n" + companyName + "\n" + videoURL + "\n" + website + "\n" + phone + "\n" + description + "\n" +
-                    null + "\n" + email + "\n" + processes + "\n" + services + "\n" + materials + "\n" + address + "\n" + city + "\n" +
-                    country + "\n" + zipcode + "\n" + latitudeAdd + "\n" + longitudeAdd);
-            }
 
-            console.log("Tesing mod, app and limit null values: " + processes);
-            console.log("I'm adding a new business");
-            console.log(materials);
-            console.log(processes);
-            console.log(services);
+        return codeLatLng().then(response => {
+            console.log("Inside codeLatLng");
 
-            var dataToSend = {
-                endpoint: 'company',
-                code: '8',
-                aid: currentAdmin,
-                du: true,
-                multi: true,
-                name: companyName,
-                URL: videoURL,
-                site: website,
-                phone: phone,
-                descr: description,
-                img: null, //add Images separetly ?
-                cemail: email,
-                spids: processes,
-                smids: materials,
-                ssids: services,
-                line: address,
-                city: city,
-                count: country,
-                zip: zipcode,
-                lat: latitudeAdd,
-                lon: longitudeAdd
-            };
-
-            $.ajax({
-                url: serverPath,
-                data: dataToSend,
-                contentType: "application/json",
-                type: "GET",
-                dataType: "json",
-                success: function (data, textStatus, jqXHR) {
-                    context.commit("addNewBusiness", data.resp);
+            return Vue.http.get(serverfile, {
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                error: function (data, textStatus, jqXHR) {
-                    console.log("textStatus: " + textStatus);
-                    console.log("Server Not Found: Please Try Again Later!");
+                params: {
+                    du: true,
+                    multi: true,
+                    endpoint: 'company',
+                    code: '8',
+                    aid: "5",
+
+                    name: companyName,
+                    URL: videoURL,
+                    site: website,
+                    phone: phone,
+                    descr: description,
+                    img: null, //add Images separetly ?
+                    cemail: email,
+                    spids: processes,
+                    smids: materials,
+                    ssids: services,
+                    line: address,
+                    city: city,
+                    count: country,
+                    zip: zipcode,
+                    lat: response.latitudeAdd,
+                    lon: response.longitudeAdd
                 }
+            }).then(response => {
+                console.log(response);
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                context.commit("addNewBusiness", data.resp);
+                return data.resp[0].number;
             });
-        });
+        }).then(resultNumber => {
+            console.log("This is the result number");
+            console.log(resultNumber);
+            return resultNumber;
+        })
+
+
+
+        function codeLatLng() {
+            return new Promise((resolve, reject) => {
+                geocoder.geocode({
+                    'address': addressLatLong
+                }, (results, status) => {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        resolve({
+                            latitudeAdd: results[0].geometry.location.lat(),
+                            longitudeAdd: results[0].geometry.location.lng()
+                        });
+                    } else {
+                        reject('Cannot find address');
+                    }
+                });
+            });
+
+        }
+        // $.ajax({
+        //     url: serverPath,
+        //     data: dataToSend,
+        //     contentType: "application/json",
+        //     type: "GET",
+        //     dataType: "json",
+        //     success: function (data, textStatus, jqXHR) {
+        //         context.commit("addNewBusiness", data.resp);
+        //     },
+        //     error: function (data, textStatus, jqXHR) {
+        //         console.log("textStatus: " + textStatus);
+        //         console.log("Server Not Found: Please Try Again Later!");
+        //     }
+        // });
+
     },
     /**    
      * Deletes a particular business submission (Admin action)

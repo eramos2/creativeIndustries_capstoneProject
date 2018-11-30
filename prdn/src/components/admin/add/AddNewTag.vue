@@ -9,7 +9,7 @@
         <div>
         <div class="row">
             <div class="col-md-4 addCategoryList">
-                <h5>Tag Connections</h5>
+                <h5>Tag - Category</h5>
                 <div class="form-group">
                     <select class="form-control" v-model="value" id="tagTypes">
                         <option value="none" disabled selected>Choose One Tag</option>
@@ -17,11 +17,11 @@
 
                         <!-- Tag Categories -->
                         <option 
-                        v-for="(category,key) in tagCat"
+                        v-for="(tagCategory,key) in tagCat"
                         :key="key"
-                        :value="category.id"
+                        :value="tagCategory.name"
                         >
-                        {{category.name}}
+                        {{tagCategory.name}}
                         </option>
 
                         <!-- <option value="1">Tubing</option>
@@ -44,10 +44,10 @@
 
                         </div>
                     </div>    
-                <h5>Tags - Name</h5>
+                <h5>Tag - Name</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Tag-Name" onclick="showServConnections() ">
+                        <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Tag-Name" >
                        <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
                         <!-- <button>Add</button> -->
                     </div>
@@ -146,7 +146,7 @@ export default {
               console.log(response);
 
               if (response > 0) {
-                this.reloadResources();
+                this.reloadTags();
                 return { modalShow: true, modalShowCred: false };
               } else {
                 return { modalShow: false, modalShowCred: true };
@@ -156,7 +156,6 @@ export default {
               this.modalShow = data.modalShow;
               this.modalShowCred = data.modalShowCred;
             });
-          this.$validator.reset();
           return;
         } else {
           this.modalShowFail = true;
@@ -166,64 +165,9 @@ export default {
     okModal() {
       this.$router.replace("/admin/add");
     },
-
-    // validateBeforeSubmit() {
-    //   this.$validator.validateAll().then(result => {
-    //     if (result) {
-    //       if (this.newTagField == "") {
-    //         //Category already exists add new tag name only
-    //         let data = {
-    //           name: this.tagName,
-    //           category: this.value
-    //         };
-    //         this.$store.dispatch("addNewTag", data).then(response => {
-    //           console.log("after dispatch add new tag");
-    //           console.log(response);
-
-    //           if (response > 0) {
-    //             //added new subresource sucessfully
-    //             this.reloadResources();
-    //             alert("added new subservice successfully");
-    //           } else {
-    //             //add new subresource failed
-    //             alert("Failed to add new subservice");
-    //           }
-    //         });
-
-    //         this.value = "";
-    //         this.newSubServ = "";
-    //         console.log(data);
-    //       } else {
-    //         let data = {
-    //           resource: "services",
-    //           resName: this.newServiceField, //new category name
-    //           subresName: this.newSubServ //new subcategory name
-    //         };
-    //         this.$store.dispatch("addNewResource", data).then(response => {
-    //           console.log("after dispatch add new service and subservice");
-    //           console.log(response);
-
-    //           if (response > 0) {
-    //             //added new subresource sucessfully
-    //             this.reloadResources();
-    //             alert("added new service and subservice successfully");
-    //           } else {
-    //             //add new subresource failed
-    //             alert("Failed to add new service and subservice");
-    //           }
-    //         });
-    //         this.value = "";
-    //         this.newServiceField = "";
-    //         this.newSubServ = "";
-
-    //         console.log(data);
-    //       }
-    //       this.$validator.reset();
-    //       return;
-    //     }
-    //     alert("Empty Field(s)");
-    //   });
-    // },
+    reloadTags() {
+      this.$store.dispatch("setTags");
+    },
     test() {
       if (this.newTagField == "") {
         let data = {
