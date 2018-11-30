@@ -130,30 +130,66 @@ export default {
 
       this.$validator.validateAll().then(result => {
         if (result) {
-          let data = {
-            resource: "materials",
-            subresName: this.newSubMat,
-            cid: this.value
-          };
-          this.$store
-            .dispatch("addNewSubResource", data)
-            .then(response => {
-              console.log("after dispatch add new submaterial");
-              console.log(response);
+          if (this.newMatField == "") {
+            //Catefory already exists add new subcategory only
+            let data = {
+              resource: "materials",
+              subresName: this.newSubMat,
+              cid: this.value
+            };
 
-              if (response > 0) {
-                this.reloadResources();
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                return { modalShow: false, modalShowCred: true };
-              }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
-            });
+            this.$store
+              .dispatch("addNewSubResource", data)
+              .then(response => {
+                console.log("after dispatch add new submaterial");
+                console.log(response);
+
+                if (response > 0) {
+                  this.reloadResources();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            this.$validator.reset();
+            this.value = "";
+            this.newSubMat = "";
+            return;
+          } else {
+            let data = {
+              resource: "materials",
+              resName: this.newMatField, //new category name
+              subresName: this.newSubMat //new subcategory name
+            };
+            this.$store
+              .dispatch("addNewResource", data)
+              .then(response => {
+                console.log("after dispatch add new material and submaterial");
+                console.log(response);
+
+                if (response > 0) {
+                  this.reloadResources();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          }
           this.$validator.reset();
+          this.value = "";
+          this.newMatField = "";
+          this.newSubMat = "";
           return;
+
+          console.log(data);
         } else {
           this.modalShowFail = true;
         }

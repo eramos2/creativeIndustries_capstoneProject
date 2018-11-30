@@ -14,7 +14,7 @@
                 <option value="none" disabled="" selected="">Choose One Material</option>
                 
                  <optgroup 
-                     v-for="(category, key) in materialCat"
+                     v-for="(category, key) in materials"
                    :key="key"
                  :label="category.name">
                  <option 
@@ -97,7 +97,7 @@
             
             <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
                 <p>
-                     <button >Edit</button>
+                     <button >Edit Material</button>
                 </p>
             </div>
         </div>
@@ -134,9 +134,6 @@ export default {
           this.reloadResources();
         });
     },
-    editResource() {
-      console.log("Gooood mornginggg");
-    },
     okModal() {
       this.$router.replace("/");
     },
@@ -160,7 +157,7 @@ export default {
     }
   },
   computed: {
-    materialCat() {
+    materials() {
       return this.$store.state.resources.resources.materials.categories;
     },
     processes() {
