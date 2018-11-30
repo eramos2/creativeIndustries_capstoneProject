@@ -11,15 +11,25 @@
             <div class="col-md-4 addCategoryList">
                 <h5>Tag Connections</h5>
                 <div class="form-group">
-                    <select class="form-control" v-model="value"  onchange="addServ()" id="servTypes">
+                    <select class="form-control" v-model="value" id="tagTypes">
                         <option value="none" disabled selected>Choose One Tag</option>
                         <option id="addNewTag" value="addNewTag">New Tag</option>
-                        <option value="1">Tubing</option>
+
+                        <!-- Tag Categories -->
+                        <option 
+                        v-for="(category,key) in tagCat"
+                        :key="key"
+                        :value="category.id"
+                        >
+                        {{category.name}}
+                        </option>
+
+                        <!-- <option value="1">Tubing</option>
                         <option value="3">Ornaments</option>
                         <option value="4">Decorative</option>
                         <option value="5">Opaque</option>
                         <option value="6">Breathable</option>
-                        <option value="7">Long Lasting</option>   
+                        <option value="7">Long Lasting</option>    -->
                     </select>
                 </div>
                 <div class="row">
@@ -37,8 +47,8 @@
                 <h5>Tags - Name</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="tagConn" id="tagConn" v-validate="'required|max:15'" v-model="tagConn"  placeholder="Tag-Name" onclick="showServConnections() ">
-                       <p class="text-danger" v-if="errors.has('tagConn')">{{ errors.first('tagConn') }}</p>
+                        <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Tag-Name" onclick="showServConnections() ">
+                       <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
                         <!-- <button>Add</button> -->
                     </div>
                 </div>
@@ -87,7 +97,7 @@ const dictionary = {
         required: "The new tag field is required.",
         max: "The new tag field may not be greater than 15 characters."
       },
-      tagConn: {
+      tagName: {
         required: "The tag connection field is required.",
         max: "The tag connection field may not be greater than 15 characters."
       },
@@ -105,14 +115,60 @@ export default {
   data: () => ({
     value: "",
     newTagField: "",
-    tagConn: ""
+    tagName: ""
   }),
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.test();
-          alert("Tag Added");
+          if (this.newTagField == "") {
+            //Category already exists add new tag name only
+            let data = {
+              name: this.tagName,
+              category: this.value
+            };
+            this.$store.dispatch("addNewTag", data).then(response => {
+              console.log("after dispatch add new tag");
+              console.log(response);
+
+              if (response > 0) {
+                //added new subresource sucessfully
+                this.reloadResources();
+                alert("added new subservice successfully");
+              } else {
+                //add new subresource failed
+                alert("Failed to add new subservice");
+              }
+            });
+
+            this.value = "";
+            this.newSubServ = "";
+            console.log(data);
+          } else {
+            let data = {
+              resource: "services",
+              resName: this.newServiceField, //new category name
+              subresName: this.newSubServ //new subcategory name
+            };
+            this.$store.dispatch("addNewResource", data).then(response => {
+              console.log("after dispatch add new service and subservice");
+              console.log(response);
+
+              if (response > 0) {
+                //added new subresource sucessfully
+                this.reloadResources();
+                alert("added new service and subservice successfully");
+              } else {
+                //add new subresource failed
+                alert("Failed to add new service and subservice");
+              }
+            });
+            this.value = "";
+            this.newServiceField = "";
+            this.newSubServ = "";
+
+            console.log(data);
+          }
           this.$validator.reset();
           return;
         }
@@ -123,27 +179,30 @@ export default {
       if (this.newTagField == "") {
         let data = {
           value: this.value,
-          tagConn: this.tagConn
+          tagName: this.tagName
         };
         this.value = "";
         this.newTagField = "";
-        this.tagConn = "";
+        this.tagName = "";
         console.log(data);
       } else {
         let data = {
           value: this.value,
           newTagField: this.newTagField,
-          tagConn: this.tagConn
+          tagName: this.tagName
         };
         this.value = "";
         this.newTagField = "";
-        this.tagConn = "";
+        this.tagName = "";
 
         console.log(data);
       }
     }
   },
   computed: {
+    tagCat() {
+      return this.$store.getters.getTags();
+    },
     displayNewTag() {
       return this.value == "addNewTag";
     }

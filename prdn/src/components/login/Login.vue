@@ -3,7 +3,8 @@
             <div class="login-page-area">
                 <div class="container">
                     <div class="login-area">
-                    <login-returning-customer> </login-returning-customer>
+                      <router-view></router-view>
+                    <!-- <login-returning-customer > </login-returning-customer> -->
                     <!-- <login-admin></login-admin> -->
                     <!-- <recoverpassword></recoverpassword> -->
                     <!-- <changepassword></changepassword> -->

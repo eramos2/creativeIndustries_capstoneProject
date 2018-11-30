@@ -274,7 +274,7 @@ const actions = {
                 smid: data.cid, //categoryId, not an array
                 ssid: data.sid,
                 spid: data.pid,
-                subName: data.subresName,
+                subName: data.subresName
             };
         } else if (data.resource == 'services') {
             prms = {
@@ -285,7 +285,7 @@ const actions = {
                 ssid: data.cid, //categoryId, not an array
                 smid: data.mid,
                 spid: data.pid,
-                subName: data.subresName,
+                subName: data.subresName
             };
         } else {
             prms = {
@@ -296,11 +296,11 @@ const actions = {
                 spid: data.cid, //categoryId, not an array
                 smid: data.mid,
                 ssid: data.sid,
-                subName: data.subresName,
+                subName: data.subresName
             };
         }
 
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: prms
             })
@@ -308,8 +308,9 @@ const actions = {
                 return response.json();
             })
             .then(data => {
-                //console.log(data.resp[0].number);
+                console.log(data.resp[0].number);
                 context.commit('confirmAddedNewResource', data.resp);
+                return data.resp[0].number;
             });
     },
     /** 
@@ -406,7 +407,7 @@ const actions = {
             };
         }
 
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: prms
             })
@@ -416,6 +417,7 @@ const actions = {
             .then(data => {
                 //console.log(data.resp[0].number);
                 context.commit('confirmAddedNewResource', data.resp);
+                return data.resp[0].number;
             });
     },
     /**   

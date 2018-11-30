@@ -25,7 +25,9 @@ const state = {
         passChanged: "",
         infoChanged: "",
         recoverPassword: "",
-        removeAdministrator: ""
+        removeAdministrator: "",
+        adminType: "",
+        adminLoggedIn: false //Is admin user loggedIn
     }
 
 
@@ -35,6 +37,27 @@ const getters = {};
 
 
 const mutations = {
+
+    /** Get admin type when initializing app, checks if admin is logged in and 
+     * what type it is or if unregistered
+     */
+    adminType: (state) => {
+
+        let userType = Vue.cookie.get("userType");
+        let adminType = Vue.cookie.get("adminType");
+        if (userType == "admin") {
+            state.adminFlags['adminType'] = adminType;
+            state.adminFlags['adminLoggedIn'] = true;
+        } else {
+            state.adminFlags['adminType'] = "";
+            state.adminFlags['adminLoggedIn'] = false;
+        }
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.adminFlags = { ...state.adminFlags
+        }
+    },
     /** 
      * Sets state.administrator data to the received response from http call
      * if credentials were correct.
@@ -42,18 +65,35 @@ const mutations = {
      */
     loginAdmin: (state, data) => {
         if (data.length > 0) {
+            Vue.cookie.set("userId", data[0].adminId, 1);
+            Vue.cookie.set("userType", 'admin', 1)
+            Vue.cookie.set("adminType", data[0].adminTypeName, 1);
+
             state.administrator = data[0];
             //Replace that Object with a fresh one. For example, 
             //using the stage-3 object spread syntax we can write it like this:
             //It gives reactivity and all components are aware if it changed
             state.administrator = { ...state.administrator
             }
-        }
-        console.log("Data received in mutations loginAdmin administrators.js");
-        console.log(data);
-        console.log("This is the administrator");
-        console.log(state.administrator);
+            state.adminFlags['adminLoggedIn'] = true;
+            //Replace that Object with a fresh one. For example, 
+            //using the stage-3 object spread syntax we can write it like this:
+            //It gives reactivity and all components are aware if it changed
+            state.adminFlags = { ...state.adminFlags
+            }
+        } else {
+            state.adminFlags['adminLoggedIn'] = false;
+            //Replace that Object with a fresh one. For example, 
+            //using the stage-3 object spread syntax we can write it like this:
+            //It gives reactivity and all components are aware if it changed
+            state.adminFlags = { ...state.adminFlags
+            }
+            console.log("Data received in mutations loginAdmin administrators.js");
+            console.log(data);
+            console.log("This is the administrator");
+            console.log(state.administrator);
 
+        }
     },
     /** 
      * Sets state.administrators to the data received response from http call
@@ -177,6 +217,15 @@ const mutations = {
 
 const actions = {
 
+    /**  Get admin type when initializing app, checks if admin is logged in and 
+     * what type it is or if it's unregistered
+     */
+    adminType: (context) => {
+
+        context.commit("adminType");
+    },
+
+
     /**   
      * Adds New admin to system db (Assumes email is not already on the system).
      * @param {object} data - Receives email, password, firsName, lastName, occupation, birthday and city of new administrator
@@ -218,7 +267,7 @@ const actions = {
     loginAdmin: (context, data) => {
         let email = data.email;
         let pass = data.password;
-        Vue.http
+        return Vue.http
             .post(
                 serverfile, {
                     aemail: email,
@@ -238,7 +287,9 @@ const actions = {
                 return response.json();
             })
             .then(data => {
+
                 context.commit('loginAdmin', data.resp);
+                return data.resp;
             });
     },
     /**  

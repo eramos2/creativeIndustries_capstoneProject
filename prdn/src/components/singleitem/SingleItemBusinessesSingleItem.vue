@@ -2,7 +2,7 @@
     <div class="col-lg-3">
         <!-- sinle-product-item start -->
         <div class="sinle-product-item">
-            <div class="product-thumb">
+            <div id="featured-business" class="product-thumb">
                 <router-link 
                   :to="{
                     name: 'businessLink', 
@@ -17,12 +17,24 @@
                   <img class="primary-image" :src="businessLogo" alt="">
                 </router-link>
                 
-                <div class="action-links">
+                <!-- <div class="action-links">
                     <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                    <!--<a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
-                </div>
+                    <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
+                </div> -->
                 <div class="add-to-cart">
-                    <a class="btn-cart" href="#"><span> Learn More </span></a>
+                  <router-link 
+                  :to="{
+                    name: 'businessLink', 
+                    params: {
+                      businessName: businessName
+                    }
+                  }" 
+                  tag="a" 
+                  active-class="active"
+                  class="btn-cart"
+                >
+                  <span> Learn More </span>
+                  </router-link>
                 </div>
             </div>
             <div class="product-info">
@@ -87,4 +99,10 @@ export default {
 </script>
 
 <style>
+#featured-business {
+  height: 100px;
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 </style>

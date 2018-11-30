@@ -5,6 +5,7 @@ import businesses from './modules/businesses';
 import users from './modules/users';
 import administrators from './modules/administrators';
 import map from './modules/map';
+import tags from './modules/tags';
 
 import * as actions from './actions';
 import * as getters from './getters';
@@ -27,7 +28,8 @@ export const store = new Vuex.Store({
         businesses,
         users,
         administrators,
-        map
+        map,
+        tags
     }
 
 })

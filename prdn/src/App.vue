@@ -14,11 +14,11 @@
     >
     </header-bar>
     
-    <router-view :authenticated="authenticated"></router-view>
+    <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
     <footer style="padding:2rem;">
       <button
             class="btn btn-primary btn-margin"
-            v-show="!authenticated"
+            v-show="!authenticated && !adminAuthenticated"
             @click="login()">
               Log In
           </button>
@@ -31,9 +31,21 @@
           </button>
           <button
             class="btn btn-primary btn-margin"
-            v-show="!authenticated"
+            v-show="!authenticated && !adminAuthenticated"
             @click="register()">
               Register
+          </button>
+          <button
+            class="btn btn-primary btn-margin"
+            v-show="!adminAuthenticated && !authenticated"
+            @click="loginAdmin()">
+              Admin Login
+          </button>
+          <button
+            class="btn btn-primary btn-margin"
+            v-show="adminAuthenticated"
+            @click="adminLogout()">
+              Admin Log Out
           </button>
           </footer>
     <!--
@@ -269,7 +281,7 @@ export default {
     ...mapActions(["setResources"]),
     register() {
       let userData = {
-        email: "emmanuel.ramosrios@gmail.com",
+        email: "anuel.ramodds2@upr.edu",
         password: "12345678",
         firstName: "registerTest",
         lastName: "registerTest",
@@ -279,17 +291,42 @@ export default {
       };
       console.log("Registering user");
       console.log(userData);
-      this.$store.dispatch("registerNewUser", userData);
+      this.$store.dispatch("registerNewUser", userData).then(response => {
+        console.log("wdasasas");
+        console.log(response);
+      });
       // this.$store.dispatch("registerUser", {
       //   email: "emmanuel.ramos2@upr.edu",
       //   password: "12345678"
       // });
     },
     login() {
-      this.$store.dispatch("loginUser", {
-        email: "emmanuel.ramos2@upr.edu",
-        password: "12345678"
-      });
+      this.$store
+        .dispatch("loginUser", {
+          email: "emmanuel.ramos2@upr.edu",
+          password: "12345678"
+        })
+        .then(da => {
+          console.log("Wooowww");
+          console.log(da);
+        });
+    },
+    loginAdmin() {
+      this.$store
+        .dispatch("loginAdmin", {
+          email: "emmanuel.ramos2@upr.edu",
+          password: "12345678"
+        })
+        .then(response => {
+          console.log("Admin response");
+          console.log(response);
+          if (response.length > 0) {
+            //Admin login sucesful
+            console.log("Admin Login sucessful");
+          } else {
+            console.log("Admin login failed.");
+          }
+        });
     },
     logout() {
       // To delete a cookie use
@@ -299,20 +336,35 @@ export default {
       //this.$store.state.users.userFlags.loggedIn = false;
       console.log("Logged Out");
       console.log(this.$store.state.users.userFlags.loggedIn);
+    },
+    adminLogout() {
+      // To delete a cookie use
+      this.$cookie.delete("userId");
+      this.$cookie.delete("userType");
+      this.$cookie.delete("adminType");
+      this.$store.dispatch("adminType");
+      //this.$store.state.users.userFlags.loggedIn = false;
+      console.log("Admin Logged Out");
+      console.log(this.$store.state.administrators.adminFlags.adminLoggedIn);
     }
   },
   computed: {
     authenticated() {
       //console.log(this.$cookie.get("userId"));
       return this.$store.state.users.userFlags.loggedIn; //this.$cookie.get("userId") === "31";
+    },
+    adminAuthenticated() {
+      return this.$store.state.administrators.adminFlags.adminLoggedIn;
     }
   },
   mounted() {
-    //Check if user is logged in
     this.setResources();
+    //Get all system tags
+    this.$store.dispatch("setTags");
     //console.log("inside App.vue after setting resources");
     //console.log(this.$store.state.resources);
-
+    //Check if user is logged in
+    this.$store.dispatch("userType");
     $(window).on("scroll", function() {
       var scroll = $(window).scrollTop();
       if (scroll < 265) {

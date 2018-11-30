@@ -294,6 +294,12 @@ export default {
 </script>
 
 <style>
+#zoom1 {
+  max-height: 120px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .sinle-product-item .product-thumb {
   overflow: hidden;
   position: relative;

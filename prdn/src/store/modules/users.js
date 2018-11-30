@@ -30,7 +30,7 @@ const getters = {
 
 const mutations = {
     /** Get user type when initializing app, checks if user is logged in and 
-     * if it is regular, admin user, unregistered
+     * if it is regular, unregistered
      */
     userType: (state) => {
         let userType = Vue.cookie.get("userType");
@@ -191,7 +191,7 @@ const actions = {
     loginUser: (context, data) => {
         let email = data.email;
         let pass = data.password;
-        Vue.http
+        return Vue.http
             .post(
                 serverfile, {
                     //for testing
@@ -214,10 +214,9 @@ const actions = {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 context.commit('loginUser', data.resp);
-                return data;
-
+                return data.resp;
             });
     },
 
@@ -426,74 +425,113 @@ const actions = {
      * Register a new user (checks email doesn't exist in db)
      * @param {object} data - Contains user's email, password, firstName, lastName, occupation, birthday, and city
      */
-    registerNewUser: (context, data) => {
-        console.log("Verifying email " + data.email + " is not in db");
+    registerNewUser: (context, userData) => {
+        console.log("Verifying email " + userData.email + " is not in db");
         state.userFlags["registerUser"] = "";
         var dataToSend = {
             endpoint: 'users',
             code: '4',
-            uemail: data.email
+            uemail: userData.email
         };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (dataGet, textStatus, jqXHR) {
-                var response = dataGet.resp;
-                if (response.length != 0) {
-                    console.log("The email entered already exists. Please enter another email.");
-                    return {
-                        testObj: "email is in db"
-                    };
-
-                    // context.commit("registerNewUser", {
-                    //     0: {
-                    //         number: '0'
-                    //     }
-                    // });
-                } else {
-                    console.log("I'm adding user " + name);
-
-                    dataToSend = {
-                        endpoint: 'users',
-                        code: '1',
-                        du: true,
-                        uemail: data.email,
-                        upass: data.password,
-                        uname: data.firstName,
-                        ulname: data.lastName,
-                        uoccu: data.occupation,
-                        ubdate: data.birthday,
-                        ucity: data.city
-                    };
-
-                    $.ajax({
-                        url: serverPath,
-                        data: dataToSend,
-                        contentType: "application/x-www-form-urlencoded",
-                        type: "POST",
-                        dataType: "json",
-                        success: function (data, textStatus, jqXHR) {
-                            context.commit("registerNewUser", data.resp);
-                        },
-                        error: function (data, textStatus, jqXHR) {
-                            console.log("textStatus: " + textStatus);
-                            console.log("Server Not Found: Please Try Again Later!");
-                        }
-                    });
-
-                }
-
-
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+        return Vue.http.get(serverfile, {
+            params: {
+                endpoint: 'users',
+                code: '4',
+                uemail: userData.email
             }
-        });
+        }).then(response => {
+
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            if (data.resp.length != 0) {
+                console.log("The email entered already exists. Please enter another email.");
+                return []; //return empty object, to let user know email is already in datbase
+            } else {
+                console.log("userDaga");
+                console.log(userData);
+                return Vue.http.post(serverfile, {
+
+                    endpoint: 'users',
+                    code: '1',
+                    du: true,
+                    uemail: userData.email,
+                    upass: userData.password,
+                    uname: userData.firstName,
+                    ulname: userData.lastName,
+                    uoccu: userData.occupation,
+                    ubdate: userData.birthday,
+                    ucity: userData.city
+
+                }, {
+
+                    emulateJSON: true,
+
+
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
+
+                    console.log("registering user");
+                    console.log(data);
+                    context.commit("registerNewUser", data.resp);
+                    return data.resp;
+                });
+            }
+        })
+        // return $.ajax({
+        //     url: serverPath,
+        //     data: dataToSend,
+        //     contentType: "application/json",
+        //     type: "GET",
+        //     dataType: "json",
+        //     success: function (dataGet, textStatus, jqXHR) {
+        //         var response = dataGet.resp;
+        //         if (response.length != 0) {
+        //             console.log("The email entered already exists. Please enter another email.");
+        //             return response;
+
+        //         } else {
+        //             console.log("I'm adding user " + name);
+
+        //             dataToSend = {
+        //                 endpoint: 'users',
+        //                 code: '1',
+        //                 du: true,
+        //                 uemail: data.email,
+        //                 upass: data.password,
+        //                 uname: data.firstName,
+        //                 ulname: data.lastName,
+        //                 uoccu: data.occupation,
+        //                 ubdate: data.birthday,
+        //                 ucity: data.city
+        //             };
+
+        //             return $.ajax({
+        //                 url: serverPath,
+        //                 data: dataToSend,
+        //                 contentType: "application/x-www-form-urlencoded",
+        //                 type: "POST",
+        //                 dataType: "json",
+        //                 success: function (data, textStatus, jqXHR) {
+        //                     context.commit("registerNewUser", data.resp);
+        //                     return data.resp.promise();
+        //                 },
+        //                 error: function (data, textStatus, jqXHR) {
+        //                     console.log("textStatus: " + textStatus);
+        //                     console.log("Server Not Found: Please Try Again Later!");
+        //                 }
+        //             }).promise();
+
+        //         }
+
+
+        //     },
+        //     error: function (data, textStatus, jqXHR) {
+        //         console.log("textStatus: " + textStatus);
+        //         console.log("Server Not Found: Please Try Again Later!");
+        //     }
+        // });
     },
 
     /**   

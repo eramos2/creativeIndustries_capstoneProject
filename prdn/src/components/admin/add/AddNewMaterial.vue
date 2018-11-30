@@ -12,30 +12,22 @@
             <div class="col-md-4 addCategoryList">
                 <h5>Material</h5>
                 <div class="form-group">
-                    <select class="form-control" v-model="value" onchange="addMat()" id="matTypes">
+                    <select class="form-control" v-model="value" id="matTypes">
                         <option value="none" disabled selected>Choose One Material</option>
                         <option id="addNewMat" value="addNewMat">New Material</option>
+                        <!-- Material Categories -->
                         <option 
-                        
                         v-for="(category,key) in materialCat"
                         :key="key"
                         :value="category.id"
                         >
                         {{category.name}}
                         </option>
-
-                        <!-- <option value="1">Concrete</option>
-                        <option value="7">Fabrics</option>
-                        <option value="6">Glass and Ceramics</option>
-                        <option value="3">Metal</option>
-                        <option value="8">Papers Coating and Surfaces</option>
-                        <option value="4">Plastic</option>
-                        <option value="5">Rubber</option>
-                        <option value="2">Wood</option> -->
                     </select>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                      <!-- If new material selected show the input textbox -->
                         <div 
                             id="newMat"
                             v-if="displayNewMat"
@@ -43,17 +35,14 @@
                         >
                             <input type="text" class="form-control" name="newMatField" placeholder="Enter New Material" v-validate="'required|max:15'" v-model="newMatField" id="newMaterialField"></div>
                             <p class="text-danger" v-if="errors.has('newMatField')">{{ errors.first('newMatField') }}</p>
-                            <!-- <button>Add</button> -->
                         </div>
                     </div>
-                    <!-- <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newMaterial" id="newMaterial" v-validate="'required|max:15'" v-model="newMaterial" placeholder="Enter New Material" onclick="showMatConnections()"> -->
                         
                         
                 <h5>Sub-Materials</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newSubMat" id="newSubMat" v-validate="'required|max:15'" v-model="newSubMat" placeholder="Enter Sub-Material" onclick="showMatConnections()">
+                        <input type="text" class="form-control" name="newSubMat" id="newSubMat" v-validate="'required|max:15'" v-model="newSubMat" placeholder="Enter Sub-Material">
                         <p class="text-danger" v-if="errors.has('newSubMat')">{{ errors.first('newSubMat') }}</p>
                     </div>
                 </div>
@@ -123,6 +112,7 @@ Validator.localize(dictionary);
 export default {
   data: () => ({
     value: "",
+    matCategory: "",
     newMatField: "",
     newSubMat: ""
   }),
@@ -130,14 +120,63 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.test();
-          this.$validator.reset();
-          alert("Material Added");
+          if (this.newMatField == "") {
+            //Catefory already exists add new subcategory only
+            let data = {
+              resource: "materials",
+              subresName: this.newSubMat,
+              cid: this.value
+            };
+            this.$store.dispatch("addNewSubResource", data).then(response => {
+              console.log("after dispatch add new submaterial");
+              console.log(response);
 
+              if (response > 0) {
+                //added new subresource sucessfully
+                this.reloadResources();
+                alert("added new subresource successfully");
+              } else {
+                //add new subresource failed
+                alert("Failed to add new subresource");
+              }
+            });
+
+            this.value = "";
+            this.newSubMat = "";
+            console.log(data);
+          } else {
+            let data = {
+              resource: "materials",
+              resName: this.newMatField, //new category name
+              subresName: this.newSubMat //new subcategory name
+            };
+            this.$store.dispatch("addNewResource", data).then(response => {
+              console.log("after dispatch add new material and submaterial");
+              console.log(response);
+
+              if (response > 0) {
+                //added new subresource sucessfully
+                this.reloadResources();
+                alert("added new material and submaterial successfully");
+              } else {
+                //add new subresource failed
+                alert("Failed to add new material and submaterial");
+              }
+            });
+            this.value = "";
+            this.newMatField = "";
+            this.newSubMat = "";
+
+            console.log(data);
+          }
+          this.$validator.reset();
           return;
         }
         alert("Empty Field(s)");
       });
+    },
+    reloadResources() {
+      this.$store.dispatch("setResources");
     },
     test() {
       if (this.newMatField == "") {
@@ -146,7 +185,13 @@ export default {
           subresName: this.newSubMat,
           cid: this.value
         };
-
+        this.$store.dispatch("addNewSubResource", data).then(response => {
+          if (response.length > 0) {
+            //added new subresource sucessfully
+          } else {
+            //add new subresource failed
+          }
+        });
         this.value = "";
         this.newSubMat = "";
         console.log(data);

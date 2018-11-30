@@ -147,10 +147,36 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.register();
-          return;
+          //Input fields are valid
+          let userData = {
+            email: this.email,
+            password: this.password,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            occupation: this.occupation,
+            birthday: "1991-10-10",
+            city: this.city
+          };
+          this.$store.dispatch("registerNewUser", userData).then(response => {
+            console.log("This is the response");
+            console.log(response);
+            if (response.length > 0) {
+              //register was successful
+              this.$validator.reset();
+              this.$router.replace("/");
+              console.log(response);
+              alert("Register Sucessful.");
+            } else {
+              //email already exists in database
+              alert(
+                "Account with that email already exists, use a different one."
+              );
+            }
+          });
+        } else {
+          //Inputs are not valid
+          alert("Verify Field(s)");
         }
-        alert("Verify Field(s)");
       });
     },
     register() {

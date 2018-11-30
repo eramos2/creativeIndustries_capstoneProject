@@ -12,53 +12,43 @@
             <div class="col-md-4 addCategoryList">
                 <h5>Process</h5>
                 <div class="form-group">
-                    <select class="form-control" v-model="value" onchange="addProc()" id="procTypes">
+                    <select class="form-control" v-model="value" id="procTypes">
                         <option value="none" disabled selected>Choose One Process</option>
                         <option id="addNewProc" value="addNewProc">New Process</option>
+                        <!-- Process categories -->
                         <option 
-                        
                         v-for="(category,key) in processCat"
                         :key="key"
                         :value="category.id"
                         >
                         {{category.name}}
                         </option>
-                        <!-- <option value="2">Engraving</option>
-                        <option value="3">Extrusion</option>
-                        <option value="7">Fabric Machinery</option>
-                        <option value="4">Geometrical Precision Cutting</option>
-                        <option value="6">Hand Made</option>
-                        <option value="9">Metal Workshop</option>
-                        <option value="1">Molding</option>
-                        <option value="8">Rapid Prototype</option>
-                        <option value="5">Welding</option> -->
+                      
                     </select>
                 </div>
+
                 <div class="row">
                     <div class="col-md-12">
+                      <!-- If new process selected show the input textbox -->
                         <div 
                         id="newProc"
                         v-if="displayNewProc"
-                        
                         >
-                            <input type="text" class="form-control" name="newProcField" placeholder="Enter New Process" v-validate="'required|max:15'"  v-model="newProcField"  id="newProcessField"></div>
-                         <p class="text-danger" v-if="errors.has('newProcField')">{{ errors.first('newProcField') }}</p>
+                          <input type="text" class="form-control" name="newProcField" placeholder="Enter New Process" 
+                          v-validate="'required|max:15'"  
+                          v-model="newProcField"  
+                          id="newProcessField">
+                        </div>
+                        <p class="text-danger" v-if="errors.has('newProcField')">{{ errors.first('newProcField') }}</p>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newProcess" id="newProcess" v-validate="'required|max:10'"  v-model="newProcess" placeholder="Enter New Process" onclick="showMatConnections()">
-                       
-                        <button>Add</button>
-                    </div>
-                </div> -->
+               
                 
                 <h5>Sub-Process</h5>
                 <div class="row">
                     <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newSubProc" id="newSubProc" v-validate="'required|max:15'"  v-model="newSubProc" placeholder="Enter Sub-Process"  onclick="showProcConnections() ">
+                        <input type="text" class="form-control" name="newSubProc" id="newSubProc" v-validate="'required|max:15'"  v-model="newSubProc" placeholder="Enter Sub-Process">
                         <p class="text-danger" v-if="errors.has('newSubProc')">{{ errors.first('newSubProc') }}</p>
-                        <!-- <button>Add</button> -->
                     </div>
                 </div>
 
@@ -125,13 +115,68 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.test();
-          alert("Process Added");
+          if (this.newProcField == "") {
+            //Catefory already exists add new subcategory only
+            let data = {
+              resource: "processes",
+              subresName: this.newSubProc,
+              cid: this.value
+            };
+            //Dispatch the action to add the subresource
+            this.$store.dispatch("addNewSubResource", data).then(response => {
+              console.log("after dispatch add new subprocess");
+              console.log(response);
+
+              if (response > 0) {
+                //added new subprocess sucessfully
+                this.reloadResources();
+                alert("added new subprocess successfully");
+              } else {
+                //add new subprocess failed
+                alert("Failed to add new subprocess");
+              }
+            });
+
+            this.value = "";
+            this.newSubProc = "";
+            console.log(data);
+          } else {
+            //Add new process Category and add new subcategory
+            let data = {
+              resource: "processes",
+              resName: this.newProcField, //new category name
+              subresName: this.newSubProc //new subcategory name
+            };
+            //Dispatch the action to add the new process category and the new subprocess
+            this.$store.dispatch("addNewResource", data).then(response => {
+              console.log("after dispatch add new material and subprocess");
+              console.log(response);
+
+              if (response > 0) {
+                //added new subresource sucessfully
+                this.reloadResources();
+                alert("added new material and subprocess successfully");
+              } else {
+                //add new subresource failed
+                alert("Failed to add new material and subprocess");
+              }
+            });
+            this.value = "";
+            this.newProcField = "";
+            this.newSubProc = "";
+
+            console.log(data);
+          }
           this.$validator.reset();
+
           return;
         }
         alert("Empty Field(s)");
       });
+    },
+
+    reloadResources() {
+      this.$store.dispatch("setResources");
     },
 
     test() {

@@ -51,7 +51,7 @@
 
 <script>
 import { Validator } from "vee-validate";
-
+import { mapActions } from "vuex";
 const emailsDB = ["test@upr.edu"];
 
 export default {
@@ -61,16 +61,30 @@ export default {
     testEmail: "test@upr.edu"
   }),
   methods: {
+    ...mapActions(["loginUser"]),
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.login(this.email, this.password).then(datatt => {
-            console.log(datatt);
-            this.$validator.reset();
-            this.$router.replace("/");
-            console.log(this.$store.state.users.user);
-            alert("Login Sucessful");
-          });
+          //Inputs are valid
+          this.$store
+            .dispatch("loginUser", {
+              email: this.email,
+              password: this.password
+            })
+            .then(response => {
+              //console.log("wooweaisn");
+              //console.log(response);
+              if (response.length > 0) {
+                //login was successful
+                this.$validator.reset();
+                this.$router.replace("/");
+                console.log(this.$store.state.users.user);
+                alert("Login Sucessful.");
+              } else {
+                //login failed
+                alert("Email/Password combination is invalid.");
+              }
+            });
         } else {
           alert("There are some empty Field(s)");
         }

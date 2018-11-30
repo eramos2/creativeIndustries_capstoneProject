@@ -19,12 +19,26 @@
                   <img alt="" :src="imgUrl" class="primary-image">
                 </router-link>
                 
-                <div class="action-links">
+                <!-- <div class="action-links">
                     <a class="action-btn btn-wishlist" href="#"><i class="ion-android-favorite-outline"></i></a>
-                    <!--<a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>-->
-                </div>
+                    <a class="action-btn btn-compare" href="#"><i class="ion-arrow-swap"></i></a>
+                </div> -->
                 <div class="add-to-cart">
-                    <a class="btn-cart" href="#"><span> Learn More </span></a>
+                  <router-link 
+                  :to="{
+                    name: 'singleitemLink', 
+                    params: {
+                        resourceName: subcat.resName,
+                        categoryName: subcat.catName, 
+                        subcategoryName: subcat.name
+                    }
+                  }" 
+                  tag="a" 
+                  active-class="active"
+                  class="btn-cart"
+                >
+                    <span> Learn More </span>
+                  </router-link>
                 </div>
             </div>
             <div class="product-info">

@@ -13,7 +13,11 @@ import User from "./pages/User.vue";
 import UserAccount from "./components/user/UserAccount.vue";
 import UserProjects from "./components/user/UserProjects.vue";
 import UserNewBusiness from "./components/user/UserNewBusiness.vue";
-
+/**Login components */
+import LoginReturningCustomer from "./components/login/LoginReturningCustomer.vue";
+import LoginAdmin from "./components/login/LoginAdmin.vue";
+import RecoverPassword from "./components/login/RecoverPassword.vue";
+import ChangePassword from "./components/login/ChangePassword.vue";
 /**Admin components */
 import Admin from "./pages/Admin.vue";
 import WelcomeAdmin from "./components/admin/WelcomeAdmin.vue";
@@ -54,6 +58,7 @@ export const routes = [{
         name: 'mapLink',
         component: Map
     },
+    /**Start Admin Routes */
     {
         path: '/admin',
         component: Admin,
@@ -77,17 +82,36 @@ export const routes = [{
             }
         ]
 
-    },
+    }, /**End admin Routes */
+
     {
         path: '/register',
         name: 'registerLink',
         component: Register
     },
+
+    /** Start login routes */
     {
         path: '/login',
-        name: 'loginLink',
-        component: Login
-    },
+        component: Login,
+        children: [{
+                path: '',
+                component: LoginReturningCustomer
+            },
+            {
+                path: 'admin',
+                component: LoginAdmin
+            },
+            {
+                path: 'recoverpassword',
+                component: RecoverPassword
+            },
+            {
+                path: 'changepassword',
+                component: ChangePassword
+            }
+        ]
+    }, /**End login routes */
 
     {
         path: '/search/:resourceName',

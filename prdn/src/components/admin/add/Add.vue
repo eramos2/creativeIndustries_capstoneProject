@@ -246,6 +246,9 @@ export default {
     }
   },
   data: () => ({
+    spids: [], //selected sub processes ids
+    smids: [], //selected sub materials ids
+    ssids: [], //selected sub services ids
     companyName: "",
     addressID: "",
     city: "",

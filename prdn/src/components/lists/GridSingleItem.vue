@@ -17,13 +17,27 @@
                 >
                   <img alt="" :src="imgUrl" class="primary-image">
                 </router-link>
-                <div class="action-links">
+                <!-- <div class="action-links">
                     <a href="#" class="action-btn btn-wishlist"><i class="ion-android-favorite-outline"></i></a>
-                    <!--<a href="#" class="action-btn btn-compare"><i class="ion-arrow-swap"></i></a>
-                    <a href="#" data-target="#exampleModalCenter" data-toggle="modal" class="action-btn btn-quickview"><i class="ion ion-ios-eye"></i></a>-->
-                </div>
+                    <a href="#" class="action-btn btn-compare"><i class="ion-arrow-swap"></i></a>
+                    <a href="#" data-target="#exampleModalCenter" data-toggle="modal" class="action-btn btn-quickview"><i class="ion ion-ios-eye"></i></a>
+                </div> -->
                 <div class="add-to-cart">
-                    <a href="#" class="btn-cart"><span> Learn More </span></a>
+                    <router-link 
+                  :to="{
+                    name: 'singleitemLink', 
+                    params: {
+                        resourceName: this.$route.params.resourceName,
+                        categoryName: subcategory.category, 
+                      subcategoryName: subcategory.name.toLowerCase()
+                    }
+                  }" 
+                  tag="a" 
+                  active-class="active"
+                  class="btn-cart"
+                >
+                <span> Learn More </span>
+                    </router-link>
                 </div>
             </div>
             <div class="product-info">
