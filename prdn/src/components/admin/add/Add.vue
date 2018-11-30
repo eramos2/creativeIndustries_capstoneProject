@@ -88,10 +88,19 @@
                <p> <input v-validate="'required|image'" data-vv-as="image" name="logo" type="file"></p>
                     <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
                         </div>
-                        <div class="row" id="materials-process">
+
+            <div class="row" id="materials-process">
+            <div class="col-md-6  categoryList" >
+                 <h3>Materials</h3>
+            </div>
+            <div class="col-md-6  categoryList" >
+                <h3>Processes</h3>
+            </div>
+            </div>
+            <div class="row">
             <div class="col-md-6  categoryList" >
                 <div style="overflow-y: scroll; height:400px;">
-                <h3>Materials</h3>
+               
                 <ul class="list-group navList" id="editServMatCons">
                  <div 
                  v-for="(category, key) in materials"
@@ -118,7 +127,7 @@
             </div>
             <div class="col-md-6 categoryList">
                 <div style="overflow-y: scroll; height:400px;">
-                <h3>Processes</h3>
+                
                 <ul class="list-group navList" id="editServProcCons">
 
                     <div 
@@ -147,10 +156,22 @@
         </div>
 
 
+
         <div class="row" id="services-tags">
              <div class="col-md-6 categoryList">
+                 <h3>Services</h3>
+             </div>
+             <div class="col-md-6 categoryList">
+                 <h3>Select 6 Tags</h3>
+             </div>
+        </div>
+
+
+
+        <div class="row">
+             <div class="col-md-6 categoryList">
             <div style="overflow-y: scroll; height:400px;">
-                <h3>Services</h3>
+                
                 <ul class="list-group navList" id="editMatServCons">
                     <div 
                  v-for="(category, key) in services"
@@ -177,7 +198,7 @@
                 <div class="col-md-6 categoryList" >
                 <div style="overflow-y: scroll; height:400px;">
                      <ul class="list-group navList" id="editMatProcCons">
-                        <h3>Select 6 Tags</h3>
+                        
                             <li class="input-group" name="tags" value="2"><strong>Applications</strong></li>
                              <li class="catMargins">
                             <div class="checkbox">
