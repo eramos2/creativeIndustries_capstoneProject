@@ -212,6 +212,10 @@ const dictionary = {
       companyName: {
         required: "Please enter your company name.",
         max: "The company name field may not be greater than 20 characters."
+      },
+      addressID: {
+        required: "Please enter the Address",
+        max: "The address field may not be greater than 40 characters."
       }
     }
   }
