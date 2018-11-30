@@ -11,7 +11,7 @@
         <div class="col-md-6 categoryList">
             <h5>Services Conections</h5>
             <div>
-                <select class="form-control" id="editServTypes" onchange="getServiceRelated(this.form)">
+                <select class="form-control" id="editServTypes">
                 <option value="none" disabled="" selected="">Choose One Service</option>
                 <optgroup label="Cleaning"><option value="40">Warehouse Cleaning</option></optgroup>
                 <optgroup label="Extraction"><option value="38">Concrete extraction</option></optgroup>

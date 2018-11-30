@@ -11,7 +11,7 @@
         <div class="col-md-4 categoryList">
                 <h5>Tag </h5>
                 <div class="form-group">
-                    <select class="form-control" v-model="value"  id="editServTypes" onchange="getServiceRelated(this.form)">
+                    <select class="form-control" v-model="selected"  id="editServTypes">
                         <option value="none" disabled selected>Choose One Tag</option>
                         <option id="addNewTag" value="addNewTag">New Tag</option>
                         <option value="1">Tubing</option>
@@ -29,6 +29,13 @@
  </div>
 </template>
 <script>
+export default {
+  data() {
+    return {
+      selected: ""
+    };
+  }
+};
 </script>
 <style>
 </style>

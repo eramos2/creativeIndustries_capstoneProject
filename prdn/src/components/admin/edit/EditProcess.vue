@@ -11,7 +11,7 @@
             <div class="col-md-6 categoryList">
                 <h5>Processes</h5>
                 <div>
-                    <select class="form-control" id="editProcTypes" onchange="getProcessRelated(this.form)">
+                    <select class="form-control" id="editProcTypes" >
                     <option value="none" disabled="" selected="">Choose One Process</option>
                     <optgroup label="Engraving"><option value="7">CNC Engraving</option>
                     <option value="6">Laser Engraving</option>
