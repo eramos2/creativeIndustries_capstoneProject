@@ -131,10 +131,10 @@ export default {
             console.log("good morning");
             console.log(response);
             this.reloadResources();
-            alert("Edit Success");
+            alert("Edit Process Success");
             this.okModal();
           } else {
-            alert("Try Again edit failed");
+            alert("Try Again edit process failed");
           }
         });
     },

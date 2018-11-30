@@ -1,5 +1,6 @@
 <template>
-<div class="container contentContainer addMarginTop">
+<form @submit.prevent="validateBeforeSubmit"> 
+<div class="container listContainer">
 
     <div class="row">
 
@@ -46,7 +47,7 @@
         </div>
     </div>
 </div>
-    
+</form>
 </template>
 <script>
 </script>

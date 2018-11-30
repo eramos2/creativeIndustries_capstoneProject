@@ -11,7 +11,7 @@
         <div class="col-md-4 categoryList">
                 <h4>Companies</h4>
                 <div class="form-group">
-                    <select class="form-control" v-model="value"  id="selectCompany">
+                    <select class="form-control" v-model="selected"  id="selectCompany">
                         <option value="none" disabled selected>Choose One Tag</option>
                         <option id="addNewTag" value="addNewTag">New Company</option>
                         <option value="1">Company #1</option>
@@ -29,6 +29,13 @@
  </div>
 </template>
 <script>
+export default {
+  data() {
+    return {
+      selected: ""
+    };
+  }
+};
 </script>
 <style>
 </style>

@@ -1,6 +1,7 @@
 <template>
+<form @submit.prevent="validateBeforeSubmit"> 
              <!-- Single Tab Content Start -->
-<div class="container contentContainer addMarginTop">
+<div class="container listContainer">
     <div class="row">
         <div class="col-md-12 cpl-md-offset-4" id="topRow">
 
@@ -91,7 +92,7 @@
         </div>
     </div>
 </div>
-
+</form>
 </template>
                                
 <script>

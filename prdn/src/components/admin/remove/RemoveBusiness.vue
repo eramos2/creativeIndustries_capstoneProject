@@ -1,5 +1,5 @@
 <template>
-<div class="container contentContainer addMarginTop">
+<div class="container">
 
     <div class="row">
 
@@ -10,6 +10,7 @@
             <p class="lead">Select the business you want to remove from the system.</p>
 
             <div class="row">
+                <div style="overflow-y: scroll; height:400px;">
                 <table class="table table-striped table-hover tableContainer" id="removBsnTable">
                     <thead>
                     <tr><th></th>
@@ -39,6 +40,7 @@
                     <td>Tamcor</td><td>All our products are manufactured either in Galvanized or Stainless Steel of the highest quality, from Steel Mills that have been loyal suppliers since 1973. To ensure promptness, TAMCOR has on it’s premises over 1,000,000 lbs. of steel (Galvanized and Stainless).</td><td>Trujillo Alto</td></tr><tr><td id="38"><input type="checkbox" v-model="rbids" value= "38"></td><td>Valcor</td>
                     <td>VALCOR está a la vanguardia con las últimas innovaciones arquitectónicas hechas en aluminio y cristal. Es el único proveedor en Puerto Rico de estructuras hechas a la medida y cuenta con la capacidad de satisfacer pedidos específicos - algo conveniente para desarrolladores, arquitectos y contratistas. Fachadas y conceptos tan impresionantes como las del Centro Comprensivo de Cáncer de Puerto Rico, y del Tribunal Supremo, se fabricaron en VALCOR. Tanto para la restauración de estructuras antiguas, como en la aplicación de innovadoras modalidades de la construcción contemporánea, esta empresa puertorriqueña es un recurso valioso.</td><td>Gurabo</td></tr></tbody>
                 </table>
+                </div>
             </div>
                 <div class="col-md-4 col-sm-6 pull-right">
                     <p>
@@ -67,7 +69,6 @@
         </div>
     </div>
 </div>
-    
 </template>
 <script>
 export default {

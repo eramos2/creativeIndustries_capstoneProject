@@ -89,7 +89,7 @@ export default {
             .dispatch("loginUser", data)
             .then(response => {
               console.log(response);
-              if (response.resp.length > 0) {
+              if (response.length > 0) {
                 return { modalShow: true, modalShowCred: false };
               } else {
                 return { modalShow: false, modalShowCred: true };

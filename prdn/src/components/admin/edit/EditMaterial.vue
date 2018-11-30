@@ -129,13 +129,19 @@ export default {
       this.$store
         .dispatch("changeSubResourceConnection", data)
         .then(response => {
-          console.log("good morning");
-          console.log(response);
-          this.reloadResources();
+          if (response.length > 0) {
+            console.log("good morning");
+            console.log(response);
+            this.reloadResources();
+            alert("Edit MaterialSuccess");
+            this.okModal();
+          } else {
+            alert("Try Again edit material failed");
+          }
         });
     },
     okModal() {
-      this.$router.replace("/");
+      this.$router.replace("/admin/edit");
     },
     onChange() {
       let data = { category: "mat", subcategoryId: this.selected };
