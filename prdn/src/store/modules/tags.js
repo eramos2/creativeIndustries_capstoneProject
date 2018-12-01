@@ -24,7 +24,7 @@ const getters = {
 
 const mutations = {
 
-    /**Set state.tags to the data received from the http call */
+    /** set state.tags to the data received data from the http call */
     setTags: (state, data) => {
         state.tags = data;
         state.tags = { ...state.tags

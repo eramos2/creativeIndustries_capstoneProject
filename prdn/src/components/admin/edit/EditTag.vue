@@ -6,26 +6,29 @@
     </div>
 
     <div id="error"></div>
+    <div class="row">
     <!-- </form> -->
-        <div class="form-group">
-                    <select class="form-control" v-model="selected" id="tagTypes">
+        <div class="form-group col-md-6">
+                    <select class="form-control" v-model="selected" @change="onChange" id="tagTypes">
                         <option value="none" disabled selected>Tags</option>
                        
 
                         <!-- Tag Categories -->
                         <option 
+                        
                         v-for="(tagCategory,key) in tagCat"
                         :key="key"
-                        :tagCategory="tagCategory.tagCategory"
+                        
                         :value="tagCategory.tagId"
                         >
                         {{tagCategory.tagName}}
                         </option>
                     </select>
                 </div>
+    </div>
                     <h5>Tag - Name</h5>
                 <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
+                    <div class="input-group input_fields_wrap subCatField col-md-6">
                         <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Insert new name for Tag" >
                        <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
                         <!-- <button>Add</button> -->
@@ -65,33 +68,50 @@ export default {
       e.preventDefault();
       let data = {
         name: this.tagName,
-        category: this.value
+        tagId: this.selected
       };
 
       if (this.selected == "") {
         alert("Select a Tag");
-      } else this.$store.dispatch("addNewTag", data);
-      then(response => {
-        if (response.length > 0) {
-          this.reloadResources();
-          return { modalShow: true, modalShowCred: false };
-        } else {
-          return { modalShow: false, modalShowCred: true };
-        }
-      }).then(response => {
-        this.modalShow = response.modalShow;
-        this.modalShowCred = response.modalShowCred;
-      });
+      } else
+        this.$store
+          .dispatch("editTag", data)
+          .then(response => {
+            console.log(response);
+            if (response >= 0) {
+              this.$store.dispatch("setTags");
+              console.log("wowow");
+              return { modalShow: true, modalShowCred: false };
+            } else {
+              return { modalShow: false, modalShowCred: true };
+            }
+          })
+          .then(response => {
+            this.modalShow = response.modalShow;
+            this.modalShowCred = response.modalShowCred;
+          });
       this.$validator.reset();
+      this.tagName = "";
+      this.selected = "";
       return;
     },
     okModal() {
       this.$router.replace("/admin/edit");
     },
-    reloadResources() {
-      this.$store.dispatch("setResources");
+    reloadTags() {
+      this.$store.dispatch("setTags");
     },
-    onChange() {}
+    onChange() {
+      console.log(this.selected);
+      let tags = this.tagCat;
+      for (let tagKey in tags) {
+        if (tags[tagKey].tagId == this.selected) {
+          this.tagName = tags[tagKey].tagName;
+          break;
+        }
+      }
+      console.log(this.tagName);
+    }
   },
   computed: {
     tagCat() {
