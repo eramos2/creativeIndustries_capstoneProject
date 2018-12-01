@@ -9,10 +9,19 @@
            
                 <div class="input-group">
                     <!-- <span class="input-group-addon">@</span> -->
-                    <input type="email" name="recPassEmail" class="form-control" v-validate="'required|email'" id="recPassEmail" v-model="recPassEmail" data-vv-delay="10000" placeholder="Enter your email"/>
+                    <input type="email" name="recPassEmail" class="form-control" v-validate="'required|email'" id="recPassEmail" v-model="email" data-vv-delay="1000" placeholder="Enter your email"/>
                     <p class="text-danger" v-if="errors.has('recPassEmail')">{{ errors.first('recPassEmail') }}</p>
                 </div>
-                <button :disabled="errors.any()"  class="btn btn-default wide" type="submit"  onClick="checkRecPassEmail(this.form)">Send</button>
+                <button :disabled="errors.any()"  class="btn btn-default wide" type="submit">Send</button>
+                  <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
+                  <p class="my-4">{{email}}</p>
+                  </b-modal>
+                  <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                  <p class="my-4">Try Again</p>
+                  </b-modal>
+                  <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                 <p class="my-4">An account with this email already exist</p>
+                  </b-modal>   
                            
             </form>
 
@@ -43,25 +52,45 @@ Validator.localize(dictionary);
 
 export default {
   data: () => ({
-    recPassEmail: ""
+    recPassEmail: "",
+    email: "",
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false
   }),
   methods: {
-    validateBeforeSubmit() {
+    validateBeforeSubmit: function(e) {
+      e.preventDefault();
+
       this.$validator.validateAll().then(result => {
         if (result) {
-          alert("Email Sent");
-          this.test();
+          let data = {
+            email: this.email
+          };
+          this.$store
+            .dispatch("sendUserPasscode", data)
+            .then(response => {
+              console.log(response);
+              if (response > 0) {
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                return { modalShow: false, modalShowCred: true };
+              }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
+            });
+          this.$validator.reset();
+          this.email = "";
           return;
+        } else {
+          this.modalShowFail = true;
         }
-
-        alert("Empty Field(s)");
       });
     },
-    test() {
-      let data = {
-        recPassEmail: this.recPassEmail
-      };
-      console.log(data);
+    okModal() {
+      this.$router.replace("/");
     }
   }
 };

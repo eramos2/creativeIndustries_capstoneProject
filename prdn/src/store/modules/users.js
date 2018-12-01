@@ -240,7 +240,7 @@ const actions = {
     sendUserPasscode: (context, data) => {
         let email = data.email;
 
-        Vue.http
+        return Vue.http
             .get(
                 serverfile, {
                     params: {
@@ -265,7 +265,7 @@ const actions = {
                     /** 
                      * Http call to send email to recover user password
                      */
-                    Vue.http
+                    return Vue.http
                         .get(
                             "email.php", {
                                 params: {
@@ -280,18 +280,21 @@ const actions = {
                             return response.json();
                         })
                         .then(data => {
-                            //console.log("User recover pass email sent");
-                            //console.log(data);
+                            console.log("User recover pass email sent");
+                            console.log(data);
                             if (data.resp[0].number == 1) {
                                 //console.log("Sent recover email sucess, commiting state")
                                 context.commit('recoveryUserEmail', true);
+                                return 1;
                             } else
                                 //console.log("Email sent failed");
                                 context.commit('recoveryUserEmail', false);
+                            return 0;
                         });
                 } else {
                     //console.log("Email is not in db");
                     context.commit('recoveryUserEmail', false);
+                    return -1;
                 }
             });
     },
