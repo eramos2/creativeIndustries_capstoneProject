@@ -1,4 +1,5 @@
 <template>
+ <form @submit.prevent="validateBeforeSubmit">  
     <div class="container">
     <form>
         <div class="container adminRemove marginTop">
@@ -11,58 +12,79 @@
         </div>
 
         <div class="container">
-            <form class="form-horizontal formPadding" role="form">
-                <div class="form-group">
-                    <!-- <label for="tags" class="col-sm-2 control-label">Search</label> -->
-                    <div class="col-sm-6 input-group">
-                        <input type="search" class="form-control" id="tags" placeholder="Search"/>
-                    </div>
-                </div>
-                <div class="form-group" id="adminInfoToRemove" style="display: none">
-                    <label class="col-sm-2 control-label">Full Name</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static" id="removeAdminName"></p>
-                    </div>
-                    <label class="col-sm-2 control-label">E-mail</label>
-                    <div class="col-sm-10">
-                        <p class="form-control-static" id="removeAdminEmail"></p>
-                    </div>
-                </div>
-            </form>
+         <div class="form-group">
+            <div :class="{'form-group': true, 'has-error': errors.has('adminEmail') }">
+            <h4>Administrator Email</h4>
+            <input name="adminEmail" v-validate="'required|email'"  type="email" id="adminEmail" v-model="adminEmail"  placeholder="Email address"  class="form-control"  >
+            <p class="text-danger" v-if="errors.has('adminEmail')">{{ errors.first('adminEmail') }}</p>
+            </div>
+         </div>
         </div>
 
 
         <div class="col-md-4 col-sm-6 pull-right">
-            <p>
-                <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                        data-target="#basicModal">Remove</button>
-                <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
+           
 
                 <button  type="submit">Remove</button>
+                <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Removed">
+                <p class="my-4">{{email}}</p>
+                </b-modal>
+                <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                <p class="my-4">Try Again</p>
+                </b-modal>
+                <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                <p class="my-4">Remove failed</p>
+                 </b-modal>
 
-            <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;
-                                    </span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Removal Confirmation</h4>
-                        </div>
-                        <div class="modal-body">
-                            <h3>Are you sure you want to remove the selected administrator?</h3>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" onclick="getRemvAdmin()">Save changes</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </form>
     </div>
+    </form>
 </template>
 <script>
+import { Validator } from "vee-validate";
+export default {
+  data: () => ({
+    modalShow: false,
+    modalShowFail: false,
+    modalShowCred: false,
+    email: ""
+  }),
+  methods: {
+    validateBeforeSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          let data = {
+            email: this.email
+          };
+          this.$store
+            .dispatch("removeAdministrator", data)
+            .then(response => {
+              console.log("This is the response");
+              console.log(response);
+              if (response > 0) {
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                return { modalShow: false, modalShowCred: true };
+              }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
+              this.$validator.reset();
+            });
+          this.$validator.reset();
+          return;
+        } else {
+          this.modalShowFail = true;
+        }
+      });
+    },
+    okModal() {
+      this.$router.replace("/");
+    }
+  }
+};
 </script>
 <style>
 </style>
