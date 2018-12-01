@@ -38,8 +38,7 @@
                         data-target="#basicModal">Remove</button>
                 <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
 
-                <button  type="submit">Submit</button>
-                <button  type="submit">Cancel</button>
+                <button  type="submit">Remove</button>
 
             <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                 <div class="modal-dialog">

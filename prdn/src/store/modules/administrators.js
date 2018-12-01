@@ -246,7 +246,7 @@ const actions = {
      */
     addNewAdmin: (context, data) => {
 
-        Vue.http.post(
+        return Vue.http.post(
             serverfile, {
                 aemail: data.email,
                 apass: data.pass,
@@ -254,7 +254,8 @@ const actions = {
                 alname: data.lastName,
                 aoccu: data.occupation,
                 abdate: data.birthday,
-                acity: data.city
+                acity: data.city,
+                tp: '2'   //regular admin type 
             }, {
                 emulateJSON: true,
                 headers: {
@@ -267,9 +268,11 @@ const actions = {
                 }
             }
         ).then(response => {
+            console.log(response);
             return response.json();
         }).then(data => {
             console.log(data.resp);
+            return data.resp[0].number;
             //context.commit('addNewAdmin', data);
         });
     },

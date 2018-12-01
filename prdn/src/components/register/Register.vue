@@ -129,6 +129,10 @@ const dictionary = {
         max:
           " The confirm password field may not be greater than 10 characters.",
         confirmed: "The confirmed password confirmation does not match."
+      },
+      birthdate: {
+        max: "The birthdate field must be in the format: YYYY-MM-DD. ",
+        min: "The birthdate field must be in the format: YYYY-MM-DD. "
       }
     }
   }
