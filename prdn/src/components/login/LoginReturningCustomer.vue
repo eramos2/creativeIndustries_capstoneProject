@@ -45,7 +45,7 @@
 
                                               <a class="pull-left" href="forgot-password.html">Forgot password?</a>
                                           
-                                             <a class="pull-right" onclick="loadPage('changePassword')">Have a passcode?</a></p> 
+                                             <a class="pull-right" type="submit" @click="havePasscode">Have a passcode?</a></p> 
 
                                         </div>
                                         </form>
@@ -108,6 +108,9 @@ export default {
     },
     okModal() {
       this.$router.replace("/");
+    },
+    havePasscode() {
+      this.$router.replace("/login/recoverpassword");
     },
     login(email, pass) {
       console.log(email + pass);

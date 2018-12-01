@@ -2,7 +2,7 @@
     <form @submit.prevent="validateBeforeSubmit">  
                           
                                 <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="manageadmin" role="tabpanel">
+                                <div class="" id="manageadmin" role="tabpanel">
                                     <div class="myaccount-content">
                                         <h3>Add Administrator</h3>
 
@@ -44,7 +44,7 @@
                                                  <div class="col-lg-6">
                                                 <div class="single-input-item">
                                                     <label for="occupation" class="required">Occupation</label>
-                                                    <input name ="occupation" v-validate="'required|max:20'" type="text" class="form-control" id="city" placeholder="Occupation">
+                                                    <input name ="occupation" v-validate="'required|max:20'" type="text" class="form-control" id="occupation" placeholder="Occupation">
                                                     <p class="text-danger" v-if="errors.has('occupation')">{{ errors.first('occupation') }}</p>
                                                 </div>
                                                 </div>
@@ -66,7 +66,7 @@
                                                             <div class="single-input-item">
                                                                 <label for="new-pwd" class="required">New
                                                                     Password</label>
-                                                                <input name ="password"  v-validate="'required|min:8|max:10'" type="password" class="form-control" id="password" placeholder="Password" ref="password">
+                                                                <input name ="password"  v-validate="'required|min:8|max:15'" type="password" class="form-control" id="password" placeholder="Password" ref="password">
                                                                 <p class="text-danger" v-if="errors.has('password')">{{ errors.first('password') }}</p>
                                                             </div>
                                                         </div>

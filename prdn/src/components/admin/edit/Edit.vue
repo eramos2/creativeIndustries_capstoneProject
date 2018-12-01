@@ -260,6 +260,16 @@
         <editservices></editservices>
                     <edittag></edittag>
 
+
+              
+                    
+                    
+                     <manageadmin  v-show="displayManageAdmin"></manageadmin>
+                    
+
+                   
+
+
                                     </form>
                                     </div>
                                 </div>
@@ -289,6 +299,7 @@ import EditProcess from "./EditProcess.vue";
 import EditServices from "./EditServices.vue";
 import CompanySelector from "./CompanySelector.vue";
 import EditTag from "./EditTag.vue";
+import Manageadmin from "../../superadmin/manageadmin/Manageadmin.vue";
 import Vue from "vue";
 import FileUpload from "v-file-upload";
 import { thisTypeAnnotation } from "babel-types";
@@ -299,7 +310,8 @@ export default {
     editprocess: EditProcess,
     editservices: EditServices,
     edittag: EditTag,
-    companyselector: CompanySelector
+    companyselector: CompanySelector,
+    manageadmin: Manageadmin
   },
   data: () => ({
     modalShow: false,
@@ -490,6 +502,10 @@ export default {
     },
     tags() {
       return this.$store.state.tags.categories;
+    },
+    displayManageAdmin() {
+      console.log(this.$cookie.get("userType"));
+      return this.$cookie.get("userType") == "admin";
     }
   }
 };

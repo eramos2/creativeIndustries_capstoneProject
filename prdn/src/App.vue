@@ -15,7 +15,7 @@
     </header-bar>
     
     <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
-    <footer style="padding:2rem;">
+    <footer id="app-footer" style="padding:2rem;">
       <button
             class="btn btn-primary btn-margin"
             v-show="!authenticated && !adminAuthenticated"
@@ -29,6 +29,20 @@
             @click="logout()">
               Log Out
           </button>
+          <!-- CONTACT US -->
+          <li class="muted credit footerContainer pull-right hidden-sm hidden-xs" 
+          style="cursor: pointer;">
+          <a href="mailto:icom2018capstone@gmail.com?subject=PR Design Network">Contact Us</a></li>
+          <!-- ADMINISTRATOR LOGIN -->
+          <li class="muted credit footerContainer pull-right hidden-sm hidden-xs"
+           id="adminLogInOpt" onclick="loadPage('loginAdmin')">
+           <a>Administrator Log In</a></li>
+           <!-- ABOUT US -->
+           <li class="muted credit footerContainer pull-right" 
+           onclick="loadPage('aboutUs')" style="cursor: pointer;"><a>About Us</a></li>
+           <!-- COPYRIGHT -->
+           <li class="muted credit footerContainer pull-left" 
+           style="cursor: pointer;">Copyright @PRDN</li>
           <button
             class="btn btn-primary btn-margin"
             v-show="!authenticated && !adminAuthenticated"
@@ -382,7 +396,11 @@ export default {
 
 <style >
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
-
+/* #app-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+} */
 html,
 body {
   height: 100%;
