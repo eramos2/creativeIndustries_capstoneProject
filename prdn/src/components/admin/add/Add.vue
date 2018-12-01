@@ -255,6 +255,8 @@
 <addnewservice></addnewservice>
 <addnewtag></addnewtag>
 
+                     <manageadmin  v-show="adminAuthenticated"></manageadmin>
+
 
 
                                     </div>
@@ -286,17 +288,20 @@ import MaterialCheckbox from "./MaterialCheckbox.vue";
 import AddNewMaterial from "./AddNewMaterial.vue";
 import AddNewProcess from "./AddNewProcess.vue";
 import AddNewService from "./AddNewService.vue";
+import Manageadmin from "../../superadmin/manageadmin/Manageadmin.vue";
 import AddNewTag from "./AddNewTag.vue";
 import Vue from "vue";
 import FileUpload from "v-file-upload";
 Vue.use(FileUpload);
 export default {
+  props: ["adminAuthenticated"],
   components: {
     addnewmaterial: AddNewMaterial,
     addnewprocess: AddNewProcess,
     addnewservice: AddNewService,
     addnewtag: AddNewTag,
-    materialCheckbox: MaterialCheckbox
+    materialCheckbox: MaterialCheckbox,
+    manageadmin: Manageadmin
   },
   computed: {
     materials() {

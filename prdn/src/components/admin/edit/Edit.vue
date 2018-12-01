@@ -264,7 +264,6 @@
               
                     
                     
-                     <manageadmin  v-show="displayManageAdmin"></manageadmin>
                     
 
                    
@@ -299,20 +298,18 @@ import EditProcess from "./EditProcess.vue";
 import EditServices from "./EditServices.vue";
 import CompanySelector from "./CompanySelector.vue";
 import EditTag from "./EditTag.vue";
-import Manageadmin from "../../superadmin/manageadmin/Manageadmin.vue";
+
 import Vue from "vue";
 import FileUpload from "v-file-upload";
 import { thisTypeAnnotation } from "babel-types";
 Vue.use(FileUpload);
 export default {
-  props: ["adminAuthenticated"],
   components: {
     editmaterial: EditMaterial,
     editprocess: EditProcess,
     editservices: EditServices,
     edittag: EditTag,
-    companyselector: CompanySelector,
-    manageadmin: Manageadmin
+    companyselector: CompanySelector
   },
   data: () => ({
     modalShow: false,
