@@ -11,6 +11,7 @@
     <header-bar
       :resources="resources"
       :authenticated="authenticated"
+      :adminAuthenticated="adminAuthenticated"
     >
     </header-bar>
     

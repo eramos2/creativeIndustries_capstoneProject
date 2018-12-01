@@ -40,7 +40,7 @@
                                                   tag="button" 
                                                   class="btn-link"
                                                   active-class="active"
-                                                  v-if="!authenticated"
+                                                  v-if="!authenticated && !adminAuthenticated"
                                                 >
                                                 <a>Login</a>
                                                 </router-link>
@@ -49,12 +49,17 @@
                                                   tag="button" 
                                                   active-class="active"
                                                   class="btn-link"
-                                                  v-if="!authenticated"
+                                                  v-if="!authenticated && !adminAuthenticated"
                                                 >
                                                 <a>Register</a>
                                                </router-link>
                                                 
-                                                <button v-if="authenticated" class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button 
+                                                  v-if="authenticated || adminAuthenticated" 
+                                                  class="btn-link dropdown-toggle" 
+                                                  data-toggle="dropdown" 
+                                                  aria-haspopup="true" 
+                                                  aria-expanded="false">
                                                    My Account <i class="fa fa-angle-down"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
@@ -75,6 +80,7 @@
                                                         >
                                                         <a>Login</a>
                                                         </router-link> -->
+                                                        <!-- Start User Options -->
                                                         <router-link 
                                                           to="/user" 
                                                           tag="li" 
@@ -98,13 +104,63 @@
                                                           v-if="authenticated"
                                                         >
                                                         <a>Submit Business</a>
+
                                                         </router-link>
+                                                        <!-- End User Options -->
+                                                        <!-- Start Admins Options -->
+                                                        <router-link 
+                                                          to="/admin" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="adminAuthenticated"
+                                                        >
+                                                        <a>Account Details</a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/admin/add" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="adminAuthenticated"
+                                                        >
+                                                        <a>Add Actions</a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/admin/edit" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="adminAuthenticated"
+                                                        >
+                                                        <a>Edit Actions </a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/admin/remove" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="adminAuthenticated"
+                                                        >
+                                                        <a>Remove Actions </a>
+                                                        </router-link>
+                                                        <router-link 
+                                                          to="/admin/requests" 
+                                                          tag="li" 
+                                                          active-class="active"
+                                                          v-if="adminAuthenticated"
+                                                        >
+                                                        <a>Pending Requests</a>
+                                                        </router-link>
+                                                        <!-- End Admin Options -->
                                                     </ul>
                                                 </div>
                                                 <button
                                                   class="btn-link"
                                                   v-if="authenticated"
                                                   @click="logout()">
+                                                    <a>Log Out</a>
+                                                </button>
+                                                <button
+                                                  class="btn-link"
+                                                  v-if="adminAuthenticated"
+                                                  @click="adminLogout()">
                                                     <a>Log Out</a>
                                                 </button>
                                             </div>
@@ -138,7 +194,7 @@
 import "popper.js";
 
 export default {
-  props: ["authenticated"],
+  props: ["authenticated", "adminAuthenticated"],
   methods: {
     logout() {
       // To delete a cookie use
@@ -153,6 +209,16 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.users.userFlags.loggedIn;
+    },
+    adminLogout() {
+      // To delete a cookie use
+      this.$cookie.delete("userId");
+      this.$cookie.delete("userType");
+      this.$cookie.delete("adminType");
+      this.$store.dispatch("adminType");
+      //this.$store.state.users.userFlags.loggedIn = false;
+      console.log("Admin Logged Out");
+      console.log(this.$store.state.administrators.adminFlags.adminLoggedIn);
     }
   }
 };
