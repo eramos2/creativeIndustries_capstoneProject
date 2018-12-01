@@ -340,7 +340,8 @@ export default {
             logo: this.logo,
             materials: this.getIdsArray("materials"),
             services: this.getIdsArray("services"),
-            processes: this.getIdsArray("processes")
+            processes: this.getIdsArray("processes"),
+            tags: this.getIdsArray("tags")
           };
           console.log(data);
           this.$store
@@ -349,6 +350,7 @@ export default {
               console.log("Helooowwe edit business info");
               console.log(response);
               if (response >= 0) {
+                this.reloadBusinesses();
                 //Edit Business successfully, set the modal booleans
                 return { modalShow: true, modalShowCred: false };
               } else {
@@ -385,12 +387,20 @@ export default {
           servArr.push(["", this.ssids[id]]);
         }
         return servArr;
-      } else {
+      } else if (subresource == "processes") {
         let procArr = [];
         for (let id in this.spids) {
           procArr.push(["", this.spids[id]]);
         }
         return procArr;
+      } else {
+        let tagArr = [];
+        for (let id of this.tids) {
+          console.log(this.tids);
+          console.log(id);
+          tagArr.push([id]);
+        }
+        return tagArr;
       }
     },
     getIds(resource, subresourceId) {
@@ -427,11 +437,10 @@ export default {
           this.website = business.website;
           this.description = business.description;
           this.logo = "";
-
           this.spids = this.getIds(business.subprocesses, "subProcessId");
           this.smids = this.getIds(business.submaterials, "subMaterialId");
           this.ssids = this.getIds(business.subservices, "subServiceId");
-          this.tids = "";
+          this.tids = this.getIds(business.tags, "tagId");
         } else {
           alert("There was an error please try again");
         }
@@ -461,6 +470,9 @@ export default {
       this.website = "";
       this.description = "";
       console.log(data);
+    },
+    reloadBusinesses() {
+      this.$store.dispatch("setBusinesses");
     }
   },
   computed: {

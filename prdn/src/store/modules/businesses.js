@@ -2,6 +2,9 @@ import Vue from 'vue';
 import {
     resolve
 } from 'path';
+import {
+    stat
+} from 'fs';
 let serverfile = "prds.php";
 let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
@@ -344,6 +347,15 @@ const mutations = {
             ...state.businessesFlags
         }
         console.log(state.businessesFlags);
+    },
+    /**      
+     * Set currentBusiness tags with given data
+     */
+    setCurrentBusinessTags: (state, data) => {
+        state.currentBusiness['tags'] = data;
+
+        state.currentBusiness = { ...state.currentBusiness
+        }
     }
 }
 
@@ -506,7 +518,25 @@ const actions = {
                                             }).then(() => {
                                                 //console.log("Set CurrentBusinessSubCategories");
                                                 context.commit('setCurrentBusinessSubCategories');
-                                                return 1;
+                                            }).then(() => {
+                                                return Vue.http.get("prds-tags.php", {
+                                                    params: {
+                                                        endpoint: 'tags',
+                                                        code: '1', //Get all tags from a company with their respective endorsements count
+                                                        cname: state.currentBusiness.companyName
+                                                    }
+                                                }).then(response => {
+                                                    console.log(
+                                                        "company tags"
+                                                    );
+                                                    console.log(response);
+                                                    return response.json();
+                                                }).then(data => {
+                                                    console.log("Company tags");
+                                                    console.log(data);
+                                                    context.commit('setCurrentBusinessTags', data.resp);
+                                                    return 1;
+                                                });
                                             });
                                     });
                             });
@@ -567,6 +597,7 @@ const actions = {
      */
     editBusinessInfo: (context, data) => {
         console.log("I'm modifying company " + data.companyId);
+        console.log(data);
         let geocoder = new google.maps.Geocoder();
         let addressLatLong = data.address + ', ' + data.city + ', ' + data.country;
 
@@ -593,6 +624,7 @@ const actions = {
                     spids: data.processes, //subprocesses id array
                     smids: data.materials, //submaterials id array
                     ssids: data.services, //subservices id array
+                    tids: data.tags, //tags id array
                     line: data.address,
                     city: data.city,
                     count: data.country,

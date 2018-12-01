@@ -6,7 +6,8 @@ const state = {
     categories: {},
     tags: {},
     tagFlags: {
-        addNewTag: ""
+        addNewTag: "",
+        editTag: ""
     }
 };
 
@@ -63,6 +64,12 @@ const mutations = {
 
         state.tagFlags = { ...state.tagFlags
         }
+    },
+    editTag: (state, data) => {
+        state.tagFlags["ediTag"] = data[0].number
+
+        state.tagFlags = { ...state.tagFlags
+        }
     }
 };
 
@@ -112,6 +119,34 @@ const actions = {
                 console.log("Add new tag!");
                 console.log(data.resp[0].number);
                 context.commit('addNewTag', data.resp);
+                return data.resp[0].number;
+            });
+    },
+    /** Call to edit tag name, Expects tagId and new tagName */
+    editTag: (context, data) => {
+        return Vue.http
+            .post(serverfile, {
+                name: data.name,
+                tagId: data.tagId
+            }, {
+                emulateJSON: true,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                params: {
+                    endpoint: "tags",
+                    code: "1", //add new tag
+                    du: true
+                }
+
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log("Add new tag!");
+                console.log(data.resp[0].number);
+                context.commit('editTag', data.resp);
                 return data.resp[0].number;
             });
     }
