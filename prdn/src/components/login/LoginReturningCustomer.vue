@@ -39,7 +39,7 @@
                                              <p class="my-4">Try Again</p>
                                                </b-modal>
                                                <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                                             <p class="my-4">Email/password combination failed</p>
+                                             <p class="my-4">An account with this email already exist</p>
                                                </b-modal>
                                             <p class="lost-password">
 

@@ -100,6 +100,15 @@
             <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
                 <p>
                      <button>Edit Services</button>
+                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
+                      <p class="my-4">The Service was edited.</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                      <p class="my-4">Try Again</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                      <p class="my-4">Select a Service</p>
+                      </b-modal>
                 </p>
             </div>
         </div>
@@ -111,7 +120,14 @@
 <script>
 export default {
   data() {
-    return { spids: [], smids: [], selected: "" };
+    return {
+      spids: [],
+      smids: [],
+      selected: "",
+      modalShow: false,
+      modalShowFail: false,
+      modalShowCred: false
+    };
   },
   methods: {
     validateBeforeSubmit: function(e) {
@@ -126,15 +142,18 @@ export default {
         .dispatch("changeSubResourceConnection", data)
         .then(response => {
           if (response.length > 0) {
-            console.log("good morning");
-            console.log(response);
             this.reloadResources();
-            alert("Edit Service Success");
-            this.okModal();
+            return { modalShow: true, modalShowCred: false };
           } else {
-            alert("Try Again edit service failed");
+            return { modalShow: false, modalShowCred: true };
           }
+        })
+        .then(response => {
+          this.modalShow = response.modalShow;
+          this.modalShowCred = response.modalShowCred;
         });
+      this.$validator.reset();
+      return;
     },
     okModal() {
       this.$router.replace("/admin/edit");
