@@ -361,7 +361,7 @@ const actions = {
             };
         }
 
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: prms
             })
@@ -371,6 +371,7 @@ const actions = {
             .then(data => {
                 //console.log(data.resp[0].number);
                 context.commit('removeSubResource', data.resp);
+                return data.resp[0].number;
             });
     },
     /** 

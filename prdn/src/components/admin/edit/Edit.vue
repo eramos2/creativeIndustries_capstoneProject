@@ -264,7 +264,7 @@
               
                     
                     
-                     <manageadmin  v-show="displayManageAdmin"></manageadmin>
+                     <manageadmin  v-show="adminAuthenticated"></manageadmin>
                     
 
                    

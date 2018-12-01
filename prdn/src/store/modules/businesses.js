@@ -874,27 +874,25 @@ const actions = {
         state.businessesFlags['removeBusiness'] = "";
         console.log("Removing business with id " + data.companyId);
 
-        var dataToSend = {
-            endpoint: 'company',
-            code: '6',
-            du: true,
-            cid: data.companyId
-        };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                context.commit("removeBusiness", data.resp);
+        return Vue.http.get(serverfile, {
+            headers: {
+                "Content-Type": "application/json"
             },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+            params: {
+                endpoint: 'company',
+                code: '6',
+                du: true,
+                cid: data.companyId
             }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            context.commit("removeBusiness", data.resp);
+            return data.resp[0].number;
         });
+
     }
 }
 

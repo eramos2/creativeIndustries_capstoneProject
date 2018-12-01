@@ -1,56 +1,107 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit"> 
-<div class="container listContainer">
-
-    <div class="row">
-
-        <div class="col-md-12 cpl-md-offset-4" id="topRow">
-
-            <h2><span class="glyphicon glyphicon-minus-sign addMarginTop"></span> Remove Tags </h2>
-
-            <p class="lead">Select the tags you want to remove from the system.</p>
-
-            <!-- <form> -->
-                <div>
-
-                <ul class="list-group categoryFont" id="serviceList">
-
-                </ul>
-                <div class="col-md-4 col-sm-6 pull-right">
-                    <p>
-                        <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                                data-target="#basicModal">Remove</button>
-                        <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button> -->
-                        <button>Remove</button>
-
-                    <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;
-                                    </span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Removal Confirmation</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h3>Are you sure you want to remove the selected tags?</h3>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" onClick="getRemvServChbox(this.form)">Save changes</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            <!-- </form> -->
-        </div>
+<form @submit.prevent="validateBeforeSubmit">
+    <div class="container listContainer">
+    <div class="row addMarginTop">
+        <h2><span class="glyphicon glyphicon-edit marginTop"></span> Remove Tag</h2>
     </div>
-</div>
+
+    <div id="error"></div>
+    <div class="row">
+    <!-- </form> -->
+        <div class="form-group col-md-6">
+                    <select class="form-control" v-model="selected" id="tagTypes">
+                        <option value="none" disabled selected>Tags</option>
+                       
+
+                        <!-- Tag Categories -->
+                        <option 
+                        
+                        v-for="(tagCategory,key) in tagCat"
+                        :key="key"
+                        
+                        :value="tagCategory.tagId"
+                        >
+                        {{tagCategory.tagName}}
+                        </option>
+                    </select>
+                </div>
+    </div>
+                 
+                <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
+                <p>
+                     <button type="submit">Remove Tag</button>
+                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
+                      <p class="my-4">The tag was removed.</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
+                      <p class="my-4">Select a tag</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
+                      <p class="my-4">remove failed</p>
+                      </b-modal>
+                </p>
+            </div>
+ </div>
 </form>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      selected: "",
+      modalShow: false,
+      modalShowFail: false,
+      modalShowCred: false
+    };
+  },
+  methods: {
+    validateBeforeSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          let data = {
+            tagId: this.selected
+          };
+          if (this.selected == "") {
+            this.modalShowFail = true;
+          } else {
+            this.$store
+              .dispatch("removeTag", data)
+              .then(response => {
+                console.log(response);
+                if (response > 0) {
+                  this.reloadTags();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(response => {
+                this.modalShow = response.modalShow;
+                this.modalShowCred = response.modalShowCred;
+              });
+            this.$validator.reset();
+            this.selected = "";
+            return;
+          }
+        } else {
+          //Invalid or Empty fields
+          this.modalShowFail = true;
+        }
+      });
+    },
+    okModal() {
+      this.$router.replace("/admin/remove");
+    },
+    reloadTags() {
+      this.$store.dispatch("setTags");
+    }
+  },
+  computed: {
+    tagCat() {
+      return this.$store.state.tags.tags;
+    }
+  }
+};
 </script>
 <style>
 </style>

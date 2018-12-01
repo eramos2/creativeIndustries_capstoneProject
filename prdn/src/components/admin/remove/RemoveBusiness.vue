@@ -1,4 +1,6 @@
 <template>
+<form @submit.prevent="validateBeforeSubmit">  
+
 <div class="container">
 
     <div class="row">
@@ -34,42 +36,81 @@
                 </table>
                 </div>
             </div>
-                <div class="col-md-4 col-sm-6 pull-right">
-                    <p>
-                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#basicModal">Remove</button>
-                        <button type="button" class="btn btn-default btn-lg" onclick="loadPage('controlPanel')">Cancel</button>
-
-                    </p><div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×
-                                    </span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Removal Confirmation</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h3>Are you sure you want to remove the selected business?</h3>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" onclick="getBusinessRemove()">Save changes</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                 <div class="row">
+            <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
+                <p>
+                     <button :disabled="errors.any()" type="submit">Remove</button>
+                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Company Removed:">
+                    <p class="my-4">removed business  success</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowCred"  id="modal-center" centered title="ERROR">
+                    <p class="my-4">remove business  failed</p>
+                      </b-modal>
+                      <b-modal ok-variant="danger" v-model="modalShowFail" id="modal-center" centered title="ERROR">
+                    <p class="my-4">Remove Business Failed Some fields are empty or invalid</p>
+                      </b-modal>
+                </p>
+            </div>
+        </div>
         </div>
     </div>
 </div>
+</form>
 </template>
 <script>
 export default {
   data() {
-    return { bid: "" };
+    return {
+      modalShow: false,
+      modalShowFail: false,
+      modalShowCred: false,
+      bid: ""
+    };
   },
   methods: {
+    validateBeforeSubmit() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          if (this.bid != "") {
+            let data = { companyId: this.bid };
+            console.log(data);
+
+            this.$store
+              .dispatch("removeBusiness", data)
+              .then(response => {
+                console.log("Helooowwe removed business info");
+                console.log(response);
+                if (response >= 0) {
+                  this.reloadBusinesses();
+
+                  //Removed Business successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when removing business
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            this.$validator.reset();
+            this.bid = "";
+            return;
+          } else {
+            //Invalid or Empty fields
+            this.modalShowFail = true;
+          }
+        } else {
+          this.modalShowFail = true;
+        }
+      });
+    },
     reloadBusinesses() {
       this.$store.dispatch("setBusinesses");
+    },
+    okModal() {
+      this.$router.replace("/admin/remove");
     }
   },
   computed: {
