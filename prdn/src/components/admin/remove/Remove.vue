@@ -12,6 +12,8 @@
           <removeprocess></removeprocess>
           <removeservices></removeservices>
           <removetags></removetags>
+
+          <removeadmin v-show="adminAuthenticated"></removeadmin>
     </div>
     </form>
 
@@ -22,13 +24,16 @@ import RemoveProcess from "./RemoveProcess.vue";
 import RemoveServices from "./RemoveServices";
 import RemoveBusiness from "./RemoveBusiness.vue";
 import RemoveTags from "./RemoveTags.vue";
+import Removeadmin from "../../superadmin/manageadmin/Removeadmin.vue";
 export default {
+  props: ["adminAuthenticated"],
   components: {
     removematerials: RemoveMaterials,
     removeprocess: RemoveProcess,
     removeservices: RemoveServices,
     removebusiness: RemoveBusiness,
-    removetags: RemoveTags
+    removetags: RemoveTags,
+    removeadmin: Removeadmin
   }
 };
 </script>

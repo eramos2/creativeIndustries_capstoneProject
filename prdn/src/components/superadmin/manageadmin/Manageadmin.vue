@@ -97,7 +97,7 @@
                                         <div class="row">
                                          </div>
 
-                                        <removeadmin></removeadmin>
+                                        
                                     </div>
                                 </div>
                                 <!-- Single Tab Content End -->
