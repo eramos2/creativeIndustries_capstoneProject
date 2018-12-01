@@ -294,6 +294,7 @@ import FileUpload from "v-file-upload";
 import { thisTypeAnnotation } from "babel-types";
 Vue.use(FileUpload);
 export default {
+  props: ["adminAuthenticated"],
   components: {
     editmaterial: EditMaterial,
     editprocess: EditProcess,

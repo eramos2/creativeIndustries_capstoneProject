@@ -28,6 +28,7 @@
                                  <i class="fa fa-star"></i> Add
                                 </router-link>
                                 <router-link 
+                                   
                                    to="/admin/edit"
                                    tag="a" 
                                    active-class="active"
@@ -64,7 +65,7 @@
                         <!-- My Account Tab Content Start -->
                         <div class="col-md-9 mt-15 mt-lg-0">
                             <div class="tab-content" id="myaccountContent">
-                              <router-view></router-view>
+                              <router-view :adminAuthenticated="adminAuthenticated"></router-view>
                                     <!-- <welcomeadmin></welcomeadmin> -->
                                     <!-- <add></add> -->
                                     <!-- <edit></edit> -->
@@ -101,6 +102,7 @@ import "bootstrap";
 
 export default {
   name: "app",
+  props: ["adminAuthenticated"],
   components: {
     // account: Account
     welcomeadmin: WelcomeAdmin,
