@@ -4,7 +4,7 @@ let serverfile = "prds-tags.php"
 const state = {
     /** Contains all tags in the system with their name and category */
     categories: {},
-
+    tags: {},
     tagFlags: {
         addNewTag: ""
     }
@@ -25,6 +25,9 @@ const mutations = {
 
     /**Set state.tags to the data received from the http call */
     setTags: (state, data) => {
+        state.tags = data;
+        state.tags = { ...state.tags
+        }
         console.log("This are the tags");
         console.log(data);
         let categories = {};
@@ -47,6 +50,7 @@ const mutations = {
                 category: tag.tagCategory
             }
         }
+
         state.categories = categories;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:

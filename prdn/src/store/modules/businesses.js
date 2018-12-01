@@ -174,6 +174,7 @@ const mutations = {
         for (var category in subcats) {
             //console.log("category");
             //console.log(category);
+
             subcats[category].resName = "services";
             subcats[category].catName = subcats[category].serviceName;
             subcats[category].name = subcats[category].subServiceName;
@@ -400,14 +401,15 @@ const actions = {
      * @constant {String} endpoint - To look for companies
      * @constant {String} code - Code to look for a company by name
      */
-    setCurrentBusiness: (context, compName) => {
+    setCurrentBusiness: (
+        context, compName) => {
         state.currentBusiness = {};
         let code = '5';
         let kword = compName;
         let endpoint = 'company'
 
         // Query the server for a business with name like the given keyword
-        Vue.http
+        return Vue.http
             .get(serverfile, {
                 params: {
                     endpoint: endpoint,
@@ -430,7 +432,7 @@ const actions = {
                 /** 
                  * Get full business profile
                  */
-                Vue.http
+                return Vue.http
                     .get(serverfile, {
                         params: {
                             endpoint: endpoint,
@@ -443,7 +445,7 @@ const actions = {
                     })
                     .then(data => {
                         let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-                        console.log(dataObject);
+                        //console.log(dataObject);
                         context.commit('setFullCurrentBusiness', dataObject); //get the wrapped object
 
                         return state.currentBusiness.companyId;
@@ -452,7 +454,7 @@ const actions = {
                         /**  
                          * Get subproceses, submaterials, subservices of the current business
                          */
-                        Vue.http
+                        return Vue.http
                             .get(serverfile, {
                                 params: {
                                     endpoint: endpoint,
@@ -468,7 +470,7 @@ const actions = {
                                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                                 context.commit('setCurrentBusinessSubServices', dataObject);
                             }).then(() => {
-                                Vue.http
+                                return Vue.http
                                     .get(serverfile, {
                                         params: {
                                             endpoint: endpoint,
@@ -480,10 +482,12 @@ const actions = {
                                         return response.json();
                                     })
                                     .then(data => {
+                                        console.log("subprocessses");
+                                        console.log(data);
                                         let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                                         context.commit('setCurrentBusinessSubProcesses', dataObject);
                                     }).then(() => {
-                                        Vue.http
+                                        return Vue.http
                                             .get(serverfile, {
                                                 params: {
                                                     endpoint: endpoint,
@@ -495,11 +499,14 @@ const actions = {
                                                 return response.json();
                                             })
                                             .then(data => {
+                                                console.log("submaterials");
+                                                console.log(data);
                                                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                                                 context.commit('setCurrentBusinessSubMaterials', dataObject);
                                             }).then(() => {
                                                 //console.log("Set CurrentBusinessSubCategories");
                                                 context.commit('setCurrentBusinessSubCategories');
+                                                return 1;
                                             });
                                     });
                             });
@@ -563,22 +570,14 @@ const actions = {
         let geocoder = new google.maps.Geocoder();
         let addressLatLong = data.address + ', ' + data.city + ', ' + data.country;
 
-        //Get google maps latitute and longitude from the business address
-        //Then proceeds to do call to edit business with the given info
-        geocoder.geocode({
-            'address': addressLatLong
-        }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                let latitudeAdd = '';
-                let longitudeAdd = '';
-                console.log(results);
-                latitudeAdd = results[0].geometry.location.lat();
-                longitudeAdd = results[0].geometry.location.lng();
-                console.log(data.companyName + "\n" + data.video + "\n" + data.website + "\n" + data.phone + "\n" + data.description + "\n" +
-                    null + "\n" + data.email + "\n" + data.processes + "\n" + data.services + "\n" + data.materials + "\n" + data.address + "\n" + data.city + "\n" +
-                    data.country + "\n" + data.zipcode + "\n" + latitudeAdd + "\n" + longitudeAdd);
+        return codeLatLng().then(response => {
+            console.log("Inside codeLatLng");
 
-                var dataToSend = {
+            return Vue.http.get(serverfile, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
                     endpoint: 'company',
                     code: '9',
                     du: true,
@@ -598,30 +597,100 @@ const actions = {
                     city: data.city,
                     count: data.country,
                     zip: data.zipcode,
-                    lat: latitudeAdd,
-                    lon: longitudeAdd
-                };
+                    lat: response.latitudeAdd,
+                    lon: response.longitudeAdd
+                }
+            }).then(response => {
+                console.log(response);
+                return response.json();
+            }).then(data => {
+                console.log(data);
+                context.commit("editBusinessInfo", data.resp);
+                return data.resp[0].number;
+            });
+        }).then(resultNumber => {
+            console.log("This is the result number");
+            console.log(resultNumber);
+            return resultNumber;
+        })
 
-                $.ajax({
-                    url: serverPath,
-                    data: dataToSend,
-                    contentType: "application/json",
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data, textStatus, jqXHR) {
-                        console.log('Company Edited');
-                        console.log(data);
-                        context.commit('editBusinessInfo', data.resp);
-                    },
-                    error: function (data, textStatus, jqXHR) {
-                        console.log("textStatus: " + textStatus);
-                        console.log("Server Not Found: Please Try Again Later!");
+        function codeLatLng() {
+            return new Promise((resolve, reject) => {
+                geocoder.geocode({
+                    'address': addressLatLong
+                }, (results, status) => {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        resolve({
+                            latitudeAdd: results[0].geometry.location.lat(),
+                            longitudeAdd: results[0].geometry.location.lng()
+                        });
+                    } else {
+                        reject('Cannot find address');
                     }
                 });
-            } else {
-                console.log("Geocode was not successful for the following reason: " + status);
-            }
-        })
+            });
+
+        }
+        //Get google maps latitute and longitude from the business address
+        //Then proceeds to do call to edit business with the given info
+        // geocoder.geocode({
+        //     'address': addressLatLong
+        // }, function (results, status) {
+        //     if (status == google.maps.GeocoderStatus.OK) {
+        //         let latitudeAdd = '';
+        //         let longitudeAdd = '';
+        //         console.log(results);
+        //         latitudeAdd = results[0].geometry.location.lat();
+        //         longitudeAdd = results[0].geometry.location.lng();
+        //         console.log(data.companyName + "\n" + data.video + "\n" + data.website + "\n" + data.phone + "\n" + data.description + "\n" +
+        //             null + "\n" + data.email + "\n" + data.processes + "\n" + data.services + "\n" + data.materials + "\n" + data.address + "\n" + data.city + "\n" +
+        //             data.country + "\n" + data.zipcode + "\n" + latitudeAdd + "\n" + longitudeAdd);
+
+        //         var dataToSend = {
+        //             endpoint: 'company',
+        //             code: '9',
+        //             du: true,
+        //             multi: true,
+        //             cid: data.companyId,
+        //             name: data.companyName,
+        //             URL: data.video,
+        //             site: data.website,
+        //             phone: data.phone,
+        //             descr: data.description,
+        //             img: data.logo,
+        //             cemail: data.email,
+        //             spids: data.processes, //subprocesses id array
+        //             smids: data.materials, //submaterials id array
+        //             ssids: data.services, //subservices id array
+        //             line: data.address,
+        //             city: data.city,
+        //             count: data.country,
+        //             zip: data.zipcode,
+        //             lat: latitudeAdd,
+        //             lon: longitudeAdd
+        //         };
+
+
+        //         $.ajax({
+        //             url: serverPath,
+        //             data: dataToSend,
+        //             contentType: "application/json",
+        //             type: "GET",
+        //             dataType: "json",
+        //             success: function (data, textStatus, jqXHR) {
+        //                 console.log('Company Edited');
+        //                 console.log(data);
+        //                 context.commit('editBusinessInfo', data.resp);
+        //             },
+        //             error: function (data, textStatus, jqXHR) {
+        //                 console.log("textStatus: " + textStatus);
+        //                 console.log("Server Not Found: Please Try Again Later!");
+        //             }
+        //         });
+        //     } else {
+        //         console.log("Geocode was not successful for the following reason: " + status);
+        //     }
+        // })
     },
     /** 
      * Add new business to system(only administrators), calculates latitude and longitude from the given address

@@ -358,9 +358,12 @@ export default {
     }
   },
   mounted() {
+    //Get All system resources
     this.setResources();
     //Get all system tags
     this.$store.dispatch("setTags");
+    //Get all system businesses
+    this.$store.dispatch("setBusinesses");
     //console.log("inside App.vue after setting resources");
     //console.log(this.$store.state.resources);
     //Check if user is logged in
