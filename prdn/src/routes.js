@@ -114,7 +114,7 @@ export const routes = [{
     }, /**End login routes */
 
     {
-        path: '/search/:resourceName',
+        path: '/search/',
         name: 'searchLink',
         component: SearchPage
     },

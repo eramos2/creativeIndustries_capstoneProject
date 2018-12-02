@@ -26,7 +26,7 @@
                 ></search-row-business>
               </tbody>
             </table>
-            <table v-else class="table">
+            <table v-if="resourceName != 'businesses'" class="table">
               <thead>
                 <tr>
                   <!--<th class="plantmore-product-remove">remove</th>-->
@@ -38,11 +38,25 @@
               </thead>
               <tbody>
                 <search-row-resources
-                  v-for="(material,key) in businesses"
+                  v-if="resourceName == 'materials'"
+                  v-for="(material,key) in results"
                   :key="key"
-                  :name="material.materialName"
-                  :description="material.ma"
-                  :city="business.city"
+                  :name="material.subMaterialName"
+                  :category="material.materialName"
+                ></search-row-resources>
+                <search-row-resources
+                  v-if="resourceName == 'processes'"
+                  v-for="(process,key) in results"
+                  :key="key"
+                  :name="process.subProcessName"
+                  :category="process.processName"
+                ></search-row-resources>
+                <search-row-resources
+                  v-if="resourceName == 'services'"
+                  v-for="(service,key) in results"
+                  :key="key"
+                  :name="service.subServiceName"
+                  :category="service.serviceName"
                 ></search-row-resources>
               </tbody>
             </table>
@@ -78,7 +92,8 @@ export default {
   },
   beforeMount() {
     // this.setBusinesses();
-    this.getBusinessesByName(this.searchValue);
+
+    this.searchForBusinesses();
   },
   computed: {
     searchValue() {
@@ -93,7 +108,7 @@ export default {
       return this.$store.state.businesses.businesses;
     },
     searchForBusinesses(keyword) {
-      if (resourceName == "businesses") {
+      if (this.resourceName == "businesses") {
         console.log("searching for businesses");
         this.$store.dispatch("getBusinessesByName", this.searchValue);
       } else {
@@ -101,6 +116,7 @@ export default {
           name: this.searchValue,
           resource: this.resourceName
         };
+
         console.log("Searching for resources");
         console.log(data);
         this.$store.dispatch("getSubResourceByName", data);
