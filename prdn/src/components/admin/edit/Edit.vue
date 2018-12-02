@@ -66,6 +66,42 @@
             <p class="text-danger" v-if="errors.has('address')">{{ errors.first('address') }}</p>
           </div>
           <div class="row">
+            <!-- EMAIL -->
+            <div class="col-lg-6">
+              <div class="single-input-item">
+                <!-- <div class="single-input-item"> -->
+                <label for="email" class="required">Email</label>
+                <input
+                  name="email"
+                  v-validate="'required|email'"
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  v-model="email"
+                  class="form-control"
+                >
+                <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+              </div>
+            </div>
+            <!-- VIDEO URL -->
+            <div class="col-lg-6">
+              <div class="single-input-item">
+                <!-- <div class="single-input-item"> -->
+                <label for="videoURL" class="required">Video URL</label>
+                <input
+                  name="videoURL"
+                  v-validate="'url|required'"
+                  data-vv-as="url"
+                  type="text"
+                  id="videoURL"
+                  placeholder="Video URL"
+                  v-model="videoURL"
+                  class="form-control"
+                >
+                <p class="text-danger" v-if="errors.has('videoURL')">{{ errors.first('videoURL') }}</p>
+              </div>
+            </div>
+            <!-- CITY -->
             <div class="col-lg-6">
               <div class="single-input-item">
                 <label for="city" class="required">City</label>
@@ -394,7 +430,9 @@ export default {
     phone: "",
     website: "",
     description: "",
-    logo: ""
+    logo: "",
+    email: "",
+    videoURL: ""
   }),
   methods: {
     collapseAll() {
@@ -414,6 +452,8 @@ export default {
             website: this.website,
             description: this.description,
             logo: this.logo,
+            email: this.email,
+            videoURL: this.videoURL,
             materials: this.getIdsArray("materials"),
             services: this.getIdsArray("services"),
             processes: this.getIdsArray("processes"),
@@ -513,6 +553,8 @@ export default {
           this.website = business.website;
           this.description = business.description;
           this.logo = "";
+          this.email = business.email;
+          this.videoURL = business.videoURL;
           this.spids = this.getIds(business.subprocesses, "subProcessId");
           this.smids = this.getIds(business.submaterials, "subMaterialId");
           this.ssids = this.getIds(business.subservices, "subServiceId");

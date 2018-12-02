@@ -79,7 +79,7 @@
                   type="text"
                   v-model="zipcode"
                   id="zipcode"
-                  placeholder="ZipCode"
+                  placeholder="Zip Code"
                   class="form-control"
                 >
                 <p class="text-danger" v-if="errors.has('zipcode')">{{ errors.first('zipcode') }}</p>

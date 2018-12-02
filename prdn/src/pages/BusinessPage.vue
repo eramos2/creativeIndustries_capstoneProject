@@ -72,13 +72,19 @@
                           Website:
                           <a href="#">{{currentBusiness.website}}</a>
                         </li>
-                        <li v-if="currentBusiness.videoURL != null">
-                          Video:
+                        <li>E-mail: {{currentBusiness.email}}</li>
+                        <li
+                          v-if="currentBusiness.videoURL != null && currentBusiness.videoURL != '' "
+                        >
+                          Video URL:
                           <a href="#">{{currentBusiness.videoURL}}</a>
                         </li>
-                        <li>E-mail: {{currentBusiness.email}}</li>
                         <li>Address: {{currentBusiness.line}} {{currentBusiness.city}}, PR {{currentBusiness.zipcode}}</li>
                         <li>Description: {{currentBusiness.description}}</li>
+                        <button type="button" class="btn btn-primary">
+                          Notifications
+                          <span class="badge badge-light">4</span>
+                        </button>
                       </ul>
                       <!--
                                                <div class="quick-add-to-cart">

@@ -20,7 +20,7 @@
               <label for="companyName" class="required">Company Name</label>
               <input
                 name="companyName"
-                v-validate="'required|max:20'"
+                v-validate="'required|max:40'"
                 type="text"
                 v-model="companyName"
                 id="companyName"
@@ -50,6 +50,45 @@
 
             <!-- <div class="row"> -->
             <div class="row">
+              <!-- EMAIL -->
+              <div class="col-lg-6">
+                <div class="single-input-item">
+                  <!-- <div class="single-input-item"> -->
+                  <label for="email" class="required">Email</label>
+                  <input
+                    name="email"
+                    v-validate="'required|email'"
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    v-model="email"
+                    class="form-control"
+                  >
+                  <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+                </div>
+              </div>
+              <!-- VIDEO URL -->
+              <div class="col-lg-6">
+                <div class="single-input-item">
+                  <!-- <div class="single-input-item"> -->
+                  <label for="videoURL" class="required">Video URL</label>
+                  <input
+                    name="videoURL"
+                    v-validate="'url|required'"
+                    data-vv-as="url"
+                    type="text"
+                    id="videoURL"
+                    placeholder="Video URL"
+                    v-model="videoURL"
+                    class="form-control"
+                  >
+                  <p
+                    class="text-danger"
+                    v-if="errors.has('videoURL')"
+                  >{{ errors.first('videoURL') }}</p>
+                </div>
+              </div>
+              <!-- CITY -->
               <div class="col-lg-6">
                 <div class="single-input-item">
                   <!-- <div class="single-input-item"> -->
@@ -369,11 +408,15 @@ const dictionary = {
     custom: {
       companyName: {
         required: "Please enter your company name.",
-        max: "The company name field may not be greater than 20 characters."
+        max: "The company name field may not be greater than 40 characters."
       },
       address: {
         required: "Please enter the Address.",
         max: "The address field may not be greater than 50 characters."
+      },
+      videoURL: {
+        required: "The video URL field is required",
+        url: "The video URL field is not a valid URL."
       }
     }
   }
@@ -433,7 +476,9 @@ export default {
     phone: "",
     website: "",
     description: "",
-    logo: ""
+    logo: "",
+    email: "",
+    videoURL: ""
   }),
 
   methods: {
@@ -450,6 +495,8 @@ export default {
             website: this.website,
             description: this.description,
             logo: this.logo,
+            email: this.email,
+            videoURL: this.videoURL,
             materials: this.getIdsArray("materials"),
             services: this.getIdsArray("services"),
             processes: this.getIdsArray("processes"),
