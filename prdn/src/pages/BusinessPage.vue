@@ -25,21 +25,6 @@
                             :imageType="image.imageType"
                             :companyName="currentBusiness.companyName"
                           ></business-carousel-image>
-                          <!-- <li class="">
-                                                            <a href="#" class="elevatezoom-gallery active" data-update="" data-image="img/product/larg-1.jpg" data-zoom-image="img/product/larg-1.jpg"><img src="img/product/larg-1.jpg" alt="zo-th-1"/></a>
-                                                        </li>
-                                                        <li class="">
-                                                            <a href="#" class="elevatezoom-gallery" data-image="img/product/larg-2.jpg" data-zoom-image="img/product/larg-2.jpg"><img src="img/product/larg-2.jpg" alt="zo-th-2"></a>
-                                                        </li>
-                                                        <li class="">
-                                                            <a href="#" class="elevatezoom-gallery" data-image="img/product/larg-3.jpg" data-zoom-image="img/product/larg-3.jpg"><img src="img/product/larg-3.jpg" alt="ex-big-3" /></a>
-                                                        </li>
-                                                        <li class="">
-                                                            <a href="#" class="elevatezoom-gallery" data-image="img/product/larg-4.jpg" data-zoom-image="img/product/larg-4.jpg"><img src="img/product/larg-4.jpg" alt="zo-th-4"></a>
-                                                        </li>
-                                                        <li class="">
-                                                            <a href="#" class="elevatezoom-gallery" data-image="img/product/larg-5.jpg" data-zoom-image="img/product/larg-5.jpg"><img src="img/product/larg-5.jpg" alt="zo-th-5"></a>
-                          </li>-->
                         </ul>
                       </div>
                     </div>
@@ -50,19 +35,7 @@
                   <div class="quick-view-content">
                     <div class="product-info">
                       <h2>{{currentBusiness.companyName}}</h2>
-                      <!--<div class="rating-box">
-                                                    <ul class="rating d-flex">
-                                                        <li><i class="ion-ios-star"></i></li>
-                                                        <li><i class="ion-ios-star"></i></li>
-                                                        <li><i class="ion-ios-star"></i></li>
-                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                    </ul>
-                      </div>-->
-                      <!--<div class="price-box">
-                                                   <span class="new-price">$25.50</span>
-                                                   <span class="old-price">$30.50</span>
-                      </div>-->
+
                       <ul class="list-unstyled">
                         <li>
                           Telephone:
@@ -82,136 +55,54 @@
                         <li>Address: {{currentBusiness.line}} {{currentBusiness.city}}, PR {{currentBusiness.zipcode}}</li>
                         <li>Description: {{currentBusiness.description}}</li>
                         <div class="row">
-                          <div class="col-md-3">
-                            <button type="button" class="btn btn-primary">
-                              Tag #1
-                              <span class="badge badge-light">4</span>
+                          <h5 id="tagsHeader" class="col">{{currentBusiness.companyName}} - Tags:</h5>
+                        </div>
+
+                        <div class="row">
+                          <div
+                            class="col-md-4 businessTags"
+                            v-for="(tag, key) in companyTags"
+                            :key="key"
+                          >
+                            <button
+                              v-if="!userTags(tag.tagId)"
+                              type="button"
+                              class="btn btn-primary"
+                              @click="endorseTag(tag.tagId)"
+                              :value="tag.tagId"
+                            >
+                              {{tag.tagName}}
+                              <span class="badge badge-light">{{tag.endorsements}}</span>
                             </button>
-                          </div>
-                          <div class="col-md-3">
-                            <button type="button" class="btn btn-primary">
-                              Tag #2
-                              <span class="badge badge-light">4</span>
-                            </button>
-                          </div>
-                          <div class="col-md-3">
-                            <button type="button" class="btn btn-primary">
-                              Tag #3
-                              <span class="badge badge-light">4</span>
+                            <button
+                              v-if="userTags(tag.tagId)"
+                              type="button"
+                              class="btn btn-primary"
+                              @click="removeTag(tag.tagId)"
+                              :value="tag.tagId"
+                            >
+                              {{tag.tagName}}
+                              <span class="badge badge-success">{{tag.endorsements}}</span>
                             </button>
                           </div>
                         </div>
                       </ul>
-                      <!--
-                                               <div class="quick-add-to-cart">
-                                                    <form class="modal-cart">
-                                                        <div class="quantity">
-                                                            <label>Quantity</label>
-                                                            <div class="cart-plus-minus">
-                                                                <input type="number" value="1" min="0" step="1" class="input-box">
-                                                            </div>
-                                                        </div>
-                                                        <button class="add-to-cart" type="submit">Add to cart</button>
-                                                        <ul class="wishlist-compare-btn">
-                                                            <li><a class="wishlist" href="#"><i class="ion-heart"></i>Add to Wish List</a></li>
-                                                            <li><a class="compare" href="#"><i class="ion-arrow-swap"></i> Compare this Product</a></li>
-                                                        </ul>
-                                                    </form>
-                      </div>-->
                     </div>
                   </div>
                   <!-- product-thumbnail-content end -->
                 </div>
               </div>
-              <!--
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="product-info-detailed">
-                                            <div class="discription-tab-menu">
-                                                <ul role="tablist" class="nav">
-                                                    <li class="active"><a href="#description" data-toggle="tab" class="active show">Description</a></li>
-                                                    <li><a href="#review" data-toggle="tab">Reviews (1)</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="discription-content">
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade in active show" id="description">
-                                                    <div class="description-content">
-                                                        <p>iPhone is a revolutionary new mobile phone that allows you to make a call by simply tapping a name or number in your address book, a favorites list, or a call log. It also automatically syncs all your contacts from a PC, Mac, or Internet service. And it lets you select and listen to voicemail messages in whatever order you want just like email.</p>
-                                                    </div>
-                                                </div>
-                                                <div id="review" class="tab-pane fade">
-                                                    <form class="form-review">
-							                            <div class="review">
-                                                            <table class="table table-striped table-bordered table-responsive">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td class="table-name"><strong>Palora Themes</strong></td>
-                                                                        <td class="text-right">08/05/2018</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td colspan="2">
-                                                                            <p>It’s both good and bad. If Nikon had achieved a high-quality wide lens camera with a 1 inch sensor, that would have been a very competitive product. So in that sense, it’s good for us. But actually, from the perspective of driving the 1 inch sensor market, we want to stimulate this market and that means multiple manufacturers.</p>    
-                                                                            <ul>
-                                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                            </ul>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="review-wrap">
-                                                            <h2>Write a review</h2>
-                                                            <div class="form-group row">
-                                                                <div class="col">
-                                                                    <label class="control-label">Your Name</label>
-                                                                    <input type="text" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col">
-                                                                    <label class="control-label">Your Review</label>
-                                                                    <textarea class="form-control"></textarea>
-                                                                    <div class="help-block"><span class="text-danger">Note:</span> HTML is not translated!</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col">
-                                                                    <label class="control-label">Rating</label>
-                                                                    &nbsp;&nbsp;&nbsp; Bad&nbsp;
-                                                                    <input type="radio" value="1" name="rating">
-                                                                    &nbsp;
-                                                                    <input type="radio" value="2" name="rating">
-                                                                    &nbsp;
-                                                                    <input type="radio" value="3" name="rating">
-                                                                    &nbsp;
-                                                                    <input type="radio" value="4" name="rating">
-                                                                    &nbsp;
-                                                                    <input type="radio" value="5" name="rating">
-                                                                    &nbsp;Good
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="buttons clearfix">
-                                                            <div class="pull-right">
-                                                                <button class="button-review"   type="button">Continue</button>
-                                                            </div>
-                                                        </div>
-													</form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-              </div>-->
             </div>
           </div>
         </div>
-
+        <!-- <div class="row box-module">
+          <div class="col-md-3 businessTags" v-for="(tag, key) in tids" :key="key">
+            <button type="button" class="btn btn-primary">
+              {{tag.tagName}}
+              <span class="badge badge-light">{{tag.count}}</span>
+            </button>
+          </div>
+        </div>-->
         <medium-carousel :key="curBusiness">All Resources</medium-carousel>
       </div>
     </div>
@@ -234,18 +125,76 @@ export default {
   data() {
     return {
       curBusiness: this.$route.params.businessName.toLowerCase(),
-      tid: [
-        { tagName: fastDelivery, count: 5 },
-        { tagName: fastDelivery, count: 5 },
-        { tagName: fastDelivery, count: 5 }
+      testtids: [
+        { tagName: "Fast Delivery", count: "5" },
+        { tagName: "Collaboration", count: "5" },
+        { tagName: "Cutting", count: "5" },
+        { tagName: "Fast Delivery", count: "5" },
+        { tagName: "Collaboration", count: "5" }
       ]
     };
   },
   methods: {
     ...mapActions(["setResources", "setCurrentBusiness"]),
-    ...mapGetters(["getCurrentBusiness"])
+    ...mapGetters(["getCurrentBusiness"]),
+    endorseTag(tid) {
+      let data = {
+        companyId: this.currentBusiness.companyId,
+        userId: this.userID,
+        tagId: tid
+      };
+      this.$store.dispatch("giveEndorsement", data).then(response => {
+        console.log(response);
+        if (response.length > 0) {
+          this.$store
+            .dispatch("setCurrentBusiness", this.currentBusiness.companyName)
+            .then(response => {
+              console.log(response);
+            });
+        }
+      });
+    },
+    removeEndorsement(tid) {
+      let data = {
+        companyId: this.currentBusiness.companyId,
+        userId: this.userID,
+        tagId: tid
+      };
+      this.$store.dispatch("removeEndorsement", data).then(response => {
+        console.log(response);
+        if (response.length > 0) {
+          this.$store
+            .dispatch("setCurrentBusiness", this.currentBusiness.companyName)
+            .then(response => {
+              console.log(response);
+            });
+        }
+      });
+    },
+    userTags(tid) {
+      console.log(tid);
+      if (tid != undefined) {
+        let endorsements = this.$store.state.users.user.endorsedTags;
+        console.log(endorsements);
+        if (endorsements != undefined) {
+          for (let key of endorsements) {
+            if (endorsements[key].tagId == tid) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }
   },
   computed: {
+    companyTags() {
+      return this.$store.state.businesses.currentBusiness.tags;
+    },
+
+    userID() {
+      return this.$store.state.users.user.userId;
+    },
     currentBusiness() {
       return this.getCurrentBusiness();
     },
@@ -332,6 +281,15 @@ export default {
     this.setCurrentBusiness(businessName);
   },
   mounted() {
+    console.log(this.$store.state.users.user.userId);
+    if (this.$store.state.users.user.userId) {
+      console.log("Before calling endorsemnts for business");
+      this.$store.dispatch(
+        "getEndorsementsToBusiness",
+        this.currentBusiness.companyName
+      );
+    }
+
     //console.log("Inside mount of Businesspage");
     //this.setResources();
   }
@@ -339,6 +297,12 @@ export default {
 </script>
 
 <style>
+#tagsHeader {
+  padding-top: 1rem;
+}
+.businessTags {
+  margin-left: auto;
+}
 #tag-second-line {
   margin-top: 1rem;
 }
