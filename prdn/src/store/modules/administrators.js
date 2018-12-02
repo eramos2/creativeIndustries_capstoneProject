@@ -4,6 +4,8 @@ let serverfile = "prds.php";
 let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
 //let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
+let CLOUDINARY_UPLOAD_PRESET = "c5ujdszc";
+let CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/prdn";
 
 const state = {
     /** 
@@ -638,6 +640,9 @@ const actions = {
         //     }
         // });
     }
+
+
+
 
 };
 

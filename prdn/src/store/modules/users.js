@@ -479,18 +479,18 @@ const actions = {
 
                 }, {
 
-                        emulateJSON: true,
+                    emulateJSON: true,
 
 
-                    }).then(response => {
-                        return response.json();
-                    }).then(data => {
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
 
-                        console.log("registering user");
-                        console.log(data);
-                        context.commit("registerNewUser", data.resp);
-                        return data.resp;
-                    });
+                    console.log("registering user");
+                    console.log(data);
+                    context.commit("registerNewUser", data.resp);
+                    return data.resp;
+                });
             }
         })
         // return $.ajax({
@@ -557,39 +557,34 @@ const actions = {
 
         state.userFlags['addSubmission'] = "";
 
-        var dataToSend = {
-            endpoint: 'submissions',
-            uid: data.id,
-            du: true,
-            sname: data.name,
-            swebsite: data.website,
-            sdescription: data.description,
-            sphone: data.phone,
-            semail: data.email,
-            sline: data.address,
-            scity: data.city,
-            scountry: data.country,
-            szip: data.zipcode,
-            code: '3'
-        };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                context.commit("addSubmission", data.resp);
+        return Vue.http.get(serverfile, {
+            headers: {
+                "Content-Type": "application/json"
             },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+            params: {
+                endpoint: 'submissions',
+                uid: data.id,
+                du: true,
+                sname: data.name,
+                swebsite: data.website,
+                sdescription: data.description,
+                sphone: data.phone,
+                semail: data.email,
+                sline: data.address,
+                scity: data.city,
+                scountry: data.country,
+                szip: data.zipcode,
+                code: '3'
             }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            context.commit("addSubmission", data.resp);
+            return data.resp;
         });
     }
-
-
 
 };
 

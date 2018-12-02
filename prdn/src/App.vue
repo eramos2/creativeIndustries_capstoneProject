@@ -1,68 +1,67 @@
 <template>
   <div class="wrapper home-2">
-  
-   <!--<login></login>-->
-   <!-- <user></user> -->
-   <!-- <admin></admin> -->
-   <!-- <superadmin></superadmin> -->
-   <!-- <register></register> -->
-    
+    <!--<login></login>-->
+    <!-- <user></user> -->
+    <!-- <admin></admin> -->
+    <!-- <superadmin></superadmin> -->
+    <!-- <register></register> -->
     <!--<app-header></app-header>-->
     <header-bar
       :resources="resources"
       :authenticated="authenticated"
       :adminAuthenticated="adminAuthenticated"
-    >
-    </header-bar>
-    
+    ></header-bar>
+
     <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
     <footer id="app-footer" style="padding:2rem;">
       <button
-            class="btn btn-primary btn-margin"
-            v-show="!authenticated && !adminAuthenticated"
-            @click="login()">
-              Log In
-          </button>
-          <p>test</p>
-          <button
-            class="btn btn-primary btn-margin"
-            v-show="authenticated"
-            @click="logout()">
-              Log Out
-          </button>
-          <!-- CONTACT US -->
-          <li class="muted credit footerContainer pull-right hidden-sm hidden-xs" 
-          style="cursor: pointer;">
-          <a href="mailto:icom2018capstone@gmail.com?subject=PR Design Network">Contact Us</a></li>
-          <!-- ADMINISTRATOR LOGIN -->
-          <li class="muted credit footerContainer pull-right hidden-sm hidden-xs"
-           id="adminLogInOpt" onclick="loadPage('loginAdmin')">
-           <a>Administrator Log In</a></li>
-           <!-- ABOUT US -->
-           <li class="muted credit footerContainer pull-right" 
-           onclick="loadPage('aboutUs')" style="cursor: pointer;"><a>About Us</a></li>
-           <!-- COPYRIGHT -->
-           <li class="muted credit footerContainer pull-left" 
-           style="cursor: pointer;">Copyright @PRDN</li>
-          <button
-            class="btn btn-primary btn-margin"
-            v-show="!authenticated && !adminAuthenticated"
-            @click="register()">
-              Register
-          </button>
-          <button
-            class="btn btn-primary btn-margin"
-            v-show="!adminAuthenticated && !authenticated"
-            @click="loginAdmin()">
-              Admin Login
-          </button>
-          <button
-            class="btn btn-primary btn-margin"
-            v-show="adminAuthenticated"
-            @click="adminLogout()">
-              Admin Log Out
-          </button>
-          </footer>
+        class="btn btn-primary btn-margin"
+        v-show="!authenticated && !adminAuthenticated"
+        @click="login()"
+      >Log In</button>
+      <p>test</p>
+      <button class="btn btn-primary btn-margin" v-show="authenticated" @click="logout()">Log Out</button>
+      <!-- CONTACT US -->
+      <li
+        class="muted credit footerContainer pull-right hidden-sm hidden-xs"
+        style="cursor: pointer;"
+      >
+        <a href="mailto:icom2018capstone@gmail.com?subject=PR Design Network">Contact Us</a>
+      </li>
+      <!-- ADMINISTRATOR LOGIN -->
+      <li
+        class="muted credit footerContainer pull-right hidden-sm hidden-xs"
+        id="adminLogInOpt"
+        onclick="loadPage('loginAdmin')"
+      >
+        <a>Administrator Log In</a>
+      </li>
+      <!-- ABOUT US -->
+      <li
+        class="muted credit footerContainer pull-right"
+        onclick="loadPage('aboutUs')"
+        style="cursor: pointer;"
+      >
+        <a>About Us</a>
+      </li>
+      <!-- COPYRIGHT -->
+      <li class="muted credit footerContainer pull-left" style="cursor: pointer;">Copyright @PRDN</li>
+      <button
+        class="btn btn-primary btn-margin"
+        v-show="!authenticated && !adminAuthenticated"
+        @click="register()"
+      >Register</button>
+      <button
+        class="btn btn-primary btn-margin"
+        v-show="!adminAuthenticated && !authenticated"
+        @click="loginAdmin()"
+      >Admin Login</button>
+      <button
+        class="btn btn-primary btn-margin"
+        v-show="adminAuthenticated"
+        @click="adminLogout()"
+      >Admin Log Out</button>
+    </footer>
     <!--
     <slider
       :resources="resources"
@@ -76,11 +75,7 @@
 
     >
     </category-list>-->
-
-    
-    
     <!--<side-bar :sideBarItems="sideBarItems"></side-bar>-->
-    
   </div>
 </template>
 

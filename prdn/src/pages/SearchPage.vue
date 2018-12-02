@@ -1,52 +1,71 @@
 <template>
-    <!-- content-wraper start -->
-            <div class="content-wraper bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-content table-responsive cart-table mt-60">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <!--<th class="plantmore-product-remove">remove</th>-->
-                                                <th class="plantmore-product-thumbnail">Business</th>
-                                                <th class="cart-product-name">Description</th>
-                                                <th class="plantmore-product-price">City</th>
-                                                <!--<th class="plantmore-product-quantity">Quantity</th>
-                                                <th class="plantmore-product-subtotal">Total</th>-->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            
-                                            <search-row-business
-                                                v-for="(business,key) in businesses"
-                                                :key="key"
-                                                :name="business.companyName"
-                                                :description="business.description"
-                                                :city="business.city"
-                                            >
-                                            </search-row-business>
-                                        </tbody>
-                                    </table>
-                                </div>
-                               
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- content-wraper end -->
+  <!-- content-wraper start -->
+  <div class="content-wraper bg-gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="table-content table-responsive cart-table mt-60">
+            <table v-if="resourceName == 'businesses'" class="table">
+              <thead>
+                <tr>
+                  <!--<th class="plantmore-product-remove">remove</th>-->
+                  <th class="plantmore-product-thumbnail">Business</th>
+                  <th class="cart-product-name">Description</th>
+                  <th class="plantmore-product-price">City</th>
+                  <!--<th class="plantmore-product-quantity">Quantity</th>
+                  <th class="plantmore-product-subtotal">Total</th>-->
+                </tr>
+              </thead>
+              <tbody>
+                <search-row-business
+                  v-for="(business,key) in businesses"
+                  :key="key"
+                  :name="business.companyName"
+                  :description="business.description"
+                  :city="business.city"
+                ></search-row-business>
+              </tbody>
+            </table>
+            <table v-else class="table">
+              <thead>
+                <tr>
+                  <!--<th class="plantmore-product-remove">remove</th>-->
+                  <th class="plantmore-product-thumbnail">Name</th>
+                  <th class="cart-product-name">Category</th>
+                  <!--<th class="plantmore-product-quantity">Quantity</th>
+                  <th class="plantmore-product-subtotal">Total</th>-->
+                </tr>
+              </thead>
+              <tbody>
+                <search-row-resources
+                  v-for="(material,key) in businesses"
+                  :key="key"
+                  :name="material.materialName"
+                  :description="material.ma"
+                  :city="business.city"
+                ></search-row-resources>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wraper end -->
 </template>
 
 <script>
 import SearchRowBusiness from "../components/search/SearchRowBusiness.vue";
+import SearchRowResources from "../components/search/SearchRowResources.vue";
+import axios from "axios";
 
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
 
 export default {
   components: {
-    searchRowBusiness: SearchRowBusiness
+    searchRowBusiness: SearchRowBusiness,
+    searchRowResources: SearchRowResources
   },
   watch: {
     // call again the method if the route changes
@@ -54,7 +73,8 @@ export default {
   },
   methods: {
     ...mapActions(["setBusinesses", "getBusinessesByName"]),
-    ...mapGetters(["getBusinesses"])
+    ...mapGetters(["getBusinesses"]),
+    getMaterial(searchVal) {}
   },
   beforeMount() {
     // this.setBusinesses();
@@ -65,12 +85,40 @@ export default {
       //console.log(this.$router.params.searchValue);
       return this.$route.params.searchValue;
     },
+    resourceName() {
+      return this.$route.params.resourceName;
+    },
     businesses() {
       console.log(this.searchValue);
       return this.$store.state.businesses.businesses;
     },
     searchForBusinesses(keyword) {
-      this.$store.dispatch("getBusinessesByName", this.searchValue);
+      if (resourceName == "businesses") {
+        console.log("searching for businesses");
+        this.$store.dispatch("getBusinessesByName", this.searchValue);
+      } else {
+        let data = {
+          name: this.searchValue,
+          resource: this.resourceName
+        };
+        console.log("Searching for resources");
+        console.log(data);
+        this.$store.dispatch("getSubResourceByName", data);
+      }
+    },
+    materials() {
+      return this.$store.state.resources.resources.materials;
+    },
+    services() {
+      return this.$store.state.resources.resources.services;
+    },
+    processes() {
+      return this.$store.state.resources.resources.processes;
+    },
+    results() {
+      console.log("This are the search results");
+      console.log(this.$store.state.resources.resourceSearchResult);
+      return this.$store.state.resources.resourceSearchResult;
     }
   }
 };

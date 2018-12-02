@@ -18,7 +18,10 @@ export const store = new Vuex.Store({
     state: {
         //Url for getting imgs from projects google drive folder
         //Add image id at the end for full url
-        driveUrl: "https://drive.google.com/uc?export=view&id="
+        driveUrl: "https://drive.google.com/uc?export=view&id=",
+        //Url for getting imgs from businesses in cloudinary
+        //Add image id at the end for full url src
+        cloudinaryUrl: "https://res.cloudinary.com/prdn/video/upload/"
     },
     getters,
     mutations,

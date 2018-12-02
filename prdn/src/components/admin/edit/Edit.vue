@@ -19,7 +19,7 @@
             <div>
               <select
                 class="form-control"
-                id="editServTypes"
+                id="chooseBusiness"
                 @change="onChange()"
                 v-model="selected"
               >

@@ -152,14 +152,30 @@
             </div>
             <div class="row"></div>
             <!-- <div class="single-input-item"> -->
-            <div class="single-input-item">
+            <!--Start Businesss Photo -->
+            <!-- <div class="single-input-item">
               <label for="logo" class="required">Business Photo</label>
               <p>
                 <input v-validate="'image'" data-vv-as="image" name="logo" type="file">
               </p>
               <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
-            </div>
-
+            </div>-->
+            <picture-input
+              ref="pictureInput"
+              @change="onImageChanged"
+              @remove="onRemoved"
+              :width="700"
+              :removable="true"
+              removeButtonClass="ui red button"
+              :height="250"
+              accept="image/jpeg, image/png, image/gif"
+              buttonClass="ui button primary"
+              :customStrings="{
+        upload: '<h1>Upload it!</h1>',
+        drag: 'Drag and drop your image here'}"
+            ></picture-input>
+            <!-- <button pull-left @click="attemptUpload" :class="{ disabled: !image } ">Upload</button> -->
+            <!-- End Business Photo -->
             <div class="row" id="materials-process">
               <div class="col-md-6 categoryList">
                 <h3>Materials</h3>
@@ -279,7 +295,13 @@
                       >
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" name="tag" v-model="tids" :value="tag.id">
+                            <input
+                              type="checkbox"
+                              name="tag"
+                              :disabled="tids.length > 5 && tids.indexOf(0)==-1"
+                              v-model="tids"
+                              :value="tag.id"
+                            >
                             {{tag.name}}
                           </label>
                         </div>
@@ -365,6 +387,9 @@ import Manageadmin from "../../superadmin/manageadmin/Manageadmin.vue";
 import AddNewTag from "./AddNewTag.vue";
 import Vue from "vue";
 import FileUpload from "v-file-upload";
+import PictureInput from "vue-picture-input";
+import axios from "axios";
+
 Vue.use(FileUpload);
 export default {
   props: ["adminAuthenticated"],
@@ -374,7 +399,8 @@ export default {
     addnewservice: AddNewService,
     addnewtag: AddNewTag,
     materialCheckbox: MaterialCheckbox,
-    manageadmin: Manageadmin
+    manageadmin: Manageadmin,
+    pictureInput: PictureInput // for getting the business image
   },
   computed: {
     materials() {
@@ -391,6 +417,7 @@ export default {
     }
   },
   data: () => ({
+    image: "", //business image file
     modalShow: false,
     modalShowFail: false,
     modalShowCred: false,
@@ -413,7 +440,7 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          let data = {
+          let dataToSend = {
             companyName: this.companyName,
             address: this.address,
             city: this.city,
@@ -426,25 +453,60 @@ export default {
             materials: this.getIdsArray("materials"),
             services: this.getIdsArray("services"),
             processes: this.getIdsArray("processes"),
-            tags: this.getIdsArray("tags")
+            tags: this.getIdsArray("tags"),
+            logoName: null //need to add placeholder image here
           };
-          this.$store
-            .dispatch("addNewBusiness", data)
-            .then(response => {
-              console.log("Helooowwe");
+          if (this.image != "") {
+            //image was added
+            this.attemptUpload().then(response => {
               console.log(response);
-              if (response > 0) {
-                //Added Business successfully, set the modal booleans
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                //Something went wrong when adding business
-                return { modalShow: false, modalShowCred: true };
+              if (response) {
+                if (response != true) {
+                  console.log("response is " + response);
+                  dataToSend.logoName = response;
+                }
+
+                this.$store
+                  .dispatch("addNewBusiness", dataToSend)
+                  .then(response => {
+                    console.log("Helooowwe");
+                    console.log(response);
+                    if (response > 0) {
+                      //Added Business successfully, set the modal booleans
+                      return { modalShow: true, modalShowCred: false };
+                    } else {
+                      //Something went wrong when adding business
+                      return { modalShow: false, modalShowCred: true };
+                    }
+                    this.image = "";
+                  })
+                  .then(data => {
+                    this.modalShow = data.modalShow;
+                    this.modalShowCred = data.modalShowCred;
+                  });
               }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
             });
+          } else {
+            // no image added
+            this.$store
+              .dispatch("addNewBusiness", dataToSend)
+              .then(response => {
+                console.log("Helooowwe");
+                console.log(response);
+                if (response > 0) {
+                  //Added Business successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when adding business
+                  return { modalShow: false, modalShowCred: true };
+                }
+                this.image = "";
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          }
 
           this.$validator.reset();
           return;
@@ -508,6 +570,52 @@ export default {
       this.website = "";
       this.description = "";
       console.log(data);
+    },
+    onImageChanged() {
+      console.log("New picture loaded");
+      if (this.$refs.pictureInput.file) {
+        console.log("Heyyyy");
+        this.image = this.$refs.pictureInput.file;
+        console.log(this.image);
+      } else {
+        console.log("Old browser. No support for Filereader API");
+      }
+    },
+    onRemoved() {
+      this.image = "";
+    },
+    attemptUpload() {
+      console.log("Hey");
+      if (this.image != "") {
+        var file = this.image;
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "c5ujdszc");
+        return axios({
+          url: "https://api.cloudinary.com/v1_1/prdn/upload",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          data: formData
+        })
+          .then(response => {
+            console.log(response);
+            if (response.statusText == "OK") {
+              console.log(response.data.secure_url);
+              console.log("Image uploaded successfully");
+              return response.data.secure_url;
+            } else {
+              return false;
+            }
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } else {
+        console.log("no Image selected");
+        //no image selected
+      }
     }
   }
 };

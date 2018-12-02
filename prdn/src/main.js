@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import VeeValidate from 'vee-validate'
-
 //import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -22,7 +21,6 @@ import {
 } from 'bootstrap-vue/es/components';
 
 Vue.use(Modal);
-
 Vue.use(VueCookie);
 Vue.use(VueResource);
 Vue.use(VueRouter);

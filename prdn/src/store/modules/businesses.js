@@ -753,6 +753,8 @@ const actions = {
         var processes = data.processes;
         var services = data.services;
         var tags = data.tags;
+        var logoName = data.logoName;
+        console.log(logoName);
         console.log(data.tags);
 
         var geocoder = new google.maps.Geocoder();
@@ -773,7 +775,7 @@ const actions = {
                     multi: true,
                     endpoint: 'company',
                     code: '8',
-                    aid: "5",  //hardcoded needs to change
+                    aid: "5", //hardcoded needs to change
 
                     name: companyName,
                     URL: videoURL,
@@ -791,7 +793,8 @@ const actions = {
                     count: country,
                     zip: zipcode,
                     lat: response.latitudeAdd,
-                    lon: response.longitudeAdd
+                    lon: response.longitudeAdd,
+                    logoName: logoName
                 }
             }).then(response => {
                 console.log(response);
