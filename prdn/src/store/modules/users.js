@@ -35,6 +35,7 @@ const mutations = {
     userType: (state) => {
         let userType = Vue.cookie.get("userType");
         if (userType == "regular") {
+
             state.userFlags['userType'] = userType;
             state.userFlags['loggedIn'] = true;
         } else {
@@ -85,6 +86,22 @@ const mutations = {
         }
 
 
+    },
+    getEndorsementsToBusiness: (state, data) => {
+        console.log("ge by the Endorsements to business user");
+        console.log(data);
+        state.user['endorsedTags'] = data;
+
+        state.user = { ...state.user
+        }
+    },
+    giveEndorsement: (state, data) => {
+        console.log("give Endorsement");
+        console.log(data);
+    },
+    removeEndorsement: (state, data) => {
+        console.log("remove Endorsement");
+        console.log(data);
     },
     /** 
      * Sets validEmail to false if the given email is not in the database, otherwise
@@ -186,6 +203,8 @@ const mutations = {
 
 
 const actions = {
+
+
     /**  Get user type when initializing app, checks if user is logged in and 
      * if it is regular, admin user, unregistered
      */
@@ -304,33 +323,32 @@ const actions = {
      */
     changeUserPassword: (context, data) => {
         console.log("I'm changing password for " + data.email + " and userId = " + data.id);
-        state.userFlags['passChanged'] = "";
-
-        var dataToSend = {
-            endpoint: 'users',
-            code: '4',
-            du: true,
-            uemail: data.email,
-            upass: data.pass,
-            uid: data.id
-        };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/x-www-form-urlencoded",
-            type: "POST",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                console.log(data.resp);
+        state.userFlags['changePassword'] = "";
+        return Vue.http
+            .post(
+                serverfile, {
+                    uemail: data.email,
+                    upass: data.pass,
+                    uid: data.id,
+                    endpoint: 'users',
+                    code: '4',
+                    du: true
+                }, {
+                    emulateJSON: true,
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }
+            )
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
                 context.commit("changeUserPassword", data.resp);
+                return data.resp;
+            });
 
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
-            }
-        });
     },
     /**  
      * Changes user firstName, lastName, occupation and city 
@@ -340,32 +358,33 @@ const actions = {
         console.log("I'm modifying user " + data.firstName);
 
         state.userFlags['infoChanged'] = "";
+        return Vue.http
+            .post(
+                serverfile, {
+                    endpoint: 'users',
+                    code: '2',
+                    uid: data.id,
+                    uname: data.firstName,
+                    ulname: data.lastName,
+                    uoccu: data.occupation,
+                    ucity: data.city,
+                    du: true
+                }, {
+                    emulateJSON: true,
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }
+            )
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                context.commit("changeUserPassword", data.resp);
+                return data.resp;
+            });
 
-        var dataToSend = {
-            endpoint: 'users',
-            code: '2',
-            uid: data.id,
-            uname: data.firstName,
-            ulname: data.lastName,
-            uoccu: data.occupation,
-            ucity: data.city,
-            du: true
-        };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/x-www-form-urlencoded",
-            type: "POST",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                context.commit("editUserInfo", data.resp);
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
-            }
-        });
     },
     /**     
      * Checks if the provided email and passcode are correct, it will proceed to change the user's password
@@ -479,18 +498,18 @@ const actions = {
 
                 }, {
 
-                        emulateJSON: true,
+                    emulateJSON: true,
 
 
-                    }).then(response => {
-                        return response.json();
-                    }).then(data => {
+                }).then(response => {
+                    return response.json();
+                }).then(data => {
 
-                        console.log("registering user");
-                        console.log(data);
-                        context.commit("registerNewUser", data.resp);
-                        return data.resp;
-                    });
+                    console.log("registering user");
+                    console.log(data);
+                    context.commit("registerNewUser", data.resp);
+                    return data.resp;
+                });
             }
         })
         // return $.ajax({
@@ -611,6 +630,66 @@ const actions = {
         }).then(data => {
             console.log("Got endorsements");
             console.log(data);
+            context.commit("getEndorsementsToBusiness", data.resp);
+            return data.resp;
+        });
+    },
+    /**   
+     * Add endorsement  to tagId of the business
+     * @param {object} data - Contains the companyId, and userId, and tagId
+     */
+    giveEndorsement: (context, data) => {
+        console.log("giving endorsement to " + data.companyId);
+        console.log(data);
+        return Vue.http.get("prds-tags.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'tags',
+                cid: data.companyId,
+                du: true,
+                multi: true,
+                uid: data.userId,
+                tid: data.tagId,
+                code: '5' //get tags(tagId) endorsed by the given user id to the given company name
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Endorsement made ");
+            console.log(data);
+            context.commit("giveEndorsement", data.resp);
+            return data.resp;
+        });
+    },
+    /**   
+     * remove endorsement  to tagId of the business
+     * @param {object} data - Contains the companyId, and userId, and tagId
+     */
+    removeEndorsement: (context, data) => {
+        console.log("removing endorsement to " + data.companyId);
+        console.log(data);
+        return Vue.http.get("prds-tags.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'tags',
+                cid: data.companyId,
+                du: true,
+                uid: data.userId,
+                tid: data.tagId,
+                code: '6' //Remove endorsement with userid tagid and company id
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Endorsement made ");
+            console.log(data);
+            context.commit("removeEndorsement", data.resp);
             return data.resp;
         });
     }
