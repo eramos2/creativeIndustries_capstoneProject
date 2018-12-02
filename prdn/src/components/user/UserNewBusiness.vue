@@ -12,9 +12,10 @@
             <label for="companyName" class="required">Company Name</label>
             <input
               name="companyName"
-              v-validate="'required|max:20|alpha_spaces'"
+              v-validate="'required|max:40'"
               type="text"
-              v-model="comapnyName"
+              data-vv-as="company name"
+              v-model="companyName"
               id="companyName"
               placeholder="Company Name"
               class="form-control"
@@ -30,6 +31,7 @@
             <input
               name="addressID"
               v-validate="'required|max:40'"
+              data-vv-as="address"
               type="text"
               v-model="addressID"
               id="addressID"
@@ -40,6 +42,41 @@
           </div>
           <!-- ROW FOR CITY, COUNTRY, ZIPCODE AND telephone  START -->
           <div class="row">
+            <!-- EMAIL -->
+            <div class="col-lg-6">
+              <div class="single-input-item">
+                <!-- <div class="single-input-item"> -->
+                <label for="email" class="required">Email</label>
+                <input
+                  name="email"
+                  v-validate="'required|email'"
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  v-model="email"
+                  class="form-control"
+                >
+                <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+              </div>
+            </div>
+            <!-- VIDEO URL -->
+            <div class="col-lg-6">
+              <div class="single-input-item">
+                <!-- <div class="single-input-item"> -->
+                <label for="videoURL" class="required">Video URL</label>
+                <input
+                  name="videoURL"
+                  v-validate="'url|required'"
+                  data-vv-as="url"
+                  type="text"
+                  id="videoURL"
+                  placeholder="Video URL"
+                  v-model="videoURL"
+                  class="form-control"
+                >
+                <p class="text-danger" v-if="errors.has('videoURL')">{{ errors.first('videoURL') }}</p>
+              </div>
+            </div>
             <div class="col-lg-6">
               <div class="single-input-item">
                 <label for="city" class="required">City</label>
@@ -125,6 +162,7 @@
               class="form-control textArea"
               name="description"
               v-validate="'required'"
+              v-model="description"
               id="description"
               placeholder="Description"
               rows="7"
@@ -138,117 +176,72 @@
           <div class="single-input-item">
             <label for="logo" class="required">Business Photo</label>
             <p>
-              <input v-validate="'required|image'" data-vv-as="image" name="logo" type="file">
+              <input v-validate="'image'" data-vv-as="image" name="logo" type="file">
             </p>
             <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
           </div>
-
           <fieldset>
             <!-- SELECT TAGS TO DESCRIBE PROJECT -->
-            <div class="row">
-              <div class="col-md-12 categoryList" id="tag-column-project">
-                <div style="overflow-y: scroll; height:400px;">
-                  <ul class="list-group navList" id="editMatProcCons">
-                    <h3>Select 6 Tags to describe your Business</h3>
-                    <li class="input-group" name="tags" value="2">
-                      <strong>Applications</strong>
+            <div class="col-md-12categoryList">
+              <h3>Tags (Max. 6)</h3>
+            </div>
+            <div class="col-md-12 categoryList">
+              <div style="overflow-y: scroll; height:400px;">
+                <ul class="list-group navList" id="addTags">
+                  <div v-for="(tagCategory, key) in tags" :key="key">
+                    <li class="input-group" name="tag" :value="tagCategory.name">
+                      <strong>{{tagCategory.name}}</strong>
                     </li>
-                    <li class="catMargins">
+                    <li v-for="(tag, tagKey) in tagCategory.tags" :key="tagKey" class="catMargins">
                       <div class="checkbox">
-                        <li class="catMargins">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="tags"
-                                :disabled="spids.length > 5 && spids.indexOf(0)==-1"
-                                v-model="spids"
-                                :value="0"
-                              >Tubing
-                            </label>
-                          </div>
-                        </li>
-                        <li class="catMargins">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="tags"
-                                :disabled="spids.length > 5 && spids.indexOf(1)==-1"
-                                v-model="spids"
-                                :value="1"
-                              >Ornaments
-                            </label>
-                          </div>
-                        </li>
-                        <li class="catMargins">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="tags"
-                                :disabled="spids.length > 5 && spids.indexOf(2)==-1"
-                                v-model="spids"
-                                :value="2"
-                              >Decorative
-                            </label>
-                          </div>
-                        </li>
-                        <li class="input-group" name="tags" value="2">
-                          <strong>Qualities</strong>
-                        </li>
-                        <li class="catMargins">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="tags"
-                                :disabled="spids.length > 5 && spids.indexOf(3)==-1"
-                                v-model="spids"
-                                :value="3"
-                              >Opaque
-                            </label>
-                          </div>
-                        </li>
-                        <li class="catMargins">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="tags"
-                                :disabled="spids.length > 5 && spids.indexOf(4)==-1"
-                                v-model="spids"
-                                :value="4"
-                              >Breathable
-                            </label>
-                          </div>
-                        </li>
-                        <li class="catMargins">
-                          <div class="checkbox">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="tags"
-                                :disabled="spids.length > 5 && spids.indexOf(5)==-1"
-                                v-model="spids"
-                                :value="5"
-                              >Long Lasting
-                            </label>
-                          </div>
-                        </li>
+                        <label>
+                          <input
+                            type="checkbox"
+                            name="tag"
+                            :disabled="tids.length > 5 && tids.indexOf(0)==-1"
+                            v-model="tids"
+                            :value="tag.id"
+                          >
+                          {{tag.name}}
+                        </label>
                       </div>
                     </li>
-                  </ul>
-                </div>
+                  </div>
+                </ul>
               </div>
             </div>
           </fieldset>
-
-          <div class="single-input-item">
-            <div class="row">
+          <div class="row">
+            <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
-                <!-- <button>Add</button> -->
                 <button :disabled="errors.any()" type="submit">Submit</button>
+                <b-modal
+                  v-model="modalShow"
+                  id="modal-center"
+                  @ok="okModal"
+                  centered
+                  title="Company Added:"
+                >
+                  <p class="my-4">Submit {{companyName}} business success</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  v-model="modalShowFail"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Submit business failed</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  v-model="modalShowCred"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Submit Business Failed Some fields are empty or invalid</p>
+                </b-modal>
               </p>
             </div>
           </div>
@@ -259,37 +252,15 @@
   </form>
 </template>
 <script>
-/**
- * Custom Messages for Alerts if an error appear after validation
- */
-import { Validator } from "vee-validate";
-const dictionary = {
-  en: {
-    custom: {
-      companyName: {
-        required: "Please enter company name.",
-        alpha_spaces:
-          "The company name field may only contain alphabetic characters.",
-        max: "The company name field may not be greater than 15 characters."
-      },
-      addressID: {
-        required: "Please enter the address.",
-        alpha_spaces:
-          "The last name field may only contain alphabetic characters.",
-        max: "The last name field may not be greater than 15 characters."
-      }
-    }
-  }
-};
-
-Validator.localize(dictionary);
-
 import Vue from "vue";
 import FileUpload from "v-file-upload";
 Vue.use(FileUpload);
 export default {
   data() {
     return {
+      modalShow: false,
+      modalShowFail: false,
+      modalShowCred: false,
       companyName: "",
       addressID: "",
       city: "",
@@ -299,44 +270,90 @@ export default {
       website: "",
       description: "",
       logo: "",
-      spids: []
+      email: "",
+      videoURL: "",
+      spids: [],
+      tids: []
     };
   },
   methods: {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          alert("Submitted");
-          this.test();
+          let dataToSend = {
+            name: this.companyName,
+            address: this.addressID,
+            city: this.city,
+            country: this.country,
+            zipcode: this.zipcode,
+            phone: this.telephone,
+            website: this.website,
+            description: this.description,
+            logo: this.logo,
+            email: this.email,
+            videoURL: this.videoURL,
+            tags: this.getIdsArray("tags"),
+            id: this.$store.state.users.user.userId
+          };
+          this.$store
+            .dispatch("addSubmission", dataToSend)
+            .then(response => {
+              if (response.length > 0) {
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                //Something went wrong when adding business
+                return { modalShow: false, modalShowCred: true };
+              }
+            })
+            .then(data => {
+              this.modalShow = data.modalShow;
+              this.modalShowCred = data.modalShowCred;
+            });
           this.$validator.reset();
           return;
+        } else {
+          this.modalShowFail = true;
         }
-        alert("Empty Field(s)");
       });
+    },
+    okModal() {
+      this.$router.replace("/admin");
+    },
+    getIdsArray(subresource) {
+      //console.log(Object.keys(resource).length > 0);
+      if (subresource == "materials") {
+        let matArr = [];
+        for (let id in this.smids) {
+          matArr.push(["", this.smids[id]]);
+        }
+        return matArr;
+      } else if (subresource == "services") {
+        let servArr = [];
+        for (let id in this.ssids) {
+          servArr.push(["", this.ssids[id]]);
+        }
+        return servArr;
+      } else if (subresource == "processes") {
+        let procArr = [];
+        for (let id in this.spids) {
+          procArr.push(["", this.spids[id]]);
+        }
+        return procArr;
+      } else {
+        let tagArr = [];
+        for (let id of this.tids) {
+          console.log(this.tids);
+          console.log(id);
+          tagArr.push([id]);
+        }
+        return tagArr;
+      }
     }
   },
-  test() {
-    let data = {
-      companyName: this.companyName,
-      addressID: this.addressID,
-      city: this.city,
-      country: this.country,
-      zipcode: this.zipcode,
-      telephone: this.telephone,
-      website: this.website,
-      description: this.description,
-      logo: this.logo
-    };
-    companyName = "";
-    addressID = "";
-    city = "";
-    country = "";
-    zipcode = "";
-    telephone = "";
-    website = "";
-    description = "";
-    logo = "";
-    console.log(data);
+  computed: {
+    tags() {
+      return this.$store.state.tags.categories;
+    }
   }
 };
 </script>

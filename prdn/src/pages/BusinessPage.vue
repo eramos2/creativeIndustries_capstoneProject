@@ -81,10 +81,26 @@
                         </li>
                         <li>Address: {{currentBusiness.line}} {{currentBusiness.city}}, PR {{currentBusiness.zipcode}}</li>
                         <li>Description: {{currentBusiness.description}}</li>
-                        <button type="button" class="btn btn-primary">
-                          Notifications
-                          <span class="badge badge-light">4</span>
-                        </button>
+                        <div class="row">
+                          <div class="col-md-3">
+                            <button type="button" class="btn btn-primary">
+                              Tag #1
+                              <span class="badge badge-light">4</span>
+                            </button>
+                          </div>
+                          <div class="col-md-3">
+                            <button type="button" class="btn btn-primary">
+                              Tag #2
+                              <span class="badge badge-light">4</span>
+                            </button>
+                          </div>
+                          <div class="col-md-3">
+                            <button type="button" class="btn btn-primary">
+                              Tag #3
+                              <span class="badge badge-light">4</span>
+                            </button>
+                          </div>
+                        </div>
                       </ul>
                       <!--
                                                <div class="quick-add-to-cart">
@@ -217,7 +233,12 @@ export default {
   },
   data() {
     return {
-      curBusiness: this.$route.params.businessName.toLowerCase()
+      curBusiness: this.$route.params.businessName.toLowerCase(),
+      tid: [
+        { tagName: fastDelivery, count: 5 },
+        { tagName: fastDelivery, count: 5 },
+        { tagName: fastDelivery, count: 5 }
+      ]
     };
   },
   methods: {
@@ -318,6 +339,9 @@ export default {
 </script>
 
 <style>
+#tag-second-line {
+  margin-top: 1rem;
+}
 #zoom1 {
   max-height: 120px;
   display: block;
