@@ -395,29 +395,29 @@ const actions = {
         console.log("I'm verifying passcode for " + data.email);
         state.userFlags['recoverPassword'] = "";
 
-        var dataToSend = {
-            endpoint: 'users',
-            code: '3',
-            passcode: data.passcode,
-            uemail: data.email,
-            utype: 0 //User type = 0, admin type = 1 
-        };
+        return Vue.http.get("prds-tags.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'users',
+                code: '3',
+                passcode: data.passcode,
+                uemail: data.email,
+                utype: 0 //User type = 0, admin type = 1
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
 
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
+            var response = data.resp;
+            console.log(response);
+            if (response.length > 0) {
+                console.log("I'm recovering password for " + response[0].email);
 
-                var response = data.resp;
-                console.log(response);
-                if (response.length > 0) {
 
-                    console.log("I'm recovering password for " + response[0].email);
-
-                    dataToSend = {
+                return Vue.http.post(serverfile, {
                         endpoint: 'users',
                         code: '3',
                         du: true,
@@ -426,33 +426,28 @@ const actions = {
                         upass: response[0].password,
                         uid: response[0].userId,
                         type: 0
-                    };
-
-                    $.ajax({
-                        url: serverPath,
-                        data: dataToSend,
-                        contentType: "application/x-www-form-urlencoded",
-                        type: "POST",
-                        dataType: "json",
-                        success: function (data, textStatus, jqXHR) {
-                            context.commit("recoverUserPassword", data.resp);
-                        },
-                        error: function (data, textStatus, jqXHR) {
-                            console.log("textStatus: " + textStatus);
-                            console.log("Server Not Found: Please Try Again Later!");
+                    }, {
+                        emulateJSON: true,
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
                         }
+                    })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        context.commit("changeUserPassword", data.resp);
+                        return data.resp;
                     });
-                } else {
-                    console.log("Invalid Email or Passcode");
-                    context.commit("recoverUserPassword", data.resp);
-                }
 
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+            } else {
+                console.log("Invalid Email or Passcode");
+                context.commit("recoverUserPassword", data.resp);
+                return data.resp;
             }
         });
+
     },
     /**     
      * Register a new user (checks email doesn't exist in db)
