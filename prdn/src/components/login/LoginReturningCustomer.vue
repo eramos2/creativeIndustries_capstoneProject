@@ -79,7 +79,7 @@
                 <p class="my-4">Please create an account</p>
               </b-modal>
               <p class="lost-password">
-                <a class="pull-left" href="forgot-password.html">Forgot password?</a>
+                <a class="pull-left" type="submit" @click="forgotPasscode">Forgot password?</a>
                 
                 <a class="pull-right" type="submit" @click="havePasscode">Have a passcode?</a>
               </p>
@@ -143,8 +143,11 @@ export default {
     okModal() {
       this.$router.replace("/");
     },
-    havePasscode() {
+    forgotPasscode() {
       this.$router.replace("/login/recoverpassword");
+    },
+    havePasscode() {
+      this.$router.replace("/login/changePassword");
     },
     login(email, pass) {
       console.log(email + pass);
