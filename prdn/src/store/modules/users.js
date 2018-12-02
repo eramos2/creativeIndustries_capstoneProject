@@ -396,16 +396,16 @@ const actions = {
                 console.log(response);
                 if (response.length > 0) {
 
-                    console.log("I'm recovering password for " + data.email);
+                    console.log("I'm recovering password for " + response[0].email);
 
                     dataToSend = {
                         endpoint: 'users',
                         code: '3',
                         du: true,
                         multi: true,
-                        uemail: data.email,
-                        upass: data.password,
-                        uid: data.id,
+                        uemail: response[0].email,
+                        upass: response[0].password,
+                        uid: response[0].userId,
                         type: 0
                     };
 

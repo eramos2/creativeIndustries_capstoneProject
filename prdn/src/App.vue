@@ -314,7 +314,7 @@ export default {
       this.$store
         .dispatch("loginUser", {
           email: "emmanuel.ramos2@upr.edu",
-          password: "12345678"
+          password: "1234567890"
         })
         .then(da => {
           console.log("Wooowww");
