@@ -36,9 +36,9 @@
                                                 <div class="row">
                                                      <div class="col-lg-6">
                                                 <div class="single-input-item">
-                                                    <label for="city" class="required">City</label>
-                                                    <input name ="city" v-validate="'required|max:15'" type="text" class="form-control" id="city" v-model="city"  placeholder="City">
-                                                    <p class="text-danger" v-if="errors.has('city')">{{ errors.first('city') }}</p>
+                                                    <label for="acity" class="required">City</label>
+                                                    <input name ="acity" v-validate="'required|max:15'" type="text" class="form-control" id="acity" v-model="acity"  placeholder="City">
+                                                    <p class="text-danger" v-if="errors.has('acity')">{{ errors.first('acity') }}</p>
                                                 </div>
                                                 </div>
                                                  <div class="col-lg-6">
@@ -121,7 +121,7 @@ export default {
     lastName: "",
     email: null,
     occupation: "",
-    city: "",
+    acity: "",
     birthdate: "",
     password: "",
     confirmedpassword: ""
@@ -137,7 +137,7 @@ export default {
             lastName: this.lastName,
             occupation: this.occupation,
             birthday: this.birthdate,
-            city: this.city
+            city: this.acity
           };
           this.$store
             .dispatch("addNewAdmin", userData)

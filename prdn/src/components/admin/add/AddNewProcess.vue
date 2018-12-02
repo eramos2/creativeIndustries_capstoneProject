@@ -1,96 +1,112 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit">  
+  <form @submit.prevent="validateBeforeSubmit">
     <div class="container listContainer">
-    <div class="row addMarginTop">
-        <h2><span class="glyphicon glyphicon-plus-sign marginTop"></span> Add New Process</h2>
-    </div>
+      <div class="row addMarginTop">
+        <h2>
+          <span class="glyphicon glyphicon-plus-sign marginTop"></span> Add New Process
+        </h2>
+      </div>
 
-    <div id="error"></div>
-    <!-- <form name="todo"> -->
-        <div>
+      <div id="error"></div>
+      <!-- <form name="todo"> -->
+      <div>
         <div class="row">
-            <div class="col-md-4 addCategoryList">
-                <h5>Process</h5>
-                <div class="form-group">
-                    <select class="form-control" v-model="value" id="procTypes">
-                        <option value="none" disabled selected>Choose One Process</option>
-                        <option id="addNewProc" value="addNewProc">New Process</option>
-                        <!-- Process categories -->
-                        <option 
-                        v-for="(category,key) in processCat"
-                        :key="key"
-                        :value="category.id"
-                        >
-                        {{category.name}}
-                        </option>
-                      
-                    </select>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                      <!-- If new process selected show the input textbox -->
-                        <div 
-                        id="newProc"
-                        v-if="displayNewProc"
-                        >
-                          <input type="text" class="form-control" name="newProcField" placeholder="Enter New Process" 
-                          v-validate="'required|max:15'"  
-                          v-model="newProcField"  
-                          id="newProcessField">
-                        </div>
-                        <p class="text-danger" v-if="errors.has('newProcField')">{{ errors.first('newProcField') }}</p>
-                    </div>
-                </div>
-               
-                
-                <h5>Sub-Process</h5>
-                <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newSubProc" id="newSubProc" v-validate="'required|max:15'"  v-model="newSubProc" placeholder="Enter Sub-Process">
-                        <p class="text-danger" v-if="errors.has('newSubProc')">{{ errors.first('newSubProc') }}</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
-                <p>
-                     <button :disabled="errors.any()" type="submit">Add</button>
-                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
-                      <p class="my-4">The Process was added.</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
-                      <p class="my-4">Try Again</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                      <p class="my-4">Combination failed</p>
-                      </b-modal>
-                </p>
-            </div>
-            </div>
-            <div id="matConn" class="col-md-4 addCategoryList" style="display: none">
-                <h5>Material Connections</h5>
-                <ul class="list-group navList" id="matCons"> </ul>
-            </div>
-
-            <div id="servConn" class="col-md-4 addCategoryList" style="display: none">
-                <h5>Services Connections</h5>
-                <ul class="list-group navList" id="servCons">
-                </ul>
+          <div class="col-md-4 addCategoryList">
+            <h5>Process</h5>
+            <div class="form-group">
+              <select class="form-control" v-model="value" id="procTypes">
+                <option value="none" disabled selected>Choose One Process</option>
+                <option id="addNewProc" value="addNewProc">New Process</option>
+                <!-- Process categories -->
+                <option
+                  v-for="(category,key) in processCat"
+                  :key="key"
+                  :value="category.id"
+                >{{category.name}}</option>
+              </select>
             </div>
 
             <div class="row">
-                <div class="col-md-4 pull-right buttonMargin" style="display: none" id="addMatServConnBtn">
-                    <p>
-                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateAddNewProc(this.form)">Add</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button>
-                    </p>
+              <div class="col-md-12">
+                <!-- If new process selected show the input textbox -->
+                <div id="newProc" v-if="displayNewProc">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="newProcField"
+                    placeholder="Enter New Process"
+                    v-validate="'required|max:15'"
+                    v-model="newProcField"
+                    id="newProcessField"
+                  >
                 </div>
+                <p
+                  class="text-danger"
+                  v-if="errors.has('newProcField')"
+                >{{ errors.first('newProcField') }}</p>
+              </div>
             </div>
+
+            <h5>Sub-Process</h5>
+            <div class="row">
+              <div class="input-group input_fields_wrap subCatField col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="newSubProc"
+                  id="newSubProc"
+                  v-validate="'required|max:15'"
+                  v-model="newSubProc"
+                  placeholder="Enter Sub-Process"
+                >
+                <p
+                  class="text-danger"
+                  v-if="errors.has('newSubProc')"
+                >{{ errors.first('newSubProc') }}</p>
+              </div>
+            </div>
+
+            <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
+              <p>
+                <button :disabled="errors.any()" type="submit">Add</button>
+                <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">
+                  <p class="my-4">The Process was added.</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  v-model="modalShowFail"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Try Again</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  v-model="modalShowCred"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Combination failed</p>
+                </b-modal>
+              </p>
+            </div>
+          </div>
+          <div id="matConn" class="col-md-4 addCategoryList" style="display: none">
+            <h5>Material Connections</h5>
+            <ul class="list-group navList" id="matCons"></ul>
+          </div>
+
+          <div id="servConn" class="col-md-4 addCategoryList" style="display: none">
+            <h5>Services Connections</h5>
+            <ul class="list-group navList" id="servCons"></ul>
+          </div>
         </div>
-        </div>
-    <!-- </form> -->
-</div>
-</form>
+      </div>
+      <!-- </form> -->
+    </div>
+  </form>
 </template>
 <script>
 /**

@@ -1,70 +1,81 @@
 <template>
-    
-        <div class="header-area sticky-header bg-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-5">
-                        <!-- logo start -->
-                        
-                        <router-link to="/" tag="div" class="logo" active-class="active" exact><a><img src="https://via.placeholder.com/178x52?text=PRDN LOGO" alt=""></a></router-link>
-                        <!--<div class="logo">
+  <div class="header-area sticky-header bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-5">
+          <!-- logo start -->
+          <router-link to="/" tag="div" class="logo" active-class="active" exact>
+            <a>
+              <img src="https://via.placeholder.com/178x52?text=PRDN LOGO" alt>
+            </a>
+          </router-link>
+          <!--<div class="logo">
                           
                             <a href="index.html"><img src="https://via.placeholder.com/178x52?text=PRDN LOGO" alt=""></a>
-                        </div>-->
-                        <!-- logo end -->
-                    </div>
-                    <div class="col-lg-6 d-none d-lg-block">
-                        <div class="main-menu main-menu-style-2">
-                            <nav>
-                                <ul>
-                                    <router-link to="/" tag="li" active-class="active" exact><a>Home</a></router-link>
-                                    <router-link to="/materials" tag="li" active-class="active"><a>Materials</a></router-link>
-                                    <router-link to="/services" tag="li" active-class="active"><a>Services</a></router-link>
-                                    <router-link to="/processes" tag="li" active-class="active"><a>Processes</a></router-link>
-                                    <router-link to="/map" tag="li" active-class="active"><a>Map</a></router-link>
+          </div>-->
+          <!-- logo end -->
+        </div>
+        <div class="col-lg-6 d-none d-lg-block">
+          <div class="main-menu main-menu-style-2">
+            <nav>
+              <ul>
+                <router-link to="/" tag="li" active-class="active" exact>
+                  <a>Home</a>
+                </router-link>
+                <router-link to="/materials" tag="li" active-class="active">
+                  <a>Materials</a>
+                </router-link>
+                <router-link to="/services" tag="li" active-class="active">
+                  <a>Services</a>
+                </router-link>
+                <router-link to="/processes" tag="li" active-class="active">
+                  <a>Processes</a>
+                </router-link>
+                <router-link to="/map" tag="li" active-class="active">
+                  <a>Map</a>
+                </router-link>
+              </ul>
+            </nav>
+          </div>
+        </div>
 
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+        <div class="col-lg-3 col-md-7">
+          <!-- top-box-lang start -->
+          <div class="top-box-lang top-box-lang-2 text-right">
+            <ul>
+              <li class="currency">
+                <div class="btn-group">
+                  <router-link
+                    to="/login"
+                    tag="button"
+                    class="btn-link"
+                    active-class="active"
+                    v-if="!authenticated && !adminAuthenticated"
+                  >
+                    <a>Login</a>
+                  </router-link>
+                  <router-link
+                    to="/register"
+                    tag="button"
+                    active-class="active"
+                    class="btn-link"
+                    v-if="!authenticated && !adminAuthenticated"
+                  >
+                    <a>Register</a>
+                  </router-link>
 
-                    <div class="col-lg-3 col-md-7">
-                        <!-- top-box-lang start -->
-                        <div class="top-box-lang top-box-lang-2 text-right">
-                            <ul>
-                                <li class="currency">
-                                            <div class="btn-group">
-                                                
-                                               <router-link 
-                                                  to="/login" 
-                                                  tag="button" 
-                                                  class="btn-link"
-                                                  active-class="active"
-                                                  v-if="!authenticated && !adminAuthenticated"
-                                                >
-                                                <a>Login</a>
-                                                </router-link>
-                                                <router-link 
-                                                  to="/register" 
-                                                  tag="button" 
-                                                  active-class="active"
-                                                  class="btn-link"
-                                                  v-if="!authenticated && !adminAuthenticated"
-                                                >
-                                                <a>Register</a>
-                                               </router-link>
-                                                
-                                                <button 
-                                                  v-if="authenticated || adminAuthenticated" 
-                                                  class="btn-link dropdown-toggle" 
-                                                  data-toggle="dropdown" 
-                                                  aria-haspopup="true" 
-                                                  aria-expanded="false">
-                                                   My Account <i class="fa fa-angle-down"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <ul>
-                                                        <!-- <router-link 
+                  <button
+                    v-if="authenticated || adminAuthenticated"
+                    class="btn-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >My Account
+                    <i class="fa fa-angle-down"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <ul>
+                      <!-- <router-link 
                                                           to="/register" 
                                                           tag="li" 
                                                           active-class="active"
@@ -79,93 +90,81 @@
                                                           v-if="!authenticated"
                                                         >
                                                         <a>Login</a>
-                                                        </router-link> -->
-                                                        <!-- Start User Options -->
-                                                        <router-link 
-                                                          to="/user" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="authenticated"
-                                                        >
-                                                        <a>Account Details</a>
-                                                        </router-link>
-                                                        <router-link 
-                                                          to="/user/projects" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="authenticated"
-                                                        >
-                                                        <a>My Projects</a>
-                                                        </router-link>
-                                                        <router-link 
-                                                          to="/user/addBusiness" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="authenticated"
-                                                        >
-                                                        <a>Submit Business</a>
-
-                                                        </router-link>
-                                                        <!-- End User Options -->
-                                                        <!-- Start Admins Options -->
-                                                        <router-link 
-                                                          to="/admin" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="adminAuthenticated"
-                                                        >
-                                                        <a>Account Details</a>
-                                                        </router-link>
-                                                        <router-link 
-                                                          to="/admin/add" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="adminAuthenticated"
-                                                        >
-                                                        <a>Add Actions</a>
-                                                        </router-link>
-                                                        <router-link 
-                                                          to="/admin/edit" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="adminAuthenticated"
-                                                        >
-                                                        <a>Edit Actions </a>
-                                                        </router-link>
-                                                        <router-link 
-                                                          to="/admin/remove" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="adminAuthenticated"
-                                                        >
-                                                        <a>Remove Actions </a>
-                                                        </router-link>
-                                                        <router-link 
-                                                          to="/admin/requests" 
-                                                          tag="li" 
-                                                          active-class="active"
-                                                          v-if="adminAuthenticated"
-                                                        >
-                                                        <a>Pending Requests</a>
-                                                        </router-link>
-                                                        <!-- End Admin Options -->
-                                                    </ul>
-                                                </div>
-                                                <button
-                                                  class="btn-link"
-                                                  v-if="authenticated"
-                                                  @click="logout()">
-                                                    <a>Log Out</a>
-                                                </button>
-                                                <button
-                                                  class="btn-link"
-                                                  v-if="adminAuthenticated"
-                                                  @click="adminLogout()">
-                                                    <a>Log Out</a>
-                                                </button>
-                                            </div>
-                                        </li>
-                                <!-- <li class="language">
+                      </router-link>-->
+                      <!-- Start User Options -->
+                      <router-link to="/user" tag="li" active-class="active" v-if="authenticated">
+                        <a>Account Details</a>
+                      </router-link>
+                      <router-link
+                        to="/user/projects"
+                        tag="li"
+                        active-class="active"
+                        v-if="authenticated"
+                      >
+                        <a>My Projects</a>
+                      </router-link>
+                      <router-link
+                        to="/user/addBusiness"
+                        tag="li"
+                        active-class="active"
+                        v-if="authenticated"
+                      >
+                        <a>Submit Business</a>
+                      </router-link>
+                      <!-- End User Options -->
+                      <!-- Start Admins Options -->
+                      <router-link
+                        to="/admin"
+                        tag="li"
+                        active-class="active"
+                        v-if="adminAuthenticated"
+                      >
+                        <a>Account Details</a>
+                      </router-link>
+                      <router-link
+                        to="/admin/add"
+                        tag="li"
+                        active-class="active"
+                        v-if="adminAuthenticated"
+                      >
+                        <a>Add Actions</a>
+                      </router-link>
+                      <router-link
+                        to="/admin/edit"
+                        tag="li"
+                        active-class="active"
+                        v-if="adminAuthenticated"
+                      >
+                        <a>Edit Actions</a>
+                      </router-link>
+                      <router-link
+                        to="/admin/remove"
+                        tag="li"
+                        active-class="active"
+                        v-if="adminAuthenticated"
+                      >
+                        <a>Remove Actions</a>
+                      </router-link>
+                      <router-link
+                        to="/admin/requests"
+                        tag="li"
+                        active-class="active"
+                        v-if="adminAuthenticated"
+                      >
+                        <a>Pending Requests</a>
+                      </router-link>
+                      <!-- End Admin Options -->
+                    </ul>
+                  </div>
+                  <button class="btn-link" v-if="authenticated" @click="logout()">
+                    <a>Log Out</a>
+                  </button>
+                  <button class="btn-link" v-if="adminAuthenticated" @click="adminLogout()">
+                    <a>Log Out</a>
+                  </button>
+                </div>
+              </li>
+              <!-- <li class="language">
                                     <div class="btn-group">
                                         <button class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <img src="https://www.fixaflat.com/images/flag-us.png" alt=""> English <i class="fa fa-angle-down"></i>
@@ -177,17 +176,14 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </li> -->
-                            </ul>
-                        </div>
-                        <!-- top-box-lang end -->
-                    </div>
-                </div>
-                
-            </div>
+              </li>-->
+            </ul>
+          </div>
+          <!-- top-box-lang end -->
         </div>
-        
-    
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

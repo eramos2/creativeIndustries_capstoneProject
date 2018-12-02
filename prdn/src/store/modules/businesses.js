@@ -354,7 +354,8 @@ const mutations = {
     setCurrentBusinessTags: (state, data) => {
         state.currentBusiness['tags'] = data;
 
-        state.currentBusiness = { ...state.currentBusiness
+        state.currentBusiness = {
+            ...state.currentBusiness
         }
     }
 }
@@ -519,6 +520,7 @@ const actions = {
                                                 //console.log("Set CurrentBusinessSubCategories");
                                                 context.commit('setCurrentBusinessSubCategories');
                                             }).then(() => {
+                                                console.log(state.currentBusiness.companyName);
                                                 return Vue.http.get("prds-tags.php", {
                                                     params: {
                                                         endpoint: 'tags',
@@ -750,6 +752,8 @@ const actions = {
         var materials = data.materials;
         var processes = data.processes;
         var services = data.services;
+        var tags = data.tags;
+        console.log(data.tags);
 
         var geocoder = new google.maps.Geocoder();
         var addressLatLong = address + ', ' + city + ', ' + country;
@@ -769,7 +773,7 @@ const actions = {
                     multi: true,
                     endpoint: 'company',
                     code: '8',
-                    aid: "5",
+                    aid: "5",  //hardcoded needs to change
 
                     name: companyName,
                     URL: videoURL,
@@ -781,6 +785,7 @@ const actions = {
                     spids: processes,
                     smids: materials,
                     ssids: services,
+                    tids: tags,
                     line: address,
                     city: city,
                     count: country,

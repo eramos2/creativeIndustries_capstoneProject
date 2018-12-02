@@ -46,7 +46,7 @@
             centered
             title="ERROR"
           >
-            <p class="my-4">remove failed</p>
+            <p class="my-4">Remove Failed, the tag is assigned to a company.</p>
           </b-modal>
         </p>
       </div>

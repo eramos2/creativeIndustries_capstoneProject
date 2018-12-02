@@ -225,7 +225,7 @@ const actions = {
                 return response.json();
             })
             .then(data => {
-                //console.log(data);
+                console.log(data);
                 context.commit('loginUser', data.resp);
                 return data.resp;
             });

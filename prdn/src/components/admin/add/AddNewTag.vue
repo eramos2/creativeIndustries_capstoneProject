@@ -1,91 +1,108 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit">  
-<div class="container listContainer">
-    <div class="row addMarginTop">
-        <h2><span class="glyphicon glyphicon-plus-sign marginTop"></span> Add New Tag</h2>
-    </div>
-    <div id="error"></div>
-    <!-- <form name="todo"> -->
-        <div>
+  <form @submit.prevent="validateBeforeSubmit">
+    <div class="container listContainer">
+      <div class="row addMarginTop">
+        <h2>
+          <span class="glyphicon glyphicon-plus-sign marginTop"></span> Add New Tag
+        </h2>
+      </div>
+      <div id="error"></div>
+      <!-- <form name="todo"> -->
+      <div>
         <div class="row">
-            <div class="col-md-4 addCategoryList">
-                <h5>Tag - Category</h5>
-                <div class="form-group">
-                    <select class="form-control" v-model="value" id="tagTypes">
-                        <option value="none" disabled selected>Choose One Tag</option>
-                        <option id="addNewTag" value="addNewTag">New Tag</option>
+          <div class="col-md-4 addCategoryList">
+            <h5>Tag - Category</h5>
+            <div class="form-group">
+              <select class="form-control" v-model="value" id="tagTypes">
+                <option value="none" disabled selected>Choose One Tag</option>
+                <option id="addNewTag" value="addNewTag">New Tag</option>
 
-                        <!-- Tag Categories -->
-                        <option 
-                        v-for="(tagCategory,key) in tagCat"
-                        :key="key"
-                        :value="tagCategory.name"
-                        >
-                        {{tagCategory.name}}
-                        </option>
-                    </select>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div 
-                            id="newTag"
-                            v-if="displayNewTag"
-                        
-                        >
-                            <input type="text" class="form-control" name="newTagField" placeholder="Enter New Tag" v-validate="'required|max:15'" v-model="newTagField" id="newTagField"></div>
-                            <p class="text-danger" v-if="errors.has('newTagField')">{{ errors.first('newTagField') }}</p>
-
-                        </div>
-                    </div>    
-                <h5>Tag - Name</h5>
-                <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="tagName" id="tagName" v-validate="'required|max:15'" v-model="tagName"  placeholder="Tag-Name" >
-                       <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
-                        <!-- <button>Add</button> -->
-                    </div>
-                </div>
-
-                <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
-                <p>
-                     <button :disabled="errors.any()" type="submit">Add</button>
-                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
-                      <p class="my-4">The tag was added.</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
-                      <p class="my-4">Try Again</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                      <p class="my-4">Combination failed</p>
-                      </b-modal>
-                </p>
+                <!-- Tag Categories -->
+                <option
+                  v-for="(tagCategory,key) in tagCat"
+                  :key="key"
+                  :value="tagCategory.name"
+                >{{tagCategory.name}}</option>
+              </select>
             </div>
-            </div>
-
-            <div id="matConn" class="col-md-4 addCategoryList" style="display: none">
-                <h5>Material Connections</h5>
-                <ul class="list-group navList" id="matCons"> </ul>
-            </div>
-
-            <div id="procConn" class="col-md-4 addCategoryList" style="display: none">
-                <h5>Processes Connections</h5>
-                <ul class="list-group navList" id="procCons">
-                </ul>
-            </div>
-
             <div class="row">
-                <div class="col-md-4 pull-right buttonMargin" style="display: none" id="addMatProcConnBtn">
-                    <p>
-                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateAddNewServ(this.form)">Add</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button>
-                    </p>
+              <div class="col-md-12">
+                <div id="newTag" v-if="displayNewTag">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="newTagField"
+                    placeholder="Enter New Tag"
+                    v-validate="'required|max:15'"
+                    v-model="newTagField"
+                    id="newTagField"
+                  >
                 </div>
+                <p
+                  class="text-danger"
+                  v-if="errors.has('newTagField')"
+                >{{ errors.first('newTagField') }}</p>
+              </div>
             </div>
+            <h5>Tag - Name</h5>
+            <div class="row">
+              <div class="input-group input_fields_wrap subCatField col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="tagName"
+                  id="tagName"
+                  v-validate="'required|max:15'"
+                  v-model="tagName"
+                  placeholder="Tag-Name"
+                >
+                <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
+                <!-- <button>Add</button> -->
+              </div>
+            </div>
+
+            <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
+              <p>
+                <button :disabled="errors.any()" type="submit">Add</button>
+                <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">
+                  <p class="my-4">The tag was added.</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  v-model="modalShowFail"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Try Again</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  v-model="modalShowCred"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Combination failed</p>
+                </b-modal>
+              </p>
+            </div>
+          </div>
+
+          <div id="matConn" class="col-md-4 addCategoryList" style="display: none">
+            <h5>Material Connections</h5>
+            <ul class="list-group navList" id="matCons"></ul>
+          </div>
+
+          <div id="procConn" class="col-md-4 addCategoryList" style="display: none">
+            <h5>Processes Connections</h5>
+            <ul class="list-group navList" id="procCons"></ul>
+          </div>
         </div>
-        </div>
-    <!-- </form> -->
-</div>
-</form>
+      </div>
+      <!-- </form> -->
+    </div>
+  </form>
 </template>
 <script>
 /**
