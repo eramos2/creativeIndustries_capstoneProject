@@ -1,33 +1,32 @@
 <template>
-    <div class="main-menu-area">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-9 col-md-8">
-                                <!-- top-search-area start -->
-                                <div class="top-search-area home-two-shearch">
-                                    <div class="search-categories">
-                                        <div class="form">
-                                            <div class="search-form-input">
-                                                <multiselect 
-                                                
-                                                track-by="name"
-                                                label="name"
-                                                v-model="selected" 
-                                                :options="searchOptions" 
-                                                :searchable="false"
-                                                :close-on-select="true"
-                                                :show-labels="false"
-                                                :allow-empty="false"
-                                                :preselectFirst="true"
-                                                placeholder="Pick a Value"
-                                                >
-                                                <template 
-                                                slot="singleLabel" 
-                                                slot-scope="{ option }">
-                                               {{ option.name }}
-                                                   </template>
-                                                </multiselect>
-                                                <!-- <select  id="select" name="select" class="nice-select" v-model="selectedType">
+  <div class="main-menu-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 col-md-8">
+          <!-- top-search-area start -->
+          <div class="top-search-area home-two-shearch">
+            <div class="search-categories">
+              <div class="form">
+                <div class="search-form-input">
+                  <multiselect
+                    track-by="name"
+                    label="name"
+                    v-model="selected"
+                    :options="searchOptions"
+                    :searchable="false"
+                    :close-on-select="true"
+                    :show-labels="false"
+                    :allow-empty="false"
+                    :preselectFirst="true"
+                    placeholder="Pick a Value"
+                  >
+                    <template
+                      @change="onChange"
+                      slot="singleLabel"
+                      slot-scope="{ option }"
+                    >{{ option.name }}</template>
+                  </multiselect>
+                  <!-- <select  id="select" name="select" class="nice-select" v-model="selectedType">
                                                   <option 
                                                       v-for="(option, key) in searchOptions" 
                                                       :key="key"
@@ -38,88 +37,109 @@
                                                   </option>
                                                 
                                                     
-                                                </select> -->
-                                                <input id="search-input" type="text" placeholder="Search..." v-model="searchText">
-                                                <router-link 
-                                                  v-show="!onSearchPage"
-                                                  :to="{
-                                                    name: 'searchLink', 
-                                                    params: {
-                                                        resourceName: selected.value,
-                                                        searchValue: searchText
+                  </select>-->
+                  <input id="search-input" type="text" placeholder="Search..." v-model="searchText">
+                  <router-link
+                    v-if="!onSearchPage"
+                    :to="{
+                     name: 'searchLink', 
+                     params: {
+                         resourceName: selected.value,
+                         searchValue: searchText
 
-                                                    }
-                                                  }" 
-                                                  tag="button" 
-                                                  active-class="active"
-                                                  class="top-search-btn"
-                                                  type="submit"
-                                                  
-                                                >
-                                                  <i class="ion-ios-search-strong"></i> Search
-                                                </router-link>
-                                                <button class="top-search-btn" type="submit" v-show="onSearchPage" @click="searchForBusinesses"><i class="ion-ios-search-strong"></i> Search</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- top-search-area end -->
-                            </div>
-                            
-                            
-                            <!-- mobile-categorei-menu start -->
-                <div class="container d-block d-lg-none">
-                    <div class="vertical-menu pb-30">
-                        <span class="categorie-title mobile-categorei-menu">All Categories</span>
-                        <nav>  
-                            <div class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden " id="cate-mobile-toggle">
-                                <ul>
-                                    <li class="has-sub"><a href="#">Home </a>
-                                        
-                                        <!-- category submenu end-->
-                                    </li>
-                                    <li class="has-sub"><a href="#">Materials </a>
-                                        <ul class="category-sub">
-                                            <li class="menu-tile">Concrete</li>
-                                            <li><a href="">Digital Concrete</a></li>
-                                            <li><a href="">Geometrical Concrete</a></li>
-                  
-                                        </ul>
-                                        <!-- category submenu end-->
-                                    </li>
-                                    <li class="has-sub"><a href="#">Processes</a>
-                                        <ul class="category-sub">
-                                            <li><a href="#">process a</a></li>
-                                            <li><a href="#">process b</a></li>
-                                        
-                                        </ul>
-                                        <!-- category submenu end-->
-                                    </li>
-                                    <li class="has-sub"><a href="#">Services</a>
-                                        <ul class="category-sub">
-                                            <li><a href="#">subservice a</a></li>
-                                            <li><a href="#">subservice b</a></li>
-                                          
-                                        </ul>
-                                        <!-- category submenu end-->
-                                    </li>
-                                    <li><a href="#">Businesses</a></li>
-                                    
-                                   <!--
-                                    <li><a href="#">test</a></li>
-                                    <li><a href="#">test</a></li>-->
-                                </ul>
-                            </div>
-                            <!-- category-menu-end -->
-                        </nav>
-                    </div>
+                          }
+                        }"
+                    tag="button"
+                    active-class="active"
+                    class="top-search-btn"
+                    type="submit"
+                  >
+                    <i class="ion-ios-search-strong"></i> Search
+                  </router-link>
+                  <button
+                    class="top-search-btn"
+                    type="submit"
+                    v-if="onSearchPage"
+                    @click="searchForBusinesses"
+                  >
+                    <i class="ion-ios-search-strong"></i> Search
+                  </button>
                 </div>
-                <!-- mobile-categorei-menu end -->
-                        </div>
-                           
-                        
-                    </div>
-                </div> 
+              </div>
+            </div>
+          </div>
+          <!-- top-search-area end -->
+        </div>
+
+        <!-- mobile-categorei-menu start -->
+        <div class="container d-block d-lg-none">
+          <div class="vertical-menu pb-30">
+            <span class="categorie-title mobile-categorei-menu">All Categories</span>
+            <nav>
+              <div
+                class="category-menu sidebar-menu sidbar-style mobile-categorei-menu-list menu-hidden"
+                id="cate-mobile-toggle"
+              >
+                <ul>
+                  <li class="has-sub">
+                    <a href="#">Home</a>
+
+                    <!-- category submenu end-->
+                  </li>
+                  <li class="has-sub">
+                    <a href="#">Materials</a>
+                    <ul class="category-sub">
+                      <li class="menu-tile">Concrete</li>
+                      <li>
+                        <a href>Digital Concrete</a>
+                      </li>
+                      <li>
+                        <a href>Geometrical Concrete</a>
+                      </li>
+                    </ul>
+                    <!-- category submenu end-->
+                  </li>
+                  <li class="has-sub">
+                    <a href="#">Processes</a>
+                    <ul class="category-sub">
+                      <li>
+                        <a href="#">process a</a>
+                      </li>
+                      <li>
+                        <a href="#">process b</a>
+                      </li>
+                    </ul>
+                    <!-- category submenu end-->
+                  </li>
+                  <li class="has-sub">
+                    <a href="#">Services</a>
+                    <ul class="category-sub">
+                      <li>
+                        <a href="#">subservice a</a>
+                      </li>
+                      <li>
+                        <a href="#">subservice b</a>
+                      </li>
+                    </ul>
+                    <!-- category submenu end-->
+                  </li>
+                  <li>
+                    <a href="#">Businesses</a>
+                  </li>
+
+                  <!--
+                                    <li><a href="#">test</a></li>
+                  <li><a href="#">test</a></li>-->
+                </ul>
+              </div>
+              <!-- category-menu-end -->
+            </nav>
+          </div>
+        </div>
+        <!-- mobile-categorei-menu end -->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -133,7 +153,10 @@ export default {
   props: ["resources"],
   data() {
     return {
-      selected: "",
+      selected: {
+        name: "Materials",
+        value: "materials"
+      },
       searchText: "",
       selectedType: "businesses",
       searchOptions: [
@@ -158,15 +181,33 @@ export default {
       }
       return this.selectedType;
     },
+    resourceName() {
+      return this.selected.value;
+    },
     test() {
       console.log(this.selectedType);
       return this.selectedType;
     }
   },
   methods: {
+    onChange() {
+      console.log("wiwwiso");
+    },
     searchForBusinesses() {
-      console.log(this.selected.value);
-      this.$store.dispatch("getBusinessesByName", this.searchText);
+      if (this.selected.value == "businesses") {
+        console.log("searching for businesses");
+        this.$route.params.resourceName = this.resourceName;
+        this.$store.dispatch("getBusinessesByName", this.searchText);
+      } else {
+        let data = {
+          name: this.searchText,
+          resource: this.resourceName
+        };
+        this.$route.params.resourceName = this.resourceName;
+        console.log("Searching for resources");
+        console.log(data);
+        this.$store.dispatch("getSubResourceByName", data);
+      }
     },
     autoSearch() {
       console.log(this.selectedType);

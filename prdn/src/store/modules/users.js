@@ -584,6 +584,35 @@ const actions = {
             context.commit("addSubmission", data.resp);
             return data.resp;
         });
+    },
+
+    /**   
+     * Gets the company tagids that the user has endorsed 
+     * @param {object} data - Contains the company's name, and userId
+     */
+    getEndorsementsToBusiness: (context, data) => {
+        console.log("getting company tags endorsed by the user ");
+
+
+        return Vue.http.get("prds-tags", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'tags',
+                uid: data.id,
+                du: true,
+                cname: data.companyName,
+                code: '0' //get tags(tagId) endorsed by the given user id to the given company name
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Got endorsements");
+            console.log(data);
+            return data.resp;
+        });
     }
 
 };

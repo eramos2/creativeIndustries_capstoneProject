@@ -52,7 +52,21 @@
                     </ul>
         </div>-->
         <h4 class="product-name">
-          <a style="cursor: pointer;" @click="scLink">{{subcategory.name}}</a>
+          <!-- <a style="cursor: pointer;" @click="scLink">{{subcategory.name}}</a> -->
+          <router-link
+            :to="{
+                    name: 'singleitemLink', 
+                    params: {
+                        resourceName: this.$route.params.resourceName,
+                        categoryName: this.$route.params.categoryName, 
+                      subcategoryName: subcategory.name.toLowerCase()
+                    }
+                  }"
+            tag="a"
+            active-class="active"
+            class
+            style="cursor: pointer;"
+          >{{subcategory.name}}</router-link>
         </h4>
         <!--<div class="price-box">
                     <span class="new-price">$98.00</span>
