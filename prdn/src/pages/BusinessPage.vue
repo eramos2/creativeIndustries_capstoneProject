@@ -1,31 +1,30 @@
 <template>
-<div :key="curBusiness">
+  <div :key="curBusiness">
     <!--<breadcrumbs></breadcrumbs>-->
     <div class="content-wraper bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="sinlge-product-wrap box-module">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="single-product-tab">
-                                            <div class="zoomWrapper">
-                                                <div id="img-1" class="zoomWrapper single-zoom">
-                                                    <a href="#" v-if="currentBusiness.logo">
-                                                        <img id="zoom1" :src="businessLogo" alt="big-1">
-                                                    </a>
-                                                </div>
-                                                <div class="single-zoom-thumb">
-                                                    <ul class="s-tab-zoom single-product-active owl-carousel" id="gallery_01">
-                                                        <business-carousel-image
-                                                          v-for="(image,key) in currentBusinessImages"
-                                                          :key="key"
-                                                          :image="image.image"
-                                                          :imageName="image.imageName"
-                                                          :imageType="image.imageType"
-                                                        >
-                                                        </business-carousel-image>
-                                                        <!-- <li class="">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="sinlge-product-wrap box-module">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="single-product-tab">
+                    <div class="zoomWrapper">
+                      <div id="img-1" class="zoomWrapper single-zoom">
+                        <a href="#" v-if="currentBusiness.logo">
+                          <img id="zoom1" :src="businessLogo" alt="big-1">
+                        </a>
+                      </div>
+                      <div class="single-zoom-thumb">
+                        <ul class="s-tab-zoom single-product-active owl-carousel" id="gallery_01">
+                          <business-carousel-image
+                            v-for="(image,key) in currentBusinessImages"
+                            :key="key"
+                            :image="image.image"
+                            :imageName="image.imageName"
+                            :imageType="image.imageType"
+                          ></business-carousel-image>
+                          <!-- <li class="">
                                                             <a href="#" class="elevatezoom-gallery active" data-update="" data-image="img/product/larg-1.jpg" data-zoom-image="img/product/larg-1.jpg"><img src="img/product/larg-1.jpg" alt="zo-th-1"/></a>
                                                         </li>
                                                         <li class="">
@@ -39,18 +38,18 @@
                                                         </li>
                                                         <li class="">
                                                             <a href="#" class="elevatezoom-gallery" data-image="img/product/larg-5.jpg" data-zoom-image="img/product/larg-5.jpg"><img src="img/product/larg-5.jpg" alt="zo-th-5"></a>
-                                                        </li> -->
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <!-- product-thumbnail-content start -->
-                                        <div class="quick-view-content">
-                                            <div class="product-info">
-                                                <h2>{{currentBusiness.companyName}}</h2>
-                                                <!--<div class="rating-box">
+                          </li>-->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <!-- product-thumbnail-content start -->
+                  <div class="quick-view-content">
+                    <div class="product-info">
+                      <h2>{{currentBusiness.companyName}}</h2>
+                      <!--<div class="rating-box">
                                                     <ul class="rating d-flex">
                                                         <li><i class="ion-ios-star"></i></li>
                                                         <li><i class="ion-ios-star"></i></li>
@@ -58,19 +57,29 @@
                                                         <li><i class="ion-android-star-outline"></i></li>
                                                         <li><i class="ion-android-star-outline"></i></li>
                                                     </ul>
-                                                </div>-->
-                                                <!--<div class="price-box">
+                      </div>-->
+                      <!--<div class="price-box">
                                                    <span class="new-price">$25.50</span>
                                                    <span class="old-price">$30.50</span>
-                                               </div>-->
-                                               <ul class="list-unstyled">
-                                                    <li>Telephone: <a href="#">{{currentBusiness.phone}}</a></li>
-                                                    <li>Website: <a href="#">{{currentBusiness.website}}</a></li>
-                                                    <li>E-mail: {{currentBusiness.email}}</li>
-                                                    <li>Address: {{currentBusiness.line}} {{currentBusiness.city}}, PR {{currentBusiness.zipcode}}</li>
-                                                    <li>Description:  {{currentBusiness.description}}</li>
-                                                </ul>
-                                                <!--
+                      </div>-->
+                      <ul class="list-unstyled">
+                        <li>
+                          Telephone:
+                          <a href="#">{{currentBusiness.phone}}</a>
+                        </li>
+                        <li>
+                          Website:
+                          <a href="#">{{currentBusiness.website}}</a>
+                        </li>
+                        <li>E-mail: {{currentBusiness.email}}</li>
+                        <li>Video URL: {{currentBusiness.videoURL}}</li>
+                        <li>Address: {{currentBusiness.line}} {{currentBusiness.city}}, PR {{currentBusiness.zipcode}}</li>
+                        <li>Description: {{currentBusiness.description}}</li>
+                        <button type="button" class="btn btn-primary">Notifications
+                          <span class="badge badge-light">4</span>
+                        </button>
+                      </ul>
+                      <!--
                                                <div class="quick-add-to-cart">
                                                     <form class="modal-cart">
                                                         <div class="quantity">
@@ -85,12 +94,13 @@
                                                             <li><a class="compare" href="#"><i class="ion-arrow-swap"></i> Compare this Product</a></li>
                                                         </ul>
                                                     </form>
-                                               </div>-->
-                                            </div>
-                                        </div>
-                                        <!-- product-thumbnail-content end -->
-                                    </div>
-                                </div><!--
+                      </div>-->
+                    </div>
+                  </div>
+                  <!-- product-thumbnail-content end -->
+                </div>
+              </div>
+              <!--
                                 <div class="row">
                                     <div class="col">
                                         <div class="product-info-detailed">
@@ -174,20 +184,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>-->
-                            </div>
-                        </div>
-                    </div>
-
-                    <medium-carousel
-                      :key="curBusiness"
-                    >
-                        All Resources
-                    </medium-carousel>
-
-                </div>
+              </div>-->
             </div>
-</div>
+          </div>
+        </div>
+
+        <medium-carousel :key="curBusiness">All Resources</medium-carousel>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

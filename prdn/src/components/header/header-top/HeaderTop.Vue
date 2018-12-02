@@ -6,7 +6,10 @@
           <!-- logo start -->
           <router-link to="/" tag="div" class="logo" active-class="active" exact>
             <a>
-              <img src="https://via.placeholder.com/178x52?text=PRDN LOGO" alt>
+              <img
+                id="logo-img"
+                src="https://drive.google.com/uc?export=view&amp;id=1akRB1FVlGCEfT9HJvcMsut-ZXcO8ofcS"
+              >
             </a>
           </router-link>
           <!--<div class="logo">
@@ -70,7 +73,8 @@
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  >My Account
+                  >
+                    My Account
                     <i class="fa fa-angle-down"></i>
                   </button>
                   <div class="dropdown-menu">
@@ -222,7 +226,12 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
-
+#logo-img {
+  width: 7rem;
+  height: 7rem;
+  float: left;
+  padding: 0 20px 20px 0;
+}
 .wrapper header {
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.12);
 }
