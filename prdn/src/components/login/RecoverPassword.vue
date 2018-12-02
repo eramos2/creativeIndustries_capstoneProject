@@ -28,7 +28,12 @@
               v-if="errors.has('recPassEmail')"
             >{{ errors.first('recPassEmail') }}</p>
           </div>
-          <button :disabled="errors.any()" class="btn btn-default wide" type="submit">Send</button>
+          <button
+            :disabled="errors.any()"
+            class="btn btn-default wide"
+            @click="havePasscode"
+            type="submit"
+          >Send</button>
           <b-modal
             v-model="modalShow"
             id="modal-center"
@@ -125,6 +130,9 @@ export default {
     },
     okModal() {
       this.$router.replace("/");
+    },
+    havePasscode() {
+      this.$router.replace("/login/changePassword");
     }
   }
 };

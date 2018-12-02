@@ -13,7 +13,9 @@
               <!-- EMAIL -->
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('email') }">
-                  <h4>Email</h4>
+                  <div class="pull-left">
+                    <h4>Email</h4>
+                  </div>
                   <input
                     name="email"
                     v-validate="'required|email'"
@@ -31,7 +33,9 @@
               <!-- MUST BE MIN 8 CHARACTERS AND MAX 15 CHARACTERS -->
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('password') }">
-                  <h4>Password</h4>
+                  <div class="pull-left">
+                    <h4>Password</h4>
+                  </div>
                   <input
                     name="password"
                     type="password"
@@ -79,7 +83,7 @@
                 <p class="my-4">Please create an account</p>
               </b-modal>
               <p class="lost-password">
-                <a class="pull-left" href="forgot-password.html">Forgot password?</a>
+                <a class="pull-left" type="submit" @click="forgotPasscode">Forgot password?</a>
                 
                 <a class="pull-right" type="submit" @click="havePasscode">Have a passcode?</a>
               </p>
@@ -110,6 +114,11 @@ export default {
     testEmail: "test@upr.edu"
   }),
   methods: {
+    /**
+     * Validate the input data from the User using v-validate rules such as
+     * required, max, min, password
+     * @return Submitted Alert if result is true else Empty Field(s) Alert
+     */
     validateBeforeSubmit: function(e) {
       e.preventDefault();
 
@@ -143,8 +152,11 @@ export default {
     okModal() {
       this.$router.replace("/");
     },
-    havePasscode() {
+    forgotPasscode() {
       this.$router.replace("/login/recoverpassword");
+    },
+    havePasscode() {
+      this.$router.replace("/login/changePassword");
     },
     login(email, pass) {
       console.log(email + pass);

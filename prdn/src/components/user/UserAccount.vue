@@ -155,7 +155,7 @@
           </div>
         </div>
       </form>
-      <button @click="editUserData">Populate</button>
+      <button>Populate</button>
     </div>
   </div>
   <!-- Single Tab Content End -->
@@ -216,6 +216,7 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           let userData = {
+            id: this.$store.state.users.user.userId,
             uname: this.firstName,
             ulname: this.lastName,
             uoccu: this.occupation,
