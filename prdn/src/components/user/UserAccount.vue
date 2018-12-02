@@ -155,7 +155,7 @@
           </div>
         </div>
       </form>
-      <button>Populate</button>
+      <!-- <button>Populate</button> -->
     </div>
   </div>
   <!-- Single Tab Content End -->
@@ -205,6 +205,12 @@ export default {
       confirmedpassword: ""
     };
   },
+  mounted() {
+    this.firstName = this.$store.state.users.user.firstName;
+    this.lastName = this.$store.state.users.user.lastName;
+    this.occupation = this.$store.state.users.user.occupation;
+    this.city = this.$store.state.users.user.city;
+  },
   methods: {
     /**
      * Validate the input data from the User using v-validate rules such as
@@ -217,21 +223,25 @@ export default {
         if (result) {
           let userData = {
             id: this.$store.state.users.user.userId,
-            uname: this.firstName,
-            ulname: this.lastName,
-            uoccu: this.occupation,
-            ucity: this.city,
-            password: this.password
+            firstName: this.firstName,
+            lastName: this.lastName,
+            occupation: this.occupation,
+            city: this.city,
+            pass: this.password,
+            email: this.email
           };
-          this.$store.dispatch("editUserInfo", userData);
-          console
-            .log("I'm here")
+          this.$store
+            .dispatch("editUserInfo", userData)
             .then(response => {
-              if (response.length > 0) {
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                return { modalShow: false, modalShowCred: true };
-              }
+              console.log(response);
+              // if (response.length > 0) {
+              //   return { modalShow: true, modalShowCred: false };
+              // } else {
+              //   return { modalShow: false, modalShowCred: true };
+              // }
+              this.$store
+                .dispatch("changeUserPassword", userData)
+                .then(response => {});
             })
             .then(data => {
               this.modalShow = data.modalShow;
@@ -248,6 +258,7 @@ export default {
     okModal() {
       this.$router.replace("/");
     },
+
     test() {
       let userData = {
         firstName: this.firstName,

@@ -80,7 +80,7 @@
                 centered
                 title="ERROR"
               >
-                <p class="my-4">Please create an account</p>
+                <p class="my-4">Wrong Email/Password combination</p>
               </b-modal>
               <p class="lost-password">
                 <a class="pull-left" type="submit" @click="forgotPasscode">Forgot password?</a>
