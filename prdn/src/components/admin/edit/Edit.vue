@@ -39,7 +39,7 @@
             <label for="companyName" class="required">Company Name</label>
             <input
               name="companyName"
-              v-validate="'required|max:30'"
+              v-validate="'required|max:40'"
               type="text"
               id="companyName"
               placeholder="Company Name"
@@ -384,7 +384,7 @@ const dictionary = {
     custom: {
       companyName: {
         required: "Please enter your company name.",
-        max: "The company name field may not be less than 30 characters."
+        max: "The company name field may not be less than 40 characters."
       }
     }
   }
