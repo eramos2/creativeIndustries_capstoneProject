@@ -255,7 +255,7 @@ const actions = {
                 aoccu: data.occupation,
                 abdate: data.birthday,
                 acity: data.city,
-                tp: '2'   //regular admin type 
+                tp: '2' //regular admin type 
             }, {
                 emulateJSON: true,
                 headers: {
@@ -601,29 +601,42 @@ const actions = {
     removeAdministrator: (context, data) => {
         console.log("I'm deleting admin: " + data.adminId);
         state.adminFlags["removeAdministrator"] = "";
-        var dataToSend = {
-            endpoint: 'admin',
-            code: '2', //code to remove administrator from system
-            du: true,
-            aid: data.adminId
-        };
 
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
 
-                context.commit("removeAdministrator", data.resp);
-
+        return Vue.http.get(serverfile, {
+            headers: {
+                "Content-Type": "application/json"
             },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+            params: {
+                endpoint: 'admin',
+                code: '2', //code to remove administrator from system
+                du: true,
+                aid: data.adminId
             }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            context.commit("removeAdministrator", data.resp);
+            return data.resp[0].number;
         });
+        // $.ajax({
+        //     url: serverPath,
+        //     data: dataToSend,
+        //     contentType: "application/json",
+        //     type: "GET",
+        //     dataType: "json",
+        //     success: function (data, textStatus, jqXHR) {
+
+        //         context.commit("removeAdministrator", data.resp);
+
+        //     },
+        //     error: function (data, textStatus, jqXHR) {
+        //         console.log("textStatus: " + textStatus);
+        //         console.log("Server Not Found: Please Try Again Later!");
+        //     }
+        // });
     }
 
 };
