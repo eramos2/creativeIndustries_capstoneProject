@@ -477,7 +477,7 @@ const actions = {
      */
     recoverAdminPassword: (context, data) => {
         console.log("I'm verifying passcode for " + data.email);
-        stat.adminFlags['recoverPassword'] = "";
+        state.adminFlags['recoverPassword'] = "";
 
         var dataToSend = {
             endpoint: 'users',

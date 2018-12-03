@@ -18,6 +18,8 @@ import LoginReturningCustomer from "./components/login/LoginReturningCustomer.vu
 import LoginAdmin from "./components/login/LoginAdmin.vue";
 import RecoverPassword from "./components/login/RecoverPassword.vue";
 import ChangePassword from "./components/login/ChangePassword.vue";
+import ChangePasswordAdmin from "./components/login/ChangePasswordAdmin.vue";
+import RecoverPasswordAdmin from "./components/login/RecoverPasswordAdmin.vue";
 /**Admin components */
 import Admin from "./pages/Admin.vue";
 import WelcomeAdmin from "./components/admin/WelcomeAdmin.vue";
@@ -31,115 +33,124 @@ import Pending from "./components/admin/pending/Pending.vue";
  * 
  */
 export const routes = [{
-        path: '/',
-        name: 'homeLink',
-        component: Home
-    },
+    path: '/',
+    name: 'homeLink',
+    component: Home
+},
 
-    {
-        path: '/user',
-        component: User,
-        children: [{
-                path: '',
-                component: UserAccount
-            },
-            {
-                path: 'projects',
-                component: UserProjects
-            },
-            {
-                path: 'addBusiness',
-                component: UserNewBusiness
-            }
-        ]
+{
+    path: '/user',
+    component: User,
+    children: [{
+        path: '',
+        component: UserAccount
     },
     {
-        path: '/map',
-        name: 'mapLink',
-        component: Map
-    },
-    /**Start Admin Routes */
-    {
-        path: '/admin',
-        component: Admin,
-        children: [{
-                path: '',
-                component: WelcomeAdmin
-            }, {
-                path: 'add',
-                component: Add
-            }, {
-                path: "edit",
-                component: Edit
-            },
-            {
-                path: "remove",
-                component: Remove
-            },
-            {
-                path: "requests",
-                component: Pending
-            }
-        ]
-
-    }, /**End admin Routes */
-
-    {
-        path: '/register',
-        name: 'registerLink',
-        component: Register
-    },
-
-    /** Start login routes */
-    {
-        path: '/login',
-        component: Login,
-        children: [{
-                path: '',
-                component: LoginReturningCustomer
-            },
-            {
-                path: 'admin',
-                component: LoginAdmin
-            },
-            {
-                path: 'recoverpassword',
-                component: RecoverPassword
-            },
-            {
-                path: 'changepassword',
-                component: ChangePassword
-            }
-        ]
-    }, /**End login routes */
-
-    {
-        path: '/search/',
-        name: 'searchLink',
-        component: SearchPage
+        path: 'projects',
+        component: UserProjects
     },
     {
-        path: '/businesses/:businessName',
-        name: 'businessLink',
-        component: BusinessPage
-    },
-    {
-        path: '/:resourceName',
-        name: 'categoriesLink',
-        component: CategoriesPage
-    },
-    {
-        path: '/:resourceName/:categoryName',
-        name: 'subcategoriesLink',
-        component: SubCategoriesPage
-    },
-    {
-        path: '/:resourceName/:categoryName/:subcategoryName',
-        name: 'singleitemLink',
-        component: SingleItemPage
-    },
-    {
-        path: '*',
-        redirect: '/'
+        path: 'addBusiness',
+        component: UserNewBusiness
     }
+    ]
+},
+{
+    path: '/map',
+    name: 'mapLink',
+    component: Map
+},
+/**Start Admin Routes */
+{
+    path: '/admin',
+    component: Admin,
+    children: [{
+        path: '',
+        component: WelcomeAdmin
+    }, {
+        path: 'add',
+        component: Add
+    }, {
+        path: "edit",
+        component: Edit
+    },
+    {
+        path: "remove",
+        component: Remove
+    },
+    {
+        path: "requests",
+        component: Pending
+    }
+    ]
+
+}, /**End admin Routes */
+
+{
+    path: '/register',
+    name: 'registerLink',
+    component: Register
+},
+
+/** Start login routes */
+{
+    path: '/login',
+    component: Login,
+    children: [{
+        path: '',
+        component: LoginReturningCustomer
+    },
+    {
+        path: 'admin',
+        component: LoginAdmin
+    },
+    {
+        path: 'recoverpassword',
+        component: RecoverPassword
+    },
+    {
+        path: 'changepassword',
+        component: ChangePassword
+    },
+    {
+        path: 'changepasswordadmin',
+        component: ChangePasswordAdmin
+
+    },
+    {
+        path: 'recoverpasswordadmin',
+        component: RecoverPasswordAdmin
+    }
+    ]
+}, /**End login routes */
+
+{
+    path: '/search/',
+    name: 'searchLink',
+    component: SearchPage
+},
+{
+    path: '/businesses/:businessName',
+    name: 'businessLink',
+    component: BusinessPage
+},
+{
+    path: '/:resourceName',
+    name: 'categoriesLink',
+    component: CategoriesPage
+},
+{
+    path: '/:resourceName/:categoryName',
+    name: 'subcategoriesLink',
+    component: SubCategoriesPage
+},
+{
+    path: '/:resourceName/:categoryName/:subcategoryName',
+    name: 'singleitemLink',
+    component: SingleItemPage
+},
+{
+    path: '*',
+    redirect: '/'
+}
 ]

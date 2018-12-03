@@ -32,7 +32,7 @@
       <li
         class="muted credit footerContainer pull-right hidden-sm hidden-xs"
         id="adminLogInOpt"
-        onclick="loadPage('loginAdmin')"
+        @click="loginAdminFooterLink"
       >
         <a>Administrator Log In</a>
       </li>
@@ -314,7 +314,7 @@ export default {
       this.$store
         .dispatch("loginUser", {
           email: "emmanuel.ramos2@upr.edu",
-          password: "1234567890"
+          password: "12345678"
         })
         .then(da => {
           console.log("Wooowww");
@@ -356,6 +356,9 @@ export default {
       //this.$store.state.users.userFlags.loggedIn = false;
       console.log("Admin Logged Out");
       console.log(this.$store.state.administrators.adminFlags.adminLoggedIn);
+    },
+    loginAdminFooterLink() {
+      this.$router.replace("/login/admin");
     }
   },
   computed: {

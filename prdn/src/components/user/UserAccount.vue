@@ -234,14 +234,14 @@ export default {
             .dispatch("editUserInfo", userData)
             .then(response => {
               console.log(response);
-              // if (response.length > 0) {
-              //   return { modalShow: true, modalShowCred: false };
-              // } else {
-              //   return { modalShow: false, modalShowCred: true };
-              // }
-              this.$store
-                .dispatch("changeUserPassword", userData)
-                .then(response => {});
+              if (response.length > 0) {
+                return { modalShow: true, modalShowCred: false };
+              } else {
+                return { modalShow: false, modalShowCred: true };
+              }
+              // this.$store
+              //   .dispatch("changeUserPassword", userData)
+              //   .then(response => {});
             })
             .then(data => {
               this.modalShow = data.modalShow;
@@ -256,7 +256,7 @@ export default {
       });
     },
     okModal() {
-      this.$router.replace("/");
+      this.$router.replace("/user");
     },
 
     test() {
