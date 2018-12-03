@@ -85,7 +85,7 @@ const mutations = {
                 image: data.resp[category].subcatImage
             }
         }
-
+        console.log("Set materials");
         // for (var category in data.resp) {
         //     let categoryName = data.resp[category].materialName;
         //     let categoryKey = data.resp[category].materialName.replace(/ +/g, "").toLowerCase();
@@ -128,6 +128,7 @@ const mutations = {
                 image: data.resp[category].subcatImage
             }
         }
+        console.log("Set processes");
         state.resources = {
             ...state.resources
         }
@@ -459,12 +460,15 @@ const actions = {
                 }
             })
             .then(response => {
+                console.log(response);
+                console.log("data");
                 return response.json();
             })
             .then(data => {
-                //console.log(data.resp);
+                console.log(data.resp);
                 context.commit('setMaterials', data);
             });
+
         Vue.http
             .get(serverfile, {
                 params: {
@@ -486,9 +490,11 @@ const actions = {
                 }
             })
             .then(response => {
+                console.log("data");
                 return response.json();
             })
             .then(data => {
+                console.log("data");
                 context.commit('setProcesses', data);
             });
     },

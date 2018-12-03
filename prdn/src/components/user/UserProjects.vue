@@ -39,23 +39,6 @@
             >
             <p class="text-danger" v-if="errors.has('projectName')">{{errors.first('projectName')}}</p>
           </div>
-          <!-- DESCRIPTION -->
-          <div class="single-input-item">
-            <label for="description" class="required">Description</label>
-            <input
-              name="description"
-              v-validate="'required|max:80|alpha_spaces'"
-              v-model="description"
-              type="text"
-              class="form-control"
-              id="description"
-              placeholder="Brief Description"
-            >
-            <p
-              class="text-danger"
-              v-if="errors.has('description')"
-            >{{ errors.first('description') }}</p>
-          </div>
           <fieldset>
             <!-- SELECT TAGS TO DESCRIBE PROJECT -->
             <div class="row">
@@ -74,8 +57,8 @@
                               <input
                                 type="checkbox"
                                 name="tags"
-                                :disabled="spids.length > 2 && spids.indexOf(0)==-1"
-                                v-model="spids"
+                                :disabled="tids.length > 2 && tids.indexOf(0)==-1"
+                                v-model="tids"
                                 :value="0"
                               >Tubing
                             </label>
@@ -87,8 +70,8 @@
                               <input
                                 type="checkbox"
                                 name="tags"
-                                :disabled="spids.length > 2 && spids.indexOf(1)==-1"
-                                v-model="spids"
+                                :disabled="tids.length > 2 && tids.indexOf(1)==-1"
+                                v-model="tids"
                                 :value="1"
                               >Ornaments
                             </label>
@@ -100,8 +83,8 @@
                               <input
                                 type="checkbox"
                                 name="tags"
-                                :disabled="spids.length > 2 && spids.indexOf(2)==-1"
-                                v-model="spids"
+                                :disabled="tids.length > 2 && tids.indexOf(2)==-1"
+                                v-model="tids"
                                 :value="2"
                               >Decorative
                             </label>
@@ -116,8 +99,8 @@
                               <input
                                 type="checkbox"
                                 name="tags"
-                                :disabled="spids.length > 2 && spids.indexOf(3)==-1"
-                                v-model="spids"
+                                :disabled="tids.length > 2 && tids.indexOf(3)==-1"
+                                v-model="tids"
                                 :value="3"
                               >Opaque
                             </label>
@@ -129,8 +112,8 @@
                               <input
                                 type="checkbox"
                                 name="tags"
-                                :disabled="spids.length > 2 && spids.indexOf(4)==-1"
-                                v-model="spids"
+                                :disabled="tids.length > 2 && tids.indexOf(4)==-1"
+                                v-model="tids"
                                 :value="4"
                               >Breathable
                             </label>
@@ -142,8 +125,8 @@
                               <input
                                 type="checkbox"
                                 name="tags"
-                                :disabled="spids.length > 2 && spids.indexOf(5)==-1"
-                                v-model="spids"
+                                :disabled="tids.length > 2 && tids.indexOf(5)==-1"
+                                v-model="tids"
                                 :value="5"
                               >Long Lasting
                             </label>
@@ -232,8 +215,7 @@ export default {
     return {
       selected: "",
       projectName: "",
-      description: "",
-      spids: []
+      tids: []
     };
   },
   methods: {
@@ -263,7 +245,18 @@ export default {
       description = "";
       console.log(data);
     },
-    onChange() {}
+    onChange() {
+      let projects = this.$store.state.users.userProjects;
+      console.log(projects);
+      for (let pKey of projects) {
+        //Get project data if it matches the current selectedId
+        if (projects[pKey].projectId == this.selected) {
+          console.log(pKey);
+          this.projectName = projects[pKey].projectName;
+          this.tids = projects[pKey].tids;
+        }
+      }
+    }
   },
   components: {
     singleitems: SingleItems
