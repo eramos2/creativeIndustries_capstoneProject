@@ -7,7 +7,6 @@
         </h2>
       </div>
       <div id="error"></div>
-      <!-- <form name="todo"> -->
       <div>
         <div class="row">
           <div class="col-md-4 addCategoryList">
@@ -44,6 +43,7 @@
                 >{{ errors.first('newServiceField') }}</p>
               </div>
             </div>
+            <!-- SubServices -->
             <h5>Sub-Service</h5>
             <div class="row">
               <div class="input-group input_fields_wrap subCatField col-md-12">
@@ -64,12 +64,21 @@
             </div>
             <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
               <p>
+                <!-- Modal Windows -->
                 <button :disabled="errors.any()" type="submit">Add</button>
-                <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">
+                <b-modal
+                  v-model="modalShow"
+                  id="modal-center"
+                  @ok="okModal"
+                  ok-only="true"
+                  centered
+                  title="Added"
+                >
                   <p class="my-4">The service was added.</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
+                  ok-only="true"
                   v-model="modalShowFail"
                   id="modal-center"
                   centered
@@ -79,12 +88,13 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
+                  ok-only="true"
                   v-model="modalShowCred"
                   id="modal-center"
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Combination failed</p>
+                  <p class="my-4">Something went wrong!</p>
                 </b-modal>
               </p>
             </div>

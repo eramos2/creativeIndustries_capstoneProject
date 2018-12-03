@@ -1,92 +1,133 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit">  
+  <form @submit.prevent="validateBeforeSubmit">
     <div class="container listContainer">
-    <div class="row addMarginTop">
-        <h2><span class="glyphicon glyphicon-plus-sign addMarginTop"></span> Add New Material</h2>
-    </div>
+      <div class="row addMarginTop">
+        <h2>
+          <span class="glyphicon glyphicon-plus-sign addMarginTop"></span> Add New Material
+        </h2>
+      </div>
 
-    <div id="error"></div>
-    <!-- <form name="todo"> -->
-        <div>
+      <div id="error"></div>
+      <div>
         <div class="row">
-            <div class="col-md-4 addCategoryList">
-                <h5>Materials</h5>
-                <div class="form-group">
-                    <select class="form-control" v-model="value" id="matTypes">
-                        <option value="none" disabled selected>Choose One Material</option>
-                        <option id="addNewMat" value="addNewMat">New Material</option>
-                        <!-- Material Categories -->
-                        <option 
-                        v-for="(category,key) in materialCat"
-                        :key="key"
-                        :value="category.id"
-                        >
-                        {{category.name}}
-                        </option>
-                    </select>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                      <!-- If new material selected show the input textbox -->
-                        <div 
-                            id="newMat"
-                            v-if="displayNewMat">
-                            <input type="text" class="form-control" name="newMatField" placeholder="Enter New Material" v-validate="'required|max:15'" v-model="newMatField" id="newMaterialField"></div>
-                            <p class="text-danger" v-if="errors.has('newMatField')">{{ errors.first('newMatField') }}</p>
-                        </div>
-                    </div>
-                        
-                        
-                <h5>Sub-Materials</h5>
-                <div class="row">
-                    <div class="input-group input_fields_wrap subCatField col-md-12">
-                        <input type="text" class="form-control" name="newSubMat" id="newSubMat" v-validate="'required|max:15'" v-model="newSubMat" placeholder="Enter Sub-Material">
-                        <p class="text-danger" v-if="errors.has('newSubMat')">{{ errors.first('newSubMat') }}</p>
-                    </div>
-                </div>
-              
-                    <div class="col-lg-8  col-lg-8 col-sm-6  buttonMargin">   
-                <p>
-                     <button :disabled="errors.any()" type="submit">Add</button>
-                      <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
-                      <p class="my-4">The material was added.</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
-                      <p class="my-4">Try Again</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                      <p class="my-4">Combination failed</p>
-                      </b-modal>
-                </p>
+          <div class="col-md-4 addCategoryList">
+            <h5>Materials</h5>
+            <div class="form-group">
+              <select class="form-control" v-model="value" id="matTypes">
+                <option value="none" disabled selected>Choose One Material</option>
+                <option id="addNewMat" value="addNewMat">New Material</option>
+                <!-- Material Categories -->
+                <option
+                  v-for="(category,key) in materialCat"
+                  :key="key"
+                  :value="category.id"
+                >{{category.name}}</option>
+              </select>
             </div>
-              
-                
-            </div>
-
-            <div id="procConn" class="col-md-4 addCategoryList" style="display: none">
-                <h5>Processes Connections</h5>
-                <ul class="list-group navList" id="procCons"> </ul>
-            </div>
-
-            <div id="servConn" class="col-md-4 addCategoryList" style="display: none">
-                <h5>Services Connections</h5>
-                <ul class="list-group navList" id="servCons">
-                </ul>
-            </div>
-
             <div class="row">
-                <div class="col-md-4 pull-right buttonMargin" style="display: none" id="addProcServConnBtn">
-                    <p>
-                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" >Add</button>
-                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" >Cancel</button>
-                    </p>
+              <div class="col-md-12">
+                <!-- If new material selected show the input textbox -->
+                <div id="newMat" v-if="displayNewMat">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="newMatField"
+                    placeholder="Enter New Material"
+                    v-validate="'required|max:15'"
+                    v-model="newMatField"
+                    id="newMaterialField"
+                  >
                 </div>
+                <p
+                  class="text-danger"
+                  v-if="errors.has('newMatField')"
+                >{{ errors.first('newMatField') }}</p>
+              </div>
             </div>
+
+            <!-- Sub Material Categories     -->
+            <h5>Sub-Materials</h5>
+            <div class="row">
+              <div class="input-group input_fields_wrap subCatField col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="newSubMat"
+                  id="newSubMat"
+                  v-validate="'required|max:15'"
+                  v-model="newSubMat"
+                  placeholder="Enter Sub-Material"
+                >
+                <p
+                  class="text-danger"
+                  v-if="errors.has('newSubMat')"
+                >{{ errors.first('newSubMat') }}</p>
+              </div>
+            </div>
+
+            <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
+              <p>
+                <button :disabled="errors.any()" type="submit">Add</button>
+                <b-modal
+                  v-model="modalShow"
+                  id="modal-center"
+                  @ok="okModal"
+                  ok-only="true"
+                  centered
+                  title="Added"
+                >
+                  <p class="my-4">Added.</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  ok-only="true"
+                  v-model="modalShowFail"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Try Again</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  ok-only="true"
+                  v-model="modalShowCred"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Something went wrong!</p>
+                </b-modal>
+              </p>
+            </div>
+          </div>
+          <!-- Processes Categories -->
+          <div id="procConn" class="col-md-4 addCategoryList" style="display: none">
+            <h5>Processes Connections</h5>
+            <ul class="list-group navList" id="procCons"></ul>
+          </div>
+
+          <div id="servConn" class="col-md-4 addCategoryList" style="display: none">
+            <h5>Services Connections</h5>
+            <ul class="list-group navList" id="servCons"></ul>
+          </div>
+
+          <div class="row">
+            <div
+              class="col-md-4 pull-right buttonMargin"
+              style="display: none"
+              id="addProcServConnBtn"
+            >
+              <p>
+                <button type="button" class="btn btn-primary btn-lg" id="addBttn">Add</button>
+                <button type="button" class="btn btn-default btn-lg" id="cancelBttn">Cancel</button>
+              </p>
+            </div>
+          </div>
         </div>
-        </div>
-    <!-- </form> -->
-</div>
-</form>
+      </div>
+    </div>
+  </form>
 </template>
 <script>
 /**
@@ -125,13 +166,17 @@ export default {
     newSubMat: ""
   }),
   methods: {
+    /**
+     * Validate the data inserted using Vee-Validate
+     * @return modal with a notification
+     */
     validateBeforeSubmit: function(e) {
       e.preventDefault();
 
       this.$validator.validateAll().then(result => {
         if (result) {
           if (this.newMatField == "") {
-            //Catefory already exists add new subcategory only
+            //Category already exists add new subcategory only
             let data = {
               resource: "materials",
               subresName: this.newSubMat,
@@ -168,8 +213,8 @@ export default {
             this.$store
               .dispatch("addNewResource", data)
               .then(response => {
-                console.log("after dispatch add new material and submaterial");
-                console.log(response);
+                // console.log("after dispatch add new material and submaterial");
+                // console.log(response);
 
                 if (response > 0) {
                   this.reloadResources();
@@ -189,7 +234,7 @@ export default {
           this.newSubMat = "";
           return;
 
-          console.log(data);
+          // console.log(data);
         } else {
           this.modalShowFail = true;
         }
@@ -217,7 +262,7 @@ export default {
         });
         this.value = "";
         this.newSubMat = "";
-        console.log(data);
+        // console.log(data);
         this.$store.dispatch("addNewSubResource", data);
       } else {
         let data = {
@@ -229,7 +274,7 @@ export default {
         this.newMatField = "";
         this.newSubMat = "";
 
-        console.log(data);
+        // console.log(data);
         this.$store.dispatch("addNewResource", data);
       }
     }

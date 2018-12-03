@@ -8,7 +8,6 @@
       </div>
 
       <div id="error"></div>
-      <!-- <form name="todo"> -->
       <div>
         <div class="row">
           <div class="col-md-4 addCategoryList">
@@ -46,7 +45,7 @@
                 >{{ errors.first('newProcField') }}</p>
               </div>
             </div>
-
+            <!-- SubProcess -->
             <h5>Sub-Process</h5>
             <div class="row">
               <div class="input-group input_fields_wrap subCatField col-md-12">
@@ -65,15 +64,23 @@
                 >{{ errors.first('newSubProc') }}</p>
               </div>
             </div>
-
+            <!-- Modal Windows -->
             <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
               <p>
                 <button :disabled="errors.any()" type="submit">Add</button>
-                <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">
+                <b-modal
+                  v-model="modalShow"
+                  id="modal-center"
+                  @ok="okModal"
+                  ok-only="true"
+                  centered
+                  title="Added"
+                >
                   <p class="my-4">The Process was added.</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
+                  ok-only="true"
                   v-model="modalShowFail"
                   id="modal-center"
                   centered
@@ -83,12 +90,13 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
+                  ok-only="true"
                   v-model="modalShowCred"
                   id="modal-center"
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Combination failed</p>
+                  <p class="my-4">Something went wrong!/p></p>
                 </b-modal>
               </p>
             </div>
@@ -140,6 +148,10 @@ export default {
     newSubProc: ""
   }),
   methods: {
+    /**
+     * Validate the data inserted using Vee-Validate
+     * @return modal with a notification
+     */
     validateBeforeSubmit: function(e) {
       e.preventDefault();
 
@@ -154,8 +166,8 @@ export default {
             this.$store
               .dispatch("addNewSubResource", data)
               .then(response => {
-                console.log("after dispatch add new sub-resource");
-                console.log(response);
+                // console.log("after dispatch add new sub-resource");
+                // console.log(response);
                 if (response > 0) {
                   this.reloadResources();
                   return { modalShow: true, modalShowCred: false };
@@ -180,8 +192,8 @@ export default {
             this.$store
               .dispatch("addNewResource", data)
               .then(response => {
-                console.log("after dispatch add new material and submaterial");
-                console.log(response);
+                // console.log("after dispatch add new material and submaterial");
+                // console.log(response);
                 if (response > 0) {
                   this.reloadResources();
                   return { modalShow: true, modalShowCred: false };
@@ -200,78 +212,21 @@ export default {
           this.newSubProc = "";
           return;
 
-          console.log(data);
+          // console.log(data);
         } else {
           this.modalShowFail = true;
         }
       });
     },
+    /**
+     * Redirect the Admin to the Add Tab in the Admin Console
+     */
     okModal() {
       this.$router.replace("/admin/add");
     },
-    // validateBeforeSubmit() {
-    //   this.$validator.validateAll().then(result => {
-    //     if (result) {
-    //       if (this.newProcField == "") {
-    //         //Catefory already exists add new subcategory only
-    //         let data = {
-    //           resource: "processes",
-    //           subresName: this.newSubProc,
-    //           cid: this.value
-    //         };
-    //         //Dispatch the action to add the subresource
-    //         this.$store.dispatch("addNewSubResource", data).then(response => {
-    //           console.log("after dispatch add new subprocess");
-    //           console.log(response);
-
-    //           if (response > 0) {
-    //             //added new subprocess sucessfully
-    //             this.reloadResources();
-    //             alert("added new subprocess successfully");
-    //           } else {
-    //             //add new subprocess failed
-    //             alert("Failed to add new subprocess");
-    //           }
-    //         });
-
-    //         this.value = "";
-    //         this.newSubProc = "";
-    //         console.log(data);
-    //       } else {
-    //         //Add new process Category and add new subcategory
-    //         let data = {
-    //           resource: "processes",
-    //           resName: this.newProcField, //new category name
-    //           subresName: this.newSubProc //new subcategory name
-    //         };
-    //         //Dispatch the action to add the new process category and the new subprocess
-    //         this.$store.dispatch("addNewResource", data).then(response => {
-    //           console.log("after dispatch add new material and subprocess");
-    //           console.log(response);
-
-    //           if (response > 0) {
-    //             //added new subresource sucessfully
-    //             this.reloadResources();
-    //             alert("added new material and subprocess successfully");
-    //           } else {
-    //             //add new subresource failed
-    //             alert("Failed to add new material and subprocess");
-    //           }
-    //         });
-    //         this.value = "";
-    //         this.newProcField = "";
-    //         this.newSubProc = "";
-
-    //         console.log(data);
-    //       }
-    //       this.$validator.reset();
-
-    //       return;
-    //     }
-    //     alert("Empty Field(s)");
-    //   });
-    // },
-
+    /**
+     * Reload all the resources in the system
+     */
     reloadResources() {
       this.$store.dispatch("setResources");
     },
@@ -284,7 +239,7 @@ export default {
         };
         this.value = "";
         this.newSubProc = "";
-        console.log(data);
+        // console.log(data);
         this.$store.dispatch("addNewSubResource", data);
       } else {
         let data = {
@@ -296,7 +251,7 @@ export default {
         this.value = "";
         this.newProcField = "";
         this.newSubProc = "";
-        console.log(data);
+        // console.log(data);
         this.$store.dispatch("addNewResource", data);
       }
     }

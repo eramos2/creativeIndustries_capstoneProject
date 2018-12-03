@@ -1,61 +1,80 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit">  
-
-<div class="container">
-
-    <div class="row">
-
+  <form @submit.prevent="validateBeforeSubmit">
+    <div class="container">
+      <div class="row">
         <div class="col-md-12 cpl-md-offset-4" id="topRow">
+          <h2>
+            <span class="glyphicon glyphicon-minus-sign addMarginTop"></span> Remove Business
+          </h2>
 
-            <h2><span class="glyphicon glyphicon-minus-sign addMarginTop"></span> Remove Business </h2>
+          <p class="lead">Select the business you want to remove from the system.</p>
 
-            <p class="lead">Select the business you want to remove from the system.</p>
-
-            <div class="row">
-                <div style="overflow-y: scroll; height:400px;">
-                <table class="table table-striped table-hover tableContainer" id="removBsnTable">
-                    <thead>
-                    <tr><th></th>
+          <div class="row">
+            <div style="overflow-y: scroll; height:400px;">
+              <table class="table table-striped table-hover tableContainer" id="removBsnTable">
+                <thead>
+                  <tr>
+                    <th></th>
                     <th data-field="name" data-sortable="true">Business</th>
                     <th data-field="description" data-sortable="true">Description</th>
                     <th data-field="city" data-sortable="true">City</th>
-                    </tr></thead>
-                    <tbody id="businessList">
-                        <tr 
-                            v-for="(business, key) in businesses"
-                            :key="key"
-                        >
-                            <td :id="business.companyId">
-                                <input type="radio"  v-model="bid" :value="business.companyId">
-                            </td>
-                            <td>{{business.companyName}}</td>
-                            <td>{{business.description}}</td>
-                            <td>{{business.city}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
+                  </tr>
+                </thead>
+                <tbody id="businessList">
+                  <tr v-for="(business, key) in businesses" :key="key">
+                    <td :id="business.companyId">
+                      <input type="radio" v-model="bid" :value="business.companyId">
+                    </td>
+                    <td>{{business.companyName}}</td>
+                    <td>{{business.description}}</td>
+                    <td>{{business.city}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-                 <div class="row">
-            <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
-                <p>
-                     <button :disabled="errors.any()" type="submit">Remove</button>
-                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Company Removed:">
-                    <p class="my-4">removed business  success</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowCred"  id="modal-center" centered title="ERROR">
-                    <p class="my-4">remove business  failed</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowFail" id="modal-center" centered title="ERROR">
-                    <p class="my-4">Remove Business Failed Some fields are empty or invalid</p>
-                      </b-modal>
-                </p>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
+              <p>
+                <!-- Modal Windows -->
+                <button :disabled="errors.any()" type="submit">Remove</button>
+                <b-modal
+                  v-model="modalShow"
+                  id="modal-center"
+                  ok-only="true"
+                  @ok="okModal"
+                  centered
+                  title="Company Removed:"
+                >
+                  <p class="my-4">removed business success</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  ok-only="true"
+                  v-model="modalShowCred"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">remove business failed</p>
+                </b-modal>
+                <b-modal
+                  ok-variant="danger"
+                  ok-only="true"
+                  v-model="modalShowFail"
+                  id="modal-center"
+                  centered
+                  title="ERROR"
+                >
+                  <p class="my-4">Something went wrong!</p>
+                </b-modal>
+              </p>
             </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-</div>
-</form>
+  </form>
 </template>
 <script>
 export default {
@@ -68,6 +87,10 @@ export default {
     };
   },
   methods: {
+    /**
+     * Validate the data inserted using Vee-Validate
+     * @return modal with a notification
+     */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -106,9 +129,15 @@ export default {
         }
       });
     },
+    /**
+     * Reload the Business in the system
+     */
     reloadBusinesses() {
       this.$store.dispatch("setBusinesses");
     },
+    /**
+     * Redirect the admin to the Admin console
+     */
     okModal() {
       this.$router.replace("/admin/remove");
     }
