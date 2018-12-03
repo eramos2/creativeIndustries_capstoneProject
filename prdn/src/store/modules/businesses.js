@@ -17,6 +17,12 @@ const state = {
     businesses: {
 
     },
+    /**     
+     *  Businesses that offer the current subcategory resource
+     */
+    subcatBusinesses: {
+
+    },
     /** 
      * Holds business object for current business being displayed 
      */
@@ -101,6 +107,24 @@ const mutations = {
         //It gives reactivity and all components are aware if it changed
         state.businesses = {
             ...state.businesses
+        }
+
+
+
+    },
+    /**
+     * Sets state.subcatBusinesses with the given businesses
+     * @param {Object} data - Server response containing the businesses of the subcategory resource. 
+     */
+    setSubcatBusinesses: (state, data) => {
+        console.log(data);
+        state.subcatBusinesses = data
+
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.subcatBusinesses = {
+            ...state.subcatBusinesses
         }
 
 
@@ -586,7 +610,7 @@ const actions = {
 
                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
                 console.log(dataObject);
-                commit('setBusinesses', dataObject);
+                commit('setSubcatBusinesses', dataObject);
                 dispatch("setMapMarkers", data, {
                     root: true
                 });

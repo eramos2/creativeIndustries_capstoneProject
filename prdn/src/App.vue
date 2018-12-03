@@ -313,8 +313,8 @@ export default {
     login() {
       this.$store
         .dispatch("loginUser", {
-          email: "emmanuel.ramos2@upr.edu",
-          password: "1234567890"
+          email: "test122@gmail.com",
+          password: "12345678"
         })
         .then(da => {
           console.log("Wooowww");

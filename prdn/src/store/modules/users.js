@@ -35,13 +35,33 @@ const mutations = {
     userType: (state) => {
         let userType = Vue.cookie.get("userType");
         if (userType == "regular") {
-
+            console.log("loggi ind regular ");
             state.userFlags['userType'] = userType;
             state.userFlags['loggedIn'] = true;
         } else {
+            console.log("not loggid in ");
             state.userFlags['userType'] = "";
             state.userFlags['loggedIn'] = false;
         }
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.userFlags = {
+            ...state.userFlags
+        }
+
+    },
+    //Get information of user that is already logged in 
+    getUser: (state, data) => {
+
+        state.user = data[0];
+        //Replace that Object with a fresh one. For example, 
+        //using the stage-3 object spread syntax we can write it like this:
+        //It gives reactivity and all components are aware if it changed
+        state.user = {
+            ...state.user
+        }
+        state.userFlags['loggedIn'] = true;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -88,7 +108,7 @@ const mutations = {
 
     },
     getEndorsementsToBusiness: (state, data) => {
-        console.log("ge by the Endorsements to business user");
+        console.log("get Endorsements to business user");
         console.log(data);
         state.user['endorsedTags'] = data;
 
@@ -211,36 +231,39 @@ const actions = {
     userType: (context) => {
 
         context.commit("userType");
+        console.log("Is user logged in?");
+        console.log(state.userFlags.loggedIn);
+        if (state.userFlags.loggedIn) {
+            console.log("Loggin dispatching gettting user data");
+            console.log(Vue.cookie.get("userId"));
+            let data = {
+                userId: Vue.cookie.get("userId")
+            }
+            context.dispatch("getUser", data);
+        }
     },
-
-    /**  
-     * Http call to validate user login
-     * @param {Array} data - Contains object with user email and password
-     */
-
     loginUser: (context, data) => {
         let email = data.email;
         let pass = data.password;
+        console.log(email);
+        console.log(pass);
         return Vue.http
             .post(
                 serverfile, {
-                    //for testing
-                    //uemail: "emmanuel.ramos2@upr.edu",
-                    //upass: "123456"
+                    endpoint: "users",
+
+                    code: '0', //validate user credentials
                     uemail: email,
                     upass: pass
                 }, {
                     emulateJSON: true,
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    params: {
-                        endpoint: "users",
-                        code: "0" //validate user credentials
                     }
                 }
             )
             .then(response => {
+                console.log(response);
                 return response.json();
             })
             .then(data => {
@@ -249,6 +272,36 @@ const actions = {
                 return data.resp;
             });
     },
+
+    /**  
+     * Http call to get  user loggedIn user with userid
+     * @param {Array} data - Contains object with userId
+     */
+
+    getUser: (context, data) => {
+        let uid = data.userId;
+        console.log("Getting user data " + uid);
+        return Vue.http.get(serverfile, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
+                    endpoint: 'users',
+                    code: '1',
+                    uid: uid
+                }
+            })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                context.commit('getUser', data.resp);
+                return data.resp;
+            });
+    },
+
 
     /**  
      * Http call verifies if given email is in the database, if it is
@@ -332,7 +385,6 @@ const actions = {
                     uid: data.id,
                     endpoint: 'users',
                     code: '4',
-                    du: true
                 }, {
                     emulateJSON: true,
                     headers: {
@@ -369,6 +421,7 @@ const actions = {
                     uoccu: data.occupation,
                     ucity: data.city,
                     du: true
+
                 }, {
                     emulateJSON: true,
                     headers: {
@@ -377,11 +430,12 @@ const actions = {
                 }
             )
             .then(response => {
+                console.log(response);
                 return response.json();
             })
             .then(data => {
                 console.log(data);
-                context.commit("changeUserPassword", data.resp);
+                context.commit("editUserInfo", data.resp);
                 return data.resp;
             });
 
@@ -395,7 +449,7 @@ const actions = {
         console.log("I'm verifying passcode for " + data.email);
         state.userFlags['recoverPassword'] = "";
 
-        return Vue.http.get("prds-tags.php", {
+        return Vue.http.get(serverfile, {
             headers: {
                 "Content-Type": "application/json"
             },
@@ -507,59 +561,7 @@ const actions = {
                 });
             }
         })
-        // return $.ajax({
-        //     url: serverPath,
-        //     data: dataToSend,
-        //     contentType: "application/json",
-        //     type: "GET",
-        //     dataType: "json",
-        //     success: function (dataGet, textStatus, jqXHR) {
-        //         var response = dataGet.resp;
-        //         if (response.length != 0) {
-        //             console.log("The email entered already exists. Please enter another email.");
-        //             return response;
 
-        //         } else {
-        //             console.log("I'm adding user " + name);
-
-        //             dataToSend = {
-        //                 endpoint: 'users',
-        //                 code: '1',
-        //                 du: true,
-        //                 uemail: data.email,
-        //                 upass: data.password,
-        //                 uname: data.firstName,
-        //                 ulname: data.lastName,
-        //                 uoccu: data.occupation,
-        //                 ubdate: data.birthday,
-        //                 ucity: data.city
-        //             };
-
-        //             return $.ajax({
-        //                 url: serverPath,
-        //                 data: dataToSend,
-        //                 contentType: "application/x-www-form-urlencoded",
-        //                 type: "POST",
-        //                 dataType: "json",
-        //                 success: function (data, textStatus, jqXHR) {
-        //                     context.commit("registerNewUser", data.resp);
-        //                     return data.resp.promise();
-        //                 },
-        //                 error: function (data, textStatus, jqXHR) {
-        //                     console.log("textStatus: " + textStatus);
-        //                     console.log("Server Not Found: Please Try Again Later!");
-        //                 }
-        //             }).promise();
-
-        //         }
-
-
-        //     },
-        //     error: function (data, textStatus, jqXHR) {
-        //         console.log("textStatus: " + textStatus);
-        //         console.log("Server Not Found: Please Try Again Later!");
-        //     }
-        // });
     },
 
     /**   
@@ -606,16 +608,16 @@ const actions = {
      */
     getEndorsementsToBusiness: (context, data) => {
         console.log("getting company tags endorsed by the user ");
+        console.log(data);
 
-
-        return Vue.http.get("prds-tags", {
+        return Vue.http.get("prds-tags.php", {
             headers: {
                 "Content-Type": "application/json"
             },
             params: {
                 endpoint: 'tags',
                 uid: data.id,
-                du: true,
+
                 cname: data.companyName,
                 code: '0' //get tags(tagId) endorsed by the given user id to the given company name
             }
