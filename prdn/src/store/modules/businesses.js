@@ -876,26 +876,25 @@ const actions = {
     removeSubmission: (context, data) => {
         state.businessesFlags['removeSubmission'] = "";
         console.log("Removing submission with id " + data.submissionId);
-        var dataToSend = {
-            endpoint: 'submissions',
-            code: '1',
-            du: true,
-            subid: data.submissionId
-        };
 
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                context.commit("removeSubmission", data.resp);
+        return Vue.http.get(serverfile, {
+            headers: {
+                "Content-Type": "application/json"
             },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+            params: {
+                endpoint: 'submissions',
+                code: '1',
+                du: true,
+                subid: data.submissionId
             }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Got projects");
+            console.log(data);
+            context.commit("removeSubmission", data.resp);
+            return data.resp;
         });
     },
     /**    

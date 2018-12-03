@@ -1,83 +1,198 @@
 <template>
-    
-                                    <!-- Single Tab Content Start -->
-                                <!-- <div class="tab-pane fade" id="orders" role="tabpanel"> -->
-                                  <div class="" id="orders" role="tabpanel">
-                                    <div class="myaccount-content">
-                                      <form @submit.prevent="validateBeforeSubmit">  
-                                        <h3>Select your Project</h3> 
-                                        <div class="row">
-                                            <div class="form-group">
-                                          <select class="form-control" v-model="value"  onchange="addServ()" id="servTypes">
-                                              <option value="none" disabled selected>Choose Your Project</option>
-                                              <option value="1">My Project</option>
-                                          </select>
-                                         </div>
-                                         </div>
-                                        <h3>My Projects Details</h3>
+  <!-- Single Tab Content Start -->
+  <!-- <div class="tab-pane fade" id="orders" role="tabpanel"> -->
+  <div class id="orders" role="tabpanel">
+    <div class="myaccount-content">
+      <form @submit.prevent="validateBeforeSubmit">
+        <h3>Select your Project</h3>
+        <div class="row">
+          <div class="form-group">
+            <select
+              class="form-control"
+              v-model="selected"
+              @change="onChange()"
+              id="userProjectsSelect"
+            >
+              <option value="none" disabled selected>Choose Your Project</option>
+              <option
+                v-for="(project, key) in userProjects"
+                :key="key"
+                :value="project.projectId"
+              >{{project.projectName}}</option>
+            </select>
+          </div>
+        </div>
+        <h3>My Projects Details</h3>
 
-                                        <div class="account-details-form checkout-form-list">
-                                          <!-- PROJECT NAME -->
-                                                        <div class="single-input-item">
-                                                            <label for="projectName" class="required">Project Name</label>
-                                                             <input name="projectName" v-validate="'required|max:20|alpha_spaces'" v-model="projectName" type="text"  id = "projectName"  placeholder="Project Name" class="form-control" >
-                                                             <p class="text-danger" v-if="errors.has('projectName')">
-                                                                 {{errors.first('projectName')}}
-                                                                 </p>
-                                                        </div>
-                                                        <!-- DESCRIPTION -->
-                                                <div class="single-input-item">
-                                                    <label for="description" class="required">Description</label>
-                                                     <input name ="description" v-validate="'required|max:80|alpha_spaces'" v-model="description" type="text" class="form-control" id="description" placeholder="Brief Description">
-                                                    <p class="text-danger" v-if="errors.has('description')">{{ errors.first('description') }}</p>
-                                                </div>
-                                                <fieldset>
-                                                  <!-- SELECT TAGS TO DESCRIBE PROJECT -->
-                                                   <div class="row">
-                                                     <div class="col-md-12 categoryList" id="tag-column-project">
-                                                        <div style="overflow-y: scroll; height:400px;">
-                                                          <ul class="list-group navList" id="editMatProcCons">
-                                                            <h3>Select 3 Tags to describe your project</h3>
-                                                            <li class="input-group" name="tags" value="2"><strong>Applications</strong></li>
-                                                                <li class="catMargins">
-                                                                    <div class="checkbox">
-                                                                      <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(0)==-1" v-model="spids" :value="0" />Tubing</label></div></li>
-                                                                     <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(1)==-1" v-model="spids" :value="1" />Ornaments</label></div></li>
-                                                                     <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(2)==-1" v-model="spids" :value="2" />Decorative</label></div></li>
-                                                                    <li class="input-group" name="tags" value="2"><strong>Qualities</strong></li>
-                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(3)==-1" v-model="spids" :value="3" />Opaque</label></div></li>
-                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(4)==-1" v-model="spids" :value="4" />Breathable</label></div></li>
-                                                                    <li class="catMargins"><div class="checkbox"><label><input type="checkbox" name="tags" :disabled="spids.length > 2 && spids.indexOf(5)==-1" v-model="spids" :value="5" />Long Lasting</label></div></li>                                             
-                                                                  </div> 
-                                                                </li>  
-                                                                </ul>     
-                                                          </div>
-                                                     </div>
-                                                   </div>
-                                                   
-                                                </fieldset>
-                                                <div class="single-input-item">
-                                                    <button :disabled="errors.any()" type="submit">Submit</button>
-                                                    <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Welcome Back">
-                                                    <p class="my-4">{{email}}</p>
-                                                    </b-modal>
-                                                    <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
-                                                    <p class="my-4">Try Again</p>
-                                                     </b-modal>
-                                                    <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                                                     <p class="my-4">Email/password combination failed</p>
-                                               </b-modal>
-                                                </div>
-                                              
-                                        </div>
-                                        </form>
-                                    <singleitems id="single-item-column"></singleitems>
+        <div class="account-details-form checkout-form-list">
+          <!-- PROJECT NAME -->
+          <div class="single-input-item">
+            <label for="projectName" class="required">Project Name</label>
+            <input
+              name="projectName"
+              v-validate="'required|max:20|alpha_spaces'"
+              v-model="projectName"
+              type="text"
+              id="projectName"
+              placeholder="Project Name"
+              class="form-control"
+            >
+            <p class="text-danger" v-if="errors.has('projectName')">{{errors.first('projectName')}}</p>
+          </div>
+          <!-- DESCRIPTION -->
+          <div class="single-input-item">
+            <label for="description" class="required">Description</label>
+            <input
+              name="description"
+              v-validate="'required|max:80|alpha_spaces'"
+              v-model="description"
+              type="text"
+              class="form-control"
+              id="description"
+              placeholder="Brief Description"
+            >
+            <p
+              class="text-danger"
+              v-if="errors.has('description')"
+            >{{ errors.first('description') }}</p>
+          </div>
+          <fieldset>
+            <!-- SELECT TAGS TO DESCRIBE PROJECT -->
+            <div class="row">
+              <div class="col-md-12 categoryList" id="tag-column-project">
+                <div style="overflow-y: scroll; height:400px;">
+                  <ul class="list-group navList" id="editMatProcCons">
+                    <h3>Select 3 Tags to describe your project</h3>
+                    <li class="input-group" name="tags" value="2">
+                      <strong>Applications</strong>
+                    </li>
+                    <li class="catMargins">
+                      <div class="checkbox">
+                        <li class="catMargins">
+                          <div class="checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="tags"
+                                :disabled="spids.length > 2 && spids.indexOf(0)==-1"
+                                v-model="spids"
+                                :value="0"
+                              >Tubing
+                            </label>
+                          </div>
+                        </li>
+                        <li class="catMargins">
+                          <div class="checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="tags"
+                                :disabled="spids.length > 2 && spids.indexOf(1)==-1"
+                                v-model="spids"
+                                :value="1"
+                              >Ornaments
+                            </label>
+                          </div>
+                        </li>
+                        <li class="catMargins">
+                          <div class="checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="tags"
+                                :disabled="spids.length > 2 && spids.indexOf(2)==-1"
+                                v-model="spids"
+                                :value="2"
+                              >Decorative
+                            </label>
+                          </div>
+                        </li>
+                        <li class="input-group" name="tags" value="2">
+                          <strong>Qualities</strong>
+                        </li>
+                        <li class="catMargins">
+                          <div class="checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="tags"
+                                :disabled="spids.length > 2 && spids.indexOf(3)==-1"
+                                v-model="spids"
+                                :value="3"
+                              >Opaque
+                            </label>
+                          </div>
+                        </li>
+                        <li class="catMargins">
+                          <div class="checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="tags"
+                                :disabled="spids.length > 2 && spids.indexOf(4)==-1"
+                                v-model="spids"
+                                :value="4"
+                              >Breathable
+                            </label>
+                          </div>
+                        </li>
+                        <li class="catMargins">
+                          <div class="checkbox">
+                            <label>
+                              <input
+                                type="checkbox"
+                                name="tags"
+                                :disabled="spids.length > 2 && spids.indexOf(5)==-1"
+                                v-model="spids"
+                                :value="5"
+                              >Long Lasting
+                            </label>
+                          </div>
+                        </li>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="single-input-item">
+            <button :disabled="errors.any()" type="submit">Submit</button>
+            <b-modal
+              v-model="modalShow"
+              id="modal-center"
+              @ok="okModal"
+              centered
+              title="Welcome Back"
+            >
+              <p class="my-4">{{email}}</p>
+            </b-modal>
+            <b-modal
+              ok-variant="danger"
+              v-model="modalShowFail"
+              id="modal-center"
+              centered
+              title="ERROR"
+            >
+              <p class="my-4">Try Again</p>
+            </b-modal>
+            <b-modal
+              ok-variant="danger"
+              v-model="modalShowCred"
+              id="modal-center"
+              centered
+              title="ERROR"
+            >
+              <p class="my-4">Email/password combination failed</p>
+            </b-modal>
+          </div>
+        </div>
+      </form>
+      <singleitems id="single-item-column"></singleitems>
+    </div>
+  </div>
 
-                                    </div>
-                                </div>
-
-                                            
-                                <!-- Single Tab Content End -->
+  <!-- Single Tab Content End -->
 </template>
 <script>
 /**
@@ -111,6 +226,7 @@ Validator.localize(dictionary);
 export default {
   data() {
     return {
+      selected: "",
       projectName: "",
       description: "",
       spids: []
@@ -136,10 +252,22 @@ export default {
       projectName = "";
       description = "";
       console.log(data);
-    }
+    },
+    onChange() {}
   },
   components: {
     singleitems: SingleItems
+  },
+  computed: {
+    userProjects() {
+      return this.$store.state.users.userProjects;
+    }
+  },
+  mounted() {
+    let data = { uid: this.$store.state.users.user.userId };
+    this.$store.dispatch("getUserProjects", data).then(response => {
+      console.log(response);
+    });
   }
 };
 </script>

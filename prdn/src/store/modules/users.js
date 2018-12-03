@@ -10,7 +10,7 @@ const state = {
      * Object that holds current logged in user information 
      */
     user: {},
-
+    userProjects: {},
     recoveryUserEmail: "",
     userFlags: {
         passChanged: "",
@@ -19,6 +19,7 @@ const state = {
         registerUser: "",
         addSubmission: "",
         userType: "",
+        userProjects: "",
         loggedIn: false //Is user loggedIn - for testing purposes
     }
 };
@@ -218,6 +219,22 @@ const mutations = {
             ...state.userFlags
         }
         console.log(state.userFlags);
+    },
+    /** 
+     * Set state.userFlags['addProjects'] flag
+     */
+    addProject: (state, data) => {
+        state.userFlags['userProjects'] = data;
+    },
+    /** 
+     * Set userFlags addSubmission flag
+     */
+    getUserProjects: (state, data) => {
+        state.userProjects = data;
+
+        state.userProjects = { ...state.userProjects
+        };
+
     }
 };
 
@@ -687,6 +704,62 @@ const actions = {
             console.log("Endorsement made ");
             console.log(data);
             context.commit("removeEndorsement", data.resp);
+            return data.resp;
+        });
+    },
+    /**   
+     * Adds a project submited by the user
+     * @param {object} data - Contains the projectName, userId, and a array of tagId arrays
+     */
+    addProject: (context, data) => {
+        console.log("removing endorsement to " + data.companyId);
+        console.log(data);
+        return Vue.http.get("prds-projects.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'projects',
+                uid: data.uid,
+                pname: data.projectName,
+                du: true,
+                multi: true,
+                tids: data.tids,
+                code: '7' //Add new project 
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Project added ");
+            console.log(data);
+            context.commit("addProject", data.resp);
+            return data.resp;
+        });
+    },
+    /**   
+     * Get user projects
+     * @param {object} data - Contains the userId
+     */
+    getUserProjects: (context, data) => {
+        console.log("getting projects for user with Id " + data.userId);
+        console.log(data);
+        return Vue.http.get("prds-projects.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'projects',
+                uid: data.uid,
+                code: '0' //get all user's projects with their respective tags by the given user id 
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Got projects");
+            console.log(data);
+            context.commit("getUserProjects", data.resp);
             return data.resp;
         });
     }
