@@ -301,6 +301,7 @@ export default {
           this.$store
             .dispatch("addSubmission", dataToSend)
             .then(response => {
+              console.log(response);
               if (response.length > 0) {
                 return { modalShow: true, modalShowCred: false };
               } else {

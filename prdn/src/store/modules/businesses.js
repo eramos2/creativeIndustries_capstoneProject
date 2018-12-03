@@ -6,9 +6,9 @@ import {
     stat
 } from 'fs';
 let serverfile = "prds.php";
-//let serverPath = "http://localhost:80/Server/prds.php";
+let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
-let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
+//let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
 
 const state = {
     /**  
@@ -764,6 +764,7 @@ const actions = {
      * 0- subcategory name, 1 -subcategory id, 2- categoryid ,3- model, 4 -application, 5 -limitation
      */
     addNewBusiness: (context, data) => {
+        console.log(data);
         let result = 0;
         console.log("Getting geocode for new business " + data.companyName);
         var currentAdmin = data.adminId;

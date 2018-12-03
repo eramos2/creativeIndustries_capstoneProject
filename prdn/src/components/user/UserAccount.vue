@@ -231,10 +231,11 @@ export default {
             occupation: this.occupation,
             city: this.city,
             pass: this.password,
-            email: this.email
+            email: this.$store.state.users.user.email
           };
           if (this.password != "") {
             console.log("changing password");
+            console.log(userData.id);
             this.$store
               .dispatch("changeUserPassword", userData)
               .then(response => {

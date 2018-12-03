@@ -1,9 +1,9 @@
 import Vue from 'vue';
 let serverfile = "prds.php";
 //For local development
-//let serverPath = "http://localhost:80/Server/prds.php";
+let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
-let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
+//let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
 
 const state = {
     /** 
@@ -599,7 +599,7 @@ const actions = {
      */
     addSubmission: (context, data) => {
         console.log("Adding submission");
-
+        console.log(data);
         state.userFlags['addSubmission'] = "";
 
         return Vue.http.get(serverfile, {
