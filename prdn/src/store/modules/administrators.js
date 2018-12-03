@@ -320,7 +320,7 @@ const actions = {
     sendAdminPasscode: (context, data) => {
         let email = data.email;
 
-        Vue.http
+        return Vue.http
             .get(
                 serverfile, {
                     params: {
@@ -367,13 +367,16 @@ const actions = {
                             if (data.resp[0].number == 1) {
                                 //console.log("Sent recover email sucess, commiting state")
                                 context.commit('recoveryAdminEmail', true);
+                                return data.resp[0].number;
                             } else
                                 //console.log("Email sent failed");
                                 context.commit('recoveryAdminEmail', false);
+                            return false;
                         });
                 } else {
                     //console.log("Email is not in db");
                     context.commit('recoveryAdminEmail', false);
+                    return false
                 }
             });
     },
@@ -383,7 +386,7 @@ const actions = {
      */
     getBusinessRequests: (context) => {
 
-        Vue.http
+        return Vue.http
             .get(
                 serverfile, {
                     params: {
@@ -398,6 +401,7 @@ const actions = {
             .then(data => {
                 //console.log(data);
                 context.commit('setBusinessRequests', data.resp);
+                return data.resp;
             });
     },
     /**  
@@ -408,29 +412,35 @@ const actions = {
         console.log("I'm recovering password for " + data.email + "and adminId = " + data.id);
         state.adminFlags['passChanged'] = "";
 
-        var dataToSend = {
-            endpoint: 'admin',
-            code: '4',
-            du: true,
-            aemail: data.email,
-            aid: data.id,
-            apass: data.pass
-        };
 
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/x-www-form-urlencoded",
-            type: "POST",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                context.commit("changeAdminPassword", data.resp);
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
-            }
-        });
+        return Vue.http
+            .post(
+                serverfile, {
+                    du: true,
+                    aemail: data.email,
+                    aid: data.id,
+                    apass: data.pass
+                }, {
+                    emulateJSON: true,
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    params: {
+                        endpoint: "admin",
+                        code: "4" //change admin password
+                    }
+                }
+            )
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+
+                context.commit('changeAdminPassword', data.resp);
+                return data.resp;
+            });
+
     },
     /**  
      * Changes admin firstName, lastName, occupation and city 
@@ -442,32 +452,36 @@ const actions = {
 
         state.adminFlags['infoChanged'] = "";
 
-        var dataToSend = {
-            endpoint: 'admin',
-            code: '2',
-            du: true,
-            aid: data.id,
-            aname: data.firstName,
-            alname: data.lastName,
-            aoccu: data.occupation,
-            acity: data.city
-        };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/x-www-form-urlencoded",
-            type: "POST",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-
-                context.commit("editAdminInfo", data.resp);
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
-            }
-        });
+        return Vue.http
+            .post(
+                serverfile, {
+                    du: true,
+                    aid: data.id,
+                    aname: data.firstName,
+                    alname: data.lastName,
+                    aoccu: data.occupation,
+                    acity: data.city
+                }, {
+                    emulateJSON: true,
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    params: {
+                        endpoint: 'admin',
+                        code: '2'
+                    }
+                }
+            )
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log("This is the data in editAdminInfo");
+                console.log(data);
+                context.commit('editAdminInfo', data.resp);
+                return data.resp;
+            });
 
     },
     /**     
@@ -479,64 +493,71 @@ const actions = {
         console.log("I'm verifying passcode for " + data.email);
         state.adminFlags['recoverPassword'] = "";
 
-        var dataToSend = {
-            endpoint: 'users',
-            code: '3',
-            passcode: data.passcode,
-            uemail: data.email,
-            utype: 1 //User type = 0, admin type = 1 
-        };
 
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
 
+        return Vue.http.get(serverfile, {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'users',
+                code: '3',
+                passcode: data.passcode,
+                uemail: data.email,
+                utype: 1 //User type = 0, admin type = 1 
+            }
+        })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
                 var response = data.resp;
                 console.log(response);
                 if (response.length > 0) {
 
                     console.log("I'm recovering password for admin " + data.email);
 
-                    dataToSend = {
-                        endpoint: 'admin',
-                        code: '3',
-                        du: true,
-                        multi: true,
-                        aemail: data.email,
-                        apass: data.password,
-                        aid: data.id,
-                        type: 1 //to remove it from recovery table
-                    };
+                    return Vue.http
+                        .post(
+                            serverfile, {
 
-                    $.ajax({
-                        url: serverPath,
-                        data: dataToSend,
-                        contentType: "application/x-www-form-urlencoded",
-                        type: "POST",
-                        dataType: "json",
-                        success: function (data, textStatus, jqXHR) {
-                            context.commit("recoverAdminPassword", data.resp);
-                        },
-                        error: function (data, textStatus, jqXHR) {
-                            console.log("textStatus: " + textStatus);
-                            console.log("Server Not Found: Please Try Again Later!");
-                        }
-                    });
+                                du: true,
+                                multi: true,
+                                aemail: data.email,
+                                apass: data.password,
+                                aid: data.id,
+                                type: 1 //to remove it from recovery table
+                            }, {
+                                emulateJSON: true,
+                                headers: {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                },
+                                params: {
+                                    endpoint: 'admin',
+                                    code: '3'
+                                }
+                            }
+                        )
+                        .then(response => {
+                            console.log(response);
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("This is the data in editAdminInfo");
+                            console.log(data);
+                            context.commit('recoverAdminPassword', data.resp);
+                            return data.resp;
+                        });
+
+
                 } else {
-                    console.log("Invalid Email or Passcode");
-                    context.commit("recoverAdminPassword", data.resp);
+                    return response;
                 }
+            });
 
-            },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
-            }
-        });
+
+
     },
     /**   
      * Get a particular business submission
@@ -546,28 +567,27 @@ const actions = {
         console.log("Getting submission " + data.submissionId);
         state.currentBusinessRequest = {};
 
-        var dataToSend = {
-            endpoint: 'submissions',
-            code: '5',
-            subid: data.submissionId
-        };
-
-        $.ajax({
-            url: serverPath,
-            data: dataToSend,
-            contentType: "application/json",
-            type: "GET",
-            dataType: "json",
-            success: function (data, textStatus, jqXHR) {
-                console.log(data.resp);
-                context.commit("getBusinessSubmission", data.resp[0])
-
+        return Vue.http.get(serverfile, {
+            headers: {
+                "Content-Type": "application/json"
             },
-            error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+            params: {
+                endpoint: 'submissions',
+                code: '5',
+                subid: data.submissionId
             }
-        });
+        })
+            .then(response => {
+                console.log(response);
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                context.commit("getBusinessSubmission", data.resp[0])
+                return data.resp;
+            })
+
+
     },
     /**     
      * Gets all administrators in the system
@@ -623,22 +643,7 @@ const actions = {
             context.commit("removeAdministrator", data.resp);
             return data.resp[0].number;
         });
-        // $.ajax({
-        //     url: serverPath,
-        //     data: dataToSend,
-        //     contentType: "application/json",
-        //     type: "GET",
-        //     dataType: "json",
-        //     success: function (data, textStatus, jqXHR) {
 
-        //         context.commit("removeAdministrator", data.resp);
-
-        //     },
-        //     error: function (data, textStatus, jqXHR) {
-        //         console.log("textStatus: " + textStatus);
-        //         console.log("Server Not Found: Please Try Again Later!");
-        //     }
-        // });
     }
 
 

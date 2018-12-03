@@ -230,24 +230,40 @@ export default {
             pass: this.password,
             email: this.email
           };
+          if (this.password != "") {
+            console.log("changing password");
+            this.$store
+              .dispatch("changeUserPassword", userData)
+              .then(response => {
+                console.log(response);
+              });
+          }
           this.$store
             .dispatch("editUserInfo", userData)
             .then(response => {
               console.log(response);
               if (response.length > 0) {
+                let data = { userId: this.$store.state.users.user.userId };
+                this.$store.dispatch("getUser", data).then(response => {
+                  console.log("Response aftget getting user");
+                  console.log(response);
+                  this.firstName = this.$store.state.users.user.firstName;
+                  this.lastName = this.$store.state.users.user.lastName;
+                  this.occupation = this.$store.state.users.user.occupation;
+                  this.city = this.$store.state.users.user.city;
+                });
+
                 return { modalShow: true, modalShowCred: false };
               } else {
                 return { modalShow: false, modalShowCred: true };
               }
-              // this.$store
-              //   .dispatch("changeUserPassword", userData)
-              //   .then(response => {});
             })
             .then(data => {
               this.modalShow = data.modalShow;
               this.modalShowCred = data.modalShowCred;
               this.$validator.reset();
             });
+          this.$router.replace("/user");
           this.$validator.reset();
           return;
         } else {

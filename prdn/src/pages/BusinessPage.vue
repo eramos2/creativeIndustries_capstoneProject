@@ -65,24 +65,24 @@
                             :key="key"
                           >
                             <button
-                              v-if="!userTags(tag.tagId)"
-                              type="button"
+                              v-show="!userTags(tag.tagId)"
                               class="btn btn-primary"
                               @click="endorseTag(tag.tagId)"
                               :value="tag.tagId"
                             >
                               {{tag.tagName}}
-                              <span class="badge badge-light">{{tag.endorsements}}</span>
+                              <span :class="'badge badge-light'">{{tag.endorsements}}</span>
                             </button>
                             <button
-                              v-if="userTags(tag.tagId)"
-                              type="button"
+                              v-show="userTags(tag.tagId)"
                               class="btn btn-primary"
-                              @click="removeTag(tag.tagId)"
+                              @click="removeEndorsement(tag.tagId)"
                               :value="tag.tagId"
                             >
                               {{tag.tagName}}
-                              <span class="badge badge-success">{{tag.endorsements}}</span>
+                              <span
+                                :class="'badge badge-success'"
+                              >{{tag.endorsements}}</span>
                             </button>
                           </div>
                         </div>
@@ -138,38 +138,73 @@ export default {
     ...mapActions(["setResources", "setCurrentBusiness"]),
     ...mapGetters(["getCurrentBusiness"]),
     endorseTag(tid) {
-      let data = {
-        companyId: this.currentBusiness.companyId,
-        userId: this.userID,
-        tagId: tid
-      };
-      this.$store.dispatch("giveEndorsement", data).then(response => {
-        console.log(response);
-        if (response.length > 0) {
-          this.$store
-            .dispatch("setCurrentBusiness", this.currentBusiness.companyName)
-            .then(response => {
-              console.log(response);
+      console.log(this.userID && !this.userTags(tid));
+      if (this.userID && !this.userTags(tid)) {
+        //user is logged in and it dosnt have endorsement on this tag
+        let data = {
+          companyId: this.currentBusiness.companyId,
+          userId: this.userID,
+          tagId: tid
+        };
+        this.$store.dispatch("giveEndorsement", data).then(response => {
+          console.log(response);
+          if (response.length > 0) {
+            let businessArr = this.currentBusiness.tags;
+            //Also add endorsement++ from company locally
+            let filtered = businessArr.filter(function(tag, index, arr) {
+              if (tag.tagId == tid) {
+                tag.endorsements = (parseInt(tag.endorsements) + 1).toString();
+                return tag;
+              }
+              return tag;
             });
-        }
-      });
+            console.log(filtered);
+            //Also add tad id endorsement from user locally
+            let userArr = this.$store.state.users.user.endorsedTags;
+            userArr.push({ tagId: tid });
+            this.$store.state.users.user.endorsedTags = userArr;
+            console.log(this.$store.state.users.user.endorsedTags);
+            // this.$store
+            //   .dispatch("setCurrentBusiness", this.currentBusiness.companyName)
+            //   .then(response => {
+            //     console.log(response);
+            //   });
+          }
+        });
+      }
     },
     removeEndorsement(tid) {
-      let data = {
-        companyId: this.currentBusiness.companyId,
-        userId: this.userID,
-        tagId: tid
-      };
-      this.$store.dispatch("removeEndorsement", data).then(response => {
-        console.log(response);
-        if (response.length > 0) {
-          this.$store
-            .dispatch("setCurrentBusiness", this.currentBusiness.companyName)
-            .then(response => {
-              console.log(response);
+      if (this.userID && this.userTags(tid)) {
+        console.log("Removing tag");
+        //user is logged in and has endorsement on this tag
+        let data = {
+          companyId: this.currentBusiness.companyId,
+          userId: this.userID,
+          tagId: tid
+        };
+        this.$store.dispatch("removeEndorsement", data).then(response => {
+          console.log(response);
+          if (response.length > 0) {
+            let businessArr = this.currentBusiness.tags;
+            //Also remove endorsement from company locally
+            let filtered = businessArr.filter(function(tag, index, arr) {
+              if (tag.tagId == tid) {
+                tag.endorsements = (parseInt(tag.endorsements) - 1).toString();
+                return tag;
+              }
+              return tag;
             });
-        }
-      });
+            this.currentBusiness.tags = filtered;
+            //Also remove endorsement from user locally
+            let userArr = this.$store.state.users.user.endorsedTags;
+            let userfiltered = userArr.filter(function(tag, index, arr) {
+              return tag.tagId != tid;
+            });
+            console.log(userfiltered);
+            this.$store.state.users.user.endorsedTags = userfiltered;
+          }
+        });
+      }
     },
     userTags(tid) {
       console.log(tid);
@@ -178,10 +213,13 @@ export default {
         console.log(endorsements);
         if (endorsements != undefined) {
           for (let key of endorsements) {
-            if (endorsements[key].tagId == tid) {
+            console.log(key);
+            if (key.tagId == tid) {
               return true;
             }
           }
+        } else {
+          return false;
         }
       }
       return false;
@@ -277,18 +315,26 @@ export default {
   },
   beforeMount() {
     let businessName = this.$route.params.businessName;
-    //console.log(businessName);
-    this.setCurrentBusiness(businessName);
+    console.log(businessName);
+    console.log("before mount");
+    console.log(this.$store.state.users.user.userId);
   },
   mounted() {
+    let businessName = this.$route.params.businessName;
+    console.log(businessName);
+    console.log("before mount");
     console.log(this.$store.state.users.user.userId);
-    if (this.$store.state.users.user.userId) {
-      console.log("Before calling endorsemnts for business");
-      this.$store.dispatch(
-        "getEndorsementsToBusiness",
-        this.currentBusiness.companyName
-      );
-    }
+    this.setCurrentBusiness(businessName).then(response => {
+      console.log(this.$store.state.users.user.userId);
+      if (this.$store.state.users.user.userId) {
+        console.log("Before calling endorsemnts for business");
+        let data = {
+          companyName: this.currentBusiness.companyName,
+          id: this.$store.state.users.user.userId
+        };
+        this.$store.dispatch("getEndorsementsToBusiness", data);
+      }
+    });
 
     //console.log("Inside mount of Businesspage");
     //this.setResources();
