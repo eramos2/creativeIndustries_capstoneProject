@@ -94,10 +94,10 @@ const mutations = {
             state.adminFlags = {
                 ...state.adminFlags
             }
-            console.log("Data received in mutations loginAdmin administrators.js");
-            console.log(data);
-            console.log("This is the administrator");
-            console.log(state.administrator);
+            // console.log("Data received in mutations loginAdmin administrators.js");
+            // console.log(data);
+            // console.log("This is the administrator");
+            // console.log(state.administrator);
 
         }
     },
@@ -114,7 +114,7 @@ const mutations = {
         state.administrators = {
             ...state.administrators
         }
-        console.log(state.administrators);
+        // console.log(state.administrators);
     },
     /** 
      * Sets recoveryAdminEmail to false if the given admin email is not in the database, otherwise
@@ -138,7 +138,7 @@ const mutations = {
             state.recoveryAdminEmail = {
                 ...state.recoveryAdminEmail
             }
-            console.log('Recover Admin Email Sent');
+            // console.log('Recover Admin Email Sent');
         }
 
     },
@@ -146,7 +146,7 @@ const mutations = {
     setBusinessRequests: (state, data) => {
 
         state.businessRequests = data;
-        console.log(state.businessRequests);
+        // console.log(state.businessRequests);
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
@@ -167,7 +167,7 @@ const mutations = {
         state.currentBusinessRequest = {
             ...state.currentBusinessRequest
         }
-        console.log(state.currentBusinessRequest);
+        // console.log(state.currentBusinessRequest);
 
 
     },
@@ -175,7 +175,7 @@ const mutations = {
      * Set adminPassChanged flag
      */
     changeAdminPassword: (state, data) => {
-        console.log(data);
+        // console.log(data);
         state.adminFlags['passChanged'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -183,13 +183,13 @@ const mutations = {
         state.adminFlags = {
             ...state.adminFlags
         }
-        console.log(state.adminFlags);
+        // console.log(state.adminFlags);
     },
     /** 
      * Set adminFlags recoverPassword flag
      */
     editAdminInfo: (state, data) => {
-        console.log(data);
+        // console.log(data);
         state.adminFlags['recoverPassword'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -197,13 +197,13 @@ const mutations = {
         state.adminFlags = {
             ...state.adminFlags
         }
-        console.log(state.adminFlags);
+        // console.log(state.adminFlags);
     },
     /** 
      * Set adminFlags infoChanged flag
      */
     recoverAdminPassword: (state, data) => {
-        console.log(data);
+        // console.log(data);
         state.adminFlags['infoChanged'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -211,13 +211,13 @@ const mutations = {
         state.adminFlags = {
             ...state.adminFlags
         }
-        console.log(state.adminFlags);
+        // console.log(state.adminFlags);
     },
     /** 
      * Set adminFlags infoChanged flag
      */
     removeAdministrator: (state, data) => {
-        console.log(data);
+        // console.log(data);
         state.adminFlags['removeAdministrator'] = data['0'].number;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -225,7 +225,7 @@ const mutations = {
         state.adminFlags = {
             ...state.adminFlags
         }
-        console.log(state.adminFlags);
+        // console.log(state.adminFlags);
     },
 };
 
@@ -270,10 +270,10 @@ const actions = {
                 }
             }
         ).then(response => {
-            console.log(response);
+            // console.log(response);
             return response.json();
         }).then(data => {
-            console.log(data.resp);
+            // console.log(data.resp);
             return data.resp[0].number;
             //context.commit('addNewAdmin', data);
         });
@@ -302,7 +302,7 @@ const actions = {
                 }
             )
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 return response.json();
             })
             .then(data => {
@@ -331,11 +331,11 @@ const actions = {
                 }
             )
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 return response.json();
             })
             .then(data => {
-                console.log(data.resp);
+                // console.log(data.resp);
                 if (data.resp.length > 0) {
 
                     //console.log('calling email');
@@ -409,7 +409,7 @@ const actions = {
      * @param {object} data - Contains admin email, new admin password, and admin id
      */
     changeAdminPassword: (context, data) => {
-        console.log("I'm recovering password for " + data.email + "and adminId = " + data.id);
+        // console.log("I'm recovering password for " + data.email + "and adminId = " + data.id);
         state.adminFlags['passChanged'] = "";
 
 
@@ -432,7 +432,7 @@ const actions = {
                 }
             )
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 return response.json();
             })
             .then(data => {
@@ -447,7 +447,7 @@ const actions = {
      * @param {object} data - Contains admin firstName, lastName,occupation, adn city
      */
     editAdminInfo: (context, data) => {
-        console.log("I'm adding admin " + data.firstName);
+        // console.log("I'm adding admin " + data.firstName);
 
 
         state.adminFlags['infoChanged'] = "";
@@ -473,12 +473,12 @@ const actions = {
                 }
             )
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 return response.json();
             })
             .then(data => {
-                console.log("This is the data in editAdminInfo");
-                console.log(data);
+                // console.log("This is the data in editAdminInfo");
+                // console.log(data);
                 context.commit('editAdminInfo', data.resp);
                 return data.resp;
             });
@@ -490,7 +490,7 @@ const actions = {
      * @param {object} data - Contains admin's email, passcode, and new password
      */
     recoverAdminPassword: (context, data) => {
-        console.log("I'm verifying passcode for " + data.email);
+        // console.log("I'm verifying passcode for " + data.email);
         state.adminFlags['recoverPassword'] = "";
 
 
@@ -508,15 +508,15 @@ const actions = {
             }
         })
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 return response.json();
             })
             .then(data => {
                 var response = data.resp;
-                console.log(response);
+                // console.log(response);
                 if (response.length > 0) {
 
-                    console.log("I'm recovering password for admin " + data.email);
+                    // console.log("I'm recovering password for admin " + data.email);
 
                     return Vue.http
                         .post(
@@ -540,12 +540,12 @@ const actions = {
                             }
                         )
                         .then(response => {
-                            console.log(response);
+                            // console.log(response);
                             return response.json();
                         })
                         .then(data => {
-                            console.log("This is the data in editAdminInfo");
-                            console.log(data);
+                            // console.log("This is the data in editAdminInfo");
+                            // console.log(data);
                             context.commit('recoverAdminPassword', data.resp);
                             return data.resp;
                         });
@@ -564,7 +564,7 @@ const actions = {
      * @param {object} data - Contains the submissionId
      */
     getBusinessSubmission: (context, data) => {
-        console.log("Getting submission " + data.submissionId);
+        // console.log("Getting submission " + data.submissionId);
         state.currentBusinessRequest = {};
 
         return Vue.http.get(serverfile, {
@@ -594,7 +594,7 @@ const actions = {
      */
     getAdministrators: (context) => {
         state.administrators = {};
-        console.log("Im getting Admins");
+        // console.log("Im getting Admins");
 
         var dataToSend1 = {
             endpoint: 'admin',
@@ -611,8 +611,8 @@ const actions = {
                 context.commit("getAdministrators", data.resp);
             },
             error: function (data, textStatus, jqXHR) {
-                console.log("textStatus: " + textStatus);
-                console.log("Server Not Found: Please Try Again Later!");
+                // console.log("textStatus: " + textStatus);
+                // console.log("Server Not Found: Please Try Again Later!");
             }
         });
     },
@@ -621,7 +621,7 @@ const actions = {
      * @param {object} data - Contains the administrator's adminId to remove
      */
     removeAdministrator: (context, data) => {
-        console.log("I'm deleting admin: " + data.adminId);
+        // console.log("I'm deleting admin: " + data.adminId);
         state.adminFlags["removeAdministrator"] = "";
 
 

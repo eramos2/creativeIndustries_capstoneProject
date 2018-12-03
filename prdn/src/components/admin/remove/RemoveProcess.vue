@@ -41,7 +41,7 @@
                 v-model="modalShow"
                 id="modal-center"
                 @ok="okModal"
-                ok-modal="true"
+                ok-modal
                 centered
                 title="Added"
               >
@@ -49,7 +49,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
-                ok-modal="true"
+                ok-modal
                 v-model="modalShowFail"
                 id="modal-center"
                 centered
@@ -59,7 +59,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
-                ok-modal="true"
+                ok-modal
                 v-model="modalShowCred"
                 id="modal-center"
                 centered

@@ -156,13 +156,14 @@
               </div>
             </div>
           </fieldset>
+          <!-- Modal windows -->
           <div class="single-input-item">
-            <button :disabled="errors.any()" type="submit">Submit</button>
+            <button :disabled="errors.any()" @click="okModal" type="submit">Submit</button>
             <b-modal
               v-model="modalShow"
               id="modal-center"
               @ok="okModal"
-              ok-only="true"
+              ok-only
               centered
               title="Welcome Back"
             >
@@ -170,7 +171,7 @@
             </b-modal>
             <b-modal
               ok-variant="danger"
-              ok-only="true"
+              ok-only
               v-model="modalShowFail"
               id="modal-center"
               centered
@@ -180,7 +181,7 @@
             </b-modal>
             <b-modal
               ok-variant="danger"
-              ok-only="true"
+              ok-only
               v-model="modalShowCred"
               id="modal-center"
               centered
@@ -236,6 +237,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * Validation of the data provided
+     */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -246,6 +250,9 @@ export default {
         }
         alert("Empty Field(s)");
       });
+    },
+    okModal() {
+      this.$router.replace("/user");
     },
     test() {
       let data = {

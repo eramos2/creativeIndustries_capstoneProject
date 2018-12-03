@@ -343,7 +343,7 @@
                   v-model="modalShow"
                   id="modal-center"
                   @ok="okModal"
-                  ok-only="true"
+                  ok-only
                   centered
                   title="Company Added:"
                 >
@@ -353,7 +353,7 @@
                   ok-variant="danger"
                   v-model="modalShowFail"
                   id="modal-center"
-                  ok-only="true"
+                  ok-only
                   centered
                   title="ERROR"
                 >
@@ -362,7 +362,7 @@
                 <b-modal
                   ok-variant="danger"
                   v-model="modalShowCred"
-                  ok-only="true"
+                  ok-only
                   id="modal-center"
                   centered
                   title="ERROR"

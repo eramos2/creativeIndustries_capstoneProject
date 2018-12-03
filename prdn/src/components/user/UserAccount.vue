@@ -129,7 +129,7 @@
               v-model="modalShow"
               id="modal-center"
               @ok="okModal"
-              ok-only="true"
+              ok-only
               centered
               title="Received, thank you."
             >
@@ -137,7 +137,7 @@
             </b-modal>
             <b-modal
               ok-variant="danger"
-              ok-only="true"
+              ok-only
               v-model="modalShowFail"
               id="modal-center"
               centered
@@ -147,7 +147,7 @@
             </b-modal>
             <b-modal
               ok-variant="danger"
-              ok-only="true"
+              ok-only
               v-model="modalShowCred"
               id="modal-center"
               centered
@@ -274,6 +274,9 @@ export default {
         }
       });
     },
+    /**
+     * Redirect the user to the User profile
+     */
     okModal() {
       this.$router.replace("/user");
     },
