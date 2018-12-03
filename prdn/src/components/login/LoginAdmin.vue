@@ -12,7 +12,9 @@
             <div>
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('adminEmail') }">
-                  <h4>Administrator Email</h4>
+                  <div class="pull-left">
+                    <h4>Administrator Email</h4>
+                  </div>
                   <input
                     name="adminEmail"
                     v-validate="'required|email'"
@@ -31,7 +33,9 @@
 
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('password') }">
-                  <h4>Password</h4>
+                  <div class="pull-left">
+                    <h4>Password</h4>
+                  </div>
                   <input
                     name="password"
                     type="password"
@@ -52,6 +56,7 @@
                 v-model="modalShow"
                 id="modal-center"
                 @ok="okModal"
+                ok-only="true"
                 centered
                 title="Welcome Back"
               >
