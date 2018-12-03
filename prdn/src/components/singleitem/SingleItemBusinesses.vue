@@ -1,27 +1,26 @@
 <template>
   <div class="row" v-if="anyBusiness">
     <div class="col">
-        <div class="related-products box-module mb-60">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="secton-title">
-                <h2>Featured Businesses</h2>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <!-- Featured Businesses Carousel  -->
-            <div class="prodict-two-active owl-carousel">
-              <singleitem-business
-                v-for="(business, key) in subcategoryBusinesses"
-                :key="key"
-                :bKey="key"
-                :business="business"
-              >
-              </singleitem-business> 
+      <div class="related-products box-module mb-60">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="secton-title">
+              <h2>Featured Businesses</h2>
             </div>
           </div>
         </div>
+        <div class="row">
+          <!-- Featured Businesses Carousel  -->
+          <div class="prodict-two-active owl-carousel">
+            <singleitem-business
+              v-for="(business, key) in subcategoryBusinesses"
+              :key="key"
+              :bKey="key"
+              :business="business"
+            ></singleitem-business>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,13 +44,14 @@ export default {
     //this.setResources();
     this.setSubCategoryBusinesses(payload);
   },
+
   methods: {
     ...mapActions(["setSubCategoryBusinesses", "setResources"]),
     ...mapGetters(["getBusinesses", "getResources", "getCategorySubCategories"])
   },
   computed: {
     anyBusiness() {
-      if ($.isEmptyObject(this.getBusinesses())) {
+      if ($.isEmptyObject(this.$store.state.businesses.subcatBusinesses)) {
         return false;
       } else {
         return true;
@@ -67,7 +67,9 @@ export default {
      */
     subcategoryBusinesses() {
       //console.log("Entered subcategoryBusiness in Singleitembusiness");
-      if ($.isEmptyObject(this.getBusinesses()) == true) {
+      if (
+        $.isEmptyObject(this.$store.state.businesses.subcatBusinesses) == true
+      ) {
         //console.log("undef");
         //console.log($.isEmptyObject(this.getBusinesses()));
         //console.log(this.getBusinesses());
@@ -130,7 +132,7 @@ export default {
           //   }
           // });
         });
-        return this.getBusinesses();
+        return this.$store.state.businesses.subcatBusinesses;
       }
     }
   }

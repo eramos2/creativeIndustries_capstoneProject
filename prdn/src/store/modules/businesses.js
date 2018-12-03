@@ -6,9 +6,9 @@ import {
     stat
 } from 'fs';
 let serverfile = "prds.php";
-let serverPath = "http://localhost:80/Server/prds.php";
+//let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
-//let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
+let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
 
 const state = {
     /**  
@@ -99,6 +99,7 @@ const mutations = {
      * @param {Object} data - Server response containing the businesses. 
      */
     setBusinesses: (state, data) => {
+        console.log("mutation businesses");
         console.log(data);
         state.businesses = data
 
@@ -420,11 +421,14 @@ const actions = {
                 }
             })
             .then(response => {
+                console.log("Business response");
+
                 return response.json();
             })
             .then(data => {
-                //console.log(data.resp);
+                console.log(data);
                 context.commit('setBusinesses', data.resp);
+                console.log("After comiting businesses");
             });
     },
     /** Clear state.businesses */

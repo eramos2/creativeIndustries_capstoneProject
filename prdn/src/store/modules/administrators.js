@@ -1,9 +1,9 @@
 import Vue from 'vue';
 let serverfile = "prds.php";
 //For local development
-let serverPath = "http://localhost:80/Server/prds.php";
+//let serverPath = "http://localhost:80/Server/prds.php";
 //For production build
-//let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
+let serverPath = "http://uprm.edu/creativeindustries/Server/prds.php";
 let CLOUDINARY_UPLOAD_PRESET = "c5ujdszc";
 let CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/prdn";
 
@@ -496,17 +496,17 @@ const actions = {
 
 
         return Vue.http.get(serverfile, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            params: {
-                endpoint: 'users',
-                code: '3',
-                passcode: data.passcode,
-                uemail: data.email,
-                utype: 1 //User type = 0, admin type = 1 
-            }
-        })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
+                    endpoint: 'users',
+                    code: '3',
+                    passcode: data.passcode,
+                    uemail: data.email,
+                    utype: 1 //User type = 0, admin type = 1 
+                }
+            })
             .then(response => {
                 console.log(response);
                 return response.json();
@@ -568,15 +568,15 @@ const actions = {
         state.currentBusinessRequest = {};
 
         return Vue.http.get(serverfile, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            params: {
-                endpoint: 'submissions',
-                code: '5',
-                subid: data.submissionId
-            }
-        })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
+                    endpoint: 'submissions',
+                    code: '5',
+                    subid: data.submissionId
+                }
+            })
             .then(response => {
                 console.log(response);
                 return response.json();

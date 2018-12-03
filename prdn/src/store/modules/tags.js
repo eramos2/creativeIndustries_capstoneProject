@@ -52,8 +52,12 @@ const mutations = {
                 category: tag.tagCategory
             }
         }
+        console.log("Finished setting up tags");
 
         state.categories = categories;
+
+        console.log("Finished setting up tag categories");
+
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
         //It gives reactivity and all components are aware if it changed
