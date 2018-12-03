@@ -108,6 +108,7 @@
                 v-model="modalShow"
                 id="modal-center"
                 @ok="okModal"
+                ok-only="true"
                 centered
                 title="Welcome Back"
               >
@@ -115,6 +116,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
+                ok-only="true"
                 v-model="modalShowFail"
                 id="modal-center"
                 centered
@@ -124,6 +126,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
+                ok-only="true"
                 v-model="modalShowCred"
                 id="modal-center"
                 centered

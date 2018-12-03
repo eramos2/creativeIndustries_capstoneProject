@@ -65,6 +65,7 @@
               <b-modal
                 ok-variant="danger"
                 v-model="modalShowFail"
+                ok-only="true"
                 id="modal-center"
                 centered
                 title="ERROR"
@@ -73,6 +74,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
+                ok-only="true"
                 v-model="modalShowCred"
                 id="modal-center"
                 centered
