@@ -212,6 +212,7 @@
             </div>
           </fieldset>
           <div class="row">
+            <!-- Modal Windows -->
             <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
                 <button :disabled="errors.any()" type="submit">Submit</button>
@@ -219,7 +220,7 @@
                   v-model="modalShow"
                   id="modal-center"
                   @ok="okModal"
-                  ok-only="true"
+                  ok-only
                   centered
                   title="Company Added:"
                 >
@@ -227,7 +228,7 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
-                  ok-only="true"
+                  ok-only
                   v-model="modalShowFail"
                   id="modal-center"
                   centered
@@ -237,7 +238,7 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
-                  ok-only="true"
+                  ok-only
                   v-model="modalShowCred"
                   id="modal-center"
                   centered
@@ -280,6 +281,9 @@ export default {
     };
   },
   methods: {
+    /**
+     * Validation of the data provided
+     */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -320,8 +324,11 @@ export default {
         }
       });
     },
+    /**
+     * Redirect the user to user profile
+     */
     okModal() {
-      this.$router.replace("/admin");
+      this.$router.replace("/user");
     },
     getIdsArray(subresource) {
       //console.log(Object.keys(resource).length > 0);

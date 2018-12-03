@@ -101,7 +101,7 @@
                 v-model="modalShow"
                 id="modal-center"
                 @ok="okModal"
-                ok-only="true"
+                ok-only
                 centered
                 title="Added"
               >
@@ -109,7 +109,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
-                ok-only="true"
+                ok-only
                 v-model="modalShowFail"
                 id="modal-center"
                 centered
@@ -119,7 +119,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
-                ok-only="true"
+                ok-only
                 v-model="modalShowCred"
                 id="modal-center"
                 centered

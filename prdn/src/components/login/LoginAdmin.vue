@@ -56,7 +56,7 @@
                 v-model="modalShow"
                 id="modal-center"
                 @ok="okModal"
-                ok-only="true"
+                ok-only
                 centered
                 title="Welcome Back"
               >
@@ -65,7 +65,7 @@
               <b-modal
                 ok-variant="danger"
                 v-model="modalShowFail"
-                ok-only="true"
+                ok-only
                 id="modal-center"
                 centered
                 title="ERROR"
@@ -74,7 +74,7 @@
               </b-modal>
               <b-modal
                 ok-variant="danger"
-                ok-only="true"
+                ok-only
                 v-model="modalShowCred"
                 id="modal-center"
                 centered
