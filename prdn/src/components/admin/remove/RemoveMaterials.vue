@@ -1,63 +1,79 @@
 <template>
-<form @submit.prevent="validateBeforeSubmit"> 
-             <!-- Single Tab Content Start -->
-<div class="container listContainer">
-    <div class="row">
+  <form @submit.prevent="validateBeforeSubmit">
+    <!-- Single Tab Content Start -->
+    <div class="container listContainer">
+      <div class="row">
         <div class="col-md-12 cpl-md-offset-4" id="topRow">
+          <h2>
+            <span class="glyphicon glyphicon-minus-sign addMarginTop"></span> Remove Materials
+          </h2>
 
-            <h2><span class="glyphicon glyphicon-minus-sign addMarginTop"></span> Remove Materials </h2>
+          <p class="lead">Select the materials you want to remove from the system.</p>
 
-            <p class="lead">Select the materials you want to remove from the system.</p>
-
-                <div style="overflow-y: scroll; height:400px;">
-                <ul class="list-group categoryFont" id="materialList">
-
-                    <div 
-                 v-for="(category, key) in materials"
-                :key="key"
-                 >
-                <li class="input-group" name="materials" :value="category.id"><strong>{{category.name}}</strong></li>
-                <li 
-                v-for="(subcategory, subcatKey) in category.subcategories"
-                :key="subcatKey"
-                class="catMargins">
-                    <div class="radio">
-                    <label>
-                        <input type="radio" name="subMaterial" v-model="smid" :value="subcategory.id">
-                        {{subcategory.name}}
-                    </label>
-                    </div>
+          <div style="overflow-y: scroll; height:400px;">
+            <ul class="list-group categoryFont" id="materialList">
+              <div v-for="(category, key) in materials" :key="key">
+                <li class="input-group" name="materials" :value="category.id">
+                  <strong>{{category.name}}</strong>
                 </li>
-                
-
-                 </div>
-                    
-                    
-                                </ul>
-                                </div>
-
+                <li
+                  v-for="(subcategory, subcatKey) in category.subcategories"
+                  :key="subcatKey"
+                  class="catMargins"
+                >
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="subMaterial" v-model="smid" :value="subcategory.id">
+                      {{subcategory.name}}
+                    </label>
+                  </div>
+                </li>
+              </div>
+            </ul>
+          </div>
         </div>
         <div class="row">
-            
-                <div class="col-lg-4  col-lg-4 col-sm-6  buttonMargin">
-                <p>
-                     <!-- <button >Edit Material</button> -->
-                     <button :disabled="errors.any()" type="submit">Remove Material</button>
-                     <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Added">
-                      <p class="my-4">The material was removed.</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowFail"  id="modal-center" centered title="ERROR">
-                      <p class="my-4">Try Again</p>
-                      </b-modal>
-                      <b-modal ok-variant="danger" v-model="modalShowCred" id="modal-center" centered title="ERROR">
-                      <p class="my-4">Select a Material to Remove</p>
-                      </b-modal>
-                </p>
-            </div>
+          <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
+            <p>
+              <!-- Modal Windows -->
+              <!-- <button >Edit Material</button> -->
+              <button :disabled="errors.any()" type="submit">Remove Material</button>
+              <b-modal
+                v-model="modalShow"
+                id="modal-center"
+                @ok="okModal"
+                ok-only="true"
+                centered
+                title="Added"
+              >
+                <p class="my-4">The material was removed.</p>
+              </b-modal>
+              <b-modal
+                ok-variant="danger"
+                ok-only="true"
+                v-model="modalShowFail"
+                id="modal-center"
+                centered
+                title="ERROR"
+              >
+                <p class="my-4">Try Again</p>
+              </b-modal>
+              <b-modal
+                ok-variant="danger"
+                ok-only="true"
+                v-model="modalShowCred"
+                id="modal-center"
+                centered
+                title="ERROR"
+              >
+                <p class="my-4">Something went wrong!</p>
+              </b-modal>
+            </p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</form>
+  </form>
 </template>
                                
 <script>
@@ -71,6 +87,10 @@ export default {
     };
   },
   methods: {
+    /**
+     * Validate the data inserted using Vee-Validate
+     * @return modal with a notification
+     */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -106,6 +126,9 @@ export default {
         }
       });
     },
+    /**
+     * Redirect the Admin to the admin console
+     */
     okModal() {
       this.$router.replace("/admin/remove");
     },

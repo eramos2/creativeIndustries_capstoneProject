@@ -327,7 +327,7 @@
               </div>
             </div>
           </div>
-
+          <!-- Modal Windows -->
           <div class="row">
             <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
@@ -335,6 +335,7 @@
                 <b-modal
                   v-model="modalShow"
                   id="modal-center"
+                  ok-only="true"
                   @ok="okModal"
                   centered
                   title="Company Added:"
@@ -343,15 +344,17 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
+                  ok-only="true"
                   v-model="modalShowFail"
                   id="modal-center"
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Edit business failed</p>
+                  <p class="my-4">Something went wrong!</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
+                  ok-only="true"
                   v-model="modalShowCred"
                   id="modal-center"
                   centered
@@ -438,6 +441,10 @@ export default {
     collapseAll() {
       this.$refs.collapsible.map(c => (c.collapsed = true));
     },
+    /**
+     * Validate the data inserted using Vee-Validate
+     * @return modal with a notification
+     */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -459,12 +466,12 @@ export default {
             processes: this.getIdsArray("processes"),
             tags: this.getIdsArray("tags")
           };
-          console.log(data);
+          // console.log(data);
           this.$store
             .dispatch("editBusinessInfo", data)
             .then(response => {
-              console.log("Helooowwe edit business info");
-              console.log(response);
+              // console.log("Helooowwe edit business info");
+              // console.log(response);
               if (response >= 0) {
                 this.reloadBusinesses();
                 //Edit Business successfully, set the modal booleans
@@ -486,6 +493,9 @@ export default {
         }
       });
     },
+    /**
+     * Reload the Business in case the Admin wants to Edit more Businesses
+     */
     reloadBusinesses() {
       this.$store.dispatch("setBusinesses");
     },
@@ -512,8 +522,8 @@ export default {
       } else {
         let tagArr = [];
         for (let id of this.tids) {
-          console.log(this.tids);
-          console.log(id);
+          // console.log(this.tids);
+          // console.log(id);
           tagArr.push([id]);
         }
         return tagArr;
@@ -529,19 +539,22 @@ export default {
           let subcategory = resource[subcatKey];
           subresourceIdArr.push(subcategory[subresourceId]);
         }
-        console.log(subresourceIdArr);
+        // console.log(subresourceIdArr);
         return subresourceIdArr;
       } else {
         return [];
       }
     },
+    /**
+     * Redirect the Admin to the Edit Tab in the Admin console
+     */
     okModal() {
       this.$router.replace("/admin/edit");
     },
     onChange() {
       let compName = this.selected;
       this.$store.dispatch("setCurrentBusiness", compName).then(response => {
-        console.log(response);
+        // console.log(response);
         if (response > 0) {
           let business = this.$store.state.businesses.currentBusiness;
           this.companyName = business.companyName;
@@ -559,7 +572,7 @@ export default {
           this.smids = this.getIds(business.submaterials, "subMaterialId");
           this.ssids = this.getIds(business.subservices, "subServiceId");
           this.tids = this.getIds(business.tags, "tagId");
-          console.log(this.tids);
+          // console.log(this.tids);
         } else {
           alert("There was an error please try again");
         }
@@ -588,7 +601,7 @@ export default {
       this.phone = "";
       this.website = "";
       this.description = "";
-      console.log(data);
+      // console.log(data);
     },
     reloadBusinesses() {
       this.$store.dispatch("setBusinesses");
@@ -611,7 +624,7 @@ export default {
       return this.$store.state.tags.categories;
     },
     displayManageAdmin() {
-      console.log(this.$cookie.get("userType"));
+      // console.log(this.$cookie.get("userType"));
       return this.$cookie.get("userType") == "admin";
     }
   }

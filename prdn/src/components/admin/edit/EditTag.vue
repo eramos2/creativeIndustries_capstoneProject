@@ -36,17 +36,24 @@
             placeholder="Insert new name for Tag"
           >
           <p class="text-danger" v-if="errors.has('tagName')">{{ errors.first('tagName') }}</p>
-          <!-- <button>Add</button> -->
         </div>
       </div>
       <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
         <p>
           <button type="submit">Edit Tags</button>
-          <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">
+          <b-modal
+            v-model="modalShow"
+            id="modal-center"
+            @ok="okModal"
+            ok-only="true"
+            centered
+            title="Added"
+          >
             <p class="my-4">The tag was added.</p>
           </b-modal>
           <b-modal
             ok-variant="danger"
+            ok-only="true"
             v-model="modalShowFail"
             id="modal-center"
             centered
@@ -56,12 +63,13 @@
           </b-modal>
           <b-modal
             ok-variant="danger"
+            ok-only="true"
             v-model="modalShowCred"
             id="modal-center"
             centered
             title="ERROR"
           >
-            <p class="my-4">Combination failed</p>
+            <p class="my-4">Something went wrong!</p>
           </b-modal>
         </p>
       </div>

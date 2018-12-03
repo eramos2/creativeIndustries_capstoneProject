@@ -335,7 +335,7 @@
                 </div>
               </div>
             </div>
-            <!-- START MODDAL BUTTONS -->
+            <!-- Modal Windows -->
             <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
               <p>
                 <button :disabled="errors.any()" type="submit">Add</button>
@@ -473,7 +473,7 @@ export default {
   methods: {
     /**
      * Validate the data inserted using Vee-Validate
-     *
+     * @return modal with a notification
      */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
@@ -541,16 +541,6 @@ export default {
                   return { modalShow: false, modalShowCred: true };
                 }
                 this.image = "";
-                this.email = "";
-                this.videoURL = "";
-                this.companyName = "";
-                this.address = "";
-                this.city = "";
-                this.country = "";
-                this.zipcode = "";
-                this.phone = "";
-                this.website = "";
-                this.description = "";
               })
               .then(data => {
                 this.modalShow = data.modalShow;
@@ -567,10 +557,21 @@ export default {
       });
     },
     /**
-     * Redirect the Admin to the Add Tab in the Admin Console
+     * Redirect the Admin to the Add Tab in the Admin Console and Clear the variables and the validator
      */
     okModal() {
       this.$router.replace("/admin/add");
+      this.email = "";
+      this.videoURL = "";
+      this.companyName = "";
+      this.address = "";
+      this.city = "";
+      this.country = "";
+      this.zipcode = "";
+      this.phone = "";
+      this.website = "";
+      this.description = "";
+      this.$validator.reset();
     },
     getIdsArray(subresource) {
       if (subresource == "materials") {

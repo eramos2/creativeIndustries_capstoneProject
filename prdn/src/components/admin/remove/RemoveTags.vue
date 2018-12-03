@@ -27,11 +27,19 @@
       <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-right">
         <p>
           <button type="submit">Remove Tag</button>
-          <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">
+          <b-modal
+            v-model="modalShow"
+            id="modal-center"
+            @ok="okModal"
+            ok-only="true"
+            centered
+            title="Added"
+          >
             <p class="my-4">The tag was removed.</p>
           </b-modal>
           <b-modal
             ok-variant="danger"
+            ok-only="true"
             v-model="modalShowFail"
             id="modal-center"
             centered
@@ -41,12 +49,13 @@
           </b-modal>
           <b-modal
             ok-variant="danger"
+            ok-only="true"
             v-model="modalShowCred"
             id="modal-center"
             centered
             title="ERROR"
           >
-            <p class="my-4">Remove Failed, the tag is assigned to a company.</p>
+            <p class="my-4">Something went wrong!.</p>
           </b-modal>
         </p>
       </div>
