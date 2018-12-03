@@ -1,10 +1,8 @@
 <template>
   <form @submit.prevent="validateBeforeSubmit">
-    <!-- Single Tab Content Start -->
     <div class id="add" role="tabpanel">
       <div class="myaccount-content">
         <h3>Add</h3>
-
         <div class="container" id="addBsnPage">
           <div class="row marginTop">
             <h2>
@@ -12,11 +10,9 @@
             </h2>
           </div>
           <div id="error"></div>
-          <!-- <form name="addBsnForm"> -->
           <!-- COMPANY NAME -->
           <div>
             <div class="single-input-item">
-              <!-- <div class="single-input-item"> -->
               <label for="companyName" class="required">Company Name</label>
               <input
                 name="companyName"
@@ -33,7 +29,6 @@
               >{{ errors.first('companyName') }}</p>
             </div>
             <!-- ADDRESS -->
-            <!-- <div class="single-input-item"> -->
             <div class="single-input-item">
               <label for="address" class="required">Address</label>
               <input
@@ -70,7 +65,6 @@
               <!-- VIDEO URL -->
               <div class="col-lg-6">
                 <div class="single-input-item">
-                  <!-- <div class="single-input-item"> -->
                   <label for="videoURL" class="required">Video URL</label>
                   <input
                     name="videoURL"
@@ -190,15 +184,7 @@
               >{{ errors.first('description') }}</p>
             </div>
             <div class="row"></div>
-            <!-- <div class="single-input-item"> -->
             <!--Start Businesss Photo -->
-            <!-- <div class="single-input-item">
-              <label for="logo" class="required">Business Photo</label>
-              <p>
-                <input v-validate="'image'" data-vv-as="image" name="logo" type="file">
-              </p>
-              <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
-            </div>-->
             <picture-input
               ref="pictureInput"
               @change="onImageChanged"
@@ -213,7 +199,6 @@
         upload: '<h1>Upload it!</h1>',
         drag: 'Drag and drop your image here'}"
             ></picture-input>
-            <!-- <button pull-left @click="attemptUpload" :class="{ disabled: !image } ">Upload</button> -->
             <!-- End Business Photo -->
             <div class="row" id="materials-process">
               <div class="col-md-6 categoryList">
@@ -350,7 +335,7 @@
                 </div>
               </div>
             </div>
-
+            <!-- START MODDAL BUTTONS -->
             <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin">
               <p>
                 <button :disabled="errors.any()" type="submit">Add</button>
@@ -358,6 +343,7 @@
                   v-model="modalShow"
                   id="modal-center"
                   @ok="okModal"
+                  ok-only="true"
                   centered
                   title="Company Added:"
                 >
@@ -367,6 +353,7 @@
                   ok-variant="danger"
                   v-model="modalShowFail"
                   id="modal-center"
+                  ok-only="true"
                   centered
                   title="ERROR"
                 >
@@ -375,23 +362,25 @@
                 <b-modal
                   ok-variant="danger"
                   v-model="modalShowCred"
+                  ok-only="true"
                   id="modal-center"
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Email/password combination failed</p>
+                  <p class="my-4">Something went wrong!</p>
                 </b-modal>
               </p>
             </div>
           </div>
         </div>
       </div>
-      <!-- </form> -->
+      <!-- END MODAL BUTTONS -->
+      <!-- START CALL COMPONENTS -->
       <addnewmaterial></addnewmaterial>
       <addnewprocess></addnewprocess>
       <addnewservice></addnewservice>
       <addnewtag></addnewtag>
-
+      <!-- END CALLING COMPONENTS -->
       <manageadmin v-show="adminAuthenticated"></manageadmin>
     </div>
 
@@ -482,6 +471,10 @@ export default {
   }),
 
   methods: {
+    /**
+     * Validate the data inserted using Vee-Validate
+     *
+     */
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
@@ -506,18 +499,18 @@ export default {
           if (this.image != "") {
             //image was added
             this.attemptUpload().then(response => {
-              console.log(response);
+              // console.log(response);
               if (response) {
                 if (response != true) {
-                  console.log("response is " + response);
+                  // console.log("response is " + response);
                   dataToSend.logoName = response;
                 }
 
                 this.$store
                   .dispatch("addNewBusiness", dataToSend)
                   .then(response => {
-                    console.log("Helooowwe");
-                    console.log(response);
+                    // console.log("Helooowwe");
+                    // console.log(response);
                     if (response > 0) {
                       //Added Business successfully, set the modal booleans
                       return { modalShow: true, modalShowCred: false };
@@ -538,8 +531,8 @@ export default {
             this.$store
               .dispatch("addNewBusiness", dataToSend)
               .then(response => {
-                console.log("Helooowwe");
-                console.log(response);
+                // console.log("Helooowwe");
+                // console.log(response);
                 if (response > 0) {
                   //Added Business successfully, set the modal booleans
                   return { modalShow: true, modalShowCred: false };
@@ -548,14 +541,24 @@ export default {
                   return { modalShow: false, modalShowCred: true };
                 }
                 this.image = "";
+                this.email = "";
+                this.videoURL = "";
+                this.companyName = "";
+                this.address = "";
+                this.city = "";
+                this.country = "";
+                this.zipcode = "";
+                this.phone = "";
+                this.website = "";
+                this.description = "";
               })
               .then(data => {
                 this.modalShow = data.modalShow;
                 this.modalShowCred = data.modalShowCred;
               });
           }
-
           this.$validator.reset();
+
           return;
         } else {
           //Invalid or Empty fields
@@ -563,11 +566,13 @@ export default {
         }
       });
     },
+    /**
+     * Redirect the Admin to the Add Tab in the Admin Console
+     */
     okModal() {
       this.$router.replace("/admin/add");
     },
     getIdsArray(subresource) {
-      //console.log(Object.keys(resource).length > 0);
       if (subresource == "materials") {
         let matArr = [];
         for (let id in this.smids) {
@@ -589,8 +594,8 @@ export default {
       } else {
         let tagArr = [];
         for (let id of this.tids) {
-          console.log(this.tids);
-          console.log(id);
+          // console.log(this.tids);
+          // console.log(id);
           tagArr.push([id]);
         }
         return tagArr;
@@ -608,6 +613,8 @@ export default {
         description: this.description,
         logo: this.logo
       };
+      this.email = "";
+      this.videoURL = "";
       this.companyName = "";
       this.address = "";
       this.city = "";
@@ -619,20 +626,23 @@ export default {
       console.log(data);
     },
     onImageChanged() {
-      console.log("New picture loaded");
+      /**
+       * Load a photo for the Company
+       */
+      // console.log("New picture loaded");
       if (this.$refs.pictureInput.file) {
-        console.log("Heyyyy");
+        // console.log("Heyyyy");
         this.image = this.$refs.pictureInput.file;
-        console.log(this.image);
+        // console.log(this.image);
       } else {
-        console.log("Old browser. No support for Filereader API");
+        // console.log("Old browser. No support for Filereader API");
       }
     },
     onRemoved() {
       this.image = "";
     },
     attemptUpload() {
-      console.log("Hey");
+      // console.log("Hey");
       if (this.image != "") {
         var file = this.image;
         var formData = new FormData();
@@ -647,20 +657,20 @@ export default {
           data: formData
         })
           .then(response => {
-            console.log(response);
+            // console.log(response);
             if (response.statusText == "OK") {
-              console.log(response.data.secure_url);
-              console.log("Image uploaded successfully");
+              // console.log(response.data.secure_url);
+              // console.log("Image uploaded successfully");
               return response.data.secure_url;
             } else {
               return false;
             }
           })
           .catch(err => {
-            console.error(err);
+            // console.error(err);
           });
       } else {
-        console.log("no Image selected");
+        // console.log("no Image selected");
         //no image selected
       }
     }
