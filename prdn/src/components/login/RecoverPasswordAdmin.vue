@@ -107,7 +107,7 @@ export default {
             email: this.email
           };
           this.$store
-            .dispatch("recoverAdminPassword", data)
+            .dispatch("sendAdminPasscode", data)
             .then(response => {
               console.log(response);
               if (response > 0) {

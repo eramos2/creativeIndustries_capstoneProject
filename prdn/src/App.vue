@@ -313,7 +313,7 @@ export default {
     login() {
       this.$store
         .dispatch("loginUser", {
-          email: "test122@gmail.com",
+          email: "emmanuel.ramos2@upr.com",
           password: "12345678"
         })
         .then(da => {
