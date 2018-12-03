@@ -182,7 +182,7 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           let data = {
-            id: this.$store.state.users.user.userId,
+            id: 47,
             email: this.email,
             password: this.password,
             confirmpassword: this.confirmpassword,
@@ -190,10 +190,10 @@ export default {
           };
           console.log(data);
           this.$store
-            .dispatch("changeAdminPassword", data)
+            .dispatch("recoverAdminPassword", data)
             .then(response => {
               console.log(response);
-              if (response > 0) {
+              if (response.length > 0) {
                 return { modalShow: true, modalShowCred: false };
               } else {
                 return { modalShow: false, modalShowCred: true };

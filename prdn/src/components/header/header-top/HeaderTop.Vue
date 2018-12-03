@@ -49,6 +49,7 @@
               <li class="currency">
                 <div class="btn-group">
                   <router-link
+                    id="btn-Login"
                     to="/login"
                     tag="button"
                     class="btn-link"
@@ -73,6 +74,7 @@
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    id="my-accountbtn"
                   >
                     My Account
                     <i class="fa fa-angle-down"></i>
@@ -226,6 +228,12 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900");
+#my-accountbtn {
+  padding-right: 1.5rem;
+}
+#btn-Login {
+  padding-right: 1.5rem;
+}
 #logo-img {
   width: 7rem;
   height: 7rem;

@@ -13,39 +13,49 @@
     ></header-bar>
 
     <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
-    <footer id="app-footer" style="padding:2rem;">
-      <button
+    <footer id="app-footer" style="padding:1rem;">
+      <div class="row">
+        <div class="col-9"></div>
+        <div class="col-3">
+          <!-- CONTACT US -->
+          <li
+            class="col-4 muted credit footerContainer pull-right hidden-sm hidden-xs"
+            style="cursor: pointer;"
+          >
+            <a href="mailto:icom2018capstone@gmail.com?subject=PR Design Network">Contact Us</a>
+          </li>
+          <!-- ADMINISTRATOR LOGIN -->
+          <li
+            class="col-4 muted credit footerContainer pull-right hidden-sm hidden-xs"
+            id="adminLogInOpt"
+            style="cursor: pointer;"
+            @click="loginAdminFooterLink"
+          >
+            <a>Admin Log In</a>
+          </li>
+          <!-- ABOUT US -->
+          <!-- <li
+          class="muted credit footerContainer pull-right"
+          onclick="loadPage('aboutUs')"
+          style="cursor: pointer;"
+        >
+          <a>About Us</a>
+          </li>-->
+          <!-- COPYRIGHT -->
+          <li
+            class="col-4 muted credit footerContainer pull-left"
+            style="cursor: pointer;"
+          >Copyright @PRDN</li>
+        </div>
+      </div>
+      <!-- <button
         class="btn btn-primary btn-margin"
         v-show="!authenticated && !adminAuthenticated"
         @click="login()"
       >Log In</button>
       <p>test</p>
       <button class="btn btn-primary btn-margin" v-show="authenticated" @click="logout()">Log Out</button>
-      <!-- CONTACT US -->
-      <li
-        class="muted credit footerContainer pull-right hidden-sm hidden-xs"
-        style="cursor: pointer;"
-      >
-        <a href="mailto:icom2018capstone@gmail.com?subject=PR Design Network">Contact Us</a>
-      </li>
-      <!-- ADMINISTRATOR LOGIN -->
-      <li
-        class="muted credit footerContainer pull-right hidden-sm hidden-xs"
-        id="adminLogInOpt"
-        @click="loginAdminFooterLink"
-      >
-        <a>Administrator Log In</a>
-      </li>
-      <!-- ABOUT US -->
-      <li
-        class="muted credit footerContainer pull-right"
-        onclick="loadPage('aboutUs')"
-        style="cursor: pointer;"
-      >
-        <a>About Us</a>
-      </li>
-      <!-- COPYRIGHT -->
-      <li class="muted credit footerContainer pull-left" style="cursor: pointer;">Copyright @PRDN</li>
+      
       <button
         class="btn btn-primary btn-margin"
         v-show="!authenticated && !adminAuthenticated"
@@ -60,7 +70,7 @@
         class="btn btn-primary btn-margin"
         v-show="adminAuthenticated"
         @click="adminLogout()"
-      >Admin Log Out</button>
+      >Admin Log Out</button>-->
     </footer>
     <!--
     <slider
@@ -313,7 +323,7 @@ export default {
     login() {
       this.$store
         .dispatch("loginUser", {
-          email: "test122@gmail.com",
+          email: "emmanuel.ramos2@upr.com",
           password: "12345678"
         })
         .then(da => {
