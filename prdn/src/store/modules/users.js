@@ -327,6 +327,9 @@ const actions = {
             .then(data => {
                 console.log(data);
                 context.commit('getUser', data.resp);
+                //let dataU = { uid: state.user.userId };
+
+                //context.dispatc("getUserProjects", dataU);
                 return data.resp;
             });
     },
@@ -724,7 +727,7 @@ const actions = {
      * @param {object} data - Contains the projectName, userId, and a array of tagId arrays
      */
     addProject: (context, data) => {
-        console.log("removing endorsement to " + data.companyId);
+        console.log("adding project to " + data.uid);
         console.log(data);
         return Vue.http.get("prds-projects.php", {
             headers: {
@@ -754,7 +757,7 @@ const actions = {
      * @param {object} data - Contains the userId
      */
     getUserProjects: (context, data) => {
-        console.log("getting projects for user with Id " + data.userId);
+        console.log("getting projects for user with Id " + data.uid);
         console.log(data);
         return Vue.http.get("prds-projects.php", {
             headers: {

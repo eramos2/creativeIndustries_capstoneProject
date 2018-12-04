@@ -118,8 +118,62 @@ const mutations = {
      * @param {Object} data - Server response containing the businesses of the subcategory resource. 
      */
     setSubcatBusinesses: (state, data) => {
-        console.log(data);
-        state.subcatBusinesses = data
+        // console.log(data);
+        //Adds the businesses(andtheir tags) that offer this subresource 
+
+        let subcatbusinesses = {};
+
+
+        //Get unique businesses]
+        for (let business of Object.keys(data)) {
+            if (typeof subcatbusinesses[data[business].companyId] === "undefined") {
+                //This business is not in the subbusinesses array
+                subcatbusinesses[data[business].companyId] = data[business];
+            }
+            
+        }
+        state.subcatBusinesses.businesses = subcatbusinesses;
+
+        let categories = {};
+        //Get tag categories unique keys and add them 
+        //to state.subcatBusinesses.tagCategories each category contains the tags related to it
+        // console.log(data);
+        for (let company of Object.keys(data)) {
+            // console.log(company);
+            // console.log(data[company].tagCategory);
+            // console.log(data[company].tagName);
+            // console.log(data[company].companyName);
+            // console.log(data[company].tagCategory != null);
+
+            if (data[company].tagCategory != null && data[company].tagName != null) {
+                let tagCategoryKey = data[company].tagCategory.replace(/ +/g, "%20").toLowerCase();
+                if (typeof categories[tagCategoryKey] === "undefined") {
+                    //This category is not in the categories dict
+                    categories[tagCategoryKey] = {
+                        name: data[company].tagCategory,
+                        tags: {}
+                    };
+                }
+                //Get tag categories and names unique keys and add them 
+
+                let tagKey = data[company].tagName.replace(/ +/g, "%20").toLowerCase();
+                if (typeof categories[tagCategoryKey].tags[tagKey] === "undefined") {
+                    //This tagName is not in the categories[tagCategoryKey].tags dict
+                    let tagName = data[company].tagName;
+                    categories[tagCategoryKey].tags[tagKey] = {
+                        id: data[company].tagId,
+                        name: tagName,
+                        category: data[company].tagCategory
+                    }
+                }
+            }
+
+        }
+        console.log("Finished setting up tags");
+
+        state.subcatBusinesses.tagCategories = categories;
+
+        console.log("Finished setting up tag categories");
 
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:

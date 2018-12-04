@@ -103,6 +103,7 @@ export default {
           .dispatch("editTag", data)
           .then(response => {
             console.log(response);
+
             if (response >= 0) {
               this.$store.dispatch("setTags");
               console.log("wowow");

@@ -132,7 +132,7 @@ export default {
           //   }
           // });
         });
-        return this.$store.state.businesses.subcatBusinesses;
+        return this.$store.state.businesses.subcatBusinesses.businesses;
       }
     }
   }

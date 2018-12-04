@@ -170,7 +170,7 @@ export default {
       this.$store
         .dispatch("changeSubResourceConnection", data)
         .then(response => {
-          if (response.length > 0) {
+          if (response > 0) {
             this.reloadResources();
             return { modalShow: true, modalShowCred: false };
           } else {

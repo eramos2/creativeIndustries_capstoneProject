@@ -3,14 +3,7 @@
     <div class="sinle-product-item mb-20">
       <div class="product-thumb">
         <router-link
-          :to="{
-                    name: 'singleitemLink', 
-                    params: {
-                        resourceName: this.$route.params.resourceName,
-                        categoryName: subcategory.category, 
-                      subcategoryName: subcategory.name.toLowerCase()
-                    }
-                  }"
+          :to="subcatLink"
           tag="a"
           active-class="active"
           class="product-name"
@@ -25,14 +18,7 @@
         </div>-->
         <div class="add-to-cart">
           <router-link
-            :to="{
-                    name: 'singleitemLink', 
-                    params: {
-                        resourceName: this.$route.params.resourceName,
-                        categoryName: this.$route.params.categoryName, 
-                      subcategoryName: subcategory.name.toLowerCase()
-                    }
-                  }"
+            :to="subcatLink"
             tag="a"
             active-class="active"
             class="btn-cart"
@@ -54,14 +40,7 @@
         <h4 class="product-name">
           <!-- <a style="cursor: pointer;" @click="scLink">{{subcategory.name}}</a> -->
           <router-link
-            :to="{
-                    name: 'singleitemLink', 
-                    params: {
-                        resourceName: this.$route.params.resourceName,
-                        categoryName: this.$route.params.categoryName, 
-                      subcategoryName: subcategory.name.toLowerCase()
-                    }
-                  }"
+            :to="subcatLink"
             tag="a"
             active-class="active"
             class
@@ -85,6 +64,16 @@ export default {
     }
   },
   computed: {
+     subcatLink() {
+      return (
+        "/" +
+        this.$route.params.resourceName +
+        "/" +
+        this.$route.params.categoryName +
+        "/" +
+        this.subcategory.name.toLowerCase()
+      );
+    },
     /**
      * Returns subcategory image url by appending the image id to the google drive folder url
      * @name imgUrl

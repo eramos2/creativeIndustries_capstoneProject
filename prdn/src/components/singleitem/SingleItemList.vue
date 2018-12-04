@@ -1,29 +1,28 @@
 <template>
-    <!-- content-wraper start -->
-            <div class="content-wraper bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 order-2 order-lg-1">
-                            <singleitem-list-box
-                                v-for="(tag, key) in tags"
-                                :key="key"
-                                :tag="tag"
-                            >{{key}}</singleitem-list-box>
-                        
-                
-                            <!-- single-benner start -->
-                            <div class="single-benner mt-30 text-center">
-                                <a href="#">
-                                    <img alt="" src="img/benner/home-04-5.jpg">
-                                </a>
-                            </div>
-                            <!-- single-benner start -->
-                        </div>
-                        <div class="col-lg-9 order-1 order-lg-2">
-                            <singleitem-slider></singleitem-slider>
+  <!-- content-wraper start -->
+  <div class="content-wraper bg-gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 order-2 order-lg-1">
+          <singleitem-list-box
+            v-for="(tagCategory, key) in tags"
+            :key="key"
+            :tagCategory="tagCategory"
+          >{{tagCategory.name}}</singleitem-list-box>
 
-                            <singleitem-businesses :key="curSubcat"></singleitem-businesses>
-                            <!--
+          <!-- single-benner start -->
+          <div class="single-benner mt-30 text-center">
+            <a href="#">
+              <img alt src="img/benner/home-04-5.jpg">
+            </a>
+          </div>
+          <!-- single-benner start -->
+        </div>
+        <div class="col-lg-9 order-1 order-lg-2">
+          <singleitem-slider></singleitem-slider>
+
+          <singleitem-businesses :key="curSubcat"></singleitem-businesses>
+          <!--
                             <div class="row">
                                 <div class="col">
                                     <div class="shop-top-bar mt-60">
@@ -91,12 +90,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- content-wraper end -->
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wraper end -->
 </template>
 
 <script>
@@ -148,15 +147,7 @@ export default {
       }
     },
     tags() {
-      //console.log("Inside computed category ListBox ");
-      //return this.getResources();
-      //return this.$store.getters.getResourceCategories(this.$route.params.resourceName);
-      let tags = {
-        applications: ["Cavity Filling", "Insulation", "Soil Stabilization"],
-        cost: ["High", "Moderate", "Low"],
-        qualities: ["Clear", "Opaque", "Vivid Colors"]
-      };
-      return tags;
+      return this.$store.state.businesses.subcatBusinesses.tagCategories;
     }
   },
   mounted() {

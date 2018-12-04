@@ -15,8 +15,8 @@
     <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
     <footer id="app-footer" style="padding:1rem;">
       <div class="row">
-        <div class="col-9"></div>
-        <div class="col-3">
+        <div class="col-8"></div>
+        <div class="col-4">
           <!-- CONTACT US -->
           <li
             class="col-4 muted credit footerContainer pull-right hidden-sm hidden-xs"
@@ -391,6 +391,7 @@ export default {
     //console.log(this.$store.state.resources);
     //Check if user is logged in
     this.$store.dispatch("userType");
+
     $(window).on("scroll", function() {
       var scroll = $(window).scrollTop();
       if (scroll < 265) {
