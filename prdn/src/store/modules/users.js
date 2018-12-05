@@ -705,6 +705,7 @@ const actions = {
                 swebsite: data.website,
                 sdescription: data.description,
                 sphone: data.phone,
+                simage: data.logo,
                 semail: data.email,
                 sline: data.address,
                 scity: data.city,
