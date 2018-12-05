@@ -30,7 +30,7 @@
             <label for="addressID" class="required">Address:*</label>
             <input
               name="addressID"
-              v-validate="'required|max:40'"
+              v-validate="'required|max:60'"
               data-vv-as="address"
               type="text"
               v-model="addressID"
@@ -63,7 +63,7 @@
             <div class="col-lg-6">
               <div class="single-input-item">
                 <!-- <div class="single-input-item"> -->
-                <label for="videoURL" class="required">Video URL:*</label>
+                <label for="videoURL" class="required">Video URL</label>
                 <input
                   name="videoURL"
                   v-validate="'url'"

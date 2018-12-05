@@ -1,19 +1,17 @@
 <template>
-    <div class="categories-box sidebar-categores-box">
-        <div class="secton-title">
-            <h2>{{resource}}</h2>
-        </div>
-        <div class="sidebar-categores-inner">
-            <ul>
-                <category-list-box-singleitem
-                    v-for="(category, key, index) in categories"
-                    :key="index"
-                    :category="key"
-                >
-                {{category.name}}
-                </category-list-box-singleitem>
-            </ul>
-            <!--<div class="filter-group">
+  <div class="categories-box sidebar-categores-box">
+    <div class="secton-title">
+      <h2>{{resource}}</h2>
+    </div>
+    <div class="sidebar-categores-inner">
+      <ul>
+        <category-list-box-singleitem
+          v-for="(category, key, index) in categories"
+          :key="index"
+          :category="key"
+        >{{category.name}}</category-list-box-singleitem>
+      </ul>
+      <!--<div class="filter-group">
                 <a 
                     href="#"
                     v-for="(category, index) in categories"
@@ -21,9 +19,9 @@
                 >   
                 {{category.name}}
                 </a>
-            </div>-->
-        </div>
+      </div>-->
     </div>
+  </div>
 </template>
 
 <script>
