@@ -593,7 +593,7 @@ const actions = {
         }).then(response => {
             console.log("After checking user email");
             console.log(response);
-            if (response.body.length > 0) {
+            if (response.body.resp.length > 0) {
                 return response.json();
             } else {
                 console.log("In else statement ")
