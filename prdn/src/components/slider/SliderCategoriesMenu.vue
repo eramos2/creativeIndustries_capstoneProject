@@ -1,22 +1,22 @@
 <template>
-    <router-link :to="resourceKey" tag="li" active-class="active" exact><a><slot></slot>
-    <span><i class="fa fa-angle-right"></i></span></a>
+  <router-link :to="resourceKey" tag="li" active-class="active" exact>
+    <a style="overflow: scroll;">
+      <slot></slot>
+      <span>
+        <i class="fa fa-angle-right"></i>
+      </span>
+    </a>
     <ul class="right-mega-menu">
-
-        <sub-category-menu
-            v-for="(category, key) in resource.categories"
-            :key="key"
-            :cKey="key | addWhitespace"
-            :rKey="resourceKey | addWhitespace" 
-            :category="category"
-        >
-            {{category.name }}
-        </sub-category-menu>
-       
+      <sub-category-menu
+        v-for="(category, key) in resource.categories"
+        :key="key"
+        :cKey="key | addWhitespace"
+        :rKey="resourceKey | addWhitespace"
+        :category="category"
+      >{{category.name }}</sub-category-menu>
     </ul>
-    
-    </router-link>
-   <!-- <li><a href="#"><slot></slot> <span><i class="fa fa-angle-right"></i></span></a>
+  </router-link>
+  <!-- <li><a href="#"><slot></slot> <span><i class="fa fa-angle-right"></i></span></a>
     <ul class="right-mega-menu">
 
         <sub-category-menu
@@ -30,8 +30,7 @@
         </sub-category-menu>
        
     </ul>
-</li>-->
-
+  </li>-->
 </template>
 
 <script>

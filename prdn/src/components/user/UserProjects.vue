@@ -14,11 +14,12 @@
               id="userProjectsSelect"
             >
               <option value="none" disabled selected>Choose Your Project</option>
+              <option id="addNewProject" value="addNewProject">New Project</option>
               <option
                 v-for="(project, key) in userProjects"
                 :key="key"
-                :value="project.projectId"
-              >{{project.projectName}}</option>
+                :value="project.id"
+              >{{project.name}}</option>
             </select>
           </div>
         </div>
@@ -195,7 +196,11 @@
           </div>
         </div>
       </form>
-      <singleitems id="single-item-column"></singleitems>
+      <singleitems
+        v-show="selected != '' && selected != 'addNewProject'"
+        id="single-item-column"
+        :recommendations="recommendations"
+      ></singleitems>
     </div>
   </div>
 
@@ -318,14 +323,25 @@ export default {
       console.log(data);
     },
     onChange() {
-      let projects = this.$store.state.users.userProjects;
-      console.log(projects);
-      for (let pKey of projects) {
-        //Get project data if it matches the current selectedId
-        if (projects[pKey].projectId == this.selected) {
-          console.log(pKey);
-          this.projectName = projects[pKey].projectName;
-          this.tids = projects[pKey].tids;
+      console.log("onChange before callin recommendations " + this.selected);
+      if (this.selected == "" || this.selected == "addNewProject") {
+      } else {
+        this.$store.dispatch("getBusinessesRecommendations", {
+          pid: this.selected
+        });
+        let projects = this.$store.state.users.userProjects;
+        console.log(projects);
+        let tags;
+        for (let project of Object.values(projects)) {
+          //Get project data if it matches the current selectedId
+          if (project.id == this.selected) {
+            console.log(project);
+            this.projectName = project.name;
+            tags = project.tags;
+          }
+        }
+        for (let tag of Object.values(tags)) {
+          this.tids.push(tag.id);
         }
       }
     }
@@ -334,6 +350,14 @@ export default {
     singleitems: SingleItems
   },
   computed: {
+    recommendations() {
+      if (this.selected != "") {
+        return this.$store.state.businesses.businessesRecommendations;
+      } else {
+        return {};
+      }
+    },
+
     userProjects() {
       return this.$store.state.users.userProjects;
     },

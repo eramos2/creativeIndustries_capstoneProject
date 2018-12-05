@@ -33,7 +33,7 @@
               <!-- <useraccount></useraccount>  -->
               <!-- <userprojects></userprojects> -->
               <!-- <usernewbusiness></usernewbusiness> -->
-              <router-view></router-view>
+              <router-view :key="$route.fullPath"></router-view>
             </div>
           </div>
           <!-- My Account Tab Content End -->

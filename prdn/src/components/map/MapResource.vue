@@ -1,58 +1,42 @@
 <template>
-<div class="map-resource">
+  <div class="map-resource">
     <h6>{{mapResourceName}}</h6>
     <div class="row">
-        <ul>
-            <li
-                v-for="(category, key) in mapResourceCategories"
+      <ul>
+        <li v-for="(category, key) in mapResourceCategories" :key="key">
+          <!-- Resource Categories -->
+          <a
+            class
+            data-toggle="collapse"
+            :href="'#mapResource'+noWhiteSpace(category)"
+            role="button"
+            aria-expanded="false"
+            :aria-controls="'mapResource'+noWhiteSpace(category)"
+            v-show="isCatConnection(mapResourceName.toLowerCase(), category.name, category.subcategories)"
+          >{{category.name}}</a>
+
+          <!-- Collapsable Row -->
+          <div class="row">
+            <div class="collapse" :id="'mapResource'+noWhiteSpace(category)">
+              <!-- Resource Sub Categories -->
+              <button
+                type="button"
+                v-for="(subcategory, key) in category.subcategories"
                 :key="key"
-            >
-            
-                <!-- Resource Categories -->
-                <a  
-                    class="" 
-                    data-toggle="collapse" 
-                    :href="'#mapResource'+noWhiteSpace(category)" 
-                    role="button" 
-                    aria-expanded="false"  
-                    :aria-controls="'mapResource'+noWhiteSpace(category)"
-                    v-show="isCatConnection(mapResourceName.toLowerCase(), category.name, category.subcategories)"
-                >
-                    {{category.name}}
-                </a>
-               
-                <!-- Collapsable Row -->
-                <div class="row">
-                    <div class="collapse" 
-                    :id="'mapResource'+noWhiteSpace(category)"
-                    >
-                        <!-- Resource Sub Categories -->
-                        <button 
-                            
-                            type="button"
-                            v-for="(subcategory, key) in category.subcategories"
-                            :key="key"
-                            class="mapResourceSubCat btn btn-link btn-block"
-                            :subcatid="mapResourceName.toLowerCase()+subcategory.id"
-                            v-on:click="
+                class="mapResourceSubCat btn btn-link btn-block"
+                :subcatid="mapResourceName.toLowerCase()+subcategory.id"
+                v-on:click="
                             showBusinesses(mapResourceName, subcategory.name);
                             showConections(mapResourceName, category.name, subcategory.id);
                             "
-                            v-show="isConnection(mapResourceName, subcategory.id)"
-                            
-                        >
-                            {{subcategory.name}}
-                        </button>
-                    </div>
-                </div>
-            </li>
-            
-        </ul>
+                v-show="isConnection(mapResourceName, subcategory.id)"
+              >{{subcategory.name}}</button>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
-    
-</div>
-       
-        
+  </div>
 </template>
 
 <script>
@@ -304,10 +288,17 @@ export default {
       console.log(this.$store.state.resources.subcatConnections);
     },
     mapResourceName() {
-      return this.resource.name;
+      return this.resource;
     },
     mapResourceCategories() {
-      return this.resource.categories;
+      console.log();
+      if (this.resource == "Materials") {
+        return this.$store.state.resources.resources.materials.categories;
+      } else if (this.resource == "Processes") {
+        return this.$store.state.resources.resources.processes.categories;
+      } else {
+        return this.$store.state.resources.resources.services.categories;
+      }
     }
   }
 };
