@@ -185,7 +185,7 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           let data = {
-            id: this.$store.state.users.user.userId,
+            // id: this.$store.state.users.user.userId,
             email: this.email,
             password: this.password,
             confirmpassword: this.confirmpassword,

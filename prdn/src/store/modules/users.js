@@ -313,15 +313,15 @@ const actions = {
         let uid = data.userId;
         console.log("Getting user data " + uid);
         return Vue.http.get(serverfile, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                params: {
-                    endpoint: 'users',
-                    code: '1',
-                    uid: uid
-                }
-            })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'users',
+                code: '1',
+                uid: uid
+            }
+        })
             .then(response => {
                 console.log(response);
                 return response.json();
@@ -511,9 +511,12 @@ const actions = {
      * @param {object} data - Contains user's email, passcode, and new password
      */
     recoverUserPassword: (context, data) => {
-        console.log("I'm verifying passcode for " + data.email);
-        state.userFlags['recoverPassword'] = "";
 
+        console.log("I'm verifying passcode for " + data.email);
+        console.log(data);
+        console.log("HERE BABY");
+        state.userFlags['recoverPassword'] = "";
+        let userData = data;
         return Vue.http.get(serverfile, {
             headers: {
                 "Content-Type": "application/json"
@@ -537,15 +540,15 @@ const actions = {
 
 
                 return Vue.http.post(serverfile, {
-                        endpoint: 'users',
-                        code: '3',
-                        du: true,
-                        multi: true,
-                        uemail: response[0].email,
-                        upass: response[0].password,
-                        uid: response[0].userId,
-                        type: 0
-                    }, {
+                    endpoint: 'users',
+                    code: '3',
+                    du: true,
+                    multi: true,
+                    uemail: response[0].email,
+                    upass: userData.password,
+                    uid: response[0].userId,
+                    type: 0
+                }, {
                         emulateJSON: true,
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded"
@@ -630,26 +633,26 @@ const actions = {
 
                 }, {
 
-                    emulateJSON: true,
+                        emulateJSON: true,
 
 
-                }).then(response => {
-                    return response.json();
-                }).then(data => {
+                    }).then(response => {
+                        return response.json();
+                    }).then(data => {
 
-                    console.log("registering user");
-                    console.log(data);
-                    commit("registerNewUser", data.resp);
-                    let udata = {
-                        name: userData.firstName,
-                        email: userData.email
-                    }
-                    console.log(data);
-                    dispatch("sendRegistrationEmail", udata, {
-                        root: true
+                        console.log("registering user");
+                        console.log(data);
+                        commit("registerNewUser", data.resp);
+                        let udata = {
+                            name: userData.firstName,
+                            email: userData.email
+                        }
+                        console.log(data);
+                        dispatch("sendRegistrationEmail", udata, {
+                            root: true
+                        });
+                        return data.resp;
                     });
-                    return data.resp;
-                });
             }
         })
 

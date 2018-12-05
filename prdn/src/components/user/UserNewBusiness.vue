@@ -150,6 +150,7 @@
               v-validate="'required|url'"
               type="url"
               id="website"
+              v-model="website"
               placeholder="Website"
               class="form-control"
             >
@@ -302,6 +303,7 @@ export default {
             tags: this.getIdsArray("tags"),
             id: this.$store.state.users.user.userId
           };
+          console.log(dataToSend);
           this.$store
             .dispatch("addSubmission", dataToSend)
             .then(response => {

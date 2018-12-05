@@ -331,11 +331,12 @@
           <div class="row">
             <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
-                <button :disabled="errors.any()" type="submit">Submit</button>
+                <button :disabled="errors.any()" type="submit" @click="submission">Submit</button>
+                <button :disabled="errors.any()" type="submit" @click="notSubmitted">Remove</button>
                 <b-modal
                   v-model="modalShow"
                   id="modal-center"
-                  ok-only="true"
+                  ok-only
                   @ok="okModal"
                   centered
                   title="Company Added:"
@@ -344,7 +345,7 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
-                  ok-only="true"
+                  ok-only
                   v-model="modalShowFail"
                   id="modal-center"
                   centered
@@ -354,7 +355,7 @@
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
-                  ok-only="true"
+                  ok-only
                   v-model="modalShowCred"
                   id="modal-center"
                   centered
@@ -415,9 +416,17 @@ export default {
     description: "",
     logo: "",
     email: "",
-    videoURL: ""
+    videoURL: "",
+    submission: false,
+    notSubmitted: false
   }),
   methods: {
+    submission() {
+      this.submission = true;
+    },
+    submissionF() {
+      this.notSubmitted = true;
+    },
     collapseAll() {
       this.$refs.collapsible.map(c => (c.collapsed = true));
     },
@@ -447,6 +456,7 @@ export default {
             logoName: null //need to add placeholder image here
           };
           // console.log(data);
+
           this.$store
             .dispatch("removeSubmission", {
               submissionId: this.$store.state.administrators
@@ -455,29 +465,31 @@ export default {
             .then(response => {
               console.log(response);
             });
-          this.$store
-            .dispatch("addNewBusiness", dataToSend)
-            .then(response => {
-              // console.log("Helooowwe");
-              // console.log(response);
-              if (response > 0) {
-                //Added Business successfully, set the modal booleans
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                //Something went wrong when adding business
-                return { modalShow: false, modalShowCred: true };
-              }
-              this.image = "";
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
-            });
-          this.$validator.reset();
-          return;
-        } else {
-          //Invalid or Empty fields
-          this.modalShowFail = true;
+          if (this.submission == true) {
+            this.$store
+              .dispatch("addNewBusiness", dataToSend)
+              .then(response => {
+                // console.log("Helooowwe");
+                // console.log(response);
+                if (response > 0) {
+                  //Added Business successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when adding business
+                  return { modalShow: false, modalShowCred: true };
+                }
+                this.image = "";
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            this.$validator.reset();
+            return;
+          } else {
+            //Invalid or Empty fields
+            this.modalShowFail = true;
+          }
         }
       });
     },

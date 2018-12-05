@@ -15,18 +15,18 @@
     <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
     <footer id="app-footer" style="padding:1rem;">
       <div class="row">
-        <div class="col-8"></div>
-        <div class="col-4">
+        <div class="col-7"></div>
+        <div class="col-5">
           <!-- CONTACT US -->
           <li
-            class="col-4 muted credit footerContainer pull-right hidden-sm hidden-xs"
+            class="col-3 muted credit footerContainer pull-right hidden-sm hidden-xs"
             style="cursor: pointer;"
           >
             <a href="mailto:icom2018capstone@gmail.com?subject=PR Design Network">Contact Us</a>
           </li>
           <!-- ADMINISTRATOR LOGIN -->
           <li
-            class="col-4 muted credit footerContainer pull-right hidden-sm hidden-xs"
+            class="col-3 muted credit footerContainer pull-right hidden-sm hidden-xs"
             id="adminLogInOpt"
             style="cursor: pointer;"
             @click="loginAdminFooterLink"
@@ -34,16 +34,16 @@
             <a>Admin Log In</a>
           </li>
           <!-- ABOUT US -->
-          <!-- <li
-          class="muted credit footerContainer pull-right"
-          onclick="loadPage('aboutUs')"
-          style="cursor: pointer;"
-        >
-          <a>About Us</a>
-          </li>-->
+          <li
+            class="col-3 muted credit footerContainer pull-right"
+            @click="aboutUsFooterLink"
+            style="cursor: pointer;"
+          >
+            <a>About Us</a>
+          </li>
           <!-- COPYRIGHT -->
           <li
-            class="col-4 muted credit footerContainer pull-left"
+            class="col-3 muted credit footerContainer pull-left"
             style="cursor: pointer;"
           >Copyright @PRDN</li>
         </div>
@@ -355,6 +355,9 @@ export default {
     },
     loginAdminFooterLink() {
       this.$router.replace("/login/admin");
+    },
+    aboutUsFooterLink() {
+      this.$router.replace("/aboutus");
     }
   },
   computed: {
