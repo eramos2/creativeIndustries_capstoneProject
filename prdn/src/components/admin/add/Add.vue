@@ -49,17 +49,20 @@
               <div class="col-lg-6">
                 <div class="single-input-item">
                   <!-- <div class="single-input-item"> -->
-                  <label for="email" class="required">Email:*</label>
+                  <label for="addEmail" class="required">Email:*</label>
                   <input
-                    name="email"
+                    name="addEmail"
                     v-validate="'required|email|max:50'"
                     type="email"
-                    id="email"
+                    id="addEmail"
                     placeholder="Email*"
-                    v-model="email"
+                    v-model="addEmail"
                     class="form-control"
                   >
-                  <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
+                  <p
+                    class="text-danger"
+                    v-if="errors.has('addEmail')"
+                  >{{ errors.first('addEmail') }}</p>
                 </div>
               </div>
               <!-- VIDEO URL -->
@@ -185,20 +188,29 @@
             </div>
             <div class="row"></div>
             <!--Start Businesss Photo -->
+            <label
+              style="margin-top:1rem;"
+            >Business Photo: Must be a jpeg image and size should be 3MB or less</label>
             <picture-input
+              style="margin-top: 0.5rem;"
               ref="pictureInput"
               @change="onImageChanged"
               @remove="onRemoved"
               :width="700"
               :removable="true"
+              v-model="logo"
+              size="3"
+              name="logo"
+              v-validate="'image|dimensions:500,500|mimes:image/jpeg'"
               removeButtonClass="ui red button"
               :height="250"
-              accept="image/jpeg, image/png, image/gif"
+              accept="image/jpeg"
               buttonClass="ui button primary"
               :customStrings="{
-        upload: '<h1>Upload it!</h1>',
-        drag: 'Drag and drop your image here'}"
+              upload: '<h1>Upload it!</h1>',
+              drag: 'Drag and drop your image here'}"
             ></picture-input>
+            <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
             <!-- End Business Photo -->
             <div class="row" id="materials-process">
               <div class="col-md-6 categoryList">
@@ -466,7 +478,7 @@ export default {
     website: "",
     description: "",
     logo: "",
-    email: "",
+    addEmail: "",
     videoURL: ""
   }),
 
@@ -488,7 +500,7 @@ export default {
             website: this.website,
             description: this.description,
             logo: this.logo,
-            email: this.email,
+            email: this.addEmail,
             videoURL: this.videoURL,
             materials: this.getIdsArray("materials"),
             services: this.getIdsArray("services"),
@@ -561,7 +573,7 @@ export default {
      */
     okModal() {
       this.$router.replace("/admin/add");
-      this.email = "";
+      this.addEmail = "";
       this.videoURL = "";
       this.companyName = "";
       this.address = "";
@@ -614,7 +626,7 @@ export default {
         description: this.description,
         logo: this.logo
       };
-      this.email = "";
+      this.addEmail = "";
       this.videoURL = "";
       this.companyName = "";
       this.address = "";
@@ -684,6 +696,9 @@ export default {
 }
 #materials-process {
   margin-top: 2rem;
+}
+.pictureinput {
+  margin-top: 0.5rem;
 }
 /* form {
   margin-left: 0%;

@@ -174,17 +174,33 @@
             >{{ errors.first('description') }}</p>
           </div>
           <!-- UPLOAD BUSINESS PHOTO -->
-          <div class="single-input-item">
-            <label for="logo" class="required">Business Photo</label>
-            <p>
-              <input v-validate="'image'" data-vv-as="image" name="logo" type="file">
-            </p>
-            <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
-          </div>
+          <label
+            style="margin-top:1rem;"
+          >Business Photo: Must be a jpeg image and size should be 3MB or less</label>
+          <picture-input
+            style="margin-top: 0.5rem; "
+            ref="pictureInput"
+            @change="onImageChanged"
+            @remove="onRemoved"
+            :width="700"
+            :removable="true"
+            v-model="logo"
+            size="3"
+            name="logo"
+            v-validate="'image|dimensions:500,500|mimes:image/jpeg'"
+            removeButtonClass="ui red button"
+            :height="250"
+            accept="image/jpeg"
+            buttonClass="ui button primary"
+            :customStrings="{
+              upload: '<h1>Upload it!</h1>',
+              drag: 'Drag and drop your image here'}"
+          ></picture-input>
+          <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
           <fieldset>
             <!-- SELECT TAGS TO DESCRIBE PROJECT -->
             <div class="col-md-12categoryList">
-              <h3>Tags (Max. 6)</h3>
+              <h3 style="margin-top:2rem;">Tags (Max. 6)</h3>
             </div>
             <div class="col-md-12 categoryList">
               <div style="overflow-y: scroll; height:400px;">
@@ -260,7 +276,15 @@
 import Vue from "vue";
 import FileUpload from "v-file-upload";
 Vue.use(FileUpload);
+import VeeValidate from "vee-validate";
+import PictureInput from "vue-picture-input";
+
+Vue.use(VeeValidate);
+
 export default {
+  components: {
+    pictureInput: PictureInput // for getting the business image
+  },
   data() {
     return {
       modalShow: false,

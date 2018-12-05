@@ -167,7 +167,7 @@
             <label for="website" class="required">Website</label>
             <input
               name="website"
-              v-validate="'required|url'"
+              v-validate="'url'"
               v-model="website"
               type="url"
               id="website"
@@ -332,7 +332,12 @@
             <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
                 <button :disabled="errors.any()" type="submit" @click="submission">Submit</button>
-                <button :disabled="errors.any()" type="submit" @click="notSubmitted">Remove</button>
+                <button
+                  class="remove-btn"
+                  :disabled="errors.any()"
+                  type="submit"
+                  @click="notSubmitted"
+                >Remove</button>
                 <b-modal
                   v-model="modalShow"
                   id="modal-center"
@@ -644,4 +649,7 @@ export default {
 };
 </script>
 <style>
+.remove-btn {
+  margin-left: 1.5rem;
+}
 </style>
