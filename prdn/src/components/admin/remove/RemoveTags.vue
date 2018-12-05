@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-right">
+      <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-left">
         <p>
           <button type="submit">Remove Tag</button>
           <b-modal
@@ -55,7 +55,7 @@
             centered
             title="ERROR"
           >
-            <p class="my-4">Something went wrong!.</p>
+            <p class="my-4">Something went wrong, verify any empty or invalid field(s).</p>
           </b-modal>
         </p>
       </div>

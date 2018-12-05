@@ -46,7 +46,7 @@
                   centered
                   title="Company Removed:"
                 >
-                  <p class="my-4">removed business success</p>
+                  <p class="my-4">Removed business success.</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
@@ -56,7 +56,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">remove business failed</p>
+                  <p class="my-4">Remove business failed.</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
@@ -66,7 +66,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Something went wrong!</p>
+                  <p class="my-4">Something went wrong, verify any empty or invalid field(s)</p>
                 </b-modal>
               </p>
             </div>

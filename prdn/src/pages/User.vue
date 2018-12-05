@@ -65,6 +65,7 @@ export default {
       this.$cookie.delete("userId");
       this.$cookie.delete("userType");
       this.$store.dispatch("userType");
+
       //this.$store.state.users.userFlags.loggedIn = false;
       console.log("Logged Out");
       console.log(this.$store.state.users.userFlags.loggedIn);

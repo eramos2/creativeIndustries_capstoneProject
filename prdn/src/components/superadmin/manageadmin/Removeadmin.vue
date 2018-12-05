@@ -2,7 +2,7 @@
   <form @submit.prevent="validateBeforeSubmit">
     <div class="container">
       <div class="container adminRemove marginTop">
-        <h2>
+        <h2 style="margin-top: 10rem;">
           <span class="glyphicon glyphicon-minus-sign"></span> Remove Administrator
         </h2>
         <div class="row"></div>
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-right">
+      <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-left">
         <p>
           <button :disabled="errors.any()" type="submit">Remove Administrator</button>
           <b-modal v-model="modalShow" id="modal-center" @ok="okModal" centered title="Added">

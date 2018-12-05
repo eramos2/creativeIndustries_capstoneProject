@@ -234,7 +234,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Verify your email or any empty field(s)</p>
+                  <p class="my-4">Verify your email or any empty or invalid field(s)</p>
                 </b-modal>
               </fieldset>
             </div>
