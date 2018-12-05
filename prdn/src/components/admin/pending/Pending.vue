@@ -330,12 +330,12 @@
           <div class="row">
             <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
-                <button :disabled="errors.any()" type="submit" @click="submission">Submit</button>
+                <button :disabled="errors.any()" type="submit" @click="submissionT()">Submit</button>
                 <button
                   class="remove-btn"
                   :disabled="errors.any()"
                   type="submit"
-                  @click="notSubmitted"
+                  @click="submissionF()"
                 >Remove</button>
                 <b-modal
                   v-model="modalShow"
@@ -343,9 +343,13 @@
                   ok-only
                   @ok="okModal"
                   centered
-                  title="Company Added:"
+                  title="Submition Request:"
                 >
-                  <p class="my-4">Submission request for {{companyName}} business success!</p>
+                  <p v-show="submission" class="my-4">{{companyName}} business added successfully!</p>
+                  <p
+                    v-show="notSubmitted"
+                    class="my-4"
+                  >{{companyName}} business removed succesfully!</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
@@ -355,7 +359,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Something went wrong!</p>
+                  <p class="my-4">Something went wrong! Verify internet connection</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
@@ -406,6 +410,7 @@ export default {
     modalShow: false,
     modalShowFail: false,
     modalShowCred: false,
+    selected: "",
     spids: [], //selected sub processes ids
     smids: [], //selected sub materials ids
     ssids: [], //selected sub services ids
@@ -421,11 +426,12 @@ export default {
     logo: "",
     email: "",
     videoURL: "",
+    logoName: "",
     submission: false,
     notSubmitted: false
   }),
   methods: {
-    submission() {
+    submissionT() {
       this.submission = true;
     },
     submissionF() {
@@ -441,6 +447,7 @@ export default {
     validateBeforeSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
+          console.log(result);
           let dataToSend = {
             companyName: this.companyName,
             address: this.address,
@@ -450,26 +457,38 @@ export default {
             phone: this.phone,
             website: this.website,
             description: this.description,
-            logo: this.logo,
+            logoName: this.logoName,
             email: this.email,
             videoURL: this.videoURL,
             materials: this.getIdsArray("materials"),
             services: this.getIdsArray("services"),
             processes: this.getIdsArray("processes"),
             tags: this.getIdsArray("tags"),
-            logoName: null //need to add placeholder image here
+            logo: null //need to add placeholder image here
           };
-          // console.log(data);
-
-          this.$store
-            .dispatch("removeSubmission", {
-              submissionId: this.$store.state.administrators
-                .currentBusinessRequest.submissionId
-            })
-            .then(response => {
-              console.log(response);
-            });
-          if (this.submission == true) {
+          console.log(dataToSend);
+          if (this.notSubmitted) {
+            this.$store
+              .dispatch("removeSubmission", {
+                submissionId: this.selected
+              })
+              .then(response => {
+                console.log(response);
+                if (response.length > 0) {
+                  //Added Business successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when adding business
+                  return { modalShow: false, modalShowCred: true };
+                }
+                this.image = "";
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+                console.log(data);
+              });
+          } else if (this.submission == true) {
             this.$store
               .dispatch("addNewBusiness", dataToSend)
               .then(response => {
@@ -554,7 +573,7 @@ export default {
      * Redirect the Admin to the Edit Tab in the Admin console
      */
     okModal() {
-      this.$router.replace("/admin/requests");
+      this.$router.replace("/admin/");
     },
     onChange() {
       let data = { submissionId: this.selected };
@@ -564,6 +583,7 @@ export default {
         if (response.length > 0) {
           let business = this.$store.state.administrators
             .currentBusinessRequest;
+          console.log(business);
           this.companyName = business.companyName;
           this.address = business.line;
           this.city = business.city;
@@ -572,9 +592,9 @@ export default {
           this.phone = business.phone;
           this.website = business.website;
           this.description = business.description;
-          this.logo = "";
+          this.logoName = business.imageName;
           this.email = business.email;
-          this.videoURL = "http://www.youtube.com";
+          this.videoURL = "";
           // this.spids = this.getIds(business.subprocesses, "subProcessId");
           // this.smids = this.getIds(business.submaterials, "subMaterialId");
           // this.ssids = this.getIds(business.subservices, "subServiceId");

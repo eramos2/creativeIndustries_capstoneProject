@@ -699,8 +699,10 @@ const actions = {
             },
             params: {
                 endpoint: 'submissions',
-                uid: data.id,
+                uid: data.uid,
+                tids: data.tags,
                 du: true,
+                multi: true,
                 sname: data.name,
                 swebsite: data.website,
                 sdescription: data.description,

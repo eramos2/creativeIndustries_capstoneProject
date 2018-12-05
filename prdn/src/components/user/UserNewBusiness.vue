@@ -327,8 +327,9 @@ export default {
             email: this.email,
             videoURL: this.videoURL,
             tags: this.getIdsArray("tags"),
-            id: this.$store.state.users.user.userId
+            uid: this.$store.state.users.user.userId
           };
+          console.log(this.$store.state.users.user.userId);
           console.log(dataToSend);
           if (this.image != "") {
             //image was added
