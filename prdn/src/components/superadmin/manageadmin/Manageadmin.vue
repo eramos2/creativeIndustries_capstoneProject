@@ -11,8 +11,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="firstName" class="required">First Name</label>
-                                                             <input name="firstName" v-validate="'required|alpha_dash|max:20'" type="text"  id = "firstName" v-model="firstName"  placeholder="First Name" class="form-control" >
+                                                            <label for="firstName" class="required">First Name:*</label>
+                                                             <input name="firstName" v-validate="'required|alpha_space|max:20'" type="text"  id = "firstName" v-model="firstName"  placeholder="First Name*" class="form-control" >
                                                              <p class="text-danger" v-if="errors.has('firstName')">
                                                                  {{errors.first('firstName')}}
                                                                  </p>
@@ -21,37 +21,37 @@
 
                                                     <div class="col-lg-6">
                                                         <div class="single-input-item">
-                                                            <label for="lastName" class="required">Last Name</label>
-                                                             <input name ="lastName" v-validate="'required|alpha_dash|max:20'" type="text" class="form-control" id="lastName"  v-model="lastName" placeholder="Last Name">
+                                                            <label for="lastName" class="required">Last Name:*</label>
+                                                             <input name ="lastName" v-validate="'required|alpha_space|max:20'" type="text" class="form-control" id="lastName"  v-model="lastName" placeholder="Last Name*">
                                                             <p class="text-danger" v-if="errors.has('lastName')">{{ errors.first('lastName') }}</p>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="single-input-item">
-                                                    <label for="email" class="required">Email</label>
-                                                     <input name ="email" v-validate="'required|email'" type="text" class="form-control" id="email" v-model="email" placeholder="Email">
+                                                    <label for="email" class="required">Email:*</label>
+                                                     <input name ="email" v-validate="'required|email'" type="text" class="form-control" id="email" v-model="email" placeholder="Email*">
                                                     <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
                                                 </div>
                                                 <div class="row">
                                                      <div class="col-lg-6">
                                                 <div class="single-input-item">
-                                                    <label for="acity" class="required">City</label>
-                                                    <input name ="acity" v-validate="'required|max:15'" type="text" class="form-control" id="acity" v-model="acity"  placeholder="City">
+                                                    <label for="acity" class="required">City:*</label>
+                                                    <input name ="acity" v-validate="'required|max:15'" type="text" class="form-control" id="acity" v-model="acity"  placeholder="City*">
                                                     <p class="text-danger" v-if="errors.has('acity')">{{ errors.first('acity') }}</p>
                                                 </div>
                                                 </div>
                                                  <div class="col-lg-6">
                                                 <div class="single-input-item">
-                                                    <label for="occupation" class="required">Occupation</label>
-                                                    <input name ="occupation" v-validate="'required|max:20'" type="text" class="form-control" id="occupation" v-model="occupation"  placeholder="Occupation">
+                                                    <label for="occupation" class="required">Occupation:*</label>
+                                                    <input name ="occupation" v-validate="'required|max:20'" type="text" class="form-control" id="occupation" v-model="occupation"  placeholder="Occupation*">
                                                     <p class="text-danger" v-if="errors.has('occupation')">{{ errors.first('occupation') }}</p>
                                                 </div>
                                                 </div>
                                                  <div class="col-lg-6">
                                                 <div class="single-input-item">
-                                                    <label for="birthdate" class="required">Birthdate</label>
-                                                    <input name ="birthdate" v-validate="'required|max:10|min:10|date_format:YYYY-MM-DD|date_between:1938-01-01,2000-01-01'" v-model="birthdate"  type="text" class="form-control" id="birthdate" placeholder="Birthdate YYYY-MM-DD">
+                                                    <label for="birthdate" class="required">Birthdate:*</label>
+                                                    <input name ="birthdate" v-validate="'required|max:10|min:10|date_format:YYYY-MM-DD|date_between:' +afterDate + ',' + beforeDate " v-model="birthdate"  type="text" class="form-control" id="birthdate" placeholder="Birthdate* YYYY-MM-DD">
                                                     <p class="text-danger" v-if="errors.has('birthdate')">{{ errors.first('birthdate') }}</p>
                                                 </div>
                                                 </div>
@@ -65,8 +65,8 @@
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item">
                                                                 <label for="new-pwd" class="required">New
-                                                                    Password</label>
-                                                                <input name ="password"  v-validate="'required|min:8|max:15'" type="password" class="form-control" id="password" v-model="password" placeholder="Password" ref="password">
+                                                                    Password:*</label>
+                                                                <input name ="password"  v-validate="'required|min:8|max:15|verify_password'" type="password" class="form-control" id="password" v-model="password" placeholder="Password*" ref="password">
                                                                 <p class="text-danger" v-if="errors.has('password')">{{ errors.first('password') }}</p>
                                                             </div>
                                                         </div>
@@ -74,8 +74,8 @@
                                                         <div class="col-lg-6">
                                                             <div class="single-input-item">
                                                                 <label for="confirm-pwd" class="required">Confirm
-                                                                    Password</label>
-                                                                 <input name ="confirmedpassword"  v-validate="'required|min:8|max:10|confirmed:password'" v-model="confirmedpassword"   type="password" class="form-control" id="confirmedpassword" placeholder="Confirm Password">
+                                                                    Password:*</label>
+                                                                 <input name ="confirmedpassword"  v-validate="'required|verify_password|min:8|max:10|confirmed:password'" v-model="confirmedpassword"   type="password" class="form-control" id="confirmedpassword" placeholder="Confirm Password*">
                                                                 <p class="text-danger" v-if="errors.has('confirmedpassword')">{{ errors.first('confirmedpassword') }}</p>
                                                             </div>
                                                         </div>
@@ -85,7 +85,7 @@
                                                 
                                                     <!-- <button class="btn">Save Changes</button> -->
                                                    <!-- <button >Save Changes</button> -->
-                                                   <button :disabled="errors.any()" type="submit">Save Changes</button>
+                                                   <button id="btn-admin" :disabled="errors.any()" type="submit">Add</button>
                                                    <b-modal  v-model="modalShow" id="modal-center" @ok="okModal"  centered title="Registered">
                                                     <p class="my-4">{{email}}</p>
                                                     </b-modal>
@@ -108,6 +108,23 @@
 <script>
 import { Validator } from "vee-validate";
 import Removeadmin from "./Removeadmin.vue";
+import Vue from "vue";
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate);
+
+VeeValidate.Validator.extend("verify_password", {
+  getMessage: field =>
+    `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. @ , . _ & ? etc)`,
+  validate: value => {
+    var strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    return strongRegex.test(value);
+  }
+});
+
+
+
 export default {
   name: "app",
   components: {
@@ -165,8 +182,31 @@ export default {
     okModal() {
       this.$router.replace("/");
     }
+  },
+    computed: {
+    beforeDate() {
+      let date = new Date();
+      let beforeDate =
+        date.getFullYear() -
+        18 +
+        "-" +
+        ("0" + (date.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + date.getDate()).slice(-2);
+      console.log(beforeDate + "before");
+      return beforeDate;
+    },
+    afterDate() {
+      let date = new Date();
+      let afterDate = date.getFullYear() - 100 + "-01-01";
+      console.log(afterDate + "After");
+      return afterDate;
+    }
   }
 };
 </script>
 <style>
+#btn-admin{
+    margin-top: 1.5rem;
+}
 </style>

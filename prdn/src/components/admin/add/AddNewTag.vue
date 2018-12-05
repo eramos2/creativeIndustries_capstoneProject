@@ -154,28 +154,56 @@ export default {
 
       this.$validator.validateAll().then(result => {
         if (result) {
-          let data = {
-            name: this.tagName,
-            category: this.value
-          };
-          this.$store
-            .dispatch("addNewTag", data)
-            .then(response => {
-              // console.log("after dispatch add new tag");
-              // console.log(response);
+          if (this.newTagField == "") {
+            let data = {
+              name: this.tagName,
 
-              if (response > 0) {
-                this.reloadTags();
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                return { modalShow: false, modalShowCred: true };
-              }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
-            });
-          return;
+              category: this.value
+            };
+            console.log(data);
+            this.$store
+              .dispatch("addNewTag", data)
+              .then(response => {
+                // console.log("after dispatch add new tag");
+                // console.log(response);
+
+                if (response > 0) {
+                  this.reloadTags();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            return;
+          } else {
+            let data = {
+              name: this.tagName,
+              category: this.newTagField
+            };
+            console.log(data);
+            this.$store
+              .dispatch("addNewTag", data)
+              .then(response => {
+                // console.log("after dispatch add new tag");
+                // console.log(response);
+
+                if (response > 0) {
+                  this.reloadTags();
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+            return;
+          }
         } else {
           this.modalShowFail = true;
         }

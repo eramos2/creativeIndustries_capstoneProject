@@ -203,6 +203,7 @@ export default {
       this.$cookie.delete("userId");
       this.$cookie.delete("userType");
       this.$store.dispatch("userType");
+      this.$router.replace("/");
       //this.$store.state.users.userFlags.loggedIn = false;
       console.log("Logged Out");
       console.log(this.$store.state.users.userFlags.loggedIn);
@@ -218,6 +219,7 @@ export default {
       this.$cookie.delete("userType");
       this.$cookie.delete("adminType");
       this.$store.dispatch("adminType");
+      this.$router.replace("/");
       //this.$store.state.users.userFlags.loggedIn = false;
       console.log("Admin Logged Out");
       console.log(this.$store.state.administrators.adminFlags.adminLoggedIn);
