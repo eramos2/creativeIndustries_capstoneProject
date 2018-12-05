@@ -12,7 +12,11 @@
       :adminAuthenticated="adminAuthenticated"
     ></header-bar>
 
-    <router-view :authenticated="authenticated" :adminAuthenticated="adminAuthenticated"></router-view>
+    <router-view
+      :authenticated="authenticated"
+      :adminAuthenticated="adminAuthenticated"
+      :key="$route.fullPath"
+    ></router-view>
     <footer id="app-footer" style="padding:1rem;">
       <div class="row">
         <div class="col-8"></div>
@@ -368,15 +372,6 @@ export default {
   },
   mounted() {
     //Get All system resources
-    let date = new Date();
-    console.log(
-      date.getFullYear() -
-        18 +
-        "-" +
-        (date.getMonth() + 1) +
-        "-" +
-        date.getDate()
-    );
 
     this.setResources();
     //Get all system tags

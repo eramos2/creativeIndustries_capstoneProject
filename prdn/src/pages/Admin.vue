@@ -35,7 +35,7 @@
           <!-- My Account Tab Content Start -->
           <div class="col-md-9 mt-15 mt-lg-0">
             <div class="tab-content" id="myaccountContent">
-              <router-view :adminAuthenticated="adminAuthenticated"></router-view>
+              <router-view :adminAuthenticated="adminAuthenticated" :key="$route.fullPath"></router-view>
               <!-- <welcomeadmin></welcomeadmin> -->
               <!-- <add></add> -->
               <!-- <edit></edit> -->

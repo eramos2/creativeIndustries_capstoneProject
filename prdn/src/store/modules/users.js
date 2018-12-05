@@ -231,19 +231,30 @@ const mutations = {
      * Set userFlags addSubmission flag
      */
     getUserProjects: (state, data) => {
-
-        let projects = data;
-
-        for (var project in projects) {
-
-            let projectName = projects[project].projectName;
-            console.log(projects[project].projectName);
-            console.log(projectName);
+        console.log(data);
+        let projects = {};
+        //Assign tags to projects
+        for (let project in data) {
+            let projectName = data[project].projectName;
+            let projectKey = data[project].projectName.replace(/ +/g, "%20").toLowerCase();
+            if (typeof projects[projectKey] === "undefined") {
+                projects[projectKey] = {
+                    id: data[project].projectId,
+                    name: projectName,
+                    tags: {}
+                };
+            }
+            let tagKey = data[project].tagName.replace(/ +/g, "%20").toLowerCase();
+            let tagName = data[project].tagName;
+            projects[projectKey].tags[tagKey] = {
+                id: data[project].tagId,
+                name: tagName,
+                category: data[project].tagCategory
+            }
         }
 
 
-
-        state.userProjects = data;
+        state.userProjects = projects;
 
         state.userProjects = {
             ...state.userProjects
@@ -273,7 +284,10 @@ const actions = {
             context.dispatch("getUser", data);
         }
     },
-    loginUser: (context, data) => {
+    loginUser: ({
+        commit,
+        dispatch
+    }, data) => {
         let email = data.email;
         let pass = data.password;
         console.log(email);
@@ -299,7 +313,10 @@ const actions = {
             })
             .then(data => {
                 console.log(data);
-                context.commit('loginUser', data.resp);
+                commit('loginUser', data.resp);
+                dispatch("getUserProjects", data.resp, {
+                    root: true
+                });
                 return data.resp;
             });
     },
@@ -331,7 +348,7 @@ const actions = {
                 context.commit('getUser', data.resp);
                 //let dataU = { uid: state.user.userId };
 
-                //context.dispatc("getUserProjects", dataU);
+                context.dispatch("getUserProjects", data.resp);
                 return data.resp;
             });
     },
@@ -511,7 +528,11 @@ const actions = {
      * @param {object} data - Contains user's email, passcode, and new password
      */
     recoverUserPassword: (context, data) => {
-        console.log("I'm verifying passcode for " + data.email);
+        let userData = data;
+        // console.log("This is the user data");
+        // console.log(userData);
+        // console.log("I'm verifying passcode for " + data.email);
+        // console.log(data);
         state.userFlags['recoverPassword'] = "";
 
         return Vue.http.get(serverfile, {
@@ -529,20 +550,21 @@ const actions = {
             console.log(response);
             return response.json();
         }).then(data => {
-
+            //console.log("after verifying user email and passcode");
+            //console.log(data);
             var response = data.resp;
-            console.log(response);
+            //console.log(response);
             if (response.length > 0) {
-                console.log("I'm recovering password for " + response[0].email);
+                //console.log("I'm recovering password for " + response[0].email);
 
-
+                //console.log(response);
                 return Vue.http.post(serverfile, {
                         endpoint: 'users',
                         code: '3',
                         du: true,
                         multi: true,
                         uemail: response[0].email,
-                        upass: response[0].password,
+                        upass: userData.password,
                         uid: response[0].userId,
                         type: 0
                     }, {
@@ -555,13 +577,13 @@ const actions = {
                         return response.json();
                     })
                     .then(data => {
-                        console.log(data);
+                        //console.log(data);
                         context.commit("changeUserPassword", data.resp);
                         return data.resp;
                     });
 
             } else {
-                console.log("Invalid Email or Passcode");
+                //console.log("Invalid Email or Passcode");
                 context.commit("recoverUserPassword", data.resp);
                 return data.resp;
             }
@@ -816,15 +838,15 @@ const actions = {
      * @param {object} data - Contains the userId
      */
     getUserProjects: (context, data) => {
-        console.log("getting projects for user with Id " + data.uid);
-        console.log(data);
+        console.log("getting projects for user with Id " + data[0].userId);
+        console.log(data[0]);
         return Vue.http.get("prds-projects.php", {
             headers: {
                 "Content-Type": "application/json"
             },
             params: {
                 endpoint: 'projects',
-                uid: data.uid,
+                uid: data[0].userId,
                 code: '0' //get all user's projects with their respective tags by the given user id 
             }
         }).then(response => {

@@ -29,6 +29,12 @@ const state = {
     currentBusiness: {
 
     },
+    /**       
+     * Holds businesses recommendations for the user project selected tags
+     */
+    businessesRecommendations: {
+
+    },
     businessesFlags: {
         //(1=success, 0=nothing happened, -1=failed)
         editedBusiness: "",
@@ -454,6 +460,16 @@ const mutations = {
 
         state.currentBusiness = {
             ...state.currentBusiness
+        }
+    },
+    /**      
+     * Set businessesRecommendations with given data
+     */
+    getBusinessesRecommendations: (state, data) => {
+        state.businessesRecommendations = data;
+
+        state.businessesRecommendations = {
+            ...state.businessesRecommendations
         }
     }
 }
@@ -1001,6 +1017,34 @@ const actions = {
             console.log(data);
             context.commit("removeBusiness", data.resp);
             return data.resp[0].number;
+        });
+
+    },
+    /**    
+     * Returns business recommendations based on the matched tagsId   (Admin action)
+     * @param {object} data - Contains the company to remove companyId
+     */
+    getBusinessesRecommendations: (context, data) => {
+        state.businessesRecommendations = {};
+        console.log("Getting business recommendations for project id " + data.pid);
+
+        return Vue.http.get("prds-projects.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'projects',
+                code: '8',
+                pid: data.pid
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log(data);
+
+            context.commit("getBusinessesRecommendations", data.resp);
+            //return data.resp[0].number;
         });
 
     }

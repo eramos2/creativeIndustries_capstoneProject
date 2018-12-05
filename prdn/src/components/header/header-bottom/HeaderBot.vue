@@ -38,7 +38,13 @@
                                                 
                                                     
                   </select>-->
-                  <input id="search-input" type="text" placeholder="Search..." v-model="searchText">
+                  <input
+                    id="search-input"
+                    type="text"
+                    placeholder="Search..."
+                    v-model="searchText"
+                    @keyup.enter="enterClicked()"
+                  >
                   <router-link
                     v-if="!onSearchPage"
                     :to="{
@@ -190,6 +196,9 @@ export default {
     }
   },
   methods: {
+    enterClicked() {
+      console.log("Enter Pressed " + this.searchText);
+    },
     onChange() {
       console.log("wiwwiso");
     },

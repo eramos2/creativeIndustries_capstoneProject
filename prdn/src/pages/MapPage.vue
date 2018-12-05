@@ -1,34 +1,22 @@
 <template>
-<div class="container">
+  <div class="container">
     <!-- Start Resources List Row -->
     <div id="MapResources" class="row">
-        <!-- Materials List -->
-        <map-resource
-            :resource="materials"  
-        >
-        </map-resource>
-        <!-- Processes List -->
-        <map-resource 
-            :resource="processes"  
-        >
-        </map-resource>
-        <!-- Services List -->
-        <map-resource
-            :resource="services"  
-        >
-        </map-resource>
+      <!-- Materials List -->
+      <map-resource :resource="'Materials'"></map-resource>
+      <!-- Processes List -->
+      <map-resource :resource="'Processes'"></map-resource>
+      <!-- Services List -->
+      <map-resource :resource="'Services'"></map-resource>
     </div>
     <!-- End Resources ListRow -->
-
     <!-- Start Map Row -->
     <div class="row">
-        <!-- Google Maps -->
-        <div id="googleMainMap"></div>
+      <!-- Google Maps -->
+      <div id="googleMainMap"></div>
     </div>
     <!-- End Map Row -->
-</div>
-
-    
+  </div>
 </template>
 
 <script>
