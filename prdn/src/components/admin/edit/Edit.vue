@@ -339,7 +339,7 @@
                   centered
                   title="Company Added:"
                 >
-                  <p class="my-4">edit {{companyName}} business success</p>
+                  <p class="my-4">Edit {{companyName}} business success</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"

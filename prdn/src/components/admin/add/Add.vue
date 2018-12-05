@@ -369,7 +369,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Try Again</p>
+                  <p class="my-4">Try Again, verify any empty field(s) or the information provided.</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
@@ -379,7 +379,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Something went wrong!</p>
+                  <p class="my-4">Something went wrong verify any empty field(s).</p>
                 </b-modal>
               </p>
             </div>
