@@ -193,8 +193,8 @@
             accept="image/jpeg"
             buttonClass="ui button primary"
             :customStrings="{
-              upload: '<h1>Upload it!</h1>',
-              drag: 'Drag and drop your image here'}"
+            upload: '<h1>Upload it!</h1>',
+            drag: 'Drag and drop your image here'}"
           ></picture-input>
           <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
           <fieldset>
@@ -278,6 +278,7 @@ import FileUpload from "v-file-upload";
 Vue.use(FileUpload);
 import VeeValidate from "vee-validate";
 import PictureInput from "vue-picture-input";
+import axios from "axios";
 
 Vue.use(VeeValidate);
 
@@ -287,6 +288,7 @@ export default {
   },
   data() {
     return {
+      image: "", //business image file
       modalShow: false,
       modalShowFail: false,
       modalShowCred: false,
@@ -321,28 +323,65 @@ export default {
             phone: this.telephone,
             website: this.website,
             description: this.description,
-            logo: this.logo,
+            logo: "",
             email: this.email,
             videoURL: this.videoURL,
             tags: this.getIdsArray("tags"),
             id: this.$store.state.users.user.userId
           };
           console.log(dataToSend);
-          this.$store
-            .dispatch("addSubmission", dataToSend)
-            .then(response => {
-              console.log(response);
-              if (response.length > 0) {
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                //Something went wrong when adding business
-                return { modalShow: false, modalShowCred: true };
+          if (this.image != "") {
+            //image was added
+            this.attemptUpload().then(response => {
+              // console.log(response);
+              if (response) {
+                if (response != true) {
+                  // console.log("response is " + response);
+                  dataToSend.logo = response;
+                }
+
+                this.$store
+                  .dispatch("addSubmission", dataToSend)
+                  .then(response => {
+                    // console.log("Helooowwe");
+                    // console.log(response);
+                    if (response.length > 0) {
+                      //Added Business successfully, set the modal booleans
+                      return { modalShow: true, modalShowCred: false };
+                    } else {
+                      //Something went wrong when adding business
+                      return { modalShow: false, modalShowCred: true };
+                    }
+                    this.image = "";
+                  })
+                  .then(data => {
+                    this.modalShow = data.modalShow;
+                    this.modalShowCred = data.modalShowCred;
+                  });
               }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
             });
+          } else {
+            // no image added
+            this.$store
+              .dispatch("addSubmission", dataToSend)
+              .then(response => {
+                // console.log("Helooowwe");
+                // console.log(response);
+                if (response.length > 0) {
+                  //Added Business successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when adding business
+                  return { modalShow: false, modalShowCred: true };
+                }
+                this.image = "";
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          }
+
           this.$validator.reset();
           return;
         } else {
@@ -355,6 +394,17 @@ export default {
      */
     okModal() {
       this.$router.replace("/user");
+      this.addEmail = "";
+      this.videoURL = "";
+      this.companyName = "";
+      this.address = "";
+      this.city = "";
+      this.country = "";
+      this.zipcode = "";
+      this.phone = "";
+      this.website = "";
+      this.description = "";
+      this.$validator.reset();
     },
     getIdsArray(subresource) {
       //console.log(Object.keys(resource).length > 0);
@@ -384,6 +434,55 @@ export default {
           tagArr.push([id]);
         }
         return tagArr;
+      }
+    },
+    onImageChanged() {
+      /**
+       * Load a photo for the Company
+       */
+      // console.log("New picture loaded");
+      if (this.$refs.pictureInput.file) {
+        // console.log("Heyyyy");
+        this.image = this.$refs.pictureInput.file;
+        // console.log(this.image);
+      } else {
+        // console.log("Old browser. No support for Filereader API");
+      }
+    },
+    onRemoved() {
+      this.image = "";
+    },
+    attemptUpload() {
+      // console.log("Hey");
+      if (this.image != "") {
+        var file = this.image;
+        var formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "c5ujdszc");
+        return axios({
+          url: "https://api.cloudinary.com/v1_1/prdn/upload",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          data: formData
+        })
+          .then(response => {
+            // console.log(response);
+            if (response.statusText == "OK") {
+              // console.log(response.data.secure_url);
+              // console.log("Image uploaded successfully");
+              return response.data.secure_url;
+            } else {
+              return false;
+            }
+          })
+          .catch(err => {
+            // console.error(err);
+          });
+      } else {
+        // console.log("no Image selected");
+        //no image selected
       }
     }
   },
