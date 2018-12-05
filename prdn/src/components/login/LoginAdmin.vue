@@ -39,7 +39,7 @@
                   <input
                     name="password"
                     type="password"
-                    v-validate="'required|min:8|max:15'"
+                    v-validate="'required|min:8|max:15|verify_password'"
                     placeholder="Password*"
                     id="password"
                     v-model="password"
@@ -105,6 +105,8 @@
  * Custom Messages for Alerts if an error appear after validation
  */
 import { Validator } from "vee-validate";
+import VeeValidate from "vee-validate";
+const emailsDB = ["test@upr.edu"];
 const dictionary = {
   en: {
     custom: {
@@ -117,6 +119,17 @@ const dictionary = {
 };
 
 Validator.localize(dictionary);
+
+VeeValidate.Validator.extend("verify_password", {
+  getMessage: field =>
+    `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. @, . _ & ? etc)`,
+  validate: value => {
+    var strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    return strongRegex.test(value);
+  }
+});
 
 export default {
   data: () => ({
