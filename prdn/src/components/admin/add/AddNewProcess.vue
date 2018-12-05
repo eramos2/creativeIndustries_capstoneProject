@@ -96,7 +96,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Something went wrong, verify the data submitted.</p>
+                  <p class="my-4">Something went wrong, verify any empty or invalid field(s).</p>
                 </b-modal>
               </p>
             </div>
