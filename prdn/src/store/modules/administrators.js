@@ -493,40 +493,40 @@ const actions = {
         // console.log("I'm verifying passcode for " + data.email);
         state.adminFlags['recoverPassword'] = "";
 
-
+        let userData = data;
 
         return Vue.http.get(serverfile, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                params: {
-                    endpoint: 'users',
-                    code: '3',
-                    passcode: data.passcode,
-                    uemail: data.email,
-                    utype: 1 //User type = 0, admin type = 1 
-                }
-            })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'users',
+                code: '3',
+                passcode: data.passcode,
+                uemail: data.email,
+                utype: 1 //User type = 0, admin type = 1 
+            }
+        })
             .then(response => {
-                // console.log(response);
+                console.log(response);
                 return response.json();
             })
             .then(data => {
                 var response = data.resp;
-                // console.log(response);
+                console.log(response);
                 if (response.length > 0) {
 
                     // console.log("I'm recovering password for admin " + data.email);
-
+                    console.log(userData);
                     return Vue.http
                         .post(
                             serverfile, {
 
                                 du: true,
                                 multi: true,
-                                aemail: data.email,
-                                apass: data.password,
-                                aid: data.id,
+                                aemail: userData.email,
+                                apass: userData.password,
+                                aid: response[0].userId,
                                 type: 1 //to remove it from recovery table
                             }, {
                                 emulateJSON: true,
@@ -540,12 +540,12 @@ const actions = {
                             }
                         )
                         .then(response => {
-                            // console.log(response);
+                            console.log(response);
                             return response.json();
                         })
                         .then(data => {
                             // console.log("This is the data in editAdminInfo");
-                            // console.log(data);
+                            console.log(data);
                             context.commit('recoverAdminPassword', data.resp);
                             return data.resp;
                         });
@@ -568,15 +568,15 @@ const actions = {
         state.currentBusinessRequest = {};
 
         return Vue.http.get(serverfile, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                params: {
-                    endpoint: 'submissions',
-                    code: '5',
-                    subid: data.submissionId
-                }
-            })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'submissions',
+                code: '5',
+                subid: data.submissionId
+            }
+        })
             .then(response => {
                 console.log(response);
                 return response.json();

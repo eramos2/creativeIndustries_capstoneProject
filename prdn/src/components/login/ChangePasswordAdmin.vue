@@ -42,7 +42,7 @@
                   <input
                     name="password"
                     type="password"
-                    v-validate="'required|min:8|max:15'"
+                    v-validate="'required|verify_password|min:8|max:15'"
                     placeholder="Password"
                     id="password"
                     data-vv-delay="500"
@@ -65,7 +65,7 @@
                   <input
                     name="confirmpassword"
                     type="password"
-                    v-validate="'required|min:8|max:15|confirmed:password'"
+                    v-validate="'required|verify_password|min:8|max:15|confirmed:password'"
                     placeholder="Confirm Password"
                     id="confirmpassword"
                     data-vv-delay="500"
@@ -147,6 +147,8 @@
  * Custom Messages for Alerts if an error appear after validation
  */
 import { Validator } from "vee-validate";
+import Vue from "vue";
+import VeeValidate from "vee-validate";
 const dictionary = {
   en: {
     custom: {
@@ -162,6 +164,19 @@ const dictionary = {
 };
 
 Validator.localize(dictionary);
+
+Vue.use(VeeValidate);
+
+VeeValidate.Validator.extend("verify_password", {
+  getMessage: field =>
+    `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. @, . _ & ? etc)`,
+  validate: value => {
+    var strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    return strongRegex.test(value);
+  }
+});
 
 export default {
   data: () => ({
@@ -185,7 +200,7 @@ export default {
       this.$validator.validateAll().then(result => {
         if (result) {
           let data = {
-            id: 47,
+            id: this.$store.state.administrators.administrator.adminId,
             email: this.email,
             password: this.password,
             confirmpassword: this.confirmpassword,
@@ -214,7 +229,7 @@ export default {
       });
     },
     okModal() {
-      this.$router.replace("/");
+      this.$router.replace("/login/admin");
     }
   }
 };
