@@ -113,7 +113,8 @@ const mutations = {
         console.log(data);
         state.user['endorsedTags'] = data;
 
-        state.user = { ...state.user
+        state.user = {
+            ...state.user
         }
     },
     giveEndorsement: (state, data) => {
@@ -244,7 +245,8 @@ const mutations = {
 
         state.userProjects = data;
 
-        state.userProjects = { ...state.userProjects
+        state.userProjects = {
+            ...state.userProjects
         };
 
     }
@@ -403,6 +405,37 @@ const actions = {
             });
     },
     /**  
+     * Http call sent email after user registration
+     * it will proceed to send email with a Welcome message
+     * @param {object} data - Object that contains user email and user name 
+     * @return {boolean} - Returns true if email is in db, and recover email sent was sucessfull, and false otherwise
+     */
+    sendRegistrationEmail: (context, data) => {
+        let email = data.email;
+        let name = data.name;
+        console.log("SENDING REGISTRATION");
+        Vue.http
+            .get(
+                "emailRegister.php", {
+                    params: {
+                        remail: email,
+                        name: name
+                    }
+                }
+            )
+            .then(response => {
+                console.log(response);
+                return response.json();
+
+            })
+            .then(data => {
+                console.log("User register email sent");
+                console.log(data);
+                return 1;
+            });
+
+    },
+    /**  
      * Changes user password (Assumes user is logged in)
      * @param {object} data - Contains user email, new user password, and user id
      */
@@ -539,7 +572,10 @@ const actions = {
      * Register a new user (checks email doesn't exist in db)
      * @param {object} data - Contains user's email, password, firstName, lastName, occupation, birthday, and city
      */
-    registerNewUser: (context, userData) => {
+    registerNewUser: ({
+        commit,
+        dispatch
+    }, userData) => {
         console.log("Verifying email " + userData.email + " is not in db");
         state.userFlags["registerUser"] = "";
         var dataToSend = {
@@ -547,6 +583,7 @@ const actions = {
             code: '4',
             uemail: userData.email
         };
+
         return Vue.http.get(serverfile, {
             params: {
                 endpoint: 'users',
@@ -554,15 +591,28 @@ const actions = {
                 uemail: userData.email
             }
         }).then(response => {
-            console.log("Checked if user email is on db user email");
+            console.log("After checking user email");
             console.log(response);
-            return response.json();
+            if (response.body.length > 0) {
+                return response.json();
+            } else {
+                console.log("In else statement ")
+                return {
+                    resp: []
+                }
+            }
+
+
         }).then(data => {
+            console.log(data.resp.length);
+
+            console.log(data.resp.length != 0);
             console.log(data);
             if (data.resp.length != 0) {
                 console.log("The email entered already exists. Please enter another email.");
                 return []; //return empty object, to let user know email is already in datbase
             } else {
+
                 console.log("userDaga");
                 console.log(userData);
                 return Vue.http.post(serverfile, {
@@ -589,7 +639,15 @@ const actions = {
 
                     console.log("registering user");
                     console.log(data);
-                    context.commit("registerNewUser", data.resp);
+                    commit("registerNewUser", data.resp);
+                    let udata = {
+                        name: userData.firstName,
+                        email: userData.email
+                    }
+                    console.log(data);
+                    dispatch("sendRegistrationEmail", udata, {
+                        root: true
+                    });
                     return data.resp;
                 });
             }

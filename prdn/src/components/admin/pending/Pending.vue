@@ -36,13 +36,13 @@
           <div id="error"></div>
           <!-- <form name="addBsnForm"> -->
           <div class="single-input-item">
-            <label for="companyName" class="required">Company Name</label>
+            <label for="companyName" class="required">Company Name:*</label>
             <input
               name="companyName"
               v-validate="'required|max:40'"
               type="text"
               id="companyName"
-              placeholder="Company Name"
+              placeholder="Company Name*"
               v-model="companyName"
               class="form-control"
             >
@@ -53,13 +53,13 @@
           </div>
 
           <div class="single-input-item">
-            <label for="address" class="required">Address</label>
+            <label for="address" class="required">Address:*</label>
             <input
               name="address"
               v-validate="'required|max:60'"
               type="text"
               id="address"
-              placeholder="Address"
+              placeholder="Address*"
               v-model="address"
               class="form-control"
             >
@@ -70,13 +70,13 @@
             <div class="col-lg-6">
               <div class="single-input-item">
                 <!-- <div class="single-input-item"> -->
-                <label for="email" class="required">Email</label>
+                <label for="email" class="required">Email:*</label>
                 <input
                   name="email"
-                  v-validate="'required|email'"
+                  v-validate="'required|email|max:50'"
                   type="email"
                   id="email"
-                  placeholder="Email"
+                  placeholder="Email*"
                   v-model="email"
                   class="form-control"
                 >
@@ -90,7 +90,7 @@
                 <label for="videoURL" class="required">Video URL</label>
                 <input
                   name="videoURL"
-                  v-validate="'url|required'"
+                  v-validate="'url'"
                   data-vv-as="url"
                   type="text"
                   id="videoURL"
@@ -104,13 +104,13 @@
             <!-- CITY -->
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="city" class="required">City</label>
+                <label for="city" class="required">City:*</label>
                 <input
                   name="city"
                   v-validate="'required|max:15'"
                   type="text"
                   id="city"
-                  placeholder="City"
+                  placeholder="City*"
                   v-model="city"
                   class="form-control"
                 >
@@ -119,7 +119,7 @@
             </div>
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="country" class="required">Country</label>
+                <label for="country" class="required">Country:*</label>
                 <input
                   name="country"
                   v-validate="'required|max:15'"
@@ -134,14 +134,14 @@
             </div>
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="zipcode" class="required">ZipCode</label>
+                <label for="zipcode" class="required">ZipCode:*</label>
                 <input
                   name="zipcode"
                   v-validate="'required|numeric|max:5|min:5'"
                   type="text"
                   id="zipcode"
                   v-model="zipcode"
-                  placeholder="ZipCode"
+                  placeholder="ZipCode*"
                   class="form-control"
                 >
                 <p class="text-danger" v-if="errors.has('zipcode')">{{ errors.first('zipcode') }}</p>
@@ -331,7 +331,7 @@
           <div class="row">
             <div class="col-lg-4 col-lg-4 col-sm-6 buttonMargin">
               <p>
-                <button :disabled="errors.any()" type="submit">Edit</button>
+                <button :disabled="errors.any()" type="submit">Submit</button>
                 <b-modal
                   v-model="modalShow"
                   id="modal-center"

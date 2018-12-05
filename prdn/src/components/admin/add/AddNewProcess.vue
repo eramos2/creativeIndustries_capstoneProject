@@ -36,7 +36,7 @@
                     placeholder="Enter New Process"
                     v-validate="'required|max:15'"
                     v-model="newProcField"
-                    id="newProcessField"
+                    id="newProcField"
                   >
                 </div>
                 <p
@@ -157,17 +157,18 @@ export default {
 
       this.$validator.validateAll().then(result => {
         if (result) {
-          if ((this.newProcField = "")) {
+          if (this.newProcField == "") {
             let data = {
               resource: "processes",
               subresName: this.newSubProc,
               cid: this.value
             };
+            console.log(data);
             this.$store
               .dispatch("addNewSubResource", data)
               .then(response => {
-                // console.log("after dispatch add new sub-resource");
-                // console.log(response);
+                console.log("after dispatch add new sub-resource");
+                console.log(response);
                 if (response > 0) {
                   this.reloadResources();
                   return { modalShow: true, modalShowCred: false };
@@ -189,11 +190,12 @@ export default {
               resName: this.newProcField,
               subresName: this.newSubProc
             };
+            console.log(data);
             this.$store
               .dispatch("addNewResource", data)
               .then(response => {
-                // console.log("after dispatch add new material and submaterial");
-                // console.log(response);
+                console.log("after dispatch add new material and submaterial");
+                console.log(response);
                 if (response > 0) {
                   this.reloadResources();
                   return { modalShow: true, modalShowCred: false };

@@ -18,7 +18,7 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('firstName') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>First Name
+                    <span class="require"></span>First Name:*
                   </label>
                   <div class="col-md-10">
                     <!-- FIRST NAME -->
@@ -28,7 +28,7 @@
                       type="text"
                       id="firstName"
                       v-model="firstName"
-                      placeholder="First Name"
+                      placeholder="First Name*"
                       class="form-control"
                     >
                     <p
@@ -42,7 +42,7 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('lastName') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>Last Name
+                    <span class="require"></span>Last Name:*
                   </label>
                   <div class="col-md-10">
                     <input
@@ -52,7 +52,7 @@
                       class="form-control"
                       id="lastName"
                       v-model="lastName"
-                      placeholder="Last Name"
+                      placeholder="Last Name*"
                     >
                     <p
                       class="text-danger"
@@ -65,7 +65,7 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('email') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>Email
+                    <span class="require"></span>Email:*
                   </label>
                   <div class="col-md-10">
                     <input
@@ -75,7 +75,7 @@
                       type="email"
                       v-model="email"
                       id="email"
-                      placeholder="Email address"
+                      placeholder="Email address*"
                       class="form-control"
                     >
                     <i v-show="errors.has('email')" class="text-danger"></i>
@@ -90,7 +90,7 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('occupation') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>Occupation
+                    <span class="require"></span>Occupation:*
                   </label>
                   <div class="col-md-10">
                     <input
@@ -100,7 +100,7 @@
                       class="form-control"
                       id="occupation"
                       v-model="occupation"
-                      placeholder="Occupation"
+                      placeholder="Occupation*"
                     >
                     <p
                       class="text-danger"
@@ -113,7 +113,7 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('city') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>City
+                    <span class="require"></span>City:*
                   </label>
                   <div class="col-md-10">
                     <input
@@ -123,7 +123,7 @@
                       class="form-control"
                       id="city"
                       v-model="city"
-                      placeholder="City"
+                      placeholder="City*"
                     >
                     <p class="text-danger" v-if="errors.has('city')">{{ errors.first('city') }}</p>
                   </div>
@@ -133,17 +133,17 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('birthdate') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>Birthdate
+                    <span class="require"></span>Birthdate:*
                   </label>
                   <div class="col-md-10">
                     <input
                       name="birthdate"
-                      v-validate="'required|max:10|min:10|date_format:YYYY-MM-DD|date_between:1938-01-01,2000-01-01'"
+                      v-validate="'required|max:10|min:10|date_format:YYYY-MM-DD|date_between:' +afterDate + ',' + beforeDate "
                       type="text"
                       v-model="birthdate"
                       class="form-control"
                       id="birthdate"
-                      placeholder="Birthdate YYYY-MM-DD"
+                      placeholder="Birthdate* YYYY-MM-DD"
                     >
                     <p
                       class="text-danger"
@@ -163,12 +163,12 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('password') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>Password
+                    <span class="require"></span>Password:*
                   </label>
                   <div class="col-md-10">
                     <input
                       name="password"
-                      v-validate="'required|min:8|max:15'"
+                      v-validate="'required|min:8|max:15|verify_password'"
                       type="password"
                       class="form-control"
                       id="password"
@@ -186,12 +186,12 @@
                   :class="{'form-group d-md-flex align-items-md-center': true, 'has-error': errors.has('confirmedpassword') }"
                 >
                   <label class="control-label col-md-2">
-                    <span class="require"></span>Confirm Password
+                    <span class="require"></span>Confirm Password:*
                   </label>
                   <div class="col-md-10">
                     <input
                       name="confirmedpassword"
-                      v-validate="'required|min:8|max:15|confirmed:password'"
+                      v-validate="'required|verify_password|min:8|max:15|confirmed:password'"
                       type="password"
                       class="form-control"
                       id="confirmedpassword"
@@ -234,7 +234,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Email/password combination failed</p>
+                  <p class="my-4">Verify your email or any empty field(s)</p>
                 </b-modal>
               </fieldset>
             </div>
@@ -250,6 +250,8 @@
  */
 import { Validator } from "vee-validate";
 import { restElement } from "babel-types";
+import Vue from "vue";
+import VeeValidate from "vee-validate";
 const dictionary = {
   en: {
     custom: {
@@ -277,7 +279,8 @@ const dictionary = {
       },
       birthdate: {
         max: "The birthdate field must be in the format: YYYY-MM-DD. ",
-        min: "The birthdate field must be in the format: YYYY-MM-DD. "
+        min: "The birthdate field must be in the format: YYYY-MM-DD. ",
+        date_between: "You must be 18 or older to register in this website "
       }
     }
   }
@@ -286,6 +289,19 @@ const dictionary = {
 Validator.localize(dictionary);
 
 const emailsDB = ["test@upr.edu", "carlos.rodriguez75@upr.edu"];
+
+Vue.use(VeeValidate);
+
+VeeValidate.Validator.extend("verify_password", {
+  getMessage: field =>
+    `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. @, . _ & ? etc)`,
+  validate: value => {
+    var strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    return strongRegex.test(value);
+  }
+});
 
 export default {
   name: "backend-example",
@@ -348,7 +364,6 @@ export default {
     okModal() {
       this.$router.replace("/");
     },
-
     /**
      * Return all Data the user enter for credentials
      * Clear all the variables after the user finish
@@ -386,6 +401,26 @@ export default {
       this.password = "";
       this.confirmedpassword = "";
       console.log(data);
+    }
+  },
+  computed: {
+    beforeDate() {
+      let date = new Date();
+      let beforeDate =
+        date.getFullYear() -
+        18 +
+        "-" +
+        ("0" + (date.getMonth() + 1)).slice(-2) +
+        "-" +
+        ("0" + date.getDate()).slice(-2);
+      console.log(beforeDate + "before");
+      return beforeDate;
+    },
+    afterDate() {
+      let date = new Date();
+      let afterDate = date.getFullYear() - 100 + "-01-01";
+      console.log(afterDate + "After");
+      return afterDate;
     }
   }
 };

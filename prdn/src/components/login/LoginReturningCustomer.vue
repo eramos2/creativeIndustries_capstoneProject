@@ -14,7 +14,7 @@
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('email') }">
                   <div class="pull-left">
-                    <h4>Email</h4>
+                    <h4>Email:*</h4>
                   </div>
                   <input
                     name="email"
@@ -23,7 +23,7 @@
                     v-model="email"
                     id="email"
                     data-vv-delay="500"
-                    placeholder="Email address"
+                    placeholder="Email address*"
                     class="form-control"
                   >
                   <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
@@ -34,13 +34,13 @@
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('password') }">
                   <div class="pull-left">
-                    <h4>Password</h4>
+                    <h4>Password:*</h4>
                   </div>
                   <input
                     name="password"
                     type="password"
                     v-validate="'required|min:8|max:15'"
-                    placeholder="Password"
+                    placeholder="Password*"
                     id="password"
                     data-vv-delay="500"
                     v-model="password"

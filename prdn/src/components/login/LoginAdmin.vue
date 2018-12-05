@@ -13,7 +13,7 @@
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('adminEmail') }">
                   <div class="pull-left">
-                    <h4>Administrator Email</h4>
+                    <h4>Administrator Email:*</h4>
                   </div>
                   <input
                     name="adminEmail"
@@ -21,7 +21,7 @@
                     type="email"
                     id="adminEmail"
                     v-model="adminEmail"
-                    placeholder="Email address"
+                    placeholder="Email address*"
                     class="form-control"
                   >
                   <p
@@ -34,13 +34,13 @@
               <div class="form-group">
                 <div :class="{'form-group': true, 'has-error': errors.has('password') }">
                   <div class="pull-left">
-                    <h4>Password</h4>
+                    <h4>Password:*</h4>
                   </div>
                   <input
                     name="password"
                     type="password"
                     v-validate="'required|min:8|max:15'"
-                    placeholder="Password"
+                    placeholder="Password*"
                     id="password"
                     v-model="password"
                     class="form-control"
