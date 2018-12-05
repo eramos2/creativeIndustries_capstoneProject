@@ -12,14 +12,14 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="firstName" class="required">First Name</label>
+                <label for="firstName" class="required">First Name:*</label>
                 <input
                   name="firstName"
                   v-validate="'required|alpha_spaces|max:15|alpha_dash'"
                   type="text"
                   id="firstName"
                   v-model="firstName"
-                  placeholder="First Name"
+                  placeholder="First Name*"
                   class="form-control"
                 >
                 <p class="text-danger" v-if="errors.has('firstName')">{{errors.first('firstName')}}</p>
@@ -28,7 +28,7 @@
             <!--  LAST NAME -->
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="lastName" class="required">Last Name</label>
+                <label for="lastName" class="required">Last Name:*</label>
                 <input
                   name="lastName"
                   v-validate="'required|alpha_spaces|max:15'"
@@ -36,7 +36,7 @@
                   v-model="lastName"
                   class="form-control"
                   id="lastName"
-                  placeholder="Last Name"
+                  placeholder="Last Name*"
                 >
                 <p class="text-danger" v-if="errors.has('lastName')">{{ errors.first('lastName') }}</p>
               </div>
@@ -44,7 +44,7 @@
           </div>
           <!--  OCCUPATION -->
           <div class="single-input-item">
-            <label for="occupation" class="required">Occupation</label>
+            <label for="occupation" class="required">Occupation:*</label>
             <input
               name="occupation"
               v-validate="'required|max:15|alpha_spaces'"
@@ -52,13 +52,13 @@
               class="form-control"
               v-model="occupation"
               id="occupation"
-              placeholder="Occupation"
+              placeholder="Occupation*"
             >
             <p class="text-danger" v-if="errors.has('occupation')">{{ errors.first('occupation') }}</p>
           </div>
           <!--  CITY -->
           <div class="single-input-item">
-            <label for="city" class="required">City</label>
+            <label for="city" class="required">City:*</label>
             <input
               name="city"
               v-validate="'required|max:15|alpha_spaces'"
@@ -66,7 +66,7 @@
               class="form-control"
               v-model="city"
               id="city"
-              placeholder="City"
+              placeholder="City*"
             >
             <p class="text-danger" v-if="errors.has('city')">{{ errors.first('city') }}</p>
           </div>

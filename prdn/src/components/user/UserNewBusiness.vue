@@ -9,7 +9,7 @@
         <div class="account-details-form checkout-form-list">
           <!-- BUSINESS NAME -->
           <div class="single-input-item">
-            <label for="companyName" class="required">Company Name</label>
+            <label for="companyName" class="required">Company Name:*</label>
             <input
               name="companyName"
               v-validate="'required|max:40'"
@@ -17,7 +17,7 @@
               data-vv-as="company name"
               v-model="companyName"
               id="companyName"
-              placeholder="Company Name"
+              placeholder="Company Name*"
               class="form-control"
             >
             <p
@@ -27,7 +27,7 @@
           </div>
           <!-- ADDRESS -->
           <div class="single-input-item">
-            <label for="addressID" class="required">Address</label>
+            <label for="addressID" class="required">Address:*</label>
             <input
               name="addressID"
               v-validate="'required|max:40'"
@@ -35,7 +35,7 @@
               type="text"
               v-model="addressID"
               id="addressID"
-              placeholder="Address"
+              placeholder="Address*"
               class="form-control"
             >
             <p class="text-danger" v-if="errors.has('addressID')">{{ errors.first('addressID') }}</p>
@@ -46,13 +46,13 @@
             <div class="col-lg-6">
               <div class="single-input-item">
                 <!-- <div class="single-input-item"> -->
-                <label for="email" class="required">Email</label>
+                <label for="email" class="required">Email:*</label>
                 <input
                   name="email"
                   v-validate="'required|email'"
                   type="email"
                   id="email"
-                  placeholder="Email"
+                  placeholder="Email*"
                   v-model="email"
                   class="form-control"
                 >
@@ -63,10 +63,10 @@
             <div class="col-lg-6">
               <div class="single-input-item">
                 <!-- <div class="single-input-item"> -->
-                <label for="videoURL" class="required">Video URL</label>
+                <label for="videoURL" class="required">Video URL:*</label>
                 <input
                   name="videoURL"
-                  v-validate="'url|required'"
+                  v-validate="'url'"
                   data-vv-as="url"
                   type="text"
                   id="videoURL"
@@ -79,14 +79,14 @@
             </div>
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="city" class="required">City</label>
+                <label for="city" class="required">City:*</label>
                 <input
                   name="city"
                   v-validate="'required|max:15'"
                   type="text"
                   id="city"
                   v-model="city"
-                  placeholder="City"
+                  placeholder="City*"
                   class="form-control"
                 >
                 <p class="text-danger" v-if="errors.has('city')">{{ errors.first('city') }}</p>
@@ -94,14 +94,14 @@
             </div>
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="country" class="required">Country</label>
+                <label for="country" class="required">Country:*</label>
                 <input
                   name="country"
                   v-validate="'required|max:15'"
                   type="text"
                   v-model="country"
                   id="country"
-                  placeholder="Country"
+                  placeholder="Country*"
                   class="form-control"
                 >
                 <p class="text-danger" v-if="errors.has('country')">{{ errors.first('country') }}</p>
@@ -109,14 +109,14 @@
             </div>
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="zipcode" class="required">ZipCode</label>
+                <label for="zipcode" class="required">ZipCode:*</label>
                 <input
                   name="zipcode"
                   v-validate="'required|numeric|max:6|min:5'"
                   type="text"
                   v-model="zipcode"
                   id="zipcode"
-                  placeholder="Zip Code"
+                  placeholder="Zip Code*"
                   class="form-control"
                 >
                 <p class="text-danger" v-if="errors.has('zipcode')">{{ errors.first('zipcode') }}</p>
@@ -124,14 +124,14 @@
             </div>
             <div class="col-lg-6">
               <div class="single-input-item">
-                <label for="telephone" class="required">Telephone</label>
+                <label for="telephone" class="required">Telephone:*</label>
                 <input
                   name="telephone"
                   v-validate="'required|numeric|max:10|min:10'"
                   type="text"
                   v-model="telephone"
                   id="telephone"
-                  placeholder="Telephone: 7877775555"
+                  placeholder="Telephone*: 7877775555"
                   class="form-control"
                 >
                 <p
@@ -147,7 +147,7 @@
             <label for="website" class="required">Website</label>
             <input
               name="website"
-              v-validate="'required|url'"
+              v-validate="'url'"
               type="url"
               id="website"
               v-model="website"
@@ -158,14 +158,14 @@
           </div>
           <!-- DESCRIPTION -->
           <div class="single-input-item">
-            <label for="description" class="required">Description</label>
+            <label for="description" class="required">Description:*</label>
             <textarea
               class="form-control textArea"
               name="description"
               v-validate="'required'"
               v-model="description"
               id="description"
-              placeholder="Description"
+              placeholder="Description*"
               rows="7"
             ></textarea>
             <p
