@@ -76,7 +76,7 @@
                   centered
                   title="Added"
                 >
-                  <p class="my-4">The Process was added.</p>
+                  <p class="my-4">Added {{newSubProc}}</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"

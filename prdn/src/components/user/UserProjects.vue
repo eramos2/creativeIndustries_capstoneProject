@@ -150,7 +150,13 @@
                     <li v-for="(tag, tagKey) in tagCategory.tags" :key="tagKey" class="catMargins">
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" name="tag" v-model="tids" :value="tag.id">
+                          <input
+                            type="checkbox"
+                            name="tag"
+                            :disabled="tids.length > 2 && tids.indexOf(0)==-1"
+                            v-model="tids"
+                            :value="tag.id"
+                          >
                           {{tag.name}}
                         </label>
                       </div>
