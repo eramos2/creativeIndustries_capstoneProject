@@ -554,7 +554,8 @@ const actions = {
                 uemail: userData.email
             }
         }).then(response => {
-
+            console.log("Checked if user email is on db user email");
+            console.log(response);
             return response.json();
         }).then(data => {
             console.log(data);

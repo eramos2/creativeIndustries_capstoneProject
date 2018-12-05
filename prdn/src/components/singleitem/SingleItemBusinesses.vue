@@ -50,6 +50,17 @@ export default {
     ...mapGetters(["getBusinesses", "getResources", "getCategorySubCategories"])
   },
   computed: {
+    anyFilteredBusiness() {
+      if (
+        $.isEmptyObject(
+          this.$store.state.businesses.subcatBusinesses.filterBusinesses
+        )
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     anyBusiness() {
       if ($.isEmptyObject(this.$store.state.businesses.subcatBusinesses)) {
         return false;
@@ -57,6 +68,7 @@ export default {
         return true;
       }
     },
+
     /**
      * Checks if this subcategory's businesses have been set
      * and returns it. Prepares carousel after DOM is updated with nextTick hook.
@@ -132,7 +144,14 @@ export default {
           //   }
           // });
         });
-        return this.$store.state.businesses.subcatBusinesses.businesses;
+        if (
+          typeof this.$store.state.businesses.subcatBusinesses
+            .filterBusinesses === "undefined"
+        ) {
+          return this.$store.state.businesses.subcatBusinesses.businesses;
+        } else {
+          return this.$store.state.businesses.subcatBusinesses.filterBusinesses;
+        }
       }
     }
   }

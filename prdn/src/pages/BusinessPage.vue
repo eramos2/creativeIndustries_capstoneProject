@@ -322,7 +322,7 @@ export default {
   mounted() {
     let businessName = this.$route.params.businessName;
     console.log(businessName);
-    console.log("before mount");
+    console.log("mounted");
     console.log(this.$store.state.users.user.userId);
     this.setCurrentBusiness(businessName).then(response => {
       console.log(this.$store.state.users.user.userId);

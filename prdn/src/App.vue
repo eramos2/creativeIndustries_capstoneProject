@@ -72,20 +72,6 @@
         @click="adminLogout()"
       >Admin Log Out</button>-->
     </footer>
-    <!--
-    <slider
-      :resources="resources"
-    >
-    </slider>
-    <resources-lists></resources-lists>-->
-    <!--<breadcrumbs></breadcrumbs>
-    <category-list 
-      class="shop"
-      :resources="resources"
-
-    >
-    </category-list>-->
-    <!--<side-bar :sideBarItems="sideBarItems"></side-bar>-->
   </div>
 </template>
 
@@ -382,6 +368,16 @@ export default {
   },
   mounted() {
     //Get All system resources
+    let date = new Date();
+    console.log(
+      date.getFullYear() -
+        18 +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getDate()
+    );
+
     this.setResources();
     //Get all system tags
     this.$store.dispatch("setTags");
@@ -414,8 +410,27 @@ export default {
 html,
 body {
   height: 100%;
+  overflow: hidden;
 }
-
+body {
+  height: 100%;
+}
+/* To fix bouncing in the page when scrolling */
+/* * {
+  border: 1px solid red;
+} */
+* {
+  margin: 0;
+  padding: 0;
+}
+.wrapper.home-2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+}
 .floatleft {
   float: left;
 }

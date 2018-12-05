@@ -1,25 +1,22 @@
 <template>
-    <div class="sub-col col-lg-3 d-md-hide d-xs-hide">
-        <div class="all-categories-menu-2 ">
-            <div class="categories-toggler-menu">
-                <span> All Categories </span>
-            </div>
-            <div class="vertical-menu-list">
-                <ul>
-                    <category-menu
-                        v-for="(resource, key) in resources"
-                        :key="key"
-                        :resourceKey="key"
-                        :resource="resource"
-                    >
-                        {{resource.name}}
-                    </category-menu>
-                </ul>
-            </div>
-            <!--<button class="btn btn-primary" @click="setResources">Get Materials</button>-->
-
-        </div>
+  <div class="sub-col col-lg-3 d-md-hide d-xs-hide">
+    <div class="all-categories-menu-2">
+      <div class="categories-toggler-menu">
+        <span>All Categories</span>
+      </div>
+      <div class="vertical-menu-list">
+        <ul>
+          <category-menu
+            v-for="(resource, key) in resources"
+            :key="key"
+            :resourceKey="key"
+            :resource="resource"
+          >{{resource.name}}</category-menu>
+        </ul>
+      </div>
+      <!--<button class="btn btn-primary" @click="setResources">Get Materials</button>-->
     </div>
+  </div>
 </template>
 
 <script>
@@ -298,6 +295,9 @@ export default {
 .all-categories-menu-2 .vertical-menu-list li a.more-default,
 .all-categories-menu-2 .vertical-menu-list li a.less-show {
   color: #ff6a00;
+}
+.right-mega-menu {
+  overflow-y: scroll;
 }
 </style>
 

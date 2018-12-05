@@ -119,7 +119,7 @@ const mutations = {
      */
     setSubcatBusinesses: (state, data) => {
         // console.log(data);
-        //Adds the businesses(andtheir tags) that offer this subresource 
+        //Adds the businesses(and their tags) that offer this subresource 
 
         let subcatbusinesses = {};
 
@@ -130,7 +130,26 @@ const mutations = {
                 //This business is not in the subbusinesses array
                 subcatbusinesses[data[business].companyId] = data[business];
             }
-            
+            console.log(data[business].tagId);
+            if (data[business].tagId != null) {
+                let tag = {
+                    tagId: data[business].tagId,
+                    tagName: data[business].tagName,
+                    tagCategory: data[business].tagCategory
+                };
+                //console.log(tag);
+                //console.log(subcatbusinesses[data[business].companyId]);
+                let tagKey = data[business].tagName.replace(/ +/g, "%20").toLowerCase();
+                //console.log(tagKey);
+                //console.log(typeof subcatbusinesses[data[business].companyId].tags === "undefined");
+                //add tags dictionary that holds all tags associated with this business
+                if (typeof subcatbusinesses[data[business].companyId].tags === "undefined") {
+                    subcatbusinesses[data[business].companyId].tags = {};
+                }
+                //console.log(subcatbusinesses[data[business].companyId]);
+                subcatbusinesses[data[business].companyId].tags[tagKey] = tag;
+            }
+
         }
         state.subcatBusinesses.businesses = subcatbusinesses;
 
@@ -502,7 +521,7 @@ const actions = {
         let code = '5';
         let kword = compName;
         let endpoint = 'company'
-
+        console.log(kword);
         // Query the server for a business with name like the given keyword
         return Vue.http
             .get(serverfile, {
@@ -513,11 +532,12 @@ const actions = {
                 }
             })
             .then(response => {
+                console.log(response);
                 return response.json();
             })
             .then(data => {
                 let dataObject = Object.assign({}, data.resp) //Convert received Array into an Object
-
+                console.log(dataObject);
                 context.commit('setCurrentBusiness', dataObject['0']); //get the wrapped object
 
                 return state.currentBusiness.companyId;
@@ -638,7 +658,7 @@ const actions = {
         commit,
         dispatch
     }, payload) => {
-        state.businesses = {};
+        state.subcatBusinesses = {};
         let code;
         console.log("setSubCategoryBusinesses");
         console.log(payload);
@@ -659,8 +679,8 @@ const actions = {
                 }
             })
             .then(response => {
-                //console.log("Inside json response of setSubCategoryBusinesses in businesses.js");
-                //console.log(response);
+                console.log("Inside json response of setSubCategoryBusinesses in businesses.js");
+                console.log(response);
                 return response.json();
             })
             .then(data => {
