@@ -249,30 +249,57 @@ export default {
       this.$validator.validateAll().then(result => {
         console.log(result);
         if (result) {
-          let dataToSend = {
-            projectName: this.projectName,
-            uid: this.$store.state.users.user.userId,
-            tids: this.getIdsArray("tags")
-          };
-          console.log(dataToSend);
-          this.$store
-            .dispatch("addProject", dataToSend)
-            .then(response => {
-              // console.log("Helooowwe");
-              console.log(response);
-              if (response.length > 0) {
-                //Added Project successfully, set the modal booleans
-                return { modalShow: true, modalShowCred: false };
-              } else {
-                //Something went wrong when adding project
-                return { modalShow: false, modalShowCred: true };
-              }
-            })
-            .then(data => {
-              this.modalShow = data.modalShow;
-              this.modalShowCred = data.modalShowCred;
-            });
-
+          if (this.selected == "addNewProject") {
+            //Adding new project
+            let dataToSend = {
+              projectName: this.projectName,
+              uid: this.$store.state.users.user.userId,
+              tids: this.getIdsArray("tags")
+            };
+            console.log(dataToSend);
+            this.$store
+              .dispatch("addProject", dataToSend)
+              .then(response => {
+                // console.log("Helooowwe");
+                console.log(response);
+                if (response.length > 0) {
+                  //Added Project successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when adding project
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          } else {
+            //Editing project
+            let dataToSend = {
+              projectName: this.projectName,
+              projectId: this.selected,
+              tids: this.getIdsArray("tags")
+            };
+            console.log(dataToSend);
+            this.$store
+              .dispatch("editProject", dataToSend)
+              .then(response => {
+                // console.log("Helooowwe");
+                console.log(response);
+                if (response.length > 0) {
+                  //Added Project successfully, set the modal booleans
+                  return { modalShow: true, modalShowCred: false };
+                } else {
+                  //Something went wrong when adding project
+                  return { modalShow: false, modalShowCred: true };
+                }
+              })
+              .then(data => {
+                this.modalShow = data.modalShow;
+                this.modalShowCred = data.modalShowCred;
+              });
+          }
           return;
         } else {
           //Invalid or Empty fields
@@ -310,8 +337,9 @@ export default {
       }
     },
     okModal() {
-      this.$router.replace("/user/projects");
-      this.$validator.reset();
+      //this.$validator.reset();
+
+      this.$router.replace("/user/");
     },
     test() {
       let data = {
@@ -323,6 +351,8 @@ export default {
       console.log(data);
     },
     onChange() {
+      this.tids = [];
+      this.projectName = "";
       console.log("onChange before callin recommendations " + this.selected);
       if (this.selected == "" || this.selected == "addNewProject") {
       } else {

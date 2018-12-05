@@ -19,6 +19,7 @@ const state = {
         registerUser: "",
         addSubmission: "",
         userType: "",
+        editProject: "",
         userProjects: "",
         loggedIn: false //Is user loggedIn - for testing purposes
     }
@@ -226,6 +227,12 @@ const mutations = {
      */
     addProject: (state, data) => {
         state.userFlags['userProjects'] = data;
+    },
+    /** 
+     * Set state.userFlags['editProjects'] flag
+     */
+    editProject: (state, data) => {
+        state.userFlags['editProject'] = data;
     },
     /** 
      * Set userFlags addSubmission flag
@@ -830,6 +837,36 @@ const actions = {
             console.log("Project added ");
             console.log(data);
             context.commit("addProject", data.resp);
+            return data.resp;
+        });
+    },
+    /**   
+     * edits a project submited by the user
+     * @param {object} data - Contains the projectName, projectId, and a array of tagId arrays
+     */
+    editProject: (context, data) => {
+        console.log("editing project with projectId " + data.projectId);
+        console.log(data);
+        return Vue.http.get("prds-projects.php", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            params: {
+                endpoint: 'projects',
+                pid: data.projectId,
+                pname: data.projectName,
+                du: true,
+                multi: true,
+                tids: data.tids,
+                code: '10' //Edit existing project 
+            }
+        }).then(response => {
+            console.log(response);
+            return response.json();
+        }).then(data => {
+            console.log("Project edited ");
+            console.log(data);
+            context.commit("editProject", data.resp);
             return data.resp;
         });
     },
