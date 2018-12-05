@@ -285,7 +285,8 @@ export default {
             let dataToSend = {
               projectName: this.projectName,
               projectId: this.selected,
-              tids: this.getIdsArray("tags")
+              tids: this.getIdsArray("tags"),
+              uid: this.$store.state.users.user.userId
             };
             console.log(dataToSend);
             this.$store

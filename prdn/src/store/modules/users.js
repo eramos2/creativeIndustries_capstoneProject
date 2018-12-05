@@ -817,6 +817,8 @@ const actions = {
     addProject: (context, data) => {
         console.log("adding project to " + data.uid);
         console.log(data);
+        data.userId = data.uid;
+        let userData = [data];
         return Vue.http.get("prds-projects.php", {
             headers: {
                 "Content-Type": "application/json"
@@ -837,6 +839,7 @@ const actions = {
             console.log("Project added ");
             console.log(data);
             context.commit("addProject", data.resp);
+            context.dispatch("getUserProjects", userData);
             return data.resp;
         });
     },
@@ -847,6 +850,8 @@ const actions = {
     editProject: (context, data) => {
         console.log("editing project with projectId " + data.projectId);
         console.log(data);
+        data.userId = data.uid;
+        let userData = [data];
         return Vue.http.get("prds-projects.php", {
             headers: {
                 "Content-Type": "application/json"
@@ -867,6 +872,7 @@ const actions = {
             console.log("Project edited ");
             console.log(data);
             context.commit("editProject", data.resp);
+            context.dispatch("getUserProjects", userData);
             return data.resp;
         });
     },
