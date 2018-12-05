@@ -1,22 +1,21 @@
 <template>
-    <!-- content-wraper start -->
-            <div class="content-wraper bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 order-2 order-lg-1">
-                            <category-list-box></category-list-box>
-                        
-                
-                            <!-- single-benner start -->
-                            <div class="single-benner mt-30 text-center">
-                                <a href="#">
-                                    <img alt="" src="img/benner/home-04-5.jpg">
-                                </a>
-                            </div>
-                            <!-- single-benner start -->
-                        </div>
-                        <div class="col-lg-9 order-1 order-lg-2">
-                          <!--
+  <!-- content-wraper start -->
+  <div class="content-wraper bg-gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 order-2 order-lg-1">
+          <category-list-box></category-list-box>
+
+          <!-- single-benner start -->
+          <div class="single-benner mt-30 text-center">
+            <a href="#">
+              <img alt src="img/benner/home-04-5.jpg">
+            </a>
+          </div>
+          <!-- single-benner start -->
+        </div>
+        <div class="col-lg-9 order-1 order-lg-2">
+          <!--
                             <div class="row">
                                 <div class="col">
                                     <div class="shop-top-bar mt-60">
@@ -57,21 +56,21 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>-->
-                            <div class="shop-products-wrapper">
-                                <div class="tab-content">
-                                    <grid :categories="resources.materials.categories"></grid>
-                                    
-                                    <row-list :categories="resources.materials.categories"></row-list>
-                                    
-                                    <!-- paginatoin-area start -->
-                                    <div class="paginatoin-area">
-                                        <div class="row">
-                                            <div class="col-lg-6 col-md-6">
-                                                <p>Showing 10-13 of 13 item(s) </p>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6">
-                                                <ul class="pagination-box">
+          </div>-->
+          <div class="shop-products-wrapper">
+            <div class="tab-content">
+              <grid :categories="resources.materials.categories"></grid>
+
+              <row-list :categories="resources.materials.categories"></row-list>
+
+              <!-- paginatoin-area start -->
+              <div class="paginatoin-area">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6">
+                    <!-- <p>Showing 10-13 of 13 item(s)</p> -->
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <!-- <ul class="pagination-box">
                                                     <li><a href="#" class="Previous"> <i class="fa fa-angle-double-left"></i> </a>
                                                     </li>
                                                     <li><a href="#" class="active">1</a></li>
@@ -80,18 +79,18 @@
                                                     <li>
                                                       <a href="#" class="Next"> <i class="fa fa-angle-double-right"></i> </a>
                                                     </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- paginatoin-area end -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </ul>-->
+                  </div>
                 </div>
+              </div>
+              <!-- paginatoin-area end -->
             </div>
-            <!-- content-wraper end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wraper end -->
 </template>
 
 <script>

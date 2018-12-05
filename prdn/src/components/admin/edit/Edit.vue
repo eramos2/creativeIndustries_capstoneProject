@@ -194,14 +194,13 @@
             >{{ errors.first('description') }}</p>
           </div>
           <div class="row"></div>
-          <div class="single-input-item">
+          <!-- <div class="single-input-item">
             <label for="logo" class="required">Business Photo</label>
             <p>
               <input v-validate="'image'" data-vv-as="image" name="logo" type="file">
             </p>
             <p class="text-danger" v-if="errors.has('logo')">{{ errors.first('logo') }}</p>
-          </div>
-
+          </div>-->
           <div class="row" id="materials-process">
             <div class="col-md-6 categoryList">
               <h3>Materials</h3>

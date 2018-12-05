@@ -27,6 +27,8 @@ import Add from "./components/admin/add/Add.vue";
 import Edit from "./components/admin/edit/Edit.vue";
 import Remove from "./components/admin/remove/Remove.vue";
 import Pending from "./components/admin/pending/Pending.vue";
+/** About Us */
+import AboutUs from "./components/aboutUs/AboutUs.vue"
 
 /**
  * Where we set all the routes for the webapp's body and its components
@@ -54,6 +56,10 @@ export const routes = [{
         component: UserNewBusiness
     }
     ]
+},
+{
+    path: '/aboutus',
+    component: AboutUs
 },
 {
     path: '/map',
@@ -104,6 +110,7 @@ export const routes = [{
         path: 'admin',
         component: LoginAdmin
     },
+
     {
         path: 'recoverpassword',
         component: RecoverPassword

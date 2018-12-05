@@ -58,13 +58,13 @@
                     tag="button"
                     active-class="active"
                     class="top-search-btn"
-                    type="submit"
+                    type="button"
                   >
                     <i class="ion-ios-search-strong"></i> Search
                   </router-link>
                   <button
                     class="top-search-btn"
-                    type="submit"
+                    type="button"
                     v-if="onSearchPage"
                     @click="searchForBusinesses"
                   >

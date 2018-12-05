@@ -528,13 +528,12 @@ const actions = {
      * @param {object} data - Contains user's email, passcode, and new password
      */
     recoverUserPassword: (context, data) => {
-        let userData = data;
-        // console.log("This is the user data");
-        // console.log(userData);
-        // console.log("I'm verifying passcode for " + data.email);
-        // console.log(data);
-        state.userFlags['recoverPassword'] = "";
 
+        console.log("I'm verifying passcode for " + data.email);
+        console.log(data);
+        console.log("HERE BABY");
+        state.userFlags['recoverPassword'] = "";
+        let userData = data;
         return Vue.http.get(serverfile, {
             headers: {
                 "Content-Type": "application/json"
@@ -559,6 +558,7 @@ const actions = {
 
                 //console.log(response);
                 return Vue.http.post(serverfile, {
+
                         endpoint: 'users',
                         code: '3',
                         du: true,
