@@ -83,7 +83,7 @@
                   </label>
                   <input
                     name="password"
-                    v-validate="'min:8|max:15'"
+                    v-validate="'min:8|max:15|verify_password'"
                     type="password"
                     v-model="password"
                     class="form-control"
@@ -106,7 +106,7 @@
                   </label>
                   <input
                     name="confirmedpassword"
-                    v-validate="'min:8|max:15|confirmed:password'"
+                    v-validate="'min:8|max:15|confirmed:password|verify_password'"
                     data-vv-delay="2000"
                     type="password"
                     class="form-control"
@@ -168,6 +168,8 @@
  * Custom Messages for Alerts if an error appear after validation
  */
 import { Validator } from "vee-validate";
+import Vue from "vue";
+import VeeValidate from "vee-validate";
 const dictionary = {
   en: {
     custom: {
@@ -191,6 +193,17 @@ const dictionary = {
     }
   }
 };
+
+VeeValidate.Validator.extend("verify_password", {
+  getMessage: field =>
+    `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. @, . _ & ? etc)`,
+  validate: value => {
+    var strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    return strongRegex.test(value);
+  }
+});
 
 Validator.localize(dictionary);
 

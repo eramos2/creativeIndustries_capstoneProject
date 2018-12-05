@@ -204,7 +204,6 @@ export default {
       this.$cookie.delete("userType");
       this.$store.dispatch("userType");
       this.$store.state.users.user = {};
-
       this.$router.replace("/");
       //this.$store.state.users.userFlags.loggedIn = false;
       console.log("Logged Out");
