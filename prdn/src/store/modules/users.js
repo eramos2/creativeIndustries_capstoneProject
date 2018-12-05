@@ -413,8 +413,8 @@ const actions = {
     sendRegistrationEmail: (context, data) => {
         let email = data.email;
         let name = data.name;
-
-        return Vue.http
+        console.log("SENDING REGISTRATION");
+        Vue.http
             .get(
                 "emailRegister.php", {
                     params: {
@@ -424,7 +424,9 @@ const actions = {
                 }
             )
             .then(response => {
+                console.log(response);
                 return response.json();
+
             })
             .then(data => {
                 console.log("User register email sent");
@@ -591,18 +593,23 @@ const actions = {
                 return response.json();
             }
             else {
+                console.log("In else statement ")
                 return {
-                    resp: [1]
+                    resp: []
                 }
             }
 
 
         }).then(data => {
+            console.log(data.resp.length);
+
+            console.log(data.resp.length != 0);
             console.log(data);
             if (data.resp.length != 0) {
                 console.log("The email entered already exists. Please enter another email.");
                 return []; //return empty object, to let user know email is already in datbase
             } else {
+
                 console.log("userDaga");
                 console.log(userData);
                 return Vue.http.post(serverfile, {
@@ -634,6 +641,7 @@ const actions = {
                             name: userData.firstName,
                             email: userData.email
                         }
+                        console.log(data);
                         dispatch("sendRegistrationEmail", udata, { root: true });
                         return data.resp;
                     });
