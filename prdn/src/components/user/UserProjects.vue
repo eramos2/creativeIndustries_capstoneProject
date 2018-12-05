@@ -197,7 +197,7 @@
               centered
               title="ERROR"
             >
-              <p class="my-4">Something went wrong</p>
+              <p class="my-4">Submit Project Failed Some fields are empty or invalid.</p>
             </b-modal>
           </div>
         </div>
