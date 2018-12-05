@@ -2,8 +2,8 @@
   <form @submit.prevent="validateBeforeSubmit">
     <div class="container">
       <div class="container adminRemove marginTop">
-        <h2>
-          <span style="margin-top: 10rem;" class="glyphicon glyphicon-minus-sign"></span> Remove Administrator
+        <h2 style="margin-top: 10rem;">
+          <span class="glyphicon glyphicon-minus-sign"></span> Remove Administrator
         </h2>
         <div class="row"></div>
         <p class="lead">Select the administrator to remove.</p>
