@@ -4,16 +4,18 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-3 order-2 order-lg-1">
-          <singleitem-list-box
+          <!-- <singleitem-list-box
             v-for="(tagCategory, key) in tags"
             :key="key"
             :tagCategory="tagCategory"
-          >{{tagCategory.name}}</singleitem-list-box>
-
+          >{{tagCategory.name}}</singleitem-list-box>-->
           <!-- single-benner start -->
           <div class="single-benner mt-30 text-center">
             <a href="#">
-              <img alt src="img/benner/home-04-5.jpg">
+              <img
+                alt
+                src="https://drive.google.com/uc?export=view&amp;id=1C_Lv-6bPdA6L07km1hrWJQhITtOuPJKK"
+              >
             </a>
           </div>
           <!-- single-benner start -->
