@@ -92,7 +92,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Something went wrong!</p>
+                  <p class="my-4">Something went wrong, verify the data submitted.</p>
                 </b-modal>
               </p>
             </div>

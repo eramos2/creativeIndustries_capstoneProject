@@ -55,7 +55,7 @@
                 centered
                 title="ERROR"
               >
-                <p class="my-4">Try Again</p>
+                <p class="my-4">Proces removed failed!</p>
               </b-modal>
               <b-modal
                 ok-variant="danger"
@@ -65,7 +65,7 @@
                 centered
                 title="ERROR"
               >
-                <p class="my-4">Something went wrong!</p>
+                <p class="my-4">Something went wrong, select a process to remove.</p>
               </b-modal>
             </p>
           </div>

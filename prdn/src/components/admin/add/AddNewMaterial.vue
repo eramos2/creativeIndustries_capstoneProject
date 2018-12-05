@@ -76,7 +76,7 @@
                   centered
                   title="Added"
                 >
-                  <p class="my-4">Added.</p>
+                  <p class="my-4">The material was added.</p>
                 </b-modal>
                 <b-modal
                   ok-variant="danger"
@@ -96,7 +96,7 @@
                   centered
                   title="ERROR"
                 >
-                  <p class="my-4">Something went wrong!</p>
+                  <p class="my-4">Something went wrong, verify the data submitted.</p>
                 </b-modal>
               </p>
             </div>
