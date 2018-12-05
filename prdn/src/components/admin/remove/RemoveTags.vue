@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-right">
+      <div class="col-lg-8 col-lg-8 col-sm-6 buttonMargin pull-left">
         <p>
           <button type="submit">Remove Tag</button>
           <b-modal
