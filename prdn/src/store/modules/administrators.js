@@ -160,6 +160,16 @@ const mutations = {
      * email,address, city, country, city, and zipcode
      */
     getBusinessSubmission: (state, data) => {
+        console.log(data);
+        let tids = [];
+        //Assign tags to projects
+        if (typeof data.tagId != "undefined") {
+            for (let tag in Object.values(data)) {
+                tids.push(tag.tagId);
+            }
+        }
+        data.tids = tids;
+        console.log(tids);
         state.currentBusinessRequest = data;
         //Replace that Object with a fresh one. For example, 
         //using the stage-3 object spread syntax we can write it like this:
@@ -496,17 +506,17 @@ const actions = {
         let userData = data;
 
         return Vue.http.get(serverfile, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            params: {
-                endpoint: 'users',
-                code: '3',
-                passcode: data.passcode,
-                uemail: data.email,
-                utype: 1 //User type = 0, admin type = 1 
-            }
-        })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
+                    endpoint: 'users',
+                    code: '3',
+                    passcode: data.passcode,
+                    uemail: data.email,
+                    utype: 1 //User type = 0, admin type = 1 
+                }
+            })
             .then(response => {
                 console.log(response);
                 return response.json();
@@ -566,17 +576,18 @@ const actions = {
     getBusinessSubmission: (context, data) => {
         // console.log("Getting submission " + data.submissionId);
         state.currentBusinessRequest = {};
-
+        console.log(data);
         return Vue.http.get(serverfile, {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            params: {
-                endpoint: 'submissions',
-                code: '5',
-                subid: data.submissionId
-            }
-        })
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                params: {
+                    endpoint: 'submissions',
+                    code: '5',
+
+                    subid: data.submissionId
+                }
+            })
             .then(response => {
                 console.log(response);
                 return response.json();
